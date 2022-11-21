@@ -36,10 +36,10 @@ class Persona extends Model
         return $this->belongsTo('App\Models\Paise');
     }
 
-    //relacion uno a uno
-    public function residente()
+    //relacion uno a muchos
+    public function residentes()
     {
-        return $this->hasOne(Residente::class, 'persona_id');
+        return $this->hasMany(Residente::class, 'persona_id');
     }
 
     //relacion uno a uno

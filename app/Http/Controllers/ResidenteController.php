@@ -49,7 +49,8 @@ class ResidenteController extends Controller
     public function store(Request $request)
     {
 
-       /*  $persona = Persona::create([
+
+        $persona = Persona::create([
             'nombres' => $request['nombres'],
             'apellidos' => $request['apellidos'],
             'ci_numero' => $request['ci_numero'],
@@ -61,11 +62,19 @@ class ResidenteController extends Controller
             'ciudade_id' => $request['ciudade_id'],
         ]);
 
-       $persona->residente()->create($request->residentes);
+
+        Residente::create([
+            'foto' => $request['foto'],
+            'fecha_ingreso' => $request['fecha_ingreso'],
+            'fecha_salida' => $request['fecha_salida'],
+            'persona_id' => $persona->id,
+        ]);
+
+        // $persona->residente()->createMany($request->residentes);
 
 
 
-        return Redirect::route('residentes.index'); */
+        return Redirect::route('residentes.index');
         /*  DB::transaction(function () use ($request) {
 
             $residentes = Persona::create($request->all());
@@ -75,7 +84,6 @@ class ResidenteController extends Controller
 
             return Redirect::route('residentes.index');
         }); */
-
     }
 
 
@@ -84,19 +92,19 @@ class ResidenteController extends Controller
         //
     }
 
-    
+
     public function edit(Residente $residente)
     {
         //
     }
 
-    
+
     public function update(Request $request, $id)
     {
         //
     }
 
-    
+
     public function destroy(Residente $residente)
     {
         //

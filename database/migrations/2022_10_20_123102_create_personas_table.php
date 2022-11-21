@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('telefono', 25)->nullable();
             $table->tinyInteger('edad');
             $table->string('sexo', 15);
-            $table->unsignedBigInteger('direction_id'); //eliminado
+            $table->unsignedBigInteger('direction_id')->nullable(); //eliminado
             $table->timestamps();
         });
     }
