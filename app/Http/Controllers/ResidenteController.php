@@ -95,16 +95,18 @@ class ResidenteController extends Controller
 
     public function edit($id)
     {
-       $persona = Persona::find($id);
-       $residente = Residente::where('persona_id', $id)->get();
-       
+        $persona = Persona::find($id);
+        $residente = Residente::where('persona_id', $id)->get();
+
         return Inertia::render('Residentes/Editar', ['residente' => $residente, 'persona' => $persona]);
     }
 
 
     public function update(Request $request, $id)
     {
-        //
+       
+
+       
     }
 
 

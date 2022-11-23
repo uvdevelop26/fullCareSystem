@@ -9,13 +9,16 @@
                     Datos Personales del Residente
                 </div>
                 <div class="flex flex-wrap -mb-8 -mr-6 p-8">
-                    <text-input v-model="personas.nombres" type="text" label="Nombres" class="pb-7 pr-6 w-full lg:w-1/2" />
+                    <text-input v-model="personas.nombres" type="text" label="Nombres"
+                        class="pb-7 pr-6 w-full lg:w-1/2" />
                     <text-input v-model="personas.apellidos" class="pb-7 pr-6 w-full lg:w-1/2" label="Apellidos"
                         :id="apellidos" />
-                    <text-input v-model="personas.ci_numero" class="pb-7 pr-6 w-full lg:w-1/2" label="CI" :id="ci_numero" />
-                    <text-input v-model="personas.fecha_nacimiento" class="pb-7 pr-6 w-full lg:w-1/2" label="Fecha de Nacimiento"
-                        type="date" :id="fecha_nacimiento" />
-                    <text-input v-model="persona.telefono" class="pb-7 pr-6 w-full lg:w-1/2" label="Teléfono" :id="telefono" />
+                    <text-input v-model="personas.ci_numero" class="pb-7 pr-6 w-full lg:w-1/2" label="CI"
+                        :id="ci_numero" />
+                    <text-input v-model="personas.fecha_nacimiento" class="pb-7 pr-6 w-full lg:w-1/2"
+                        label="Fecha de Nacimiento" type="date" :id="fecha_nacimiento" />
+                    <text-input v-model="persona.telefono" class="pb-7 pr-6 w-full lg:w-1/2" label="Teléfono"
+                        :id="telefono" />
                     <text-input v-model="persona.edad" class="pb-7 pr-6 w-full lg:w-1/2" label="edad" type="number"
                         :id="edad" />
                     <select-input v-model="personas.sexo" class="pb-8 pr-6 w-full lg:w-1/2" label="Sexo">
@@ -39,14 +42,15 @@
                 </div>
                 <div class="flex flex-wrap -mb-8 -mr-6 p-8">
                     <text-input v-model="persona.paise_id" class="pb-7 pr-6 w-full lg:w-1/2" label="Pais" :id="pais" />
-                    <text-input v-model="persona.ciudade_id" class="pb-7 pr-6 w-full lg:w-1/2" label="Ciudad" :id="ciudad" />
+                    <text-input v-model="persona.ciudade_id" class="pb-7 pr-6 w-full lg:w-1/2" label="Ciudad"
+                        :id="ciudad" />
                 </div>
                 <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
                     <Link type="button" :href="route('residentes.index')" class="btn-cancelar">
                     <span class="text-white font-bold">Cancelar</span>
                     </Link>
                     <!--  <loading-button class="btn-indigo mx-1" type="submit">Crear Ingreso</loading-button>  -->
-                    <button class="btn-indigo mx-1" @click.prevent="guardar()" type="submit">
+                    <button class="btn-indigo mx-1" @click.prevent="actualizarResidente()" type="submit">
                         Crear Ingreso
                     </button>
                 </div>
@@ -97,22 +101,31 @@ export default {
             foto: props.residente[0].foto,
             fecha_ingreso: props.residente[0].fecha_ingreso,
             fecha_salida: props.residente[0].fecha_salida
-            
+
         });
 
         const actualizarResidente = () => {
-         form.post(route("residentes.update", props.actividades.id), {
-        preserveScroll: true,
-      });
-    };
+            /* form.post(route("residentes.update", props.persona.id), {
+                preserveScroll: true,
+            }); */
 
+            this.$inertia.put(route('residentes.store', props.persona.id),
+               personas,
+            )
+        };
+
+
+        /* this.$inertia.put(
+                route('ingresos.update', this.$props.ingreso.id),
+                this.form
+                ) */
 
 
 
         console.log(personas);
-   
 
-        return { personas }
+
+        return { personas, actualizarResidente }
 
     }
 
