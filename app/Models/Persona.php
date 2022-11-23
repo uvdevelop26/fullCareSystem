@@ -43,9 +43,9 @@ class Persona extends Model
     }
 
     //relacion uno a uno
-    public function familiar()
+    public function familiars()
     {
-        return $this->hasOne('App\Models\Familiar');
+        return $this->hasMany('App\Models\Familiar');
     }
 
     //relacion uno a uno

@@ -19,7 +19,9 @@
           <Link class="block pt-2 pl-2" href="/residentes">
           <div :class="isUrl('residentes') ? 'text-white' : 'text-cyan-300 group-hover:text-white'">Admin. Residentes</div>
           </Link>
-          <Link class="block pt-2 pl-2">Admin. Familiares</Link>
+          <Link class="block pt-2 pl-2" href="/familiars">
+            <div :class="isUrl('familiars') ? 'text-white' : 'text-cyan-300 group-hover:text-white'">Admin. Familiares</div>
+          </Link>
         </div>
      </div>
      <!-- Empleados -->

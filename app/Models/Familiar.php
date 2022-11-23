@@ -7,7 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Familiar extends Model
 {
+   
     use HasFactory;
+
+    protected $table = 'familiars';
+
+    protected $fillable = [
+        'parentesco',
+        'email',
+        'persona_id',
+        'residente_id'
+    ];
+
+
 
     //relación uno a uno inversa
     public function persona()

@@ -25,6 +25,7 @@
                     <th class="py-4 px-6">Fecha Salida</th>
                     <th class="py-4 px-6">Pais</th>
                     <th class="py-4 px-6">Ciudad</th>
+                    <th class="py-4 px-6">Acciones</th>
                 </tr>
             </thead>
             <tbody>

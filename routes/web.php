@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EgresoController;
 use App\Http\Controllers\IngresoController;
+use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\ResidenteController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +41,10 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 Route::resource('residentes', ResidenteController::class)
     ->middleware('auth:sanctum', 'verified');
 
+//familiares
+Route::resource('familiars', PersonaController::class)
+    ->middleware('auth:sanctum', 'verified');
+
 
 //Ingresos
 Route::resource('ingresos', IngresoController::class)
@@ -49,6 +54,6 @@ Route::resource('ingresos', IngresoController::class)
 Route::resource('egresos', EgresoController::class)
     ->middleware('auth:sanctum', 'verified');
 
-Route::get('test', function(){
+Route::get('test', function () {
     return Inertia::render('Residentes/test');
 });

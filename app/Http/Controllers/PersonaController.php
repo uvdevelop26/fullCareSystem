@@ -2,24 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Familiar;
 use App\Models\Persona;
-use App\Models\Residente;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
-use Inertia\Inertia;
 
-use function GuzzleHttp\Promise\all;
-
-class ResidenteController extends Controller
+class PersonaController extends Controller
 {
 
     public function index()
     {
         $personas = DB::table('personas')
-            ->join('residentes', 'residentes.persona_id', '=', 'personas.id')
+            ->join('familiars', 'familiars.persona_id', '=', 'personas.id')
             ->join('paises', 'personas.paise_id', '=', 'paises.id')
             ->join('ciudades', 'personas.ciudade_id', '=', 'ciudades.id')
+            ->join('residentes', 'familiars.residente_id', '=', 'residentes.id')
             ->select(
                 'personas.id',
                 'personas.nombres',
@@ -29,27 +28,24 @@ class ResidenteController extends Controller
                 'personas.telefono',
                 'personas.edad',
                 'personas.sexo',
-                'residentes.foto',
-                'residentes.fecha_ingreso',
-                'residentes.fecha_salida',
+                'familiars.parentesco',
+                'familiars.email',
                 'paises.nombre_pais',
-                'ciudades.nombre_ciudad'
+                'ciudades.nombre_ciudad',
+                'residentes.foto'
             )->get();
 
-        return Inertia::render('Residentes/Index', ['personas' => $personas]);
+         return Inertia::render('Familiars/Index', ['personas' => $personas]);
     }
 
 
     public function create()
     {
-        return Inertia::render('Residentes/Nuevos');
+        return Inertia::render('Familiars/Nuevo');
     }
-
 
     public function store(Request $request)
     {
-
-
         $persona = Persona::create([
             'nombres' => $request['nombres'],
             'apellidos' => $request['apellidos'],
@@ -62,43 +58,26 @@ class ResidenteController extends Controller
             'ciudade_id' => $request['ciudade_id'],
         ]);
 
-
-        Residente::create([
-            'foto' => $request['foto'],
-            'fecha_ingreso' => $request['fecha_ingreso'],
-            'fecha_salida' => $request['fecha_salida'],
+        Familiar::create([
+            'parentesco' => $request['parentesco'],
+            'email' => $request['email'],
+            'residente_id' => $request['residente_id'],
             'persona_id' => $persona->id,
         ]);
 
-        // $persona->residente()->createMany($request->residentes);
-
-
-
-        return Redirect::route('residentes.index');
-        /*  DB::transaction(function () use ($request) {
-
-            $residentes = Persona::create($request->all());
-            $residentes->residente()->create($request->residentes);
-
-           // dd($request);
-
-            return Redirect::route('residentes.index');
-        }); */
+        return Redirect::route('familiars.index');
     }
 
 
     public function show($id)
     {
-        //
+        
     }
 
 
     public function edit($id)
     {
-       $persona = Persona::find($id);
-       $residente = Residente::where('persona_id', $id)->get();
-       
-        return Inertia::render('Residentes/Editar', ['residente' => $residente, 'persona' => $persona]);
+        return Redirect::route('Familiars/Editar');
     }
 
 
@@ -107,8 +86,7 @@ class ResidenteController extends Controller
         //
     }
 
-
-    public function destroy(Residente $residente)
+    public function destroy($id)
     {
         //
     }

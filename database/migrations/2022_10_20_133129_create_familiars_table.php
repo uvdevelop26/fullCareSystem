@@ -13,7 +13,7 @@ return new class extends Migration
             $table->id();
             $table->string('parentesco', 30);
             $table->string('email', 40);
-            $table->unsignedBigInteger('persona_id')->unique();
+            $table->unsignedBigInteger('persona_id');
             $table->unsignedBigInteger('residente_id');
             $table->foreign('persona_id')
                 ->references('id')
