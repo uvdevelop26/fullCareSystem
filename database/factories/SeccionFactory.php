@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Ingreso>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Seccion>
  */
-class IngresoFactory extends Factory
+class SeccionFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +17,8 @@ class IngresoFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'nombre_seccion' => $this->faker->word(),
+            'descripcion' => $this->faker->sentence(),
         ];
     }
 }

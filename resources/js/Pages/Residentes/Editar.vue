@@ -31,10 +31,10 @@
                     Datos de Interno
                 </div>
                 <div class="flex flex-wrap -mb-8 -mr-6 p-8">
-                    <text-input v-model="personas.foto" class="pb-7 pr-6 w-full lg:w-1/2" label="Foto" :id="foto" />
-                    <text-input v-model="personas.fecha_ingreso" class="pb-7 pr-6 w-full lg:w-1/2" label="Fecha Ingreso"
+                    <text-input v-model="residente[0].foto" class="pb-7 pr-6 w-full lg:w-1/2" label="Foto" :id="foto" />
+                    <text-input v-model="residente[0].fecha_ingreso" class="pb-7 pr-6 w-full lg:w-1/2" label="Fecha Ingreso"
                         type="date" :id="fecha_ingreso" />
-                    <text-input v-model="personas.fecha_salida" class="pb-7 pr-6 w-full lg:w-1/2" label="Fecha Salida"
+                    <text-input v-model="residente[0].fecha_salida" class="pb-7 pr-6 w-full lg:w-1/2" label="Fecha Salida"
                         type="date" :id="fecha_salida" />
                 </div>
                 <div class="text-center py-2 font-bold text-cyan-700 italic border rounded-lg mx-1 my-1">
@@ -51,7 +51,7 @@
                     </Link>
                     <!--  <loading-button class="btn-indigo mx-1" type="submit">Crear Ingreso</loading-button>  -->
                     <button class="btn-indigo mx-1" @click.prevent="actualizarResidente()" type="submit">
-                        Crear Ingreso
+                        Actualizar Residente
                     </button>
                 </div>
             </form>
@@ -98,6 +98,7 @@ export default {
             paise_id: props.persona.paise_id,
             ciudade_id: props.persona.ciudade_id,
 
+            id_residente: props.residente[0].id,
             foto: props.residente[0].foto,
             fecha_ingreso: props.residente[0].fecha_ingreso,
             fecha_salida: props.residente[0].fecha_salida
@@ -105,13 +106,21 @@ export default {
         });
 
         const actualizarResidente = () => {
+
+            personas.id_residente = props.residente[0].id;
+            personas.foto = props.residente[0].foto;
+            personas.fecha_ingreso = props.residente[0].fecha_ingreso;
+            personas.fecha_salida = props.residente[0].fecha_salida;
+            personas.post(route("residentes.update", personas), {
+                preserveScroll: true,
+            });
             /* form.post(route("residentes.update", props.persona.id), {
                 preserveScroll: true,
             }); */
 
-            this.$inertia.put(route('residentes.store', props.persona.id),
+            /* this.$inertia.put(route('residentes.store', props.persona.id),
                personas,
-            )
+            ) */
         };
 
 

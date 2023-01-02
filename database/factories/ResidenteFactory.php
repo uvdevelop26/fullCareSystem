@@ -11,12 +11,13 @@ class ResidenteFactory extends Factory
    
     public function definition()
     {
-        $personas = Persona::all();
+        
+        
         return [
             'foto' => $this->faker->imageUrl(150, 150),
             'fecha_ingreso' => $this->faker->date(),
-            'fecha_salida' => $this->faker->date(),
-            'persona_id' => $this->faker->unique()->numberBetween(1, $personas->count()),
+            'estado' => $this->faker->randomElement(['Activo', 'Inactivo']),
+            'persona_id' =>Persona::all()->random()->id,
         ];
     }
 }

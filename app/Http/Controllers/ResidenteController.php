@@ -104,7 +104,26 @@ class ResidenteController extends Controller
 
     public function update(Request $request, $id)
     {
-       
+        $persona = Persona::findOrFail($request['id']);
+        $persona->nombres = $request['nombres'];
+        $persona->apellidos = $request['apellidos'];
+        $persona->ci_numero = $request['ci_numero'];
+        $persona->fecha_nacimiento = $request['fecha_nacimiento'];
+        $persona->telefono = $request['telefono'];
+        $persona->edad = $request['edad'];
+        $persona->sexo = $request['sexo'];
+        $persona->paise_id = $request['paise_id'];
+        $persona->ciudade_id = $request['ciudade_id'];
+        $persona->save();
+
+        $residente = Residente::findOrFail($request['id_residente']);
+        $residente->foto = $request['foto'];
+        $residente->fecha_ingreso = $request['fecha_ingreso'];
+        $residente->fecha_salida = $request['fecha_salida'];
+        $residente->persona_id = $request['id'];
+        $residente->save();
+
+        return Redirect::route('residentes.index');
 
        
     }

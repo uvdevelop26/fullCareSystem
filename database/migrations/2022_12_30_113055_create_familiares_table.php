@@ -9,18 +9,22 @@ return new class extends Migration
 
     public function up()
     {
-        Schema::create('medicamento_residente', function (Blueprint $table) {
+        Schema::create('familiares', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('medicamento_id');
-            $table->unsignedBigInteger('residente_id');
-            $table->foreign('medicamento_id')
-                ->references('id')
-                ->on('medicamentos')
-                ->onDelete('cascade');
+            $table->string('parentezco', 200);
+            $table->string('email');
+            $table->unsignedBigInteger('residente_id')->nullable();
+            $table->unsignedBigInteger('persona_id');
+
             $table->foreign('residente_id')
                 ->references('id')
                 ->on('residentes')
+                ->onDelete('set null');
+            $table->foreign('persona_id')
+                ->references('id')
+                ->on('personas')
                 ->onDelete('cascade');
+
             $table->timestamps();
         });
     }
@@ -28,6 +32,6 @@ return new class extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('medicamento_residente');
+        Schema::dropIfExists('familiares');
     }
 };

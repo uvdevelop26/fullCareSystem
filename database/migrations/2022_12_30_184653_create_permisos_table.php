@@ -12,12 +12,14 @@ return new class extends Migration
         Schema::create('permisos', function (Blueprint $table) {
             $table->id();
             $table->date('fecha_permiso');
-            $table->string('motivo', 100);
+            $table->string('justificacion');
             $table->unsignedBigInteger('empleado_id');
+
             $table->foreign('empleado_id')
                 ->references('id')
                 ->on('empleados')
                 ->onDelete('cascade');
+                
             $table->timestamps();
         });
     }

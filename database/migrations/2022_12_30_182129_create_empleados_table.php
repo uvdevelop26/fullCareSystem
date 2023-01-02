@@ -12,23 +12,27 @@ return new class extends Migration
         Schema::create('empleados', function (Blueprint $table) {
             $table->id();
             $table->date('fecha_ingreso');
-            $table->string('email', 50);
-            $table->string('foto', 500);
-            $table->unsignedBigInteger('persona_id')->unique();
-            $table->unsignedBigInteger('section_id')->nullable();
+            $table->string('email');
+            $table->string('profesion', 200);
+            $table->unsignedBigInteger('seccion_id')->nullable();
             $table->unsignedBigInteger('sueldo_id')->nullable();
-            $table->foreign('persona_id')
+            $table->unsignedBigInteger('persona_id');
+
+            $table->foreign('seccion_id')
                 ->references('id')
-                ->on('personas')
-                ->onDelete('cascade');
-            $table->foreign('section_id')
-                ->references('id')
-                ->on('sections')
+                ->on('seccions')
                 ->onDelete('set null');
+
             $table->foreign('sueldo_id')
                 ->references('id')
                 ->on('sueldos')
                 ->onDelete('set null');
+
+            $table->foreign('persona_id')
+                ->references('id')
+                ->on('personas')
+                ->onDelete('cascade');
+
             $table->timestamps();
         });
     }

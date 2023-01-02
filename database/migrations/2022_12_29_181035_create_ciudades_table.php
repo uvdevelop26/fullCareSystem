@@ -6,20 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    
+
     public function up()
     {
-        Schema::create('sections', function (Blueprint $table) {
+        Schema::create('ciudades', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre_seccion', 30);
-            $table->string('descripcion', 100);
+            $table->string('nombre_ciudad', 100);
             $table->timestamps();
         });
     }
 
-    
+
     public function down()
     {
-        Schema::dropIfExists('sections');
+        Schema::dropIfExists('ciudades');
     }
 };

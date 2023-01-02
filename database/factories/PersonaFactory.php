@@ -22,7 +22,7 @@ class PersonaFactory extends Factory
             'telefono' => $this->faker->phoneNumber(20),
             'edad' => $this->faker->numberBetween(1, 100),
             'sexo' => $this->faker->randomElement(['femenino', 'masculino']),
-            'paise_id' => Paise::all()->random()->id,
+            'direccion' => $this->faker->sentence(),
             'ciudade_id' => Ciudade::all()->random()->id
         ];
     }
