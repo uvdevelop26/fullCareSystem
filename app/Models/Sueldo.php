@@ -9,9 +9,10 @@ class Sueldo extends Model
 {
     use HasFactory;
 
-    //Relación uno a muchos 
+    protected $table = 'sueldos';
+
     public function empleados()
     {
-        return $this->hasMany('App\Models\Empleado');
+        return $this->hasMany(Empleado::class);
     }
 }

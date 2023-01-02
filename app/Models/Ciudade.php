@@ -9,8 +9,10 @@ class Ciudade extends Model
 {
     use HasFactory;
 
-    public function personas()
-    {
-       return $this->hasMany('App\Models\Persona');
+    protected $table = 'ciudades';
+    
+    //relacion de uno a muchos
+    public function personas(){
+        return $this->hasMany(Persona::class);
     }
 }

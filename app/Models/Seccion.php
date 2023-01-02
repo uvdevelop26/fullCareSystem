@@ -5,13 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Section extends Model
+class Seccion extends Model
 {
     use HasFactory;
 
-    //relacion uno a muchos
+    protected $table = 'seccions';
+
     public function empleados()
     {
-        return $this->hasMany('App\Models\Empleado');
+        return $this->hasMany(Empleado::class);
     }
 }

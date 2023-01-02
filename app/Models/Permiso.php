@@ -9,8 +9,10 @@ class Permiso extends Model
 {
     use HasFactory;
 
+    protected $table = 'permisos';
+
     public function empleado()
     {
-        return $this->belongsTo('App\Models\Empleado');
+        return $this->belongsTo(Empleado::class);
     }
 }

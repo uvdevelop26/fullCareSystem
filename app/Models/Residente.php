@@ -7,39 +7,25 @@ use Illuminate\Database\Eloquent\Model;
 
 class Residente extends Model
 {
-    use HasFactory;
+  use HasFactory;
 
-    protected $table = 'residentes';
+  protected $table = 'residentes';
 
-    protected $fillable = [
-      'foto',
-      'fecha_ingreso',
-      'fecha_salida',
-      'persona_id'
-    ];
+  protected $fillable = [
+    'foto',
+    'fecha_ingreso',
+    'estado',
+    'persona_id'
+  ];
 
-    //relación uno a uno inversa
-    public function persona()
-    {
-       return $this->belongsTo(Persona::class, 'persona_id');
-    }
+  //relacion uno a muchos
+  public function persona()
+  {
+    return $this->belongsTo(Persona::class);
+  }
 
-    //relacion uno a muchos
-    public function familiars()
-    {
-       return $this->hasMany('App\Models\Familiar');
-    }
-
-    //relación mucho a muchos
-    public function pensiones()
-    {
-      return $this->belongsToMany('App\Models\Pensione');
-    }
-
-    //relacion muchos a muchos
-
-    public function medicamentos()
-    {
-      return $this->belongsToMany('App\Models\Medicamento');
-    }
+  public function familiares()
+  {
+    return $this->hasMany(Familiare::class);
+  }
 }

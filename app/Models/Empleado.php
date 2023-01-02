@@ -9,27 +9,26 @@ class Empleado extends Model
 {
     use HasFactory;
 
-    //relacion uno a mucho inversa
-    public function section()
-    {
-        return $this->belongsTo('App\Models\Section');
-    }
+    protected $table = 'empleados';
 
-    //relacion uno a muchos inversa
-    public function sueldo()
-    {
-        return $this->belongsTo('App\Models\Sueldo');
-    }
-
-    //relacion uno a uno inversa
+    //relacion de uno a muchos
     public function persona()
     {
-        return $this->belongsTo('App\Models\Persona');
+        return $this->belongsTo(Persona::class);
     }
 
-    //relacion uno a muchos
+    public function sueldo()
+    {
+        return $this->belongsTo(Sueldo::class);
+    }
+
+    public function seccion()
+    {
+        return $this->belongsTo(Seccion::class);
+    }
+
     public function permisos()
     {
-        return $this->hasMany('App\Models\Permiso');
+        return $this->hasMany(Permiso::class);
     }
 }

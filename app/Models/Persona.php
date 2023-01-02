@@ -19,38 +19,28 @@ class Persona extends Model
         'telefono',
         'edad',
         'sexo',
-        'paise_id',
+        'direccion',
         'ciudade_id'
     ];
 
-    //relación uno a muchos inversa
+    //Relacion de uno a muchos
     public function ciudade()
     {
-        return $this->belongsTo('App\Models\Ciudade');
+        return $this->belongsTo(Ciudade::class);
     }
 
-    //relacion uno a muchos inversa
-
-    public function paise()
+    public function familiares()
     {
-        return $this->belongsTo('App\Models\Paise');
+        return $this->hasMany(Familiare::class);
     }
 
-    //relacion uno a muchos
     public function residentes()
     {
-        return $this->hasMany(Residente::class, 'persona_id');
+        return $this->hasMany(Residente::class);
     }
 
-    //relacion uno a uno
-    public function familiars()
+    public function empleados()
     {
-        return $this->hasMany('App\Models\Familiar');
-    }
-
-    //relacion uno a uno
-    public function empleado()
-    {
-        return $this->hasOne('App\Models\Empleado');
+        return $this->hasMany(Empleado::class);
     }
 }
