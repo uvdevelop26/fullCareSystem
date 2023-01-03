@@ -7,6 +7,9 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import FullcareLogo from '../../Shared/FullcareLogo.vue';
+
+
 
 defineProps({
     canResetPassword: Boolean,
@@ -33,9 +36,10 @@ const submit = () => {
     <Head title="Log in" />
 
     <AuthenticationCard>
-        <template #logo>
-            <AuthenticationCardLogo />
-        </template>
+         <template #logo>
+            <fullcare-logo class="fill-cyan-900 text-white" width="90" height="90" />
+           <h1 class="text-2xl font-bold text-cyan-900">Bienvenido</h1>
+        </template> 
 
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
             {{ status }}

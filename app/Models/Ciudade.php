@@ -10,9 +10,10 @@ class Ciudade extends Model
     use HasFactory;
 
     protected $table = 'ciudades';
-    
+
     //relacion de uno a muchos
-    public function personas(){
+    public function personas()
+    {
         return $this->hasMany(Persona::class);
     }
 }

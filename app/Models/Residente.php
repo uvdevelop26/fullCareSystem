@@ -18,6 +18,16 @@ class Residente extends Model
     'persona_id'
   ];
 
+  public function scopeFilter($query, array $filters)
+  {
+    $query->when($filters['search'] ?? null, function ($query, $search) {
+      $query->where(function ($query) use ($search) {
+        $query->where('id', 'like', '%' . $search . '%');
+         /*  ->orWhere('nombres', 'like', '%' . $search . '%'); */
+      });
+    });
+  }
+
   //relacion uno a muchos
   public function persona()
   {

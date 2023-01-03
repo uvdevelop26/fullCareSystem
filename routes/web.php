@@ -19,13 +19,19 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
+/* Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
+}); */
+
+//Login
+
+Route::get('/', function () {
+    return Inertia::render('Auth/Login');
 });
 
 //dashboard
@@ -54,6 +60,4 @@ Route::resource('ingresos', IngresoController::class)
 Route::resource('egresos', EgresoController::class)
     ->middleware('auth:sanctum', 'verified');
 
-Route::get('test', function () {
-    return Inertia::render('Residentes/test');
-});
+

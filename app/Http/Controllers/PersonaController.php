@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Familiar;
+use App\Models\Familiare;
 use App\Models\Persona;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -14,7 +14,11 @@ class PersonaController extends Controller
 
     public function index()
     {
-        $personas = DB::table('personas')
+
+        $personas = Persona::with('ciudade')->get();
+        return Inertia::render('Residentes/Index', compact('personas'));
+
+        /* $personas = DB::table('personas')
             ->join('familiars', 'familiars.persona_id', '=', 'personas.id')
             ->join('paises', 'personas.paise_id', '=', 'paises.id')
             ->join('ciudades', 'personas.ciudade_id', '=', 'ciudades.id')
@@ -33,9 +37,9 @@ class PersonaController extends Controller
                 'paises.nombre_pais',
                 'ciudades.nombre_ciudad',
                 'residentes.foto'
-            )->get();
+            )->get(); */
 
-         return Inertia::render('Familiars/Index', ['personas' => $personas]);
+     //    
     }
 
 
@@ -58,7 +62,7 @@ class PersonaController extends Controller
             'ciudade_id' => $request['ciudade_id'],
         ]);
 
-        Familiar::create([
+        Familiare::create([
             'parentesco' => $request['parentesco'],
             'email' => $request['email'],
             'residente_id' => $request['residente_id'],

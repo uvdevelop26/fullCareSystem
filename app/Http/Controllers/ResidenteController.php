@@ -14,9 +14,22 @@ use function GuzzleHttp\Promise\all;
 class ResidenteController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $personas = DB::table('personas')
+        $queries = ['search'];
+
+        return Inertia::render('Residentes/Index', [
+            'residentes' => Residente::filter($request->only($queries))
+            ->with('persona.ciudade')
+            ->paginate(8),
+            'filters' => $request->all($queries)
+        ]);
+
+      //  $residentes = Residente::with('persona.ciudade')->paginate(8);
+
+       // return Inertia::render('Residentes/Index', compact('residentes'));
+
+        /* $personas = DB::table('personas')
             ->join('residentes', 'residentes.persona_id', '=', 'personas.id')
             ->join('paises', 'personas.paise_id', '=', 'paises.id')
             ->join('ciudades', 'personas.ciudade_id', '=', 'ciudades.id')
@@ -36,7 +49,7 @@ class ResidenteController extends Controller
                 'ciudades.nombre_ciudad'
             )->get();
 
-        return Inertia::render('Residentes/Index', ['personas' => $personas]);
+         */
     }
 
 
