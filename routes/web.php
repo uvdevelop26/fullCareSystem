@@ -52,12 +52,6 @@ Route::resource('familiars', PersonaController::class)
     ->middleware('auth:sanctum', 'verified');
 
 
-//Ingresos
-Route::resource('ingresos', IngresoController::class)
-    ->middleware('auth:sanctum', 'verified');
 
-//Egresos
-Route::resource('egresos', EgresoController::class)
-    ->middleware('auth:sanctum', 'verified');
 
 
