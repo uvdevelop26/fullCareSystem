@@ -16,14 +16,14 @@ class ResidenteController extends Controller
 
     public function index(Request $request)
     {
-        $queries = ['search'];
+        /* $queries = ['search'];
 
         return Inertia::render('Residentes/Index', [
             'residentes' => Residente::filter($request->only($queries))
             ->with('persona.ciudade')
             ->paginate(8),
             'filters' => $request->all($queries)
-        ]);
+        ]); */
 
       //  $residentes = Residente::with('persona.ciudade')->paginate(8);
 

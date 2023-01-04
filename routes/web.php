@@ -44,7 +44,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     });
 
 //Residentes
-Route::resource('residentes', ResidenteController::class)
+Route::resource('residentes', PersonaController::class)
     ->middleware('auth:sanctum', 'verified');
 
 //familiares
@@ -52,6 +52,12 @@ Route::resource('familiars', PersonaController::class)
     ->middleware('auth:sanctum', 'verified');
 
 
+//Ingresos
+Route::resource('ingresos', IngresoController::class)
+    ->middleware('auth:sanctum', 'verified');
 
+//Egresos
+Route::resource('egresos', EgresoController::class)
+    ->middleware('auth:sanctum', 'verified');
 
 

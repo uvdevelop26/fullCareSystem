@@ -15,8 +15,14 @@ class PersonaController extends Controller
     public function index()
     {
 
-        $personas = Persona::with('ciudade')->get();
+        //esto no retorna la relación con residentes
+
+        $personas = Persona::with('residentes')->get();
+
         return Inertia::render('Residentes/Index', compact('personas'));
+
+        /* $personas = Persona::with('ciudade')->get();
+        return Inertia::render('Residentes/Index', compact('personas')); */
 
         /* $personas = DB::table('personas')
             ->join('familiars', 'familiars.persona_id', '=', 'personas.id')
