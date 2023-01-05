@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Head title="Crear Ingreso" />
+        <Head title="Crear Residente" />
         <h1 class="mb-5 text-2xl font-bold text-cyan-900">Crear Residente</h1>
         <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
             <form>
@@ -57,17 +57,25 @@
                         <option value="Femenino">Femenino</option>
                         <option value="Masculino">Masculino</option>
                     </select-input>
-                </div>
-                <div
-                    class="text-center py-2 font-bold text-cyan-700 italic border rounded-lg mx-1 my-1"
-                >
-                    Datos de Interno
-                </div>
-                <div class="flex flex-wrap -mb-8 -mr-6 p-8">
+                    <text-input
+                        v-model="direccion"
+                        class="pb-7 pr-6 w-full lg:w-1/2"
+                        label="Direccion"
+                        type="text"
+                        :id="direccion"
+                    />
+                    <text-input
+                        v-model="ciudade_id"
+                        class="pb-7 pr-6 w-full lg:w-1/2"
+                        label="Ciudad"
+                        type="text"
+                        :id="ciudade_id"
+                    />
                     <text-input
                         v-model="foto"
                         class="pb-7 pr-6 w-full lg:w-1/2"
                         label="Foto"
+                        type="text"
                         :id="foto"
                     />
                     <text-input
@@ -77,32 +85,15 @@
                         type="date"
                         :id="fecha_ingreso"
                     />
-                    <text-input
-                        v-model="fecha_salida"
-                        class="pb-7 pr-6 w-full lg:w-1/2"
-                        label="Fecha Salida"
-                        type="date"
-                        :id="fecha_salida"
-                    />
-                </div>
-                <div
-                    class="text-center py-2 font-bold text-cyan-700 italic border rounded-lg mx-1 my-1"
-                >
-                    Direccion del Residente
-                </div>
-                <div class="flex flex-wrap -mb-8 -mr-6 p-8">
-                    <text-input
-                        v-model="paise_id"
-                        class="pb-7 pr-6 w-full lg:w-1/2"
-                        label="Pais"
-                        :id="pais"
-                    />
-                    <text-input
-                        v-model="ciudade_id"
-                        class="pb-7 pr-6 w-full lg:w-1/2"
-                        label="Ciudad"
-                        :id="ciudad"
-                    />
+                    <select-input
+                        v-model="estado"
+                        class="pb-8 pr-6 w-full lg:w-1/2"
+                        label="Estado"
+                    >
+                        <option :value="null" />
+                        <option value="Activo">Activo</option>
+                        <option value="Inactivo">Inactivo</option>
+                    </select-input>
                 </div>
                 <div
                     class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
@@ -120,7 +111,7 @@
                         @click.prevent="guardar()"
                         type="submit"
                     >
-                        Crear Ingreso
+                        Crear Residente
                     </button>
                 </div>
             </form>

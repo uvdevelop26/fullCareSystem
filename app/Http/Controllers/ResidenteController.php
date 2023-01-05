@@ -25,31 +25,6 @@ class ResidenteController extends Controller
             'filters' => $request->all($queries)
         ]);
 
-      //  $residentes = Residente::with('persona.ciudade')->paginate(8);
-
-       // return Inertia::render('Residentes/Index', compact('residentes'));
-
-        /* $personas = DB::table('personas')
-            ->join('residentes', 'residentes.persona_id', '=', 'personas.id')
-            ->join('paises', 'personas.paise_id', '=', 'paises.id')
-            ->join('ciudades', 'personas.ciudade_id', '=', 'ciudades.id')
-            ->select(
-                'personas.id',
-                'personas.nombres',
-                'personas.apellidos',
-                'personas.ci_numero',
-                'personas.fecha_nacimiento',
-                'personas.telefono',
-                'personas.edad',
-                'personas.sexo',
-                'residentes.foto',
-                'residentes.fecha_ingreso',
-                'residentes.fecha_salida',
-                'paises.nombre_pais',
-                'ciudades.nombre_ciudad'
-            )->get();
-
-         */
     }
 
 
