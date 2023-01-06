@@ -6,7 +6,7 @@
         <div class="search">
             <label for="search" class="font-bold text-cyan-600 px-2">Buscar:</label>
             <input type="text" 
-            v-model="form.search" 
+            v-model="search" 
             class="rounded-md mx-2 w-60 border-cyan-700 focus:border-cyan-500"
             placeholder="Buscar Residente..">
         </div>
@@ -96,6 +96,7 @@
 </template>
 
 <script>
+
 import Layout from '../../Shared/Layout.vue';
 import {Head, Link} from '@inertiajs/inertia-vue3'
 import Icon from '../../Shared/Icon.vue'
@@ -103,7 +104,7 @@ import Pagination from '../../Shared/Pagination.vue'
 import { reactive } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 import {pickBy} from 'lodash'
-import { watchEffect  } from "vue";
+import { watch, ref, defineProps  } from "vue";
 export default {
 
     components: {
@@ -122,19 +123,14 @@ export default {
     },
 
     setup(props){
-            const form = reactive({
-                search: props.filters.search,
-            });
+            const search = ref('');
 
-            watchEffect(() =>{
-                const query = pickBy(form);
-                Inertia.replace(
-                    route('residentes.index', Object.keys(query).length ? query : {})
-                );
+            watch(search, value =>{
+                Inertia.get('Residentes/Index', {search: value});
             });
 
 
-            return { form  }
+            return{ search }
     },
 
   

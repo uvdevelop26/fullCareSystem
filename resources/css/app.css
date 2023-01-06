@@ -21,9 +21,22 @@
   @apply p-2 leading-normal block w-full border border-cyan-700 text-gray-700 bg-white font-sans rounded text-left appearance-none relative focus:border-cyan-200 focus:ring;
 }
 
+.form-error {
+  @apply text-red-700 mt-2 text-sm;
+}
+
 .form-label{
   @apply font-medium inline-block py-2 text-gray-800;
 }
+
+.form-input.error,
+.form-textarea.error,
+.form-select.error {
+  @apply border-red-500 focus:ring focus:ring-red-200;
+}
+
+
+
 
 /*=======Botones============*/
 

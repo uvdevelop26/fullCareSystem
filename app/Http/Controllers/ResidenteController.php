@@ -16,15 +16,16 @@ class ResidenteController extends Controller
 
     public function index(Request $request)
     {
-        $queries = ['search'];
-
+      
         return Inertia::render('Residentes/Index', [
-            'residentes' => Residente::filter($request->only($queries))
-            ->with('persona.ciudade')
-            ->paginate(8),
-            'filters' => $request->all($queries)
+            'residentes' => Residente::query()
+                ->when($request->input('search'), function ($query, $search) {
+                    $query->where('id', 'like', "%{$search}%");
+                })
+                ->with('persona.ciudade')
+                ->orderBy('id', 'desc')
+                ->paginate(8)
         ]);
-
     }
 
 
@@ -37,6 +38,20 @@ class ResidenteController extends Controller
     public function store(Request $request)
     {
 
+        $request->validate([
+            'nombres' => 'required',
+            'apellidos' => 'required',
+            'ci_numero' => 'required',
+            'fecha_nacimiento' => 'required',
+            'telefono' => 'required',
+            'edad' => 'required',
+            'sexo' => 'required',
+            'direccion' => 'required',
+            'ciudade_id' => 'required',
+            'fecha_ingreso' => 'required',
+            'estado' => 'required',
+        ]);
+
 
         $persona = Persona::create([
             'nombres' => $request['nombres'],
@@ -46,7 +61,7 @@ class ResidenteController extends Controller
             'telefono' => $request['telefono'],
             'edad' => $request['edad'],
             'sexo' => $request['sexo'],
-            'paise_id' => $request['paise_id'],
+            'direccion' => $request['direccion'],
             'ciudade_id' => $request['ciudade_id'],
         ]);
 
@@ -54,24 +69,14 @@ class ResidenteController extends Controller
         Residente::create([
             'foto' => $request['foto'],
             'fecha_ingreso' => $request['fecha_ingreso'],
-            'fecha_salida' => $request['fecha_salida'],
+            'estado' => $request['estado'],
             'persona_id' => $persona->id,
         ]);
 
-        // $persona->residente()->createMany($request->residentes);
-
-
+        
 
         return Redirect::route('residentes.index');
-        /*  DB::transaction(function () use ($request) {
-
-            $residentes = Persona::create($request->all());
-            $residentes->residente()->create($request->residentes);
-
-           // dd($request);
-
-            return Redirect::route('residentes.index');
-        }); */
+       
     }
 
 
@@ -112,8 +117,6 @@ class ResidenteController extends Controller
         $residente->save();
 
         return Redirect::route('residentes.index');
-
-       
     }
 
 
