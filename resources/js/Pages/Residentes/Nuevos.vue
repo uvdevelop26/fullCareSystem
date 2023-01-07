@@ -6,7 +6,7 @@
             <form>
                 <div class="flex flex-wrap -mb-8 -mr-6 p-8">
                     <text-input
-                        v-model="nombres"
+                        v-model="personas.nombres"
                         type="text"
                         label="Nombres"
                         class="pb-7 pr-6 w-full lg:w-1/2"
@@ -14,18 +14,18 @@
                         name="nombres"
                         :error="errors.nombres"
                     />
-                   <!--  <input-error :message="errors.nombres" class="block"/> -->
+                    <!--  <input-error :message="errors.nombres" class="block"/> -->
                     <text-input
-                        v-model="apellidos"
+                        v-model="personas.apellidos"
                         type="text"
                         label="Apellidos"
-                        class="pb-7 pr-6 w-full lg:w-1/2"        
+                        class="pb-7 pr-6 w-full lg:w-1/2"
                         :id="apellidos"
                         name="nombres"
                         :error="errors.apellidos"
                     />
                     <text-input
-                        v-model="ci_numero"
+                        v-model="personas.ci_numero"
                         type="text"
                         label="CI"
                         class="pb-7 pr-6 w-full lg:w-1/2"
@@ -34,17 +34,17 @@
                         :error="errors.ci_numero"
                     />
                     <text-input
-                        v-model="fecha_nacimiento"
+                        v-model="personas.fecha_nacimiento"
                         type="date"
                         label="Fecha de Nacimiento"
-                        class="pb-7 pr-6 w-full lg:w-1/2"  
+                        class="pb-7 pr-6 w-full lg:w-1/2"
                         :id="fecha_nacimiento"
                         name="fecha_nacimiento"
                         :error="errors.fecha_nacimiento"
                     />
                     <text-input
-                        v-model="telefono"
-                        type="text"         
+                        v-model="personas.telefono"
+                        type="text"
                         label="Teléfono"
                         class="pb-7 pr-6 w-full lg:w-1/2"
                         :id="telefono"
@@ -52,7 +52,7 @@
                         :error="errors.telefono"
                     />
                     <text-input
-                        v-model="edad"
+                        v-model="personas.edad"
                         type="number"
                         label="edad"
                         class="pb-7 pr-6 w-full lg:w-1/2"
@@ -61,7 +61,7 @@
                         :error="errors.edad"
                     />
                     <select-input
-                        v-model="sexo"
+                        v-model="personas.sexo"
                         class="pb-8 pr-6 w-full lg:w-1/2"
                         label="Sexo"
                         :error="errors.sexo"
@@ -71,7 +71,7 @@
                         <option value="Masculino">Masculino</option>
                     </select-input>
                     <text-input
-                        v-model="direccion"
+                        v-model="personas.direccion"
                         type="text"
                         label="Direccion/Compañia"
                         class="pb-7 pr-6 w-full lg:w-1/2"
@@ -80,7 +80,7 @@
                         :error="errors.direccion"
                     />
                     <text-input
-                        v-model="ciudade_id"
+                        v-model="personas.ciudade_id"
                         type="text"
                         label="Ciudad"
                         class="pb-7 pr-6 w-full lg:w-1/2"
@@ -89,7 +89,7 @@
                         :error="errors.ciudade_id"
                     />
                     <text-input
-                        v-model="foto"
+                        v-model="personas.foto"
                         type="text"
                         label="Foto"
                         class="pb-7 pr-6 w-full lg:w-1/2"
@@ -97,7 +97,7 @@
                         name="foto"
                     />
                     <text-input
-                        v-model="fecha_ingreso"
+                        v-model="personas.fecha_ingreso"
                         type="date"
                         label="Fecha Ingreso"
                         class="pb-7 pr-6 w-full lg:w-1/2"
@@ -106,7 +106,7 @@
                         :error="errors.fecha_ingreso"
                     />
                     <select-input
-                        v-model="estado"
+                        v-model="personas.estado"
                         class="pb-8 pr-6 w-full lg:w-1/2"
                         label="Estado"
                         :error="errors.estado"
@@ -158,13 +158,13 @@ export default {
         TextInput,
         LoadingButton,
         SelectInput,
-      /*   InputError */
+        /*   InputError */
     },
 
     layout: Layout,
 
-    props:{
-        errors: Object
+    props: {
+        errors: Object,
     },
 
     setup() {
@@ -179,7 +179,6 @@ export default {
         const sexo = ref("");
         const direccion = ref("");
         const ciudade_id = ref("");
-        
 
         const foto = ref("");
         const fecha_ingreso = ref("");
@@ -208,24 +207,10 @@ export default {
         }; */
 
         const guardar = async () => {
-            personas.nombres = nombres.value;
-            personas.apellidos = apellidos.value;
-            personas.ci_numero = ci_numero.value;
-            personas.fecha_nacimiento = fecha_nacimiento.value;
-            personas.telefono = telefono.value;
-            personas.edad = edad.value;
-            personas.sexo = sexo.value;
-            personas.direccion = direccion.value;
-            personas.ciudade_id = ciudade_id.value;
-
-            personas.foto = foto.value;
-            personas.fecha_ingreso = fecha_ingreso.value;
-            personas.estado = estado.value;
-
             const add = {
-                foto: foto.value,
-                fecha_ingreso: fecha_ingreso.value,
-                estado: estado.value,
+                foto: personas.foto,
+                fecha_ingreso: personas.fecha_ingreso,
+                estado: personas.estado,
             };
 
             personas.residentes.push(add);
@@ -238,19 +223,9 @@ export default {
         };
 
         return {
-            nombres,
-            apellidos,
-            ci_numero,
-            fecha_nacimiento,
-            telefono,
-            edad,
-            sexo,
-            direccion,
-            ciudade_id,
-            foto,
-            fecha_ingreso,
-            estado,
-            guardar
+            personas,
+
+            guardar,
         };
     },
 };

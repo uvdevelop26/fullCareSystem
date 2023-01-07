@@ -13,7 +13,6 @@ use function GuzzleHttp\Promise\all;
 
 class ResidenteController extends Controller
 {
-
     public function index(Request $request)
     {
 
@@ -37,7 +36,6 @@ class ResidenteController extends Controller
 
     public function store(Request $request)
     {
-
         $request->validate([
             'nombres' => 'required',
             'apellidos' => 'required',
