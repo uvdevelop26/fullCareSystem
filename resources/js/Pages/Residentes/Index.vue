@@ -76,14 +76,14 @@
                         {{residente.estado}}
                     </td>
                     <td class="border-t py-2">
-                        <Link class="inline-block px-2 py-2 bg-gray-100 rounded-full mx-1"
+                        <Link class="inline-block px-2 py-2 mx-1 bg-gray-100 rounded-full "
                         :href="route('residentes.edit', residente.id)">
                         <icon name="edit" class="w-3 h-3 fill-gray-600" />
                         </Link>
-                        <Link class="inline-block px-2 py-2 bg-gray-100 rounded-full mx-1" method="DELETE"
-                        :href="route('residentes.destroy', residente.id)">
+                        <button class="px-2 py-2 mx-1 my-0 bg-gray-100 rounded-full"
+                        @click="eliminarResidente(residente)">
                         <icon name="delete" class="w-3 h-3 fill-gray-600" />
-                        </Link>
+                        </button>
                     </td>
 
                 </tr>
@@ -123,14 +123,27 @@ export default {
     },
 
     setup(props){
+
             const search = ref('');
 
             watch(search, value =>{
                 Inertia.get('Residentes/Index', {search: value});
             });
 
+            /* const eliminarResidente(data){
+                data._method = "DELETE";
+                Inertia.post("/residentes/" + data.id, data);
+            } */
 
-            return{ search }
+            const eliminarResidente = (data) =>{
+                data._method = "DELETE";
+                Inertia.post("/residentes/" + data.id, data);
+            }
+
+
+
+
+            return{ search, eliminarResidente }
     },
 
   

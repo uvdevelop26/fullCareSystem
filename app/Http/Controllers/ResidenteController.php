@@ -113,9 +113,19 @@ class ResidenteController extends Controller
 
     public function update(Request $request, $id)
     {
-
-
-
+        $request->validate([
+            'nombres' => 'required',
+            'apellidos' => 'required',
+            'ci_numero' => 'required',
+            'fecha_nacimiento' => 'required',
+            'telefono' => 'required',
+            'edad' => 'required',
+            'sexo' => 'required',
+            'direccion' => 'required',
+            'ciudade_id' => 'required',
+            'fecha_ingreso' => 'required',
+            'estado' => 'required',
+        ]);
 
         $residente = Residente::find($id);
         $residente = Residente::where('id', $id)->first();
@@ -169,6 +179,11 @@ class ResidenteController extends Controller
 
     public function destroy(Residente $residente)
     {
-        //
+        $persona = Persona::find($residente->persona_id);
+        $persona = Persona::where('id', $residente->persona_id)->first();
+
+        $persona->delete();
+
+        return Redirect::route('residentes.index');
     }
 }
