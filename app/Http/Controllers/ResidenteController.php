@@ -24,7 +24,7 @@ class ResidenteController extends Controller
                 })
                 ->with('persona.ciudade')
                 ->orderBy('id', 'desc')
-                ->get()
+                ->paginate(8)
         ]);
     }
 

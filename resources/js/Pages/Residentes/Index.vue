@@ -3,13 +3,7 @@
     <Head title="Residentes" />
     <h1 class="mb-7 text-3xl font-bold text-cyan-600">Residentes</h1>
     <div class="flex items-center justify-between mb-6">
-        <div class="search">
-            <label for="search" class="font-bold text-cyan-600 px-2">Buscar:</label>
-            <input type="text" 
-            v-model="search" 
-            class="rounded-md mx-2 w-60 border-cyan-700 focus:border-cyan-500"
-            placeholder="Buscar Residente..">
-        </div>
+        <search-input></search-input>
         <Link class="btn-nuevo" 
         type="button" 
         :href="route('residentes.create')">
@@ -36,7 +30,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="residente in residentes" :key="residente.id" 
+                <tr v-for="residente in residentes.data" :key="residente.id" 
                 class="text-center text-sm text-gray-600 hover:bg-gray-50"
                 :class="{}">
                     <td class="border-t">
@@ -89,7 +83,12 @@
                 </tr>
             </tbody>      
         </table>
-       <!--  <pagination class="mt-6" :links="residentes.links" /> -->
+        <div class="m-1 p-1">
+            <div class="flex">
+
+            </div>
+        </div>
+        <pagination class="mt-6" :links="residentes.links" />
     </div>
 </div>
   
@@ -100,18 +99,21 @@
 import Layout from '../../Shared/Layout.vue';
 import {Head, Link} from '@inertiajs/inertia-vue3'
 import Icon from '../../Shared/Icon.vue'
-/* import Pagination from '../../Shared/Pagination.vue' */
+import Pagination from '../../Shared/Pagination.vue'
 import { reactive } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 import {pickBy} from 'lodash'
 import { watch, ref, defineProps  } from "vue";
+import SearchInput from '../../Shared/SearchInput.vue';
+
 export default {
 
     components: {
         Head,
         Link,
         Icon,
-       /*  Pagination */
+        Pagination,
+        SearchInput
 
     },
 
@@ -119,7 +121,7 @@ export default {
 
     props:{
         residentes: Object,
-        filters: Object
+        /* filters: Object */
     },
 
     setup(props){
@@ -130,10 +132,6 @@ export default {
                 Inertia.get('Residentes/Index', {search: value});
             });
 
-            /* const eliminarResidente(data){
-                data._method = "DELETE";
-                Inertia.post("/residentes/" + data.id, data);
-            } */
 
             const eliminarResidente = (data) =>{
                 data._method = "DELETE";

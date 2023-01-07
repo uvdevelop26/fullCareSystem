@@ -77,7 +77,7 @@
                         class="pb-7 pr-6 w-full lg:w-1/2"
                         :id="direccion"
                         name="edad"
-                        :error="errors.edad"
+                        :error="errors.direccion"
                     />
                     <text-input
                         v-model="ciudade_id"
