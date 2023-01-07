@@ -36,7 +36,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="residente in residentes.data" :key="residente.id" 
+                <tr v-for="residente in residentes" :key="residente.id" 
                 class="text-center text-sm text-gray-600 hover:bg-gray-50"
                 :class="{}">
                     <td class="border-t">
@@ -89,7 +89,7 @@
                 </tr>
             </tbody>      
         </table>
-        <pagination class="mt-6" :links="residentes.links" />
+       <!--  <pagination class="mt-6" :links="residentes.links" /> -->
     </div>
 </div>
   
@@ -100,7 +100,7 @@
 import Layout from '../../Shared/Layout.vue';
 import {Head, Link} from '@inertiajs/inertia-vue3'
 import Icon from '../../Shared/Icon.vue'
-import Pagination from '../../Shared/Pagination.vue'
+/* import Pagination from '../../Shared/Pagination.vue' */
 import { reactive } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 import {pickBy} from 'lodash'
@@ -111,7 +111,7 @@ export default {
         Head,
         Link,
         Icon,
-        Pagination
+       /*  Pagination */
 
     },
 

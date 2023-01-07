@@ -16,7 +16,7 @@ class ResidenteController extends Controller
 
     public function index(Request $request)
     {
-      
+
         return Inertia::render('Residentes/Index', [
             'residentes' => Residente::query()
                 ->when($request->input('search'), function ($query, $search) {
@@ -24,7 +24,7 @@ class ResidenteController extends Controller
                 })
                 ->with('persona.ciudade')
                 ->orderBy('id', 'desc')
-                ->paginate(8)
+                ->get()
         ]);
     }
 
@@ -73,10 +73,9 @@ class ResidenteController extends Controller
             'persona_id' => $persona->id,
         ]);
 
-        
+
 
         return Redirect::route('residentes.index');
-       
     }
 
 
@@ -86,18 +85,66 @@ class ResidenteController extends Controller
     }
 
 
-    public function edit($id)
+    public function edit(Residente $residente)
     {
-        $persona = Persona::find($id);
+
+        $persona = Persona::find($residente->persona_id);
+
+
+        return Inertia::render(
+            'Residentes/Editar',
+            [
+                'residente' => $residente,
+                'persona' => $persona
+            ]
+        );
+
+
+        /* return Inertia::render('Residentes/Editar'); */
+
+        /*   $persona = Persona::find($id);
         $residente = Residente::where('persona_id', $id)->get();
 
-        return Inertia::render('Residentes/Editar', ['residente' => $residente, 'persona' => $persona]);
+        return $persona; */
+
+        /*   return Inertia::render('Residentes/Editar', ['residente' => $residente, 'persona' => $persona]); */
     }
 
 
     public function update(Request $request, $id)
     {
-        $persona = Persona::findOrFail($request['id']);
+
+
+
+
+        $residente = Residente::find($id);
+        $residente = Residente::where('id', $id)->first();
+        $residente->foto = $request['foto'];
+        $residente->fecha_ingreso = $request['fecha_ingreso'];
+        $residente->estado = $request['estado'];
+        if ($residente->save()) {
+            $persona = Persona::find($request->id);
+            $persona = Persona::where('id', $request->id)->first();
+            $persona->nombres = $request['nombres'];
+            $persona->apellidos = $request['apellidos'];
+            $persona->ci_numero = $request['ci_numero'];
+            $persona->fecha_nacimiento = $request['fecha_nacimiento'];
+            $persona->telefono = $request['telefono'];
+            $persona->edad = $request['edad'];
+            $persona->sexo = $request['sexo'];
+            $persona->direccion = $request['direccion'];
+            $persona->ciudade_id = $request['ciudade_id'];
+
+            $persona->save();
+
+            return Redirect::route('residentes.index');
+        }
+
+        /*  if($persona->save()){
+            $residente = Residente::find($)
+        }
+
+        /* $persona = Persona::findOrFail($request['id']);
         $persona->nombres = $request['nombres'];
         $persona->apellidos = $request['apellidos'];
         $persona->ci_numero = $request['ci_numero'];
@@ -105,18 +152,18 @@ class ResidenteController extends Controller
         $persona->telefono = $request['telefono'];
         $persona->edad = $request['edad'];
         $persona->sexo = $request['sexo'];
-        $persona->paise_id = $request['paise_id'];
+        $persona->direccion = $request['direccion'];
         $persona->ciudade_id = $request['ciudade_id'];
         $persona->save();
 
         $residente = Residente::findOrFail($request['id_residente']);
         $residente->foto = $request['foto'];
         $residente->fecha_ingreso = $request['fecha_ingreso'];
-        $residente->fecha_salida = $request['fecha_salida'];
+        $residente->estado = $request['estado'];
         $residente->persona_id = $request['id'];
         $residente->save();
 
-        return Redirect::route('residentes.index');
+        return Redirect::route('residentes.index'); */
     }
 
 
