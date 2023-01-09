@@ -202,9 +202,7 @@ export default {
             residentes: [],
         });
 
-        /* const storeResidentes = async (data) => {
-            await axios.post("/residentes", data);
-        }; */
+   
 
         const guardar = async () => {
             const add = {
@@ -216,10 +214,8 @@ export default {
             personas.residentes.push(add);
             console.log(personas);
 
-            //return;
-
             personas.post(route("residentes.store"), personas);
-            /* await storeResidentes({...personas}); */
+
         };
 
         return {

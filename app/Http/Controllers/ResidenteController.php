@@ -16,11 +16,21 @@ class ResidenteController extends Controller
     public function index(Request $request)
     {
 
-        return Inertia::render('Residentes/Index', [
+        $queries = ['search'];
+
+        /* return Inertia::render('Residentes/Index', [
             'residentes' => Residente::query()
                 ->when($request->input('search'), function ($query, $search) {
                     $query->where('id', 'like', "%{$search}%");
                 })
+                ->with('persona.ciudade')
+                ->orderBy('id', 'desc')
+                ->paginate(8)
+        ]); */
+
+        return Inertia::render('Residentes/Index', [
+            'filters' => $request->all($queries),
+            'residentes' => Residente::filter($request->only($queries))
                 ->with('persona.ciudade')
                 ->orderBy('id', 'desc')
                 ->paginate(8)
@@ -64,7 +74,7 @@ class ResidenteController extends Controller
         ]);
 
 
-        Residente::create([
+          Residente::create([
             'foto' => $request['foto'],
             'fecha_ingreso' => $request['fecha_ingreso'],
             'estado' => $request['estado'],
@@ -73,7 +83,7 @@ class ResidenteController extends Controller
 
 
 
-        return Redirect::route('residentes.index');
+        return Redirect::route('residentes.index')->with('success', 'Residente Creado');
     }
 
 
@@ -145,7 +155,7 @@ class ResidenteController extends Controller
 
             $persona->save();
 
-            return Redirect::route('residentes.index');
+            return Redirect::route('residentes.index')->with('success', 'Residente Actualizado');
         }
 
         /*  if($persona->save()){
@@ -182,6 +192,6 @@ class ResidenteController extends Controller
 
         $persona->delete();
 
-        return Redirect::route('residentes.index');
+        return Redirect::route('residentes.index')->with('success', 'Residente Eliminado');
     }
 }

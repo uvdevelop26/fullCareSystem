@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Head title="Crear Ingreso" />
+        <Head title="Editar Residente" />
         <h1 class="mb-5 text-2xl font-bold text-cyan-900">Editar Residente</h1>
         <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
             <form>
@@ -124,8 +124,8 @@
                         <option :value="residentes.estado" />
                         <option value="Activo">Activo</option>
                         <option value="Inactivo">
-                            Inactivo
-                        </option> </select-input
+                            Inactivo</option> 
+                        </select-input
                     ><!-- v-model="residente[0].estado" -->
                 </div>
                 <div

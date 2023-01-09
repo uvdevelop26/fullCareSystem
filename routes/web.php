@@ -1,9 +1,12 @@
 <?php
 
 use App\Http\Controllers\EgresoController;
+use App\Http\Controllers\EmpleadoController;
+use App\Http\Controllers\FamiliareController;
 use App\Http\Controllers\IngresoController;
 use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\ResidenteController;
+use App\Http\Controllers\SueldoController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -47,10 +50,16 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 Route::resource('residentes', ResidenteController::class)
     ->middleware('auth:sanctum', 'verified');
 
-//familiares
-Route::resource('familiars', PersonaController::class)
+//Familiares
+Route::resource('familiares', FamiliareController::class)
+    ->middleware('auth:sanctum', 'verified');
+//Empleados
+Route::resource('empleados', EmpleadoController::class)
     ->middleware('auth:sanctum', 'verified');
 
+//Sueldos
+Route::resource('sueldos', SueldoController::class)
+    ->middleware('auth:sanctum', 'verified');
 
 //Ingresos
 Route::resource('ingresos', IngresoController::class)
@@ -59,5 +68,3 @@ Route::resource('ingresos', IngresoController::class)
 //Egresos
 Route::resource('egresos', EgresoController::class)
     ->middleware('auth:sanctum', 'verified');
-
-

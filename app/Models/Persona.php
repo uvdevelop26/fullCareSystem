@@ -23,6 +23,8 @@ class Persona extends Model
         'ciudade_id'
     ];
 
+    
+
     //Relacion de uno a muchos
     public function ciudade()
     {

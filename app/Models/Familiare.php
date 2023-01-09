@@ -12,6 +12,13 @@ class Familiare extends Model
 
     protected $table = 'familiares';
 
+    protected $fillable = [
+        'parentezco',
+         'email',
+         'residente_id',
+         'persona_id'
+    ];
+
     //relacion uno a muchos
     public function persona()
     {
