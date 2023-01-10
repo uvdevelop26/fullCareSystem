@@ -45,7 +45,10 @@
         <div :class="isUrl('empleados') ? 'text-white' : 'text-cyan-300 group-hover:text-white'">Admin. Empleados
         </div>
         </Link>
-        <Link class="block pt-2 pl-2">Planilla de Sueldos</Link>
+        <Link class="block pt-2 pl-2" href="/sueldos">
+        <div :class="isUrl('sueldos') ? 'text-white' : 'text-cyan-300 group-hover:text-white'">Sueldos
+        </div>
+        </Link>
         <Link class="block pt-2 pl-2">Jornadas de Trabajo</Link>
         <Link class="block pt-2 pl-2">Permisos</Link>
         <Link class="block pt-2 pl-2">Gráfico de Turnos</Link>

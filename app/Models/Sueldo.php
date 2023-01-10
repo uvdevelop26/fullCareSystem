@@ -11,8 +11,15 @@ class Sueldo extends Model
 
     protected $table = 'sueldos';
 
-    public function empleados()
+    protected $fillable = [
+        'monto',
+        'categoria',
+        'observacion',
+        'empleado_id'
+    ];
+
+    public function empleado()
     {
-        return $this->hasMany(Empleado::class);
+        return $this->belongsTo(Empleado::class);
     }
 }

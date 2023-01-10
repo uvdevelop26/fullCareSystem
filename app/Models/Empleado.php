@@ -16,7 +16,6 @@ class Empleado extends Model
         'email',
         'profesion',
         'seccion_id',
-        'sueldo_id',
         'persona_id'
     ];
 
@@ -26,9 +25,9 @@ class Empleado extends Model
         return $this->belongsTo(Persona::class);
     }
 
-    public function sueldo()
+    public function sueldos()
     {
-        return $this->belongsTo(Sueldo::class);
+        return $this->hasMany(Sueldo::class);
     }
 
     public function seccion()

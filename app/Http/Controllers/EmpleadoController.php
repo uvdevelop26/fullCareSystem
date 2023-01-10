@@ -15,7 +15,7 @@ class EmpleadoController extends Controller
     public function index()
     {
         return Inertia::render('Empleados/Index', [
-            'empleados' => Empleado::with('persona.ciudade', 'seccion', 'sueldo')
+            'empleados' => Empleado::with('persona.ciudade', 'seccion')
                 ->orderBy('id', 'desc')
                 ->paginate(8)
         ]);
@@ -45,7 +45,6 @@ class EmpleadoController extends Controller
             'email' => 'required',
             'profesion' => 'required',
             'seccion_id' => 'required',
-            'sueldo_id' => 'required',
         ]);
 
         $persona = Persona::create([
@@ -65,7 +64,6 @@ class EmpleadoController extends Controller
             'email' => $request['email'],
             'profesion' => $request['profesion'],
             'seccion_id' => $request['seccion_id'],
-            'sueldo_id' => $request['sueldo_id'],
             'persona_id' => $persona->id
 
         ]);
@@ -110,7 +108,6 @@ class EmpleadoController extends Controller
             'email' => 'required',
             'profesion' => 'required',
             'seccion_id' => 'required',
-            'sueldo_id' => 'required',
         ]);
 
         $empleado = Empleado::find($id);
@@ -119,7 +116,6 @@ class EmpleadoController extends Controller
         $empleado->email = $request['email'];
         $empleado->profesion = $request['profesion'];
         $empleado->seccion_id = $request['seccion_id'];
-        $empleado->sueldo_id = $request['sueldo_id'];
         if ($empleado->save()) {
             $persona = Persona::find($request->id);
             $persona = Persona::where('id', $request->id)->first();

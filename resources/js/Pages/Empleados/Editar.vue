@@ -38,8 +38,6 @@
                         class="pb-7 pr-6 w-full lg:w-1/2" :id="profesion" name="profesion" :error="errors.profesion" />
                     <text-input v-model="empleados.seccion_id" type="text" label="Sección"
                         class="pb-7 pr-6 w-full lg:w-1/2" :id="seccion" name="seccion" :error="errors.seccion_id" />
-                    <text-input v-model="empleados.sueldo_id" type="text" label="Sueldo"
-                        class="pb-7 pr-6 w-full lg:w-1/2" :id="sueldo_id" name="sueldo" :error="errors.sueldo_id" />
                 </div>
                 <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
                     <Link type="button" :href="route('empleados.index')" class="btn-cancelar">
@@ -99,7 +97,6 @@ export default {
             email: props.empleado.email,
             profesion: props.empleado.profesion,
             seccion_id: props.empleado.seccion_id,
-            sueldo_id: props.empleado.sueldo_id
 
         });
 

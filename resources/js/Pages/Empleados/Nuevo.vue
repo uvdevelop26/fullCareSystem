@@ -39,9 +39,6 @@
                         class="pb-7 pr-6 w-full lg:w-1/2" :id="profesion" name="profesion" :error="errors.profesion" />
                     <text-input v-model="personas.seccion_id" type="text" label="Seccion"
                         class="pb-7 pr-6 w-full lg:w-1/2" :id="seccion_id" name="seccion" :error="errors.seccion_id" />
-                    <text-input v-model="personas.sueldo_id" type="text" label="Sueldo"
-                        class="pb-7 pr-6 w-full lg:w-1/2" :id="sueldo_id" name="sueldo" :error="errors.sueldo_id" />
-
                 </div>
                 <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
                     <Link type="button" :href="route('empleados.index')" class="btn-cancelar">
@@ -98,7 +95,7 @@ export default {
         const email = ref("");
         const profesion = ref("");
         const seccion_id = ref("");
-        const sueldo_id = ref("");
+
 
         const personas = useForm({
             nombres: "",
@@ -115,7 +112,7 @@ export default {
             email: "",
             profesion: "",
             seccion_id: "",
-            sueldo_id: "",
+           
 
             empleados: [],
         });
@@ -128,7 +125,6 @@ export default {
                 email: personas.email,
                 profesion: personas.profesion,
                 seccion_id: personas.seccion_id,
-                sueldo_id: personas.sueldo_id
             };
 
             personas.empleados.push(add);

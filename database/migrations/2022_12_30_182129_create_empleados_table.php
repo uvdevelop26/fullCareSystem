@@ -15,17 +15,11 @@ return new class extends Migration
             $table->string('email');
             $table->string('profesion', 200);
             $table->unsignedBigInteger('seccion_id')->nullable();
-            $table->unsignedBigInteger('sueldo_id')->nullable();
             $table->unsignedBigInteger('persona_id');
 
             $table->foreign('seccion_id')
                 ->references('id')
                 ->on('seccions')
-                ->onDelete('set null');
-
-            $table->foreign('sueldo_id')
-                ->references('id')
-                ->on('sueldos')
                 ->onDelete('set null');
 
             $table->foreign('persona_id')

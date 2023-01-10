@@ -24,8 +24,8 @@ class DatabaseSeeder extends Seeder
        Residente::factory(20)->create();
        Familiare::factory(20)->create();
        Seccion::factory(4)->create();
-       Sueldo::factory(5)->create();
        Empleado::factory(15)->create();
        Permiso::factory(10)->create();
+       Sueldo::factory(10)->create();
     }
 }

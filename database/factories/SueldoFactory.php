@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Empleado;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -13,10 +14,10 @@ class SueldoFactory extends Factory
     public function definition()
     {
         return [
-            'categoria' => $this->faker->word(),
             'monto' => $this->faker->randomDigit(),
-            'observacion' => $this->faker->sentence()
-
+            'categoria' => $this->faker->word(),
+            'observacion' => $this->faker->sentence(),
+            'empleado_id' => Empleado::all()->random()->id,
         ];
     }
 }

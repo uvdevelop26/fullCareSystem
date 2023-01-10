@@ -25,7 +25,6 @@
                         <th class="py-2 px-4">Email</th>
                         <th class="py-2 px-4">Profesion</th>
                         <th class="py-2 px-4">Sección</th>
-                        <th class="py-2 px-4">Sueldo</th>
                         <th class="py-2 px-4">Acciones</th>
                     </tr>
                 </thead>
@@ -70,9 +69,6 @@
                         </td>
                         <td class="border-t">
                             {{ empleado.seccion.nombre_seccion }}
-                        </td>
-                        <td class="border-t">
-                            {{ empleado.sueldo.monto }}
                         </td>
                         <td class="border-t py-2">
                             <Link class="inline-block px-2 py-2 mx-1 bg-gray-100 rounded-full"
