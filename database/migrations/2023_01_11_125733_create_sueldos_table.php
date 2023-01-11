@@ -16,8 +16,13 @@ return new class extends Migration
         Schema::create('sueldos', function (Blueprint $table) {
             $table->id();
             $table->string('categoria', 100);
-            $table->double('monto', 8,2);
+            $table->double('monto', 8, 2);
             $table->string('observacion');
+            $table->unsignedBigInteger('empleado_id')->nullable();
+            $table->foreign('empleado_id')
+                ->references('id')
+                ->on('empleados')
+                ->onDelete('set null');
             $table->timestamps();
         });
     }

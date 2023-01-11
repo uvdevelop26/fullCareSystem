@@ -30,7 +30,7 @@
                         <template #default>
                             <div class="group flex items-center cursor-pointer select-none">
                                 <div class="mr-1 text-gray-700 group-hover:text-cyan-600 focus:text-cyan-600 whitespace-nowrap">
-                                    <span>{{ $page.props.user.name }}</span>
+                                    <span>{{ $page.props.user.username }}</span>
                                     <span class="hidden md:inline">&nbsp; apellido</span>
                                 </div>
                                 <icon class="w-5 h-5 fill-gray-700 group-hover:fill-cyan-600 focus:fill-cyan-600" name="cheveron-down" />

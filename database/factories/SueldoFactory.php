@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Empleado;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -15,7 +16,8 @@ class SueldoFactory extends Factory
         return [
             'categoria' => $this->faker->word(),
             'monto' => $this->faker->randomDigit(),
-            'observacion' => $this->faker->sentence()
+            'observacion' => $this->faker->sentence(),
+            'empleado_id' => Empleado::all()->random()->id,
 
         ];
     }

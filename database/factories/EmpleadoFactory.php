@@ -19,7 +19,6 @@ class EmpleadoFactory extends Factory
             'email' => $this->faker->email(),
             'profesion' => $this->faker->jobTitle(),
             'seccion_id' => Seccion::all()->random()->id,
-            'sueldo_id' => Sueldo::all()->random()->id,
             'persona_id' => Persona::all()->random()->id,
         ];
     }
