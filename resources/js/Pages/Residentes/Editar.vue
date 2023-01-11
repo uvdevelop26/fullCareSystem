@@ -69,8 +69,9 @@
                         class="pb-8 pr-6 w-full lg:w-1/2"
                         label="Sexo"
                         :error="errors.sexo"
+                        v-model="residentes.sexo"
                     >
-                        <option :value="residentes.sexo" />
+                        <option :value="null" />
                         <!-- :value="persona.sexo" -->
                         <option value="Femenino">Femenino</option>
                         <option value="Masculino">Masculino</option>
@@ -86,15 +87,20 @@
                         :error="errors.direccion"
                     />
                     <!-- v-model="persona.direccion" -->
-                    <text-input
+                    <select-input
                         v-model="residentes.ciudade_id"
-                        type="text"
+                        class="pb-8 pr-6 w-full lg:w-1/2"
                         label="Ciudad"
-                        class="pb-7 pr-6 w-full lg:w-1/2"
-                        :id="ciudad"
-                        name="ciudade_id"
                         :error="errors.ciudade_id"
-                    />
+                    >
+                        <option :value="null" />
+                        <option v-for="ciudade in ciudades" 
+                        :value="ciudade.id"
+                       >
+                        {{ciudade.nombre_ciudad}}
+                    </option>
+                        
+                    </select-input>
                     <!-- v-model="persona.ciudade_id" -->
                     <text-input
                         v-model="residentes.foto"
@@ -117,15 +123,15 @@
                     />
                     <!-- v-model="residente[0].fecha_ingreso" -->
                     <select-input
+                        v-model="residentes.estado"
                         class="pb-8 pr-6 w-full lg:w-1/2"
                         label="Estado"
                         :error="errors.estado"
                     >
-                        <option :value="residentes.estado" />
+                        <option :value="null" />
                         <option value="Activo">Activo</option>
-                        <option value="Inactivo">
-                            Inactivo</option> 
-                        </select-input
+                        <option value="Inactivo">Inactivo</option>
+                    </select-input>
                     ><!-- v-model="residente[0].estado" -->
                 </div>
                 <div
@@ -172,6 +178,7 @@ export default {
     props: {
         residente: Object,
         persona: Object,
+        ciudades: Object,
         errors: Object,
     },
 

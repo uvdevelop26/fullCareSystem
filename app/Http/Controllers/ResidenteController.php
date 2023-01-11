@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ciudade;
 use App\Models\Persona;
 use App\Models\Residente;
 use Illuminate\Http\Request;
@@ -40,21 +41,22 @@ class ResidenteController extends Controller
 
     public function create()
     {
-        return Inertia::render('Residentes/Nuevos');
+        $ciudades = Ciudade::all();
+        return Inertia::render('Residentes/Nuevos', ['ciudades' => $ciudades]);
     }
 
 
     public function store(Request $request)
     {
         $request->validate([
-            'nombres' => 'required',
-            'apellidos' => 'required',
-            'ci_numero' => 'required',
+            'nombres' =>  ['required', 'max:100'],
+            'apellidos' => ['required', 'max:100'],
+            'ci_numero' => ['nullable', 'max:100'],
             'fecha_nacimiento' => 'required',
-            'telefono' => 'required',
+            'telefono' => ['nullable', 'max:30'],
             'edad' => 'required',
             'sexo' => 'required',
-            'direccion' => 'required',
+            'direccion' => ['required', 'max:200'],
             'ciudade_id' => 'required',
             'fecha_ingreso' => 'required',
             'estado' => 'required',
@@ -97,13 +99,14 @@ class ResidenteController extends Controller
     {
 
         $persona = Persona::find($residente->persona_id);
-
+        $ciudades = Ciudade::all();
 
         return Inertia::render(
             'Residentes/Editar',
             [
                 'residente' => $residente,
-                'persona' => $persona
+                'persona' => $persona,
+                'ciudades' => $ciudades
             ]
         );
 
@@ -122,14 +125,14 @@ class ResidenteController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nombres' => 'required',
-            'apellidos' => 'required',
-            'ci_numero' => 'required',
+            'nombres' =>  ['required', 'max:100'],
+            'apellidos' => ['required', 'max:100'],
+            'ci_numero' => ['nullable', 'max:100'],
             'fecha_nacimiento' => 'required',
-            'telefono' => 'required',
+            'telefono' => ['nullable', 'max:30'],
             'edad' => 'required',
             'sexo' => 'required',
-            'direccion' => 'required',
+            'direccion' => ['required', 'max:200'],
             'ciudade_id' => 'required',
             'fecha_ingreso' => 'required',
             'estado' => 'required',

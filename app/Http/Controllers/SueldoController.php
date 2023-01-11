@@ -30,9 +30,9 @@ class SueldoController extends Controller
     {
         $request->validate([
             'monto' => 'required',
-            'categoria' => 'required',
-            'observacion' => 'required',
-            'empleado_id' => 'required'
+            'categoria' => ['required', 'max:200'],
+            'observacion' => ['required', 'max:300'],
+            'empleado_id' => 'nullable'
         ]);
 
         Sueldo::create([
@@ -67,15 +67,14 @@ class SueldoController extends Controller
     {
         $request->validate([
             'monto' => 'required',
-            'categoria' => 'required',
-            'observacion' => 'required',
-            'empleado_id' => 'required'
+            'categoria' => ['required', 'max:200'],
+            'observacion' => ['required', 'max:300'],
+            'empleado_id' => 'nullable'
         ]);
 
         $sueldo->update($request->all());
 
         return Redirect::route('sueldos.index')->with('success', 'Sueldo Creado');
-       
     }
 
 

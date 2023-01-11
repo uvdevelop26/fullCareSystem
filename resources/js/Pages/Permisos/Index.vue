@@ -1,11 +1,11 @@
 <template>
     <div>
-        <Head title="Sueldos" />
-        <h1 class="mb-7 text-3xl font-bold text-cyan-600">Planilla de Sueldos</h1>
-        <div class="flex items-center justify-between mb-6">
 
-            <Link class="btn-nuevo" type="button" :href="route('sueldos.create')">
-            <span class="text-white font-bold">Nuevo Sueldo</span>
+        <Head title="Permisos" />
+        <h1 class="mb-7 text-3xl font-bold text-cyan-600">Permisos</h1>
+        <div class="flex items-center justify-between mb-6">
+            <Link class="btn-nuevo" type="button" :href="route('permisos.create')">
+            <span class="text-white font-bold">Nuevo Permiso</span>
             </Link>
         </div>
         <div class="bg-white rounded-md shadow overflow-x-auto">
@@ -14,49 +14,43 @@
                     <tr class="text-center text-sm uppercase">
                         <th class="py-3 px-4">Nombres</th>
                         <th class="py-3 px-4">Apellidos</th>
-                        <th class="py-3 px-4">Monto</th>
-                        <th class="py-3 px-4">Categoria</th>
-                        <th class="py-3 px-4">Observacion</th>
+                        <th class="py-3 px-4">Fecha</th>
+                        <th class="py-3 px-4">Justificación</th>
                         <th class="py-3 px-4">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="sueldo in sueldos.data" :key="sueldo.id"
+                    <tr v-for="permiso in permisos.data" :key="permiso.id"
                         class="text-center text-sm text-gray-600 hover:bg-gray-100" :class="{}">
                         <td class="border-t py-3">
-                            {{ sueldo.empleado.persona.nombres }}
+                            {{ permiso.empleado.persona.nombres }}
                         </td>
                         <td class="border-t py-3">
-                            {{ sueldo.empleado.persona.apellidos }}
+                            {{ permiso.empleado.persona.apellidos }}
                         </td>
                         <td class="border-t py-3">
-                            {{ sueldo.monto }}
+                            {{ permiso.fecha_permiso }}
                         </td>
                         <td class="border-t py-3">
-                            {{ sueldo.categoria }}
+                            {{ permiso.justificacion }}
                         </td>
-                        <td class="border-t py-3">
-                            {{ sueldo.observacion }}
-                        </td>
-
                         <td class="border-t py-3">
                             <Link class="mx-1 inline-block"
-                                :href="route('sueldos.edit', sueldo.id)">
+                                :href="route('permisos.edit', permiso.id)">
                             <icon name="edit" class="w-4 h-4 fill-gray-600 hover:fill-cyan-800" />
                             </Link>
                             <button class="mx-1"
-                                @click="eliminarSueldo(sueldo)">
+                                @click="eliminarPermiso(permiso)">
                                 <icon name="delete" class="w-4 h-4 fill-gray-600 hover:fill-cyan-800" />
                             </button>
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <pagination class="mt-6" :links="sueldos.links" />
+            <pagination class="mt-6" :links="permisos.links" />
         </div>
     </div>
 </template>
-
 <script>
 import Layout from '../../Shared/Layout.vue'
 import { Head, Link } from '@inertiajs/inertia-vue3'
@@ -76,23 +70,21 @@ export default {
     layout: Layout,
 
     props: {
-        sueldos: Object
+        permisos: Object
     },
 
     setup(props) {
 
-        const eliminarSueldo = (data) => {
+        const eliminarPermiso = (data) => {
             data._method = "DELETE";
-            Inertia.post("/sueldos/" + data.id, data);
+            Inertia.post("/permisos/" + data.id, data);
         };
 
 
 
         return {
-            eliminarSueldo
+            eliminarPermiso
         }
     }
-
 }
-
 </script>

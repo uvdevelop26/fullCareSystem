@@ -11,6 +11,12 @@ class Permiso extends Model
 
     protected $table = 'permisos';
 
+    protected $fillable =  [
+        'fecha_permiso',
+        'justificacion',
+        'empleado_id'
+    ];
+
     public function empleado()
     {
         return $this->belongsTo(Empleado::class);

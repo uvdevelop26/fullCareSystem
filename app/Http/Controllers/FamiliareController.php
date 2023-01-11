@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ciudade;
 use App\Models\Familiare;
 use App\Models\Persona;
 use Illuminate\Http\Request;
@@ -31,7 +32,8 @@ class FamiliareController extends Controller
 
     public function create()
     {
-        return Inertia::render('Familiares/Nuevo');
+        $ciudades = Ciudade::all();
+        return Inertia::render('Familiares/Nuevo', ['ciudades' => $ciudades]);
     }
 
 
@@ -39,18 +41,18 @@ class FamiliareController extends Controller
     {
         $request->validate([
 
-            'nombres' => 'required',
-            'apellidos' => 'required',
-            'ci_numero' => 'required',
+            'nombres' =>  ['required', 'max:100'],
+            'apellidos' => ['required', 'max:100'],
+            'ci_numero' => ['nullable', 'max:100'],
             'fecha_nacimiento' => 'required',
-            'telefono' => 'required',
+            'telefono' => ['nullable', 'max:30'],
             'edad' => 'required',
             'sexo' => 'required',
-            'direccion' => 'required',
+            'direccion' => ['required', 'max:200'],
             'ciudade_id' => 'required',
             'parentezco' => 'required',
-            'email' => 'required',
-            'residente_id' => 'required'
+            'email' => ['required', 'max:100', 'email'],
+            'residente_id' => 'nullable'
 
         ]);
 
@@ -84,11 +86,13 @@ class FamiliareController extends Controller
 
     public function edit(Familiare $familiare)
     {
+        $ciudades = Ciudade::all();
         $persona = Persona::find($familiare->persona_id);
 
         return Inertia::render('Familiares/Editar', [
             'familiare' => $familiare,
             'persona' => $persona,
+            'ciudades' => $ciudades
         ]);
     }
 
@@ -97,18 +101,18 @@ class FamiliareController extends Controller
     {
         $request->validate([
 
-            'nombres' => 'required',
-            'apellidos' => 'required',
-            'ci_numero' => 'required',
+            'nombres' =>  ['required', 'max:100'],
+            'apellidos' => ['required', 'max:100'],
+            'ci_numero' => ['nullable', 'max:100'],
             'fecha_nacimiento' => 'required',
-            'telefono' => 'required',
+            'telefono' => ['nullable', 'max:30'],
             'edad' => 'required',
             'sexo' => 'required',
-            'direccion' => 'required',
+            'direccion' => ['required', 'max:200'],
             'ciudade_id' => 'required',
             'parentezco' => 'required',
-            'email' => 'required',
-            'residente_id' => 'required'
+            'email' => ['required', 'max:100', 'email'],
+            'residente_id' => 'nullable'
 
         ]);
 
@@ -144,7 +148,5 @@ class FamiliareController extends Controller
         $persona->delete();
 
         return Redirect::route('familiares.index')->with('success', 'Familiar Eliminado');
-
-        
     }
 }

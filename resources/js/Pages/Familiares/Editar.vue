@@ -19,17 +19,24 @@
                         class="pb-7 pr-6 w-full lg:w-1/2" :id="telefono" name="telefono" :error="errors.telefono" />
                     <text-input v-model="familiares.edad" type="number" label="edad" class="pb-7 pr-6 w-full lg:w-1/2"
                         :id="edad" name="edad" :error="errors.edad" />
-                    <select-input class="pb-8 pr-6 w-full lg:w-1/2" label="Sexo" :error="errors.sexo">
-                        <option :value="familiares.sexo" />
+                    <select-input v-model="familiares.sexo" class="pb-8 pr-6 w-full lg:w-1/2" label="Sexo"
+                        :error="errors.sexo">
+                        <option :value="null" />
                         <option value="Femenino">Femenino</option>
                         <option value="Masculino">Masculino</option>
                     </select-input>
                     <text-input v-model="familiares.direccion" type="text" label="Direccion"
                         class="pb-7 pr-6 w-full lg:w-1/2" :id="direccion" name="direccion" :error="errors.direccion" />
-                    <text-input v-model="familiares.ciudade_id" type="text" label="Ciudad"
-                        class="pb-7 pr-6 w-full lg:w-1/2" :id="ciudad" name="ciudade_id" :error="errors.ciudade_id" />
+                    <select-input v-model="familiares.ciudade_id" class="pb-8 pr-6 w-full lg:w-1/2" label="Ciudad"
+                        :error="errors.ciudade_id">
+                        <option :value="null" />
+                        <option v-for="ciudade in ciudades" :value="ciudade.id">
+                            {{ ciudade.nombre_ciudad }}
+                        </option>
+                    </select-input>
 
-                    <select-input v-model="familiares.parentezco" class="pb-8 pr-6 w-full lg:w-1/2" label="Parentezco" :error="errors.parentezco">
+                    <select-input v-model="familiares.parentezco" class="pb-8 pr-6 w-full lg:w-1/2" label="Parentezco"
+                        :error="errors.parentezco">
                         <option :value="familiares.parentezco" />
                         <option value="Hijo">Hijo/a</option>
                         <option value="Hermano/a">Hermano/a</option>
@@ -78,6 +85,7 @@ export default {
         familiare: Object,
         persona: Object,
         errors: Object,
+        ciudades: Object
     },
 
     layout: Layout,

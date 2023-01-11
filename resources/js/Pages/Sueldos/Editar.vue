@@ -16,7 +16,7 @@
                         <option value="R3">R3</option>
                     </select-input>
                     <text-input v-model="sueldos.observacion" type="text" label="Observacion"
-                        class="pb-7 pr-6 w-full lg:w-1/2" :id="observacion" name="observacion" :error="observacion" />
+                        class="pb-7 pr-6 w-full lg:w-1/2" :id="observacion" name="observacion" :error="errors.observacion" />
                     <text-input v-model="sueldos.empleado_id" type="text" label="Empleado"
                         class="pb-7 pr-6 w-full lg:w-1/2" :id="empleado_id" name="empleado_id"
                         :error="errors.empleado_id" />

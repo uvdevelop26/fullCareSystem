@@ -27,9 +27,13 @@
                     </select-input>
                     <text-input v-model="personas.direccion" type="text" label="Direccion/Compañia"
                         class="pb-7 pr-6 w-full lg:w-1/2" :id="direccion" name="direccion" :error="errors.direccion" />
-                    <text-input v-model="personas.ciudade_id" type="text" label="Ciudad"
-                        class="pb-7 pr-6 w-full lg:w-1/2" :id="ciudade_id" name="ciudade_id"
-                        :error="errors.ciudade_id" />
+                    <select-input v-model="personas.ciudade_id" class="pb-8 pr-6 w-full lg:w-1/2" label="Ciudad"
+                        :error="errors.ciudade_id">
+                        <option :value="null" />
+                        <option v-for="ciudade in ciudades" :value="ciudade.id">
+                            {{ ciudade.nombre_ciudad }}
+                        </option>
+                    </select-input>
                     <text-input v-model="personas.fecha_ingreso" type="date" label="Fecha Ingreso"
                         class="pb-7 pr-6 w-full lg:w-1/2" :id="fecha_ingreso" name="fecha_ingreso"
                         :error="errors.fecha_ingreso" />
@@ -37,8 +41,13 @@
                         :id="email" name="email" :error="errors.email" />
                     <text-input v-model="personas.profesion" type="text" label="Profesion"
                         class="pb-7 pr-6 w-full lg:w-1/2" :id="profesion" name="profesion" :error="errors.profesion" />
-                    <text-input v-model="personas.seccion_id" type="text" label="Seccion"
-                        class="pb-7 pr-6 w-full lg:w-1/2" :id="seccion_id" name="seccion" :error="errors.seccion_id" />
+                    <select-input v-model="personas.seccion_id" class="pb-8 pr-6 w-full lg:w-1/2" label="Seccion"
+                        :error="errors.seccion_id">
+                        <option :value="null" />
+                        <option v-for="seccion in seccions" :value="seccion.id">
+                            {{ seccion.nombre_seccion }}
+                        </option>
+                    </select-input>
                 </div>
                 <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
                     <Link type="button" :href="route('empleados.index')" class="btn-cancelar">
@@ -76,6 +85,8 @@ export default {
 
     props: {
         errors: Object,
+        ciudades: Object,
+        seccions: Object
     },
 
     setup() {
@@ -112,7 +123,7 @@ export default {
             email: "",
             profesion: "",
             seccion_id: "",
-           
+
 
             empleados: [],
         });

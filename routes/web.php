@@ -4,7 +4,7 @@ use App\Http\Controllers\EgresoController;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\FamiliareController;
 use App\Http\Controllers\IngresoController;
-use App\Http\Controllers\PersonaController;
+use App\Http\Controllers\PermisoController;
 use App\Http\Controllers\ResidenteController;
 use App\Http\Controllers\SueldoController;
 use Illuminate\Foundation\Application;
@@ -59,6 +59,10 @@ Route::resource('empleados', EmpleadoController::class)
 
 //Sueldos
 Route::resource('sueldos', SueldoController::class)
+    ->middleware('auth:sanctum', 'verified');
+
+//Permisos
+Route::resource('permisos', PermisoController::class)
     ->middleware('auth:sanctum', 'verified');
 
 //Ingresos

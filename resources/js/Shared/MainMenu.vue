@@ -46,11 +46,14 @@
         </div>
         </Link>
         <Link class="block pt-2 pl-2" href="/sueldos">
-        <div :class="isUrl('sueldos') ? 'text-white' : 'text-cyan-300 group-hover:text-white'">Sueldos
+        <div :class="isUrl('sueldos') ? 'text-white' : 'text-cyan-300 group-hover:text-white'">Planilla de Sueldos
         </div>
         </Link>
         <Link class="block pt-2 pl-2">Jornadas de Trabajo</Link>
-        <Link class="block pt-2 pl-2">Permisos</Link>
+        <Link class="block pt-2 pl-2" href="/permisos">
+        <div :class="isUrl('permisos') ? 'text-white' : 'text-cyan-300 group-hover:text-white'">Permisos
+        </div>
+        </Link>
         <Link class="block pt-2 pl-2">Gráfico de Turnos</Link>
       </div>
     </div>

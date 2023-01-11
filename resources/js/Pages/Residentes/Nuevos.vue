@@ -73,21 +73,27 @@
                     <text-input
                         v-model="personas.direccion"
                         type="text"
-                        label="Direccion/Compañia"
+                        label="Barrio/Compañia"
                         class="pb-7 pr-6 w-full lg:w-1/2"
                         :id="direccion"
                         name="edad"
                         :error="errors.direccion"
                     />
-                    <text-input
+
+                    <select-input
                         v-model="personas.ciudade_id"
-                        type="text"
+                        class="pb-8 pr-6 w-full lg:w-1/2"
                         label="Ciudad"
-                        class="pb-7 pr-6 w-full lg:w-1/2"
-                        :id="ciudade_id"
-                        name="ciudade_id"
                         :error="errors.ciudade_id"
-                    />
+                    >
+                        <option :value="null" />
+                        <option v-for="ciudade in ciudades" 
+                        :value="ciudade.id"
+                       >
+                        {{ciudade.nombre_ciudad}}
+                    </option>
+                        
+                    </select-input>
                     <text-input
                         v-model="personas.foto"
                         type="text"
@@ -165,6 +171,7 @@ export default {
 
     props: {
         errors: Object,
+        ciudades: Object
     },
 
     setup() {

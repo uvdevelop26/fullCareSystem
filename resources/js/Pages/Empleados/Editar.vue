@@ -19,15 +19,21 @@
                         class="pb-7 pr-6 w-full lg:w-1/2" :id="telefono" name="telefono" :error="errors.telefono" />
                     <text-input v-model="empleados.edad" type="number" label="edad" class="pb-7 pr-6 w-full lg:w-1/2"
                         :id="edad" name="edad" :error="errors.edad" />
-                    <select-input class="pb-8 pr-6 w-full lg:w-1/2" label="Sexo" :error="errors.sexo">
-                        <option :value="empleados.sexo" />
+                    <select-input v-model="empleados.sexo" class="pb-8 pr-6 w-full lg:w-1/2" label="Sexo"
+                        :error="errors.sexo">
+                        <option :value="null" />
                         <option value="Femenino">Femenino</option>
                         <option value="Masculino">Masculino</option>
                     </select-input>
                     <text-input v-model="empleados.direccion" type="text" label="Direccion"
                         class="pb-7 pr-6 w-full lg:w-1/2" :id="direccion" name="direccion" :error="errors.direccion" />
-                    <text-input v-model="empleados.ciudade_id" type="text" label="Ciudad"
-                        class="pb-7 pr-6 w-full lg:w-1/2" :id="ciudad" name="ciudade_id" :error="errors.ciudade_id" />
+                    <select-input v-model="empleados.ciudade_id" class="pb-8 pr-6 w-full lg:w-1/2" label="Ciudad"
+                        :error="errors.ciudade_id">
+                        <option :value="null" />
+                        <option v-for="ciudade in ciudades" :value="ciudade.id">
+                            {{ ciudade.nombre_ciudad }}
+                        </option>
+                    </select-input>
 
                     <text-input v-model="empleados.fecha_ingreso" type="date" label="Fecha Ingreso"
                         class="pb-7 pr-6 w-full lg:w-1/2" :id="fecha_ingreso" name="fecha_ingreso"
@@ -36,8 +42,13 @@
                         :id="email" name="email" :error="errors.email" />
                     <text-input v-model="empleados.profesion" type="text" label="Profesion"
                         class="pb-7 pr-6 w-full lg:w-1/2" :id="profesion" name="profesion" :error="errors.profesion" />
-                    <text-input v-model="empleados.seccion_id" type="text" label="Sección"
-                        class="pb-7 pr-6 w-full lg:w-1/2" :id="seccion" name="seccion" :error="errors.seccion_id" />
+                    <select-input v-model="empleados.seccion_id" class="pb-8 pr-6 w-full lg:w-1/2" label="Seccion"
+                        :error="errors.seccion_id">
+                        <option :value="null" />
+                        <option v-for="seccion in seccions" :value="seccion.id">
+                            {{ seccion.nombre_seccion }}
+                        </option>
+                    </select-input>
                 </div>
                 <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
                     <Link type="button" :href="route('empleados.index')" class="btn-cancelar">
@@ -73,6 +84,8 @@ export default {
         empleado: Object,
         persona: Object,
         errors: Object,
+        ciudades: Object,
+        seccions: Object
     },
 
     layout: Layout,

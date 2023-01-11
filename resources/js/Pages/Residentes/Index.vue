@@ -18,57 +18,57 @@
         <div class="bg-white rounded-md shadow overflow-x-auto">
             <table class="w-full whitespace-nowrap text-sm">
                 <thead>
-                    <tr class="text-center text-sm uppercase">
-                        <th class="py-2 px-4">Nombres</th>
-                        <th class="py-2 px-4">Apellidos</th>
-                        <th class="py-2 px-4">CI</th>
-                        <th class="py-2 px-4">Fecha Nacimiento</th>
-                        <th class="py-2 px-4">Teléfono</th>
-                        <th class="py-2 px-4">Edad</th>
-                        <th class="py-2 px-4">Sexo</th>
-                        <th class="py-2 px-4">Direccion</th>
-                        <th class="py-2 px-4">Ciudad</th>
-                        <th class="py-2 px-4">Foto</th>
-                        <th class="py-2 px-4">Fecha Ingreso</th>
-                        <th class="py-2 px-4">Estado</th>
-                        <th class="py-2 px-4">Acciones</th>
+                    <tr class="text-center text-sm text-cyan-800 uppercase">
+                        <th class="py-3 px-4">Nombres</th>
+                        <th class="py-3 px-4">Apellidos</th>
+                        <th class="py-3 px-4">CI</th>
+                        <th class="py-3 px-4">Fecha Nacimiento</th>
+                        <th class="py-3 px-4">Teléfono</th>
+                        <th class="py-3 px-4">Edad</th>
+                        <th class="py-3 px-4">Sexo</th>
+                        <th class="py-3 px-4">Direccion</th>
+                        <th class="py-3 px-4">Ciudad</th>
+                        <th class="py-3 px-4">Foto</th>
+                        <th class="py-3 px-4">Fecha Ingreso</th>
+                        <th class="py-3 px-4">Estado</th>
+                        <th class="py-3 px-4">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr
                         v-for="residente in residentes.data"
                         :key="residente.id"
-                        class="text-center text-sm text-gray-600 hover:bg-gray-50"
+                        class="text-center text-sm text-gray-600 hover:bg-gray-100"
                         :class="{}"
                     >
-                        <td class="border-t">
+                        <td class="border-t py-3">
                             {{ residente.persona.nombres }}
                         </td>
-                        <td class="border-t">
+                        <td class="border-t py-3">
                             {{ residente.persona.apellidos }}
                         </td>
-                        <td class="border-t">
+                        <td class="border-t py-3">
                             {{ residente.persona.ci_numero }}
                         </td>
-                        <td class="border-t">
+                        <td class="border-t py-3">
                             {{ residente.persona.fecha_nacimiento }}
                         </td>
-                        <td class="border-t">
+                        <td class="border-t py-3">
                             {{ residente.persona.telefono }}
                         </td>
-                        <td class="border-t">
+                        <td class="border-t py-3">
                             {{ residente.persona.edad }}
                         </td>
-                        <td class="border-t">
+                        <td class="border-t py-3">
                             {{ residente.persona.sexo }}
                         </td>
-                        <td class="border-t">
+                        <td class="border-t py-3">
                             {{ residente.persona.direccion }}
                         </td>
-                        <td class="border-t">
+                        <td class="border-t py-3">
                             {{ residente.persona.ciudade.nombre_ciudad }}
                         </td>
-                        <td class="border-t">
+                        <td class="border-t py-3">
                             <img
                                 src="{{ residente.foto }}"
                                 width="20"
@@ -76,29 +76,29 @@
                                 class="rounded-full border mx-auto"
                             />
                         </td>
-                        <td class="border-t">
+                        <td class="border-t py-3">
                             {{ residente.fecha_ingreso }}
                         </td>
-                        <td class="border-t">
+                        <td class="border-t py-3">
                             {{ residente.estado }}
                         </td>
-                        <td class="border-t py-2">
+                        <td class="border-t py-3">
                             <Link
-                                class="inline-block px-2 py-2 mx-1 bg-gray-100 rounded-full"
+                                class="mx-1 inline-block"
                                 :href="route('residentes.edit', residente.id)"
                             >
                                 <icon
                                     name="edit"
-                                    class="w-3 h-3 fill-gray-600"
+                                    class="w-4 h-4 fill-gray-600 hover:fill-cyan-800"
                                 />
                             </Link>
                             <button
-                                class="px-2 py-2 mx-1 my-0 bg-gray-100 rounded-full"
+                                class="mx-1"
                                 @click="eliminarResidente(residente)"
                             >
                                 <icon
                                     name="delete"
-                                    class="w-3 h-3 fill-gray-600"
+                                    class="w-4 h-4 fill-gray-600 hover:fill-cyan-800"
                                 />
                             </button>
                         </td>
@@ -118,7 +118,7 @@ import Pagination from "../../Shared/Pagination.vue";
 import { reactive } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import { pickBy } from "lodash";
-import { watchEffect, ref, defineProps } from "vue";
+import { watchEffect } from "vue";
 import TextInput from '../../Components/TextInput.vue'
 
 

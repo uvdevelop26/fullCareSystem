@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ciudade;
 use App\Models\Empleado;
 use App\Models\Persona;
+use App\Models\Seccion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Redis;
@@ -24,7 +26,12 @@ class EmpleadoController extends Controller
 
     public function create()
     {
-        return Inertia::render('Empleados/Nuevo');
+        $ciudades = Ciudade::all();
+        $seccions = Seccion::all();
+        return Inertia::render('Empleados/Nuevo', [
+            'ciudades' => $ciudades,
+            'seccions' => $seccions
+        ]);
     }
 
 
@@ -32,19 +39,19 @@ class EmpleadoController extends Controller
     {
         $request->validate([
 
-            'nombres' => 'required',
-            'apellidos' => 'required',
-            'ci_numero' => 'required',
+            'nombres' =>  ['required', 'max:100'],
+            'apellidos' => ['required', 'max:100'],
+            'ci_numero' => ['nullable', 'max:100'],
             'fecha_nacimiento' => 'required',
-            'telefono' => 'required',
+            'telefono' => ['nullable', 'max:30'],
             'edad' => 'required',
             'sexo' => 'required',
-            'direccion' => 'required',
+            'direccion' => ['required', 'max:200'],
             'ciudade_id' => 'required',
             'fecha_ingreso' => 'required',
-            'email' => 'required',
-            'profesion' => 'required',
-            'seccion_id' => 'required',
+            'email' => ['required', 'max:100', 'email'],
+            'profesion' => ['required', 'max:200'],
+            'seccion_id' => 'nullable',
         ]);
 
         $persona = Persona::create([
@@ -80,12 +87,16 @@ class EmpleadoController extends Controller
     public function edit(Empleado $empleado)
     {
         $persona = Persona::find($empleado->persona_id);
+        $ciudades = Ciudade::all();
+        $seccions = Seccion::all();
 
         return Inertia::render(
             'Empleados/Editar',
             [
                 'persona' => $persona,
-                'empleado' => $empleado
+                'empleado' => $empleado,
+                'ciudades' => $ciudades,
+                'seccions' => $seccions
             ]
         );
     }
@@ -95,19 +106,19 @@ class EmpleadoController extends Controller
     {
         $request->validate([
 
-            'nombres' => 'required',
-            'apellidos' => 'required',
-            'ci_numero' => 'required',
+            'nombres' =>  ['required', 'max:100'],
+            'apellidos' => ['required', 'max:100'],
+            'ci_numero' => ['nullable', 'max:100'],
             'fecha_nacimiento' => 'required',
-            'telefono' => 'required',
+            'telefono' => ['nullable', 'max:30'],
             'edad' => 'required',
             'sexo' => 'required',
-            'direccion' => 'required',
+            'direccion' => ['required', 'max:200'],
             'ciudade_id' => 'required',
             'fecha_ingreso' => 'required',
-            'email' => 'required',
-            'profesion' => 'required',
-            'seccion_id' => 'required',
+            'email' => ['required', 'max:100', 'email'],
+            'profesion' => ['required', 'max:200'],
+            'seccion_id' => 'nullable',
         ]);
 
         $empleado = Empleado::find($id);
