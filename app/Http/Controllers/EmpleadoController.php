@@ -19,7 +19,7 @@ class EmpleadoController extends Controller
         return Inertia::render('Empleados/Index', [
             'empleados' => Empleado::with('persona.ciudade', 'seccion')
                 ->orderBy('id', 'desc')
-                ->paginate(8)
+                ->paginate(10)
         ]);
     }
 

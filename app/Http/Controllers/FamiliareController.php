@@ -20,7 +20,7 @@ class FamiliareController extends Controller
         return Inertia::render('Familiares/Index', [
             'familiares' => Familiare::with('persona.ciudade', 'residente.persona')
                 ->orderBy('id', 'desc')
-                ->paginate(8)
+                ->paginate(10)
         ]);
 
 

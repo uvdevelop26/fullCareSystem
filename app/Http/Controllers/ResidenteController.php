@@ -34,7 +34,7 @@ class ResidenteController extends Controller
             'residentes' => Residente::filter($request->only($queries))
                 ->with('persona.ciudade')
                 ->orderBy('id', 'desc')
-                ->paginate(8)
+                ->paginate(10)
         ]);
     }
 

@@ -16,7 +16,7 @@ class SueldoController extends Controller
         return Inertia::render('Sueldos/Index', [
             'sueldos' => Sueldo::with('empleado.persona')
                 ->orderBy('id', 'desc')
-                ->paginate(8)
+                ->paginate(10)
         ]);
     }
 

@@ -15,7 +15,7 @@ class PermisoController extends Controller
         return Inertia::render('Permisos/Index', [
             'permisos' => Permiso::with('empleado.persona')
                 ->orderBy('id', 'desc')
-                ->paginate(5)
+                ->paginate(10)
         ]);
     }
 
