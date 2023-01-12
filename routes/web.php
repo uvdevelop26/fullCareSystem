@@ -7,6 +7,7 @@ use App\Http\Controllers\IngresoController;
 use App\Http\Controllers\PermisoController;
 use App\Http\Controllers\ResidenteController;
 use App\Http\Controllers\SueldoController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -63,6 +64,10 @@ Route::resource('sueldos', SueldoController::class)
 
 //Permisos
 Route::resource('permisos', PermisoController::class)
+    ->middleware('auth:sanctum', 'verified');
+
+//usuarios
+Route::resource('usuarios', UserController::class)
     ->middleware('auth:sanctum', 'verified');
 
 //Ingresos

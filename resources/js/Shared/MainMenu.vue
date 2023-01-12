@@ -68,7 +68,10 @@
           :class="isUrl('') ? 'fill-white' : 'fill-cyan-400 group-hover:fill-white'" />
       </div>
       <div v-if="isOpen3">
-        <Link class="block pt-2 pl-2">Admin. Usuarios</Link>
+        <Link class="block pt-2 pl-2" href="/usuarios">
+        <div :class="isUrl('usuarios') ? 'text-white' : 'text-cyan-300 group-hover:text-white'">Usuarios
+        </div>
+        </Link>
         <Link class="block pt-2 pl-2">Roles de Usuarios</Link>
       </div>
     </div>

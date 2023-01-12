@@ -18,15 +18,13 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var string[]
-     */
+
+    protected $table = 'users';
+
     protected $fillable = [
-        'name',
-        'email',
+        'username',
         'password',
+        'empleado_id'
     ];
 
     /**
@@ -58,4 +56,9 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class);
+    }
 }

@@ -39,4 +39,8 @@ class Empleado extends Model
     {
         return $this->hasMany(Permiso::class);
     }
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 }
