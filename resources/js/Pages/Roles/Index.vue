@@ -1,55 +1,42 @@
 <template>
     <div>
-        <Head title="Usuarios" />
-        <h1 class="mb-7 text-3xl font-bold text-cyan-600">Usuarios</h1>
+        <Head title="Roles" />
+        <h1 class="mb-7 text-3xl font-bold text-cyan-600">Roles</h1>
         <div class="flex items-center justify-between mb-6">
          
             <Link
                 class="btn-nuevo"
                 type="button"
-                :href="route('usuarios.create')"
+                :href="route('roles.create')"
             >
-                <span class="text-white font-bold">Nuevo Usuario</span>
+                <span class="text-white font-bold">Nuevo Rol</span>
             </Link>
         </div>
-        <div class="bg-white rounded-md shadow overflow-x-auto">
+        <div class="bg-white rounded-md shadow overflow-x-auto" >
             <table class="w-full whitespace-nowrap text-sm">
                 <thead>
                     <tr class="text-center text-sm uppercase">
-                        <th class="py-3 px-4">Nombres</th>
-                        <th class="py-3 px-4">Apellidos</th>
-                        <th class="py-3 px-4">Nombre Usuario</th>
-                        <th class="py-3 px-4">Email</th>
                         <th class="py-3 px-4">Rol</th>
-                        <th class="py-3 px-4">Acciones</th>
+                        <th class="py-3 px-4">Acciones</th> 
                     </tr>
                 </thead>
                 <tbody>
                     <tr
-                        v-for="user in users"
-                        :key="user.id"
+                        v-for="roles in role"
+                        :key="role.id"
                         class="text-center text-sm text-gray-600 hover:bg-gray-100"
                         :class="{}"
                     >
                         <td class="border-t py-3">
-                            {{ user.empleado.persona.nombres }}
+                            {{ role.name }}
                         </td>
-                        <td class="border-t py-3">
-                            {{ user.empleado.persona.apellidos }}
-                        </td>
-                        <td class="border-t py-3">
-                            {{ user.username }}
-                        </td>
-                        <td class="border-t py-3">
-                            {{ user.empleado.email }}
-                        </td>
-                        <td class="border-t py-3">
-                             <span v-for="role in roles" :key="role.id">{{ role.name }}</span>
-                        </td>
+                        
+    
                         <td class="border-t py-3">
                             <Link
                                 class="mx-1 inline-block"
-                                :href="route('usuarios.edit', user.id)"
+                                :href="route('roles.edit', role.id)"
+                          
                             >
                                 <icon
                                     name="edit"
@@ -58,7 +45,8 @@
                             </Link>
                             <button
                                 class="mx-1"
-                                @click="eliminarUsuario(user)"
+                                @click="eliminarRol(role)"
+                                
                             >
                                 <icon
                                     name="delete"
@@ -93,8 +81,7 @@ export default{
     layout: Layout,
 
     props:{
-        users: Object, 
-      
+        roles: Object
     },
 
     setup(props){

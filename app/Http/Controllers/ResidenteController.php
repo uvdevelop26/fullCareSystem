@@ -14,6 +14,14 @@ use function GuzzleHttp\Promise\all;
 
 class ResidenteController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:ver-residente | crear-residente | editar-residente | borrar-residente', ['only' => ['index']]);
+        $this->middleware('permission:crear-residente', ['only' => ['create', 'store']]);
+        $this->middleware('permission:editar-residente', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:borrar-residente', ['only' => ['destroy']]);
+    }
+
     public function index(Request $request)
     {
 

@@ -1,5 +1,6 @@
 <template>
     <div>
+
         <Head title="Usuarios" />
         <h1 class="mb-5 text-2xl font-bold text-cyan-900">Editar Usuario</h1>
         <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
@@ -12,6 +13,13 @@
                     <text-input v-model="users.empleado_id" type="text" label="Empleado"
                         class="pb-7 pr-6 w-full lg:w-1/2" :id="empleado_id" name="empleado_id"
                         :error="errors.empleado_id" />
+                    <select-input v-model="users.role_id" class="pb-8 pr-6 w-full lg:w-1/2" label="Roles"
+                        :error="errors.role_id">
+                        <option :value="null" />
+                        <option v-for="role in roles" :value="role.id">
+                            {{ role.name }}
+                        </option>
+                    </select-input>
                 </div>
                 <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
                     <Link type="button" :href="route('usuarios.index')" class="btn-cancelar">
@@ -44,7 +52,9 @@ export default {
     },
 
     props: {
-        user: Array,
+        user: Object,
+        roles: Object,
+        userRole: Object,
         errors: Object,
     },
 
@@ -53,10 +63,11 @@ export default {
     setup(props) {
         const users = useForm({
             _method: "PUT",
-            id: props.user[0].id,
-            username: props.user[0].username,
-            password: props.user[0].password,
-            empleado_id: props.user[0].empleado_id
+            id: props.user.id,
+            username: props.user.username,
+            password: props.user.password,
+            empleado_id: props.user.empleado_id,
+            role_id: props.user.role_id
         });
 
         const actualizarUsuario = () => {

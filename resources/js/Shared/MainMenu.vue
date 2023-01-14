@@ -72,7 +72,14 @@
         <div :class="isUrl('usuarios') ? 'text-white' : 'text-cyan-300 group-hover:text-white'">Usuarios
         </div>
         </Link>
-        <Link class="block pt-2 pl-2">Roles de Usuarios</Link>
+        <Link class="block pt-2 pl-2" href="/roles">
+        <div :class="isUrl('roles') ? 'text-white' : 'text-cyan-300 group-hover:text-white'">Roles
+        </div>
+        </Link>
+        <Link class="block pt-2 pl-2" href="/permissions">
+        <div :class="isUrl('permissions') ? 'text-white' : 'text-cyan-300 group-hover:text-white'">Permissions
+        </div>
+        </Link>
       </div>
     </div>
     <!-- Finanzas -->
