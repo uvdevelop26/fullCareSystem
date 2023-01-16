@@ -44,7 +44,7 @@
                             {{ user.empleado.email }}
                         </td>
                         <td class="border-t py-3">
-                             <span v-for="role in roles" :key="role.id">{{ role.name }}</span>
+                          
                         </td>
                         <td class="border-t py-3">
                             <Link
@@ -94,7 +94,7 @@ export default{
 
     props:{
         users: Object, 
-      
+    
     },
 
     setup(props){

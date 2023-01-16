@@ -2,17 +2,30 @@
 
 namespace App\Http\Controllers;
 
+
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
-use Spatie\Permission\Models\Role;
+//use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Arr;
 
 class UserController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('can:ver-usuario', ['only' => ['index', 'show']]);
+        $this->middleware('can:crear-usuario', ['only' => ['create', 'store']]);
+        $this->middleware('can:editar-usuario', ['only' => ['edit', 'update']]);
+        $this->middleware('can:borrar-usuario', ['only' => ['destroy']]);
+    }
+
+
 
     public function index()
     {
@@ -20,14 +33,20 @@ class UserController extends Controller
         return Inertia::render('Usuarios/Index', [
             'users' => User::with('empleado.persona')
                 ->orderBy('id', 'desc')
-                ->get()
+                ->get(),
+
+            'can' => [
+                'create' => Auth::user()->can('crear-usuario'),
+                'edit' => Auth::user()->can('editar-usuario'),
+                'delete' => Auth::user()->can('borrar-usuario'),
+            ]
         ]);
     }
 
 
     public function create()
     {
-        $roles = Role::pluck('name', 'name')->all();
+        $roles = Role::all();
 
         return Inertia::render('Usuarios/Nuevo', [
             'roles' => $roles
@@ -37,25 +56,20 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+       /*  $request->validate([
             'username' => 'required',
             'password' => 'required',
             'empleado_id' => 'required',
             'roles' => 'required'
-        ]);
+        ]); */
 
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
 
         $user = User::create($input);
-        $user->assignRole($request->input('roles'));
+        $user->assignRole($request->input('role_id'));
 
-        /* User::create([
-            'username' => $request['username'],
-            'password' => Hash::make($request['password']),
-            'empleado_id' => $request['empleado_id'],
-            
-        ]); */
+  
 
         return Redirect::route('usuarios.index')->with('success', 'Usuario Creado');
     }
@@ -70,7 +84,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        $roles = Role::pluck('name', 'name')->all();
+        $roles = Role::all();
         $userRole = $user->roles->pluck('name', 'name')->all();
 
         return Inertia::render(
@@ -86,12 +100,11 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate([
+        /* $request->validate([
             'username' => 'required',
-            'password' => 'same:confirm-password',
             'empleado_id' => 'required',
             'roles' => 'required'
-        ]);
+        ]); */
 
         $input = $request->all();
         if (!empty($input['password'])) {
@@ -100,20 +113,18 @@ class UserController extends Controller
             $input = Arr::except($input, array('password'));
         }
 
+      
+
         $user = User::find($id);
+
+
         $user->update($input);
 
         DB::table('model_has_roles')->where('model_id', $id)->delete();
 
         $user->assignRole($request->input('roles'));
 
-        /* $user = User::find($id);
-
-        $user->update([
-            'username' => $request['username'],
-            'password' => Hash::make($request['password']),
-            'empleado_id' => $request['empleado_id']
-        ]); */
+    
 
         return Redirect::route('usuarios.index')->with('success', 'Usuario Actualizado.');
     }
@@ -121,7 +132,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::find($id);
-        $user = User::where('id', $id);
+      //  $user = User::where('id', $id);
 
         $user->delete();
 

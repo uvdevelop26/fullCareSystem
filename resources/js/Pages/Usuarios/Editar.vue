@@ -7,14 +7,12 @@
             <form>
                 <div class="flex flex-wrap -mb-8 -mr-6 p-8">
                     <text-input v-model="users.username" type="text" label="Usuario" class="pb-7 pr-6 w-full lg:w-1/2"
-                        :id="username" name="username" :error="errors.username" />
+                        :id="username" name="username" />
                     <text-input v-model="users.password" type="password" label="Contraseña"
-                        class="pb-7 pr-6 w-full lg:w-1/2" :id="password" name="password" :error="errors.password" />
+                        class="pb-7 pr-6 w-full lg:w-1/2" :id="password" name="password" />
                     <text-input v-model="users.empleado_id" type="text" label="Empleado"
-                        class="pb-7 pr-6 w-full lg:w-1/2" :id="empleado_id" name="empleado_id"
-                        :error="errors.empleado_id" />
-                    <select-input v-model="users.role_id" class="pb-8 pr-6 w-full lg:w-1/2" label="Roles"
-                        :error="errors.role_id">
+                        class="pb-7 pr-6 w-full lg:w-1/2" :id="empleado_id" name="empleado_id" />
+                    <select-input v-model="users.role_id" class="pb-8 pr-6 w-full lg:w-1/2" label="Roles">
                         <option :value="null" />
                         <option v-for="role in roles" :value="role.id">
                             {{ role.name }}
@@ -55,7 +53,7 @@ export default {
         user: Object,
         roles: Object,
         userRole: Object,
-        errors: Object,
+
     },
 
     layout: Layout,
@@ -67,7 +65,7 @@ export default {
             username: props.user.username,
             password: props.user.password,
             empleado_id: props.user.empleado_id,
-            role_id: props.user.role_id
+            role_id: props.roles.role_id
         });
 
         const actualizarUsuario = () => {

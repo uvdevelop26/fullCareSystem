@@ -4,16 +4,20 @@
         <Head title="Usuarios" />
         <h1 class="mb-5 text-2xl font-bold text-cyan-900">Editar Rol</h1>
         <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
-            <form>
-                <div class="flex flex-wrap -mb-8 -mr-6 p-8">
+            <form @submit.prevent="roles.post(route('role.update', props.role.id))">
+
+                <div class="flex-wrap -mb-8 -mr-6 p-8">
                     <text-input v-model="roles.name" type="text" label="Rol" class="pb-7 pr-6 w-full lg:w-1/2"
-                        :id="name" name="name" :error="errors.name" />
+                        :id="name" name="name" />
 
                     <div class="flex-wrap -mb-8 -mr-6 p-8">
                         <div class="block">Permisos para este Rol</div>
-                        <label class="block" for="" v-for="permissio in permission" :key="permissio.id">
-                            <input type="checkbox"> {{ permissio.name }}
-                        </label>
+                        <div v-for="permission in permissions" :key="permission.id">
+                            <label for="">
+                                <input type="checkbox" name="permissions[]" value="{{ permission.id }}" id="">
+                                {{ permission.name }}
+                            </label>
+                        </div>
 
                     </div>
                 </div>
@@ -49,17 +53,19 @@ export default {
 
     props: {
         role: Object,
-        permission: Object,
-        rolePermission: Object,
+        permissions: Object,
+        roleHasPermissions: Object,
     },
 
     layout: Layout,
 
     setup(props) {
+
         const roles = useForm({
             _method: "PUT",
             id: props.role.id,
-            name: props.role.name
+            name: props.role.name,
+            permissions: props.roleHasPermissions
         });
 
         const actualizarRol = () => {

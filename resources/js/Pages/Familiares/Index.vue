@@ -72,7 +72,7 @@
                             {{ familiare.email }}
                         </td>
                         <td class="border-t py-3">
-                            {{ familiare.residente_id }}
+                            {{ familiare.residente.persona.nombres }}
                         </td>
                         <td class="border-t py-3">
                             <Link

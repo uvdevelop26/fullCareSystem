@@ -8,6 +8,7 @@ use App\Http\Controllers\PermisoController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ResidenteController;
 use App\Http\Controllers\RolController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SueldoController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
@@ -72,13 +73,14 @@ Route::resource('permisos', PermisoController::class)
 Route::resource('usuarios', UserController::class)
     ->middleware('auth:sanctum', 'verified');
 
+//Roles
+Route::resource('roles', RoleController::class)
+    ->middleware('auth:sanctum', 'verified');
+
 //Premissions
 Route::resource('permissions', PermissionController::class)
     ->middleware('auth:sanctum', 'verified');
 
-//Roles
-Route::resource('roles', RolController::class)
-    ->middleware('auth:sanctum', 'verified');
 
 //Ingresos
 Route::resource('ingresos', IngresoController::class)
