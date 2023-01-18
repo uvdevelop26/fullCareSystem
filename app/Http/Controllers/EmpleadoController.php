@@ -5,21 +5,41 @@ namespace App\Http\Controllers;
 use App\Models\Ciudade;
 use App\Models\Empleado;
 use App\Models\Persona;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Seccion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Redis;
 use Inertia\Inertia;
 
+use PhpParser\Node\Stmt\Return_;
+
+
+use \Illuminate\Auth\Middleware\Authorize;
+
 class EmpleadoController extends Controller
 {
+    
+    function __construct()
+    {
+        $this->middleware('permission:ver-empleado', ['only' => ['index']]);
+        $this->middleware('permission:crear-empleado', ['only' => ['create', 'store']]);
+        $this->middleware('permission:editar-empleado', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:borrar-empleado', ['only' => ['destroy']]);
+    }
+
 
     public function index()
     {
         return Inertia::render('Empleados/Index', [
             'empleados' => Empleado::with('persona.ciudade', 'seccion')
                 ->orderBy('id', 'desc')
-                ->paginate(10)
+                ->paginate(10),
+                'can' => [
+                    'create' => Auth::user()->can('crear-empleado'),
+                    'edit' => Auth::user()->can('editar-empleado'),
+                    'delete' => Auth::user()->can('borrar-empleado'),
+                ]
         ]);
     }
 

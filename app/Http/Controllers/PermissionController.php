@@ -31,7 +31,7 @@ class PermissionController extends Controller
     public function index()
     {
 
-        $permissions = Permission::orderBy('id', 'desc')->get();
+        $permissions = Permission::orderBy('id', 'desc')->paginate(8);
         return Inertia::render('Permissions/Index',[
                 'permissions' => $permissions,
                 'can' => [
@@ -84,6 +84,6 @@ class PermissionController extends Controller
     {
         $permission->delete();
 
-        return Redirect::route('permisos.index')->with('success', 'Permiso Eliminado');
+        return Redirect::route('permissions.index')->with('success', 'Permiso Eliminado');
     }
 }

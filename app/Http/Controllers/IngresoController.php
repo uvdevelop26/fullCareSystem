@@ -12,8 +12,14 @@ class IngresoController extends Controller
 
     public function index()
     {
-        $ingresos = Ingreso::all();
-        return Inertia::render('Ingresos/Index', ['ingresos' => $ingresos]);
+        $ingresos = Ingreso::orderBy('id', 'desc')->paginate(8);
+
+        return Inertia::render(
+            'Ingresos/Index',
+            [
+                'ingresos' => $ingresos
+            ]
+        );
     }
 
 
@@ -24,15 +30,24 @@ class IngresoController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'tipo_ingreso',
-            'detalle',
-            'fecha_ingreso',
-            'monto'
+
+        $request->validate(
+            [
+                'tipo' => 'required',
+                'ingreso_fecha' => 'required',
+                'monto' => 'required'
+            ]
+        );
+
+        Ingreso::create([
+            'tipo' => $request->tipo,
+            'subtipo' => $request->subtipo,
+            'detalle' => $request->detalle,
+            'ingreso_fecha' => $request->ingreso_fecha,
+            'monto' => $request->monto
         ]);
 
-        Ingreso::create($request->all());
-        return Redirect::route('ingresos.index');
+        return Redirect::route('ingresos.index')->with('success', 'Ingreso Registrado');
     }
 
     public function show($id)
@@ -43,20 +58,28 @@ class IngresoController extends Controller
 
     public function edit(Ingreso $ingreso)
     {
+
         return Inertia::render('Ingresos/Editar', ['ingreso' => $ingreso]);
     }
 
 
     public function update(Request $request, Ingreso $ingreso)
     {
+        $request->validate(
+            [
+                'tipo' => 'required',
+                'ingreso_fecha' => 'required',
+                'monto' => 'required'
+            ]
+        );
         $ingreso->update($request->all());
-        return Redirect::route('ingresos.index');
+        return Redirect::route('ingresos.index')->with('success', 'Ingreso Actualizado');
     }
 
 
     public function destroy(Ingreso $ingreso)
     {
         $ingreso->delete();
-        return Redirect::route('ingresos.index');
+        return Redirect::route('ingresos.index')->with('success', 'Ingreso Eliminado');
     }
 }

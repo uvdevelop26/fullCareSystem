@@ -36,11 +36,39 @@ class PermissionSeeder extends Seeder
             'editar-residente',
             'borrar-residente',
 
+            //tabla familiares
+            'ver-familiare',
+            'crear-familiare',
+            'editar-familiare',
+            'borrar-familiare',
+
+            //tabla Empleados
+            'ver-empleado',
+            'crear-empleado',
+            'editar-empleado',
+            'borrar-empleado',
+
+            //tabla sueldos
+            'ver-sueldo',
+            'crear-sueldo',
+            'editar-sueldo',
+            'borrar-sueldo',
+
+            //tabla permisos
+
+            'ver-permiso',
+            'crear-permiso',
+            'editar-permiso',
+            'borrar-permiso',
+
             //tabla usuarios
             'ver-usuario',
             'crear-usuario',
             'editar-usuario',
-            'borrar-usuario'
+            'borrar-usuario',
+
+
+
         ];
 
 
@@ -54,10 +82,8 @@ class PermissionSeeder extends Seeder
 
         //ROL 1 -- ENFERMERO -- LE DA SOLO ESTOS PERMISOS
         $role1 = Role::create(['name' => 'enfermero']);
-        $role1->givePermissionTo('ver-permisos');
-        $role1->givePermissionTo('ver-rol');
-        $role1->givePermissionTo('ver-residente');
-        $role1->givePermissionTo('ver-usuario');
+        $role1->givePermissionTo('ver-empleado');
+        $role1->givePermissionTo('ver-sueldo');
 
         //ROL 2 -- ADMIN -- LE DA TODOS LOS PERMISOS
         $role2 = Role::create(['name' => 'admin']);

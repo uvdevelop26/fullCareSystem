@@ -4,7 +4,7 @@
         <h1 class="mb-7 text-3xl font-bold text-cyan-600">Planilla de Sueldos</h1>
         <div class="flex items-center justify-between mb-6">
 
-            <Link class="btn-nuevo" type="button" :href="route('sueldos.create')">
+            <Link class="btn-nuevo" type="button" :href="route('sueldos.create')" v-if="can.create">
             <span class="text-white font-bold">Nuevo Sueldo</span>
             </Link>
         </div>
@@ -17,7 +17,7 @@
                         <th class="py-3 px-4">Monto</th>
                         <th class="py-3 px-4">Categoria</th>
                         <th class="py-3 px-4">Observacion</th>
-                        <th class="py-3 px-4">Acciones</th>
+                        <th class="py-3 px-4"  v-if="can.edit || can.delete">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,13 +39,13 @@
                             {{ sueldo.observacion }}
                         </td>
 
-                        <td class="border-t py-3">
+                        <td class="border-t py-3" v-if="can.edit || can.delete">
                             <Link class="mx-1 inline-block"
-                                :href="route('sueldos.edit', sueldo.id)">
+                                :href="route('sueldos.edit', sueldo.id)" v-if="can.edit">
                             <icon name="edit" class="w-4 h-4 fill-gray-600 hover:fill-cyan-800" />
                             </Link>
                             <button class="mx-1"
-                                @click="eliminarSueldo(sueldo)">
+                                @click="eliminarSueldo(sueldo)" v-if="can.delete">
                                 <icon name="delete" class="w-4 h-4 fill-gray-600 hover:fill-cyan-800" />
                             </button>
                         </td>
@@ -76,7 +76,8 @@ export default {
     layout: Layout,
 
     props: {
-        sueldos: Object
+        sueldos: Object,
+        can: Object
     },
 
     setup(props) {

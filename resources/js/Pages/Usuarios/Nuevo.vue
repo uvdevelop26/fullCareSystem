@@ -7,12 +7,12 @@
             <form>
                 <div class="flex flex-wrap -mb-8 -mr-6 p-8">
                     <text-input v-model="users.username" type="text" label="Nombre de Usuario"
-                        class="pb-7 pr-6 w-full lg:w-1/2" :id="username" name="username" />
+                        class="pb-7 pr-6 w-full lg:w-1/2" :id="username" name="username" :error="errors.username" />
                     <text-input v-model="users.password" type="password" label="Password"
-                        class="pb-7 pr-6 w-full lg:w-1/2" :id="password" name="password"  />
+                        class="pb-7 pr-6 w-full lg:w-1/2" :id="password" name="password" :error="errors.password"  />
                     <text-input v-model="users.empleado_id" type="text" label="Empleado"
-                        class="pb-7 pr-6 w-full lg:w-1/2" :id="empleado_id" name="empleado_id" />
-                    <select-input  class="pb-8 pr-6 w-full lg:w-1/2" label="Roles" v-model="users.role_id">
+                        class="pb-7 pr-6 w-full lg:w-1/2" :id="empleado_id" :error="errors.empleado_id" name="empleado_id" />
+                    <select-input  class="pb-8 pr-6 w-full lg:w-1/2" label="Roles" v-model="users.role_id" :error="errors.role_id">
                         <option :value="null" />
                         <option v-for="role in roles" :value="role.id">
                             {{ role.name }}
@@ -55,7 +55,8 @@ export default {
     layout: Layout,
 
     props: {
-        roles: Object
+        roles: Object,
+        errors: Object
     },
 
     setup() {

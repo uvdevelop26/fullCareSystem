@@ -12,10 +12,19 @@ use Inertia\Inertia;
 class FamiliareController extends Controller
 {
 
+    function __construct()
+    {
+        $this->middleware('permission:ver-familiare | crear-familiare | editar-familiare | borrar-familiare', ['only' => ['index']]);
+        $this->middleware('permission:crear-familiare', ['only' => ['create', 'store']]);
+        $this->middleware('permission:editar-familiare', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:borrar-familiare', ['only' => ['destroy']]);
+    }
+
+
     public function index()
     {
 
-        // $familiares = Persona::with('familiares')->get();
+
 
         return Inertia::render('Familiares/Index', [
             'familiares' => Familiare::with('persona.ciudade', 'residente.persona')

@@ -54,7 +54,7 @@
         <div :class="isUrl('permisos') ? 'text-white' : 'text-cyan-300 group-hover:text-white'">Permisos
         </div>
         </Link>
-        <Link class="block pt-2 pl-2">Gráfico de Turnos</Link>
+        <!-- <Link class="block pt-2 pl-2">Gráfico de Turnos</Link> -->
       </div>
     </div>
     <!-- Usuarios -->
@@ -100,7 +100,7 @@
         <div :class="isUrl('egresos') ? 'text-white' : 'text-cyan-300 group-hover:text-white'">Egresos</div>
         </Link>
         <Link class="block pt-2 pl-2">Movimientos Diarios</Link>
-        <Link class="block pt-2 pl-2">Gráfico de Finanzas</Link>
+       <!--  <Link class="block pt-2 pl-2">Gráfico de Finanzas</Link> -->
       </div>
     </div>
     <!-- Salud -->

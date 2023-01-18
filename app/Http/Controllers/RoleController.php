@@ -52,17 +52,15 @@ class RoleController extends Controller
 
     public function store(Request $request)
     {
+
+     
         $role = Role::create([
             'name' => $request->input('name')
         ]);
 
         $role->syncPermissions($request->input('permissions'));
 
-        //si los permisos no están nulos se lo asignamos al rol creado
-      /*   if (!empty($request->permissions)) {
-
-            $role->givePermissionTo($request->permissions);
-        } */
+     
 
         return Redirect::route('roles.index')->with('success', 'Rol Creado');
     }

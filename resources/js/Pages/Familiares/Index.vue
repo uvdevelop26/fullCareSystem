@@ -93,6 +93,15 @@
                                     class="w-4 h-4 fill-gray-600 hover:fill-cyan-800"
                                 />
                             </button>
+                            <Link
+                                class="mx-1 inline-block"
+                                :href="route('emails.index', familiare)"
+                            >
+                                <icon
+                                    name="email"
+                                    class="w-4 h-4 fill-gray-600 hover:fill-cyan-800"
+                                />
+                            </Link>
                         </td>
                     </tr>
                 </tbody>

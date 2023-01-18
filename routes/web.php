@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EgresoController;
 use App\Http\Controllers\EmpleadoController;
+use App\Http\Controllers\EnviarCorreoController;
 use App\Http\Controllers\FamiliareController;
 use App\Http\Controllers\IngresoController;
 use App\Http\Controllers\PermisoController;
@@ -57,6 +58,10 @@ Route::resource('residentes', ResidenteController::class)
 //Familiares
 Route::resource('familiares', FamiliareController::class)
     ->middleware('auth:sanctum', 'verified');
+
+//Correo Electrónico
+Route::resource('emails', EnviarCorreoController::class)
+    ->middleware('auth:sanctum', 'verified');;
 //Empleados
 Route::resource('empleados', EmpleadoController::class)
     ->middleware('auth:sanctum', 'verified');

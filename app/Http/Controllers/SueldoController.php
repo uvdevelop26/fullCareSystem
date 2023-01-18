@@ -7,16 +7,29 @@ use App\Models\Sueldo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
 
 class SueldoController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('can:ver-sueldo', ['only' => ['index', 'show']]);
+        $this->middleware('can:crear-sueldo', ['only' => ['create', 'store']]);
+        $this->middleware('can:editar-sueldo', ['only' => ['edit', 'update']]);
+        $this->middleware('can:borrar-sueldo', ['only' => ['destroy']]);
+    }
 
     public function index()
     {
         return Inertia::render('Sueldos/Index', [
             'sueldos' => Sueldo::with('empleado.persona')
                 ->orderBy('id', 'desc')
-                ->paginate(10)
+                ->paginate(10),
+            'can' => [
+                'create' => Auth::user()->can('crear-permisos'),
+                'edit' => Auth::user()->can('editar-permisos'),
+                'delete' => Auth::user()->can('borrar-permisos'),
+            ]
         ]);
     }
 

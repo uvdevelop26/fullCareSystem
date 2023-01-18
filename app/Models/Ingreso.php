@@ -9,5 +9,13 @@ class Ingreso extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['tipo_ingreso', 'detalle', 'fecha_ingreso', 'monto'];
+    protected $table = 'ingresos';
+
+    protected $fillable = [
+        'tipo',
+        'subtipo',
+        'detalle',
+        'ingreso_fecha',
+        'monto'
+    ];
 }

@@ -9,11 +9,13 @@ class Egreso extends Model
 {
     use HasFactory;
 
+    protected $table = 'egresos';
+
     protected $fillable = [
-        'tipo_egreso',
+        'tipo',
         'subtipo',
         'detalle',
-        'fecha_egreso',
+        'egreso_fecha',
         'monto'
     ];
 }

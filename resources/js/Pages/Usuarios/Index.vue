@@ -94,6 +94,7 @@ export default{
 
     props:{
         users: Object, 
+   
     
     },
 

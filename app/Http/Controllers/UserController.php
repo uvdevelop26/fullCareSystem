@@ -56,12 +56,12 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-       /*  $request->validate([
+        $request->validate([
             'username' => 'required',
             'password' => 'required',
             'empleado_id' => 'required',
-            'roles' => 'required'
-        ]); */
+            'role_id' => 'required'
+        ]);
 
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
@@ -100,11 +100,11 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
-        /* $request->validate([
+        $request->validate([
             'username' => 'required',
             'empleado_id' => 'required',
-            'roles' => 'required'
-        ]); */
+            'role_id' => 'required'
+        ]);
 
         $input = $request->all();
         if (!empty($input['password'])) {
@@ -122,7 +122,7 @@ class UserController extends Controller
 
         DB::table('model_has_roles')->where('model_id', $id)->delete();
 
-        $user->assignRole($request->input('roles'));
+        $user->assignRole($request->input('role_id'));
 
     
 

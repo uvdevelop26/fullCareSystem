@@ -1,18 +1,18 @@
 <template>
     <div>
-
-        <Head title="Usuarios" />
+        {{ user }}
+        <!-- <Head title="Usuarios" />
         <h1 class="mb-5 text-2xl font-bold text-cyan-900">Editar Usuario</h1>
         <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
             <form>
                 <div class="flex flex-wrap -mb-8 -mr-6 p-8">
                     <text-input v-model="users.username" type="text" label="Usuario" class="pb-7 pr-6 w-full lg:w-1/2"
-                        :id="username" name="username" />
+                        :id="username" name="username" :error="errors.username" />
                     <text-input v-model="users.password" type="password" label="Contraseña"
-                        class="pb-7 pr-6 w-full lg:w-1/2" :id="password" name="password" />
+                        class="pb-7 pr-6 w-full lg:w-1/2" :id="password" name="password" :error="errors.password" />
                     <text-input v-model="users.empleado_id" type="text" label="Empleado"
-                        class="pb-7 pr-6 w-full lg:w-1/2" :id="empleado_id" name="empleado_id" />
-                    <select-input v-model="users.role_id" class="pb-8 pr-6 w-full lg:w-1/2" label="Roles">
+                        class="pb-7 pr-6 w-full lg:w-1/2" :id="empleado_id" name="empleado_id" :error="errors.empleado_id" />
+                    <select-input v-model="users.role_id" class="pb-8 pr-6 w-full lg:w-1/2" label="Roles" :error="errors.role_id">
                         <option :value="null" />
                         <option v-for="role in roles" :value="role.id">
                             {{ role.name }}
@@ -28,7 +28,7 @@
                     </button>
                 </div>
             </form>
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -53,6 +53,7 @@ export default {
         user: Object,
         roles: Object,
         userRole: Object,
+        errors: Object
 
     },
 
@@ -65,7 +66,7 @@ export default {
             username: props.user.username,
             password: props.user.password,
             empleado_id: props.user.empleado_id,
-            role_id: props.roles.role_id
+            role_id: props.user.roles.id
         });
 
         const actualizarUsuario = () => {
