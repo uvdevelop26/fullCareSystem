@@ -11,6 +11,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ResidenteController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SueldoController;
+use App\Http\Controllers\TurnoController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -70,6 +71,10 @@ Route::resource('empleados', EmpleadoController::class)
 Route::resource('sueldos', SueldoController::class)
     ->middleware('auth:sanctum', 'verified');
 
+//Jornadas de Trabajo
+Route::resource('turnos', TurnoController::class)
+    ->middleware('auth:sanctum', 'verified');
+
 //Permisos
 Route::resource('permisos', PermisoController::class)
     ->middleware('auth:sanctum', 'verified');
@@ -97,3 +102,5 @@ Route::resource('egresos', EgresoController::class)
 //historial clinico
 Route::resource('historiales', HistorialeController::class)
     ->middleware('auth:sanctum', 'verified');
+
+//Medicamentos

@@ -75,7 +75,7 @@ class RoleController extends Controller
     public function edit(Role $role)
     {
         $permissions = Permission::all();
-        //Este no se que hace
+        //los permisos que tiene este rol en forma de array puro
         $roleHasPermissions = array_column(json_decode($role->permissions, true), 'id');
 
         return Inertia::render('Roles/Editar', [

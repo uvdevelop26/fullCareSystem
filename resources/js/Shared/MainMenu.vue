@@ -49,7 +49,10 @@
         <div :class="isUrl('sueldos') ? 'text-white' : 'text-cyan-300 group-hover:text-white'">Planilla de Sueldos
         </div>
         </Link>
-        <Link class="block pt-2 pl-2">Jornadas de Trabajo</Link>
+        <Link class="block pt-2 pl-2" href="/turnos">
+        <div :class="isUrl('turnos') ? 'text-white' : 'text-cyan-300 group-hover:text-white'">Jornadas de Trabajo
+        </div>
+        </Link>
         <Link class="block pt-2 pl-2" href="/permisos">
         <div :class="isUrl('permisos') ? 'text-white' : 'text-cyan-300 group-hover:text-white'">Permisos
         </div>
@@ -115,7 +118,8 @@
       </div>
       <div v-if="isOpen5" class="transition-all duration-100">
         <Link class="block pt-2 pl-2" href="/historiales">
-        <div :class="isUrl('historiales') ? 'text-white' : 'text-cyan-300 group-hover:text-white'">Historial Clínico</div>
+        <div :class="isUrl('historiales') ? 'text-white' : 'text-cyan-300 group-hover:text-white'">Historial Clínico
+        </div>
         </Link>
         <Link class="block pt-2 pl-2">Medicamentos</Link>
         <Link class="block pt-2 pl-2">Suministros y Control</Link>

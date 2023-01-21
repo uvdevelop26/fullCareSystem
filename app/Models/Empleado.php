@@ -43,4 +43,8 @@ class Empleado extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    public function turnos(){
+        return $this->hasMany(Turno::class);
+    }
 }
