@@ -4,11 +4,11 @@ use App\Http\Controllers\EgresoController;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\EnviarCorreoController;
 use App\Http\Controllers\FamiliareController;
+use App\Http\Controllers\HistorialeController;
 use App\Http\Controllers\IngresoController;
 use App\Http\Controllers\PermisoController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ResidenteController;
-use App\Http\Controllers\RolController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SueldoController;
 use App\Http\Controllers\UserController;
@@ -86,11 +86,14 @@ Route::resource('roles', RoleController::class)
 Route::resource('permissions', PermissionController::class)
     ->middleware('auth:sanctum', 'verified');
 
-
 //Ingresos
 Route::resource('ingresos', IngresoController::class)
     ->middleware('auth:sanctum', 'verified');
 
 //Egresos
 Route::resource('egresos', EgresoController::class)
+    ->middleware('auth:sanctum', 'verified');
+
+//historial clinico
+Route::resource('historiales', HistorialeController::class)
     ->middleware('auth:sanctum', 'verified');

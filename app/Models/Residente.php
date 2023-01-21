@@ -23,7 +23,7 @@ class Residente extends Model
     $query->when($filters['search'] ?? null, function ($query, $search) {
       $query->where(function ($query) use ($search) {
         $query->where('id', 'like', '%' . $search . '%');
-          /* ->orWhere('nombres', 'like', '%' . $search . '%'); */
+        /* ->orWhere('nombres', 'like', '%' . $search . '%'); */
       });
     });
   }
@@ -37,5 +37,10 @@ class Residente extends Model
   public function familiares()
   {
     return $this->hasMany(Familiare::class);
+  }
+
+  public function historiales()
+  {
+    return $this->hasMany(Historiale::class);
   }
 }

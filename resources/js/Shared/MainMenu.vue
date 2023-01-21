@@ -100,7 +100,7 @@
         <div :class="isUrl('egresos') ? 'text-white' : 'text-cyan-300 group-hover:text-white'">Egresos</div>
         </Link>
         <Link class="block pt-2 pl-2">Movimientos Diarios</Link>
-       <!--  <Link class="block pt-2 pl-2">Gráfico de Finanzas</Link> -->
+        <!--  <Link class="block pt-2 pl-2">Gráfico de Finanzas</Link> -->
       </div>
     </div>
     <!-- Salud -->
@@ -114,7 +114,9 @@
           :class="isUrl('') ? 'fill-white' : 'fill-cyan-400 group-hover:fill-white'" />
       </div>
       <div v-if="isOpen5" class="transition-all duration-100">
-        <Link class="block pt-2 pl-2">Historial Clínico</Link>
+        <Link class="block pt-2 pl-2" href="/historiales">
+        <div :class="isUrl('historiales') ? 'text-white' : 'text-cyan-300 group-hover:text-white'">Historial Clínico</div>
+        </Link>
         <Link class="block pt-2 pl-2">Medicamentos</Link>
         <Link class="block pt-2 pl-2">Suministros y Control</Link>
       </div>

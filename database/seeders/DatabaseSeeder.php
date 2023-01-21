@@ -4,9 +4,13 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Caracteristica;
 use App\Models\Egreso;
 use App\Models\Empleado;
+use App\Models\Enfermedade;
 use App\Models\Familiare;
+use App\Models\Historiale;
+use App\Models\Incidencia;
 use App\Models\Ingreso;
 use App\Models\Permiso;
 use App\Models\Persona;
@@ -31,5 +35,9 @@ class DatabaseSeeder extends Seeder
        Sueldo::factory(20)->create();
        Ingreso::factory(20)->create();
        Egreso::factory(20)->create();
+       Enfermedade::factory(20)->create();
+       Incidencia::factory(20)->create();
+       Caracteristica::factory(20)->create();
+       Historiale::factory(20)->create();
     }
 }
