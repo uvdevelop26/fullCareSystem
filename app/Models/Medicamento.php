@@ -9,9 +9,25 @@ class Medicamento extends Model
 {
     use HasFactory;
 
-    //relacion muchos a muchos
-    public function residentes()
+    protected $table = 'medicamentos';
+
+    protected $fillable = [
+        'nombre_medicamento',
+        'via_suministro',
+        'fecha_vencimiento',
+        'dosis_cantidad',
+        'stock',
+        'residente_id'
+    ];
+
+
+    public function residente()
     {
-        return $this->belongsToMany('App\Models\Residente');
+        return $this->belongsTo(Residente::class);
+    }
+
+    public function horarios()
+    {
+        return $this->belongsToMany(Horario::class);
     }
 }

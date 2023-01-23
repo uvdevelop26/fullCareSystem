@@ -43,4 +43,9 @@ class Residente extends Model
   {
     return $this->hasMany(Historiale::class);
   }
+
+  public function medicamentos()
+  {
+    return $this->hasMany(Medicamento::class);
+  }
 }

@@ -49,8 +49,7 @@ class TurnoController extends Controller
     public function edit(Turno $turno)
     {
         $dias = Dia::get();
-     //   $turnosHasDias = $turno->dias;
-
+        
         $turnosHasDias = array_column(json_decode($turno->dias, true), 'id');
 
         return Inertia::render('Turnos/Editar', [

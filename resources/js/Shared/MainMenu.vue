@@ -121,7 +121,10 @@
         <div :class="isUrl('historiales') ? 'text-white' : 'text-cyan-300 group-hover:text-white'">Historial Clínico
         </div>
         </Link>
-        <Link class="block pt-2 pl-2">Medicamentos</Link>
+        <Link class="block pt-2 pl-2" href="/medicamentos">
+        <div :class="isUrl('medicamentos') ? 'text-white' : 'text-cyan-300 group-hover:text-white'"> Medicametos
+        </div>
+        </Link>
         <Link class="block pt-2 pl-2">Suministros y Control</Link>
       </div>
     </div>

@@ -6,6 +6,7 @@ use App\Http\Controllers\EnviarCorreoController;
 use App\Http\Controllers\FamiliareController;
 use App\Http\Controllers\HistorialeController;
 use App\Http\Controllers\IngresoController;
+use App\Http\Controllers\MedicamentoController;
 use App\Http\Controllers\PermisoController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ResidenteController;
@@ -104,3 +105,5 @@ Route::resource('historiales', HistorialeController::class)
     ->middleware('auth:sanctum', 'verified');
 
 //Medicamentos
+Route::resource('medicamentos', MedicamentoController::class)
+    ->middleware('auth:sanctum', 'verified');
