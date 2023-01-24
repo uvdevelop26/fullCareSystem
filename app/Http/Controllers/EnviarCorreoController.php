@@ -12,6 +12,10 @@ use Inertia\Inertia;
 
 class EnviarCorreoController extends Controller
 {
+    public function __invoke(Request $request)
+    {
+        
+    }
 
     public function index(Request $request)
     {
@@ -29,9 +33,9 @@ class EnviarCorreoController extends Controller
 
     public function store(Request $request)
     {
-       /*  $correo = new InformacionesMailable;
+    
 
-        Mail::to($request['email'])->send($correo); */
+        Mail::to($request['email'])->send(new InformacionesMailable($request['email'], $request['mensaje']));
 
         return Redirect::route('familiares.index')->with('success', 'Correo Enviado con éxito');
         

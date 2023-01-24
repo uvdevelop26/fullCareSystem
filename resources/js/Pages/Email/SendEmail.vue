@@ -1,15 +1,14 @@
-<template>
-
+    <template>
     <Head title="Enviar Correo" />
     <h1 class="mb-7 text-3xl font-bold text-cyan-600">Enviar Correo Electrónico</h1>
     <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
         <form>
             <div class="-mb-8 -mr-6 p-8">
                 <text-input type="text" v-model="form.email" label="Correo Electrónico"
-                    class="pb-7 pr-6 w-full lg:w-1/2" :id="telefono" name="telefono" />
+                    class="pb-7 pr-6 w-full lg:w-1/2" :id="telefono" name="email"  />
                     <label for="mensaje" class="block py-2">Mensaje:</label>
                 <textarea class="rounded lg:w-1/2 border-cyan-800" name="mensaje" id="mensaje" cols="30" rows="10"
-                    v-model="form.mensaje">
+                    v-model="form.mensaje" >
                 </textarea>
 
             </div>
@@ -46,7 +45,8 @@ export default {
     },
 
     props: {
-        email: String
+        email: String,
+      
     },
 
     setup(props) {

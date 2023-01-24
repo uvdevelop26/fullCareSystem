@@ -13,9 +13,9 @@ class InformacionesMailable extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $subject = "Reporte Sobre Interno";
+   // public $subject = "Reporte Sobre Interno";
 
-    public function __construct()
+    public function __construct(public String $email, public String $mensaje)
     {
         //
     }
@@ -31,9 +31,9 @@ class InformacionesMailable extends Mailable
     
     public function content()
     {
-      /*   return new Content(
-            view: 'Email/SendEmail.vue',
-        ); */
+        return new Content(
+            view: 'email.correo',
+        );
     }
 
    

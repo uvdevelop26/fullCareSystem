@@ -63,7 +63,7 @@ Route::resource('familiares', FamiliareController::class)
 
 //Correo Electrónico
 Route::resource('emails', EnviarCorreoController::class)
-    ->middleware('auth:sanctum', 'verified');;
+    ->middleware('auth:sanctum', 'verified');
 //Empleados
 Route::resource('empleados', EmpleadoController::class)
     ->middleware('auth:sanctum', 'verified');
