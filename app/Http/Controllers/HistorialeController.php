@@ -9,9 +9,17 @@ use App\Models\Incidencia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
 
 class HistorialeController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('can:ver-historial', ['only' => ['index', 'show']]);
+        $this->middleware('can:crear-historial', ['only' => ['create', 'store']]);
+        $this->middleware('can:editar-historial', ['only' => ['edit', 'update']]);
+        $this->middleware('can:borrar-historial', ['only' => ['destroy']]);
+    }
 
     public function index()
     {
@@ -19,7 +27,14 @@ class HistorialeController extends Controller
             ->orderBy('id', 'desc')
             ->paginate(8);
 
-        return Inertia::render('Historiales/Index', ['historiales' => $historiales]);
+        return Inertia::render('Historiales/Index', [
+            'historiales' => $historiales,
+            'can' => [
+                'create' => Auth::user()->can('crear-historial'),
+                'edit' => Auth::user()->can('editar-historial'),
+                'delete' => Auth::user()->can('borrar-historial'),
+            ]
+        ]);
     }
 
 

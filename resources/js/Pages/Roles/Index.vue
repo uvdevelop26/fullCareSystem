@@ -4,7 +4,6 @@
         <Head title="Roles" />
         <h1 class="mb-7 text-3xl font-bold text-cyan-600">Roles</h1>
         <div class="flex items-center justify-between mb-6">
-
             <Link class="btn-nuevo" type="button" :href="route('roles.create')" v-if="can.create">
             <span class="text-white font-bold">Nuevo Rol</span>
             </Link>

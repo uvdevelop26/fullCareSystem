@@ -7,8 +7,8 @@
             <form>
                 <div class="flex flex-wrap -mb-8 -mr-6 p-8">
                     <text-input v-model="form.empleado_id" type="text" label="Empleado"
-                        class="pb-7 pr-6 w-full lg:w-1/2" :id="empleado_id" name="empleado_id" />
-                    <select-input v-model="form.turno" class="pb-8 pr-6 w-full lg:w-1/2" label="Turno">
+                        class="pb-7 pr-6 w-full lg:w-1/2" :id="empleado_id" name="empleado_id" :error="errors.empleado_id"/>
+                    <select-input v-model="form.turno" class="pb-8 pr-6 w-full lg:w-1/2" label="Turno" :error="errors.empleado_id">
                         <option :value="null" />
                         <option value="Mañana">Mañana</option>
                         <option value="Tarde">Tarde</option>
@@ -20,7 +20,7 @@
                     <div class="block py-2 font-bold text-center text-2xl text-cyan-700">Dias Laborales</div>
                     <div v-for="dia in dias" :key="dia.id">
                         <div class="flex items-center gap-1">
-                            <input type="checkbox" :id="dia.dias" :value="dia.id" v-model="form.dias">
+                            <input type="checkbox" :id="dia.dias" :value="dia.id" v-model="form.dias" :error="errors.dias">
                             <label :for="dia.dias">{{ dia.dias }}</label>
                         </div>
                     </div>
@@ -61,7 +61,8 @@ export default {
     layout: Layout,
 
     props: {
-        dias: Object
+        dias: Object,
+        errors: Object
     },
 
     setup() {

@@ -16,26 +16,16 @@ class ResidenteController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:ver-residente | crear-residente | editar-residente | borrar-residente', ['only' => ['index']]);
-        $this->middleware('permission:crear-residente', ['only' => ['create', 'store']]);
-        $this->middleware('permission:editar-residente', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:borrar-residente', ['only' => ['destroy']]);
+        $this->middleware('can:ver-residente', ['only' => ['index']]);
+        $this->middleware('can:crear-residente', ['only' => ['create', 'store']]);
+        $this->middleware('can:editar-residente', ['only' => ['edit', 'update']]);
+        $this->middleware('can:borrar-residente', ['only' => ['destroy']]);
     }
 
     public function index(Request $request)
     {
 
         $queries = ['search'];
-
-        /* return Inertia::render('Residentes/Index', [
-            'residentes' => Residente::query()
-                ->when($request->input('search'), function ($query, $search) {
-                    $query->where('id', 'like', "%{$search}%");
-                })
-                ->with('persona.ciudade')
-                ->orderBy('id', 'desc')
-                ->paginate(8)
-        ]); */
 
         return Inertia::render('Residentes/Index', [
             'filters' => $request->all($queries),

@@ -4,7 +4,7 @@
         <Head title="Crear Roles" />
         <h1 class="mb-5 text-2xl font-bold text-cyan-900">Crear Rol</h1>
         <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
-            <form @submit.prevent="roles.post(route('roles.store'))">
+            <form>
                 <div class="flex flex-wrap -mb-8 -mr-6 p-8">
                     <text-input v-model="roles.name" type="text" label="Nombre del Rol"
                         class="pb-7 pr-6 w-full lg:w-1/2" :id="name" name="name" />
@@ -23,7 +23,7 @@
                     <span class="text-white font-bold">Cancelar</span>
                     </Link>
 
-                    <button class="btn-indigo mx-1" type="submit">
+                    <button class="btn-indigo mx-1" type="submit" @click.prevent="guardar()">
                         Crear Rol
                     </button>
                 </div>
@@ -72,16 +72,17 @@ export default {
 
 
 
-        /* const guardar = async () => {
+        const guardar = async () => {
 
             console.log(roles);
 
             roles.post(route("roles.store"), roles);
 
-        }; */
+        };
 
         return {
-            roles
+            roles,
+            guardar
         };
     },
 };

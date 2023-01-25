@@ -22,10 +22,10 @@ class EmpleadoController extends Controller
     
     function __construct()
     {
-        $this->middleware('permission:ver-empleado', ['only' => ['index']]);
-        $this->middleware('permission:crear-empleado', ['only' => ['create', 'store']]);
-        $this->middleware('permission:editar-empleado', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:borrar-empleado', ['only' => ['destroy']]);
+        $this->middleware('can:ver-empleado', ['only' => ['index']]);
+        $this->middleware('can:crear-empleado', ['only' => ['create', 'store']]);
+        $this->middleware('can:editar-empleado', ['only' => ['edit', 'update']]);
+        $this->middleware('can:borrar-empleado', ['only' => ['destroy']]);
     }
 
 

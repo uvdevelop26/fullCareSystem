@@ -74,6 +74,7 @@ class RoleController extends Controller
 
     public function edit(Role $role)
     {
+  
         $permissions = Permission::all();
         //los permisos que tiene este rol en forma de array puro
         $roleHasPermissions = array_column(json_decode($role->permissions, true), 'id');
@@ -85,15 +86,25 @@ class RoleController extends Controller
         ]);
     }
 
-    public function update(Request $request, Role $role)
+    public function update(Request $request, $id)
     {
-        $role->update($request->all());
+
+        $role = Role::find($id);
+
+        $role->update([
+            'name' => $request['name'],
+        ]);
+
+        $role->syncPermissions($request['permissions']);
+
+        return Redirect::route('roles.index')->with('success', 'Rol Actualizado');
+       /*  $role->update($request->all());
         //almacenamos en la variable permissions el array de permisos si es que tiene
         $permissions = $request->permissions ?? [];
 
         $role->syncPermissions($permissions);
 
-        return Redirect::route('roles.index')->with('success', 'Rol Actualizado');
+        return Redirect::route('roles.index')->with('success', 'Rol Actualizado'); */
     }
 
 

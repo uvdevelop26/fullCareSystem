@@ -1,7 +1,6 @@
 <template>
     <div>
-        {{ user }}
-        <!-- <Head title="Usuarios" />
+        <Head title="Usuarios" />
         <h1 class="mb-5 text-2xl font-bold text-cyan-900">Editar Usuario</h1>
         <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
             <form>
@@ -28,7 +27,7 @@
                     </button>
                 </div>
             </form>
-        </div> -->
+        </div>
     </div>
 </template>
 
@@ -66,7 +65,7 @@ export default {
             username: props.user.username,
             password: props.user.password,
             empleado_id: props.user.empleado_id,
-            role_id: props.user.roles.id
+            role_id: props.userRole[0].id
         });
 
         const actualizarUsuario = () => {

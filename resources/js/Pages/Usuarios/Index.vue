@@ -1,15 +1,12 @@
 <template>
     <div>
+
         <Head title="Usuarios" />
         <h1 class="mb-7 text-3xl font-bold text-cyan-600">Usuarios</h1>
         <div class="flex items-center justify-between mb-6">
-         
-            <Link
-                class="btn-nuevo"
-                type="button"
-                :href="route('usuarios.create')"
-            >
-                <span class="text-white font-bold">Nuevo Usuario</span>
+
+            <Link class="btn-nuevo" type="button" :href="route('usuarios.create')">
+            <span class="text-white font-bold">Nuevo Usuario</span>
             </Link>
         </div>
         <div class="bg-white rounded-md shadow overflow-x-auto">
@@ -25,12 +22,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr
-                        v-for="user in users"
-                        :key="user.id"
-                        class="text-center text-sm text-gray-600 hover:bg-gray-100"
-                        :class="{}"
-                    >
+                    <tr v-for="user in users" :key="user.id" class="text-center text-sm text-gray-600 hover:bg-gray-100"
+                        :class="{}">
                         <td class="border-t py-3">
                             {{ user.empleado.persona.nombres }}
                         </td>
@@ -44,45 +37,33 @@
                             {{ user.empleado.email }}
                         </td>
                         <td class="border-t py-3">
-                          
+                        {{ user.roles[0].name }}
                         </td>
                         <td class="border-t py-3">
-                            <Link
-                                class="mx-1 inline-block"
-                                :href="route('usuarios.edit', user.id)"
-                            >
-                                <icon
-                                    name="edit"
-                                    class="w-4 h-4 fill-gray-600 hover:fill-cyan-800"
-                                />
+                            <Link class="mx-1 inline-block" :href="route('usuarios.edit', user.id)">
+                            <icon name="edit" class="w-4 h-4 fill-gray-600 hover:fill-cyan-800" />
                             </Link>
-                            <button
-                                class="mx-1"
-                                @click="eliminarUsuario(user)"
-                            >
-                                <icon
-                                    name="delete"
-                                    class="w-4 h-4 fill-gray-600 hover:fill-cyan-800"
-                                />
+                            <button class="mx-1" @click="eliminarUsuario(user)">
+                                <icon name="delete" class="w-4 h-4 fill-gray-600 hover:fill-cyan-800" />
                             </button>
                         </td>
                     </tr>
                 </tbody>
             </table>
-           <!--  <pagination class="mt-6" :links="user.links" /> -->
+            <!--  <pagination class="mt-6" :links="user.links" /> -->
         </div>
     </div>
 </template>
 <script>
 import Layout from '../../Shared/Layout.vue'
-import {Head, Link} from '@inertiajs/inertia-vue3'
+import { Head, Link } from '@inertiajs/inertia-vue3'
 import Icon from '../../Shared/Icon.vue'
 /* import Pagination from "../../Shared/Pagination.vue"; */
 import { Inertia } from "@inertiajs/inertia";
 
-export default{
+export default {
 
-    components:{
+    components: {
         Head,
         Link,
         Icon,
@@ -92,13 +73,13 @@ export default{
 
     layout: Layout,
 
-    props:{
-        users: Object, 
-   
-    
+    props: {
+        users: Object,
+
+
     },
 
-    setup(props){
+    setup(props) {
 
         const eliminarUsuario = (data) => {
             data._method = "DELETE";
@@ -107,12 +88,12 @@ export default{
 
 
 
-        return{
+        return {
             eliminarUsuario
         }
     }
 
-    
+
 
 }
 

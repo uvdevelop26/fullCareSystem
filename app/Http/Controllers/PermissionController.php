@@ -22,10 +22,10 @@ class PermissionController extends Controller
 {
     function __construct()
     {
-        $this->middleware('can:ver-permisos', ['only' => ['index', 'show']]);
-        $this->middleware('can:crear-permisos', ['only' => ['create', 'store']]);
-        $this->middleware('can:editar-permisos', ['only' => ['edit', 'update']]);
-        $this->middleware('can:borrar-permisos', ['only' => ['destroy']]);
+        $this->middleware('can:ver-permission', ['only' => ['index', 'show']]);
+        $this->middleware('can:crear-permission', ['only' => ['create', 'store']]);
+        $this->middleware('can:editar-permission', ['only' => ['edit', 'update']]);
+        $this->middleware('can:borrar-permission', ['only' => ['destroy']]);
     }
 
     public function index()
@@ -35,9 +35,9 @@ class PermissionController extends Controller
         return Inertia::render('Permissions/Index',[
                 'permissions' => $permissions,
                 'can' => [
-                    'create' => Auth::user()->can('crear-permisos'),
-                    'edit' => Auth::user()->can('editar-permisos'),
-                    'delete' => Auth::user()->can('borrar-permisos'),
+                    'create' => Auth::user()->can('crear-permission'),
+                    'edit' => Auth::user()->can('editar-permission'),
+                    'delete' => Auth::user()->can('borrar-permission'),
                 ]
 
             ]);

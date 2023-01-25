@@ -11,6 +11,13 @@ use Inertia\Inertia;
 
 class TurnoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:ver-jornada', ['only' => ['index', 'show']]);
+        $this->middleware('can:crear-jornada', ['only' => ['create', 'store']]);
+        $this->middleware('can:editar-jornada', ['only' => ['edit', 'update']]);
+        $this->middleware('can:borrar-jornada', ['only' => ['destroy']]);
+    }
 
     public function index()
     {
@@ -31,6 +38,12 @@ class TurnoController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'turno' => 'required',
+            'empleado_id' => 'required',
+            'dias' => 'required'
+        ]);
+
         $turno = Turno::create([
             'turno' => $request['turno'],
             'empleado_id' => $request['empleado_id']
@@ -49,7 +62,7 @@ class TurnoController extends Controller
     public function edit(Turno $turno)
     {
         $dias = Dia::get();
-        
+
         $turnosHasDias = array_column(json_decode($turno->dias, true), 'id');
 
         return Inertia::render('Turnos/Editar', [

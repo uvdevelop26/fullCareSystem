@@ -14,10 +14,10 @@ class FamiliareController extends Controller
 
     function __construct()
     {
-        $this->middleware('permission:ver-familiare | crear-familiare | editar-familiare | borrar-familiare', ['only' => ['index']]);
-        $this->middleware('permission:crear-familiare', ['only' => ['create', 'store']]);
-        $this->middleware('permission:editar-familiare', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:borrar-familiare', ['only' => ['destroy']]);
+        $this->middleware('can:ver-familiare', ['only' => ['index']]);
+        $this->middleware('can:crear-familiare', ['only' => ['create', 'store']]);
+        $this->middleware('can:editar-familiare', ['only' => ['edit', 'update']]);
+        $this->middleware('can:borrar-familiare', ['only' => ['destroy']]);
     }
 
 

@@ -8,9 +8,23 @@ use App\Models\Turno;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
+
+use PhpParser\Node\Stmt\Return_;
+
+
+use \Illuminate\Auth\Middleware\Authorize;
 
 class MedicamentoController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('can:ver-medicamento', ['only' => ['index']]);
+        $this->middleware('can:crear-medicamento', ['only' => ['create', 'store']]);
+        $this->middleware('can:editar-medicamento', ['only' => ['edit', 'update']]);
+        $this->middleware('can:borrar-medicamento', ['only' => ['destroy']]);
+    }
+
 
     public function index()
     {
@@ -19,7 +33,12 @@ class MedicamentoController extends Controller
             ->orderBy('id', 'desc')
             ->get();
         return Inertia::render('Medicamentos/Index', [
-            'medicamentos' => $medicamentos
+            'medicamentos' => $medicamentos,
+            'can' => [
+                'create' => Auth::user()->can('crear-medicamento'),
+                'edit' => Auth::user()->can('editar-medicamento'),
+                'delete' => Auth::user()->can('borrar-medicamento'),
+            ]
         ]);
     }
 

@@ -13,9 +13,12 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Arr;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
 
 class UserController extends Controller
 {
+    use HasRoles;
 
     public function __construct()
     {
@@ -30,8 +33,9 @@ class UserController extends Controller
     public function index()
     {
 
+
         return Inertia::render('Usuarios/Index', [
-            'users' => User::with('empleado.persona')
+            'users' => User::with('empleado.persona', 'roles')
                 ->orderBy('id', 'desc')
                 ->get(),
 
@@ -69,7 +73,7 @@ class UserController extends Controller
         $user = User::create($input);
         $user->assignRole($request->input('role_id'));
 
-  
+
 
         return Redirect::route('usuarios.index')->with('success', 'Usuario Creado');
     }
@@ -85,7 +89,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $roles = Role::all();
-        $userRole = $user->roles->pluck('name', 'name')->all();
+        $userRole = $user->roles->all();
 
         return Inertia::render(
             'Usuarios/Editar',
@@ -113,10 +117,7 @@ class UserController extends Controller
             $input = Arr::except($input, array('password'));
         }
 
-      
-
         $user = User::find($id);
-
 
         $user->update($input);
 
@@ -124,7 +125,7 @@ class UserController extends Controller
 
         $user->assignRole($request->input('role_id'));
 
-    
+
 
         return Redirect::route('usuarios.index')->with('success', 'Usuario Actualizado.');
     }
@@ -132,7 +133,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::find($id);
-      //  $user = User::where('id', $id);
+        //  $user = User::where('id', $id);
 
         $user->delete();
 

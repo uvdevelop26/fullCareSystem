@@ -20,16 +20,6 @@ class PermissionSeeder extends Seeder
 
         //CREA EL ARRAY CON LOS PERMISOS
         $permissions = [
-            //tabla permisos
-            'ver-permisos',
-            'crear-permisos',
-            'editar-permisos',
-            'borrar-permisos',
-            //tabla roles
-            'ver-rol',
-            'crear-rol',
-            'editar-rol',
-            'borrar-rol',
             //tabla residentes
             'ver-residente',
             'crear-residente',
@@ -54,12 +44,17 @@ class PermissionSeeder extends Seeder
             'editar-sueldo',
             'borrar-sueldo',
 
-            //tabla permisos
+            //tabla Jornadas
+            'ver-jornada',
+            'crear-jornada',
+            'editar-jornada',
+            'borrar-jornada',
 
-            'ver-permiso',
-            'crear-permiso',
-            'editar-permiso',
-            'borrar-permiso',
+            //tabla permisos
+            'ver-permisos',
+            'crear-permisos',
+            'editar-permisos',
+            'borrar-permisos',
 
             //tabla usuarios
             'ver-usuario',
@@ -67,8 +62,41 @@ class PermissionSeeder extends Seeder
             'editar-usuario',
             'borrar-usuario',
 
+            //tabla roles
+            'ver-rol',
+            'crear-rol',
+            'editar-rol',
+            'borrar-rol',
 
+            //tabla permissions
+            'ver-permission',
+            'crear-permission',
+            'editar-permission',
+            'borrar-permission',
 
+            //tabla ingresos
+            'ver-ingreso',
+            'crear-ingreso',
+            'editar-ingreso',
+            'borrar-ingreso',
+
+            //tabla egresos
+            'ver-egreso',
+            'crear-egreso',
+            'editar-egreso',
+            'borrar-egreso',
+
+            //tabla-historial
+            'ver-historial',
+            'crear-historial',
+            'editar-historial',
+            'borrar-historial',
+
+            //medicamentos
+            'ver-medicamento',
+            'crear-medicamento',
+            'editar-medicamento',
+            'borrar-medicamento'
         ];
 
 
@@ -84,6 +112,10 @@ class PermissionSeeder extends Seeder
         $role1 = Role::create(['name' => 'enfermero']);
         $role1->givePermissionTo('ver-empleado');
         $role1->givePermissionTo('ver-sueldo');
+        $role1->givePermissionTo('ver-jornada');
+        $role1->givePermissionTo('ver-historial');
+        $role1->givePermissionTo('ver-medicamento');
+
 
         //ROL 2 -- ADMIN -- LE DA TODOS LOS PERMISOS
         $role2 = Role::create(['name' => 'admin']);

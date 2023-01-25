@@ -26,9 +26,9 @@ class SueldoController extends Controller
                 ->orderBy('id', 'desc')
                 ->paginate(10),
             'can' => [
-                'create' => Auth::user()->can('crear-permisos'),
-                'edit' => Auth::user()->can('editar-permisos'),
-                'delete' => Auth::user()->can('borrar-permisos'),
+                'create' => Auth::user()->can('crear-sueldo'),
+                'edit' => Auth::user()->can('editar-sueldo'),
+                'delete' => Auth::user()->can('borrar-sueldo'),
             ]
         ]);
     }

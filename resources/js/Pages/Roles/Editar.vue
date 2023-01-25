@@ -1,10 +1,12 @@
 <template>
     <div>
 
-        <Head title="Usuarios" />
+        {{ roleHasPermissions }}
+
+       <!--  <Head title="Roles" />
         <h1 class="mb-5 text-2xl font-bold text-cyan-900">Editar Rol</h1>
         <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
-            <form @submit.prevent="roles.post(route('role.update', props.role.id))">
+            <form>
 
                 <div class="flex-wrap -mb-8 -mr-6 p-8">
                     <text-input v-model="roles.name" type="text" label="Rol" class="pb-7 pr-6 w-full lg:w-1/2"
@@ -14,7 +16,7 @@
                         <div class="block">Permisos para este Rol</div>
                         <div v-for="permission in permissions" :key="permission.id">
                             <label for="">
-                                <input type="checkbox" name="permissions[]" value="{{ permission.id }}" id="">
+                                <input type="checkbox" :id="permission.name" :value="permission.id" v-model="roles.permissions">
                                 {{ permission.name }}
                             </label>
                         </div>
@@ -30,7 +32,7 @@
                     </button>
                 </div>
             </form>
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -65,12 +67,12 @@ export default {
             _method: "PUT",
             id: props.role.id,
             name: props.role.name,
-            permissions: props.roleHasPermissions
+            permissions: props.roleHasPermissions   
         });
 
         const actualizarRol = () => {
             roles.post(
-                route("usuarios.update", roles.id),
+                route("roles.update", roles.id),
                 {
                     preserveScroll: true,
                 }

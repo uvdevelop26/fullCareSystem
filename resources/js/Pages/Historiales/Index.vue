@@ -3,7 +3,7 @@
         <Head title="Permisos" />
         <h1 class="mb-7 text-3xl font-bold text-cyan-600">Historial Clínico</h1>
         <div class="flex items-center justify-between mb-6">
-            <Link class="btn-nuevo" type="button" :href="route('historiales.create')">
+            <Link class="btn-nuevo" type="button" :href="route('historiales.create')" v-if="can.create">
             <span class="text-white font-bold">Nuevo Historial</span>
             </Link>
         </div>
@@ -35,7 +35,7 @@
                         </td>
                         <td class="border-t py-3">
                             <Link class="mx-1 inline-block"
-                                :href="route('historiales.edit', historiale.id)">
+                                :href="route('historiales.edit', historiale.id)" v-if="can.edit">
                             <icon name="edit" class="w-4 h-4 fill-gray-600 hover:fill-cyan-800" />
                             </Link>
                             <Link class="mx-1 inline-block">
@@ -69,7 +69,8 @@ export default {
     layout: Layout,
 
     props: {
-        historiales: Object
+        historiales: Object,
+        can: Object
     },
 
    

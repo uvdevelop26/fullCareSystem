@@ -3,7 +3,7 @@
         <Head title="Medicamentos" />
         <h1 class="mb-7 text-3xl font-bold text-cyan-600">Medicamentos</h1>
         <div class="flex items-center justify-between mb-6">
-            <Link class="btn-nuevo" type="button" :href="route('medicamentos.create')">
+            <Link class="btn-nuevo" type="button" :href="route('medicamentos.create')" v-if="can.create">
             <span class="text-white font-bold">Nuevo Medicamento</span>
             </Link>
         </div>
@@ -18,6 +18,7 @@
                         <th class="py-4 px-6">Dosis/Cantidad</th>
                         <th class="py-4 px-6">Stock</th>
                         <th class="py-4 px-6">Horarios</th>
+                        <th class="py-4 px-6" v-if="can.edit || can.delete">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -48,11 +49,11 @@
                         </span>  
                         </td>
                       
-                        <td class="border-t py-3">
-                            <Link class="mx-1 inline-block" :href="route('medicamentos.edit', medicamento.id)">
+                        <td class="border-t py-3" v-if="can.edit || can.delete">
+                            <Link class="mx-1 inline-block" :href="route('medicamentos.edit', medicamento.id)" v-if="can.edit">
                             <icon name="edit" class="w-4 h-4 fill-gray-600 hover:fill-cyan-800" />
                             </Link>
-                            <button class="mx-1"  @click="eliminarMedicamento(medicamento)">
+                            <button class="mx-1"  @click="eliminarMedicamento(medicamento)" v-if="can.delete">
                                 <icon name="delete" class="w-4 h-4 fill-gray-600 hover:fill-cyan-800" />
                             </button>
                         </td>
@@ -83,7 +84,8 @@ export default {
     },
 
     props: {
-        medicamentos: Object
+        medicamentos: Object,
+        can: Object
     },
 
     layout: Layout,

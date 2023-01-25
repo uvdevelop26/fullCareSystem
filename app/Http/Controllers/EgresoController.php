@@ -10,6 +10,14 @@ use Inertia\Inertia;
 class EgresoController extends Controller
 {
 
+    function __construct()
+    {
+        $this->middleware('can:ver-egreso', ['only' => ['index']]);
+        $this->middleware('can:crear-egreso', ['only' => ['create', 'store']]);
+        $this->middleware('can:editar-egreso', ['only' => ['edit', 'update']]);
+        $this->middleware('can:borrar-egreso', ['only' => ['destroy']]);
+    }
+
     public function index()
     {
         $egresos = Egreso::orderBy('id', 'desc')->paginate(8);
