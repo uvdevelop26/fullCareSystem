@@ -4,7 +4,7 @@
         <Head title="Permisos" />
         <h1 class="mb-7 text-3xl font-bold text-cyan-600">Permisos</h1>
         <div class="flex items-center justify-between mb-6">
-            <Link class="btn-nuevo" type="button" :href="route('permisos.create')">
+            <Link class="btn-nuevo" type="button" :href="route('permisos.create')" v-if="can.create">
             <span class="text-white font-bold">Nuevo Permiso</span>
             </Link>
         </div>
@@ -16,7 +16,7 @@
                         <th class="py-3 px-4">Apellidos</th>
                         <th class="py-3 px-4">Fecha</th>
                         <th class="py-3 px-4">Justificación</th>
-                        <th class="py-3 px-4">Acciones</th>
+                        <th class="py-3 px-4" v-if="can.edit || can.delete">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -34,13 +34,13 @@
                         <td class="border-t py-3">
                             {{ permiso.justificacion }}
                         </td>
-                        <td class="border-t py-3">
+                        <td class="border-t py-3" v-if="can.edit || can.delete">
                             <Link class="mx-1 inline-block"
-                                :href="route('permisos.edit', permiso.id)">
+                                :href="route('permisos.edit', permiso.id)" v-if="can.edit">
                             <icon name="edit" class="w-4 h-4 fill-gray-600 hover:fill-cyan-800" />
                             </Link>
                             <button class="mx-1"
-                                @click="eliminarPermiso(permiso)">
+                                @click="eliminarPermiso(permiso)" v-if="can.delete">
                                 <icon name="delete" class="w-4 h-4 fill-gray-600 hover:fill-cyan-800" />
                             </button>
                         </td>
@@ -70,7 +70,8 @@ export default {
     layout: Layout,
 
     props: {
-        permisos: Object
+        permisos: Object,
+        can: Object
     },
 
     setup(props) {

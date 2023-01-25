@@ -6,6 +6,7 @@ use App\Models\Permiso;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
 
 class PermisoController extends Controller
 {
@@ -23,7 +24,12 @@ class PermisoController extends Controller
         return Inertia::render('Permisos/Index', [
             'permisos' => Permiso::with('empleado.persona')
                 ->orderBy('id', 'desc')
-                ->paginate(10)
+                ->paginate(10),
+            'can' => [
+                'create' => Auth::user()->can('crear-empleado'),
+                'edit' => Auth::user()->can('editar-empleado'),
+                'delete' => Auth::user()->can('borrar-empleado'),
+            ]
         ]);
     }
 

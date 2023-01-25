@@ -18,7 +18,7 @@
                     </select-input>
                     <text-input v-model="form.fecha_vencimiento" type="date" label="Fecha de Vencimiento"
                         class="pb-7 pr-6 w-full lg:w-1/2" :id="fecha_vencimiento" name="fecha_vencimiento" />
-                    <text-input v-model="form.dosis_cantidad" type="text" label="Dosis/Cantidad"
+                    <text-input v-model="form.dosis_cantidad" type="text" label="Dosis diaria"
                         class="pb-7 pr-6 w-full lg:w-1/2" :id="dosis_cantidad" name="dosis_cantidad" />
                     <text-input v-model="form.stock" type="number" label="Stock" class="pb-7 pr-6 w-full lg:w-1/2"
                         :id="stock" name="stock" />

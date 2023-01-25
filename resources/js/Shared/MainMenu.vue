@@ -125,7 +125,10 @@
         <div :class="isUrl('medicamentos') ? 'text-white' : 'text-cyan-300 group-hover:text-white'"> Medicametos
         </div>
         </Link>
-        <Link class="block pt-2 pl-2">Suministros y Control</Link>
+        <Link class="block pt-2 pl-2" href="/suministros">
+        <div :class="isUrl('suministros') ? 'text-white' : 'text-cyan-300 group-hover:text-white'"> Control de Suministros
+        </div>
+        </Link>
       </div>
     </div>
     <!-- Reportes -->

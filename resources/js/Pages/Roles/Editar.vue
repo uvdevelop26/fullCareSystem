@@ -1,9 +1,6 @@
 <template>
     <div>
-
-        {{ roleHasPermissions }}
-
-       <!--  <Head title="Roles" />
+        <Head title="Roles" />
         <h1 class="mb-5 text-2xl font-bold text-cyan-900">Editar Rol</h1>
         <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
             <form>
@@ -32,7 +29,7 @@
                     </button>
                 </div>
             </form>
-        </div> -->
+        </div>
     </div>
 </template>
 
