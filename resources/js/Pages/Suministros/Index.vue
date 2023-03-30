@@ -20,6 +20,7 @@
                     <span class="font-bold">Horarios de Suministro</span>
                     <div v-for="horario in medicamento.horarios" class="block py-1">
                         <span class="inline-block p-1 bg-indigo-700 text-white rounded-lg">{{ horario.hora }} </span>
+                        <input type="checkbox" class="mx-1">
                     </div>
                 </div>
             </div>

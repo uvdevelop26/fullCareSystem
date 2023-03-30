@@ -1,31 +1,30 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope&family=Roboto&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Noto+Sans:ital,wght@0,300;1,300&family=Roboto:ital,wght@0,400;1,100&family=Satisfy&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Epilogue:wght@200;500;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 
-
+* {
+  @apply font-Epilogue text-slate-500 font-normal
+}
 
 
 /*========fuente===========*/
-.font-roboto{
-  font-family: 'Manrope', sans-serif;
-}
 
 /*======Formularios============*/
 
 .form-input,
 .form-textarea,
 .form-select {
-  @apply p-2 leading-normal block w-full border border-cyan-700 text-gray-700 bg-white font-sans rounded text-left appearance-none relative focus:border-cyan-200 focus:ring;
+  @apply p-2 leading-normal block w-full border border-cyan-700 text-gray-700 bg-white font-sans rounded text-left appearance-none relative focus:border-cyan-500 focus:ring;
 }
 
 .form-error {
   @apply text-red-700 mt-2 text-sm;
 }
 
-.form-label{
+.form-label {
   @apply font-medium inline-block py-2 text-gray-800;
 }
 
@@ -40,11 +39,11 @@
 
 /*=======Botones============*/
 
-.btn-nuevo{
+.btn-nuevo {
   @apply inline-block px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-600 hover:to-blue-500;
 }
 
-.btn-cancelar{
+.btn-cancelar {
   @apply px-3 py-2 mx-1 bg-gray-500 rounded hover:bg-gray-700;
 }
 
@@ -56,8 +55,5 @@
 }
 
 .btn-indigo {
-    @apply px-6 py-3 rounded bg-indigo-600 text-white text-sm leading-4 font-bold whitespace-nowrap hover:bg-orange-400 focus:bg-orange-400;
-  }
-
-  
-
+  @apply px-6 py-3 rounded bg-indigo-600 text-white text-sm leading-4 font-bold whitespace-nowrap hover:bg-orange-400 focus:bg-orange-400;
+}

@@ -3,14 +3,11 @@
 </template>
 
 <script>
-import Layout from '../../Shared/Layout.vue';
-export default {
+import LayoutApp from '../../Layouts/LayoutApp.vue';
 
-    components: {
+export default{
 
-    },
-
-    layout: Layout
+  layout: LayoutApp
 
 }
 </script>
