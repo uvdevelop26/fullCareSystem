@@ -129,7 +129,7 @@ onUnmounted(() => {
                 <NavigationMenu>
                     <template #header>
                         <div class="md:text-center">
-                            <span class="font-Lobster text-cyan-800 text-2xl">
+                            <span class="text-white font-semibold drop-shadow-xl text-xl">
                                 FullCareSystem
                             </span>
                             <FullcareLogo class="w-6 h-6 mb-2 inline" />
@@ -137,59 +137,61 @@ onUnmounted(() => {
                         <div class="pt-1 text-right">
                             <button class="text-right md:hidden" @click="isMobile = !isMobile">
                                 <Icon name='menu' :class="isMobile ? 'border' : ''"
-                                    class="w-6 h-6 inline-block fill-cyan-800" />
+                                    class="w-6 h-6 inline-block fill-white" />
                             </button>
                         </div>
                     </template>
                     <transition name="slice">
                         <nav class="md:h-full md:flex md:flex-col md:justify-between" v-if="isMobile">
-                            <ul class="md:pt-4 md:px-2 md:h-full md:overflow-y-auto">
-                                <li v-for="(item, index) in menu" :key="item.id" 
-                                class="py-2 pl-1 md:mb-2">
+                            <ul class="md:pt-4  md:h-full md:overflow-y-auto">
+                                <li v-for="(item, index) in menu" :key="item.id" class="py-2 px-3  md:mb-2"
+                                    :class="{ 'bg-fondColor border-l-turquesa': $page.url.startsWith(item.href) }">
                                     <button v-if="item.submenu.length" @click="toggleSubMenu(index)"
-                                        class="group w-full flex" >
+                                        class="group w-full flex">
                                         <Icon :name="item.icon_name"
-                                            class="w-5 h-5 mr-3 inline fill-slate-500 group-hover:fill-cyan-800"/>
-                                        <span class="capitalize group-hover:text-cyan-800"> {{ item.name }}</span>
+                                            class="w-5 h-5 mr-3 inline fill-slate-500 group-hover:fill-turquesa" />
+                                        <span class="capitalize group-hover:text-turquesa"> {{ item.name }}</span>
                                         <Icon :name="item.toggle_submenu ? 'up' : 'down'"
-                                            class="w-5 h-5 inline ml-auto fill-slate-500 group-hover:fill-cyan-800" />
+                                            class="w-5 h-5 inline ml-auto fill-slate-500 group-hover:fill-turquesa" />
                                     </button>
-                                    <Link class="group" v-else :href="item.href" >
-                                        <Icon :name="item.icon_name"
-                                            class="w-5 h-5 mr-3 inline fill-slate-500 group-hover:fill-cyan-800"
-                                            :class="{'fill-cyan-800 ': $page.url.startsWith(item.href) }" />
-                                        <span class="capitalize group-hover:text-cyan-800" 
-                                        :class="{ 'text-cyan-800 font-bold': $page.url.startsWith(item.href) }">
-                                            {{ item.name }}</span>
+                                    <Link class="group" v-else :href="item.href">
+                                    <Icon :name="item.icon_name"
+                                        class="w-5 h-5 mr-3 inline fill-slate-500 group-hover:fill-turquesa"
+                                        :class="{ 'fill-turquesa ': $page.url.startsWith(item.href) }" />
+                                    <span class="capitalize group-hover:text-turquesa"
+                                        :class="{ 'text-turquesa font-bold': $page.url.startsWith(item.href) }">
+                                        {{ item.name }}</span>
                                     </Link>
                                     <transition name="submenu-slice">
                                         <ul v-if="item.submenu.length && item.toggle_submenu"
                                             class="pl-8 pt-1 overflow-hidden">
                                             <li v-for="subitem in item.submenu" :key="subitem.name"
-                                                class="py-1 pl-3 border-l-2">
+                                                class="py-1 pl-3 border-l-2"
+                                                :class="{ 'bg-fondColor border-l-turquesa': $page.url.startsWith(subitem.href) }">
                                                 <Link :href="subitem.href" class="md:text-sm">
-                                                <span class="capitalize hover:text-cyan-800"
-                                                :class="{'text-cyan-800 font-bold': $page.url.startsWith(subitem.href) }">{{ subitem.name }}</span>
+                                                <span class="capitalize hover:text-turquesa"
+                                                    :class="{ 'text-turquesa font-bold': $page.url.startsWith(subitem.href) }">{{
+                                                        subitem.name }}</span>
                                                 </Link>
                                             </li>
                                         </ul>
                                     </transition>
                                 </li>
                             </ul>
-                            <div class="py-4 border-t relative md:text-center">
-                                <button class="px-4 py-2 bg-softIndigo rounded-lg"
+                            <div class="py-4 px-3 border-t relative md:text-center">
+                                <button class="px-4 py-2 bg-turquesa rounded-lg"
                                     @click="showUserDropdown = !showUserDropdown">
                                     <span class="text-white">{{ $page.props.user.username }}</span>
                                     <icon class="ml-1 w-5 h-5 inline fill-white" name="cheveron-down" />
                                 </button>
                                 <div class="absolute z-100 bg-white mt-1 rounded-lg w-44 border shadow-lg md:top-[-120%] md:left-6"
                                     v-if="showUserDropdown">
-                                    <Link class="block px-6 py-2 text-left hover:text-white hover:bg-softIndigo"
+                                    <Link class="block px-6 py-2 text-left hover:text-white hover:bg-turquesa"
                                         :href="route('profile.show')">
                                     Mi Perfil
                                     </Link>
                                     <form @submit.prevent="logout" method="POST">
-                                        <Link class="block px-6 py-2 w-full text-left hover:text-white hover:bg-softIndigo"
+                                        <Link class="block px-6 py-2 w-full text-left hover:text-white hover:bg-turquesa"
                                             href="/logout" method="POST" as="button">Logout</Link>
                                     </form>
                                 </div>
@@ -197,7 +199,7 @@ onUnmounted(() => {
                         </nav>
                     </transition>
                 </NavigationMenu>
-                <div class="px-5 bg-fondColor md:px-8 md:py-8 md:flex-1 md:h-screen md:overflow-y-auto" scroll-region>
+                <div class="px-5 py-3 bg-fondColor md:px-8 md:py-8 md:flex-1 md:h-screen md:overflow-y-auto" scroll-region>
                     <slot />
                 </div>
             </div>

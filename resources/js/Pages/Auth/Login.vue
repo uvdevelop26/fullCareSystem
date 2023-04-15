@@ -38,22 +38,22 @@ const submit = () => {
 <template>
 
     <Head title="Log in" />
-    <div class="container px-7 pt-10 mx-auto h-screen w-screen flex justify-center items-center bg-cyan-700">
+    <div class=" px-7 pt-10 mx-auto h-screen w-screen flex justify-center items-center overflow-y-auto bg-turquesa">
         <authentication-card-new>
             <template #logo>
-                <fullcare-logo class="w-6 h-6 mx-1 inline " />
-                <span class="font-bold text-cyan-700 font-Lobster">FullCareSystem</span>
+                <fullcare-logo class="w-4 h-4 mx-1 mb-1 inline " />
+                <span class="font-bold text-indigo-400  text-md">FullCareSystem</span>
             </template>
             <template #image>
                 <div class="md:text-center">
                     <Coworking name="coworking" class="w-60 h-60 md:my-3" />
                 </div>
             </template>
-            <div v-if="status" class="mb-4 font-medium text-sm text-cyan-600">
+            <div v-if="status" class="mb-4 font-medium text-sm">
                 {{ status }}
             </div>
             <template #welcome>
-                <h1 class="py-2 md:py-3 text-center text-2xl text-cyan-700 font-bold font-Lobster">¡Bienvenido!</h1>
+                <h1 class="py-2 md:py-3 text-center text-2xl text-turquesa font-bold">¡Bienvenido!</h1>
             </template>
             <form @submit.prevent="submit">
                 <div>
@@ -73,13 +73,13 @@ const submit = () => {
                 <div class="block mt-4">
                     <label class="flex items-center">
                         <Checkbox v-model:checked="form.remember" name="remember" />
-                        <span class="ml-2 text-sm text-cyan-700">Recuerdame</span>
+                        <span class="ml-2 text-sm">Recuerdame</span>
                     </label>
                 </div>
 
                 <div class="flex items-center justify-end mt-4">
                     <Link v-if="canResetPassword" :href="route('password.request')"
-                        class="underline text-sm text-cyan-700 hover:text-gray-900">
+                        class="underline text-sm hover:text-gray-900">
                     Olvidaste tu contraseña?
                     </Link>
 

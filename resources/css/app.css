@@ -10,14 +10,12 @@
 }
 
 
-/*========fuente===========*/
-
-/*======Formularios============*/
+/* INPUT TEXT E INPUT SELECT */
 
 .form-input,
 .form-textarea,
 .form-select {
-  @apply p-2 leading-normal block w-full border border-cyan-700 text-gray-700 bg-white font-sans rounded text-left appearance-none relative focus:border-cyan-500 focus:ring;
+  @apply p-2 leading-normal block w-full border border-turquesa bg-white rounded text-left appearance-none relative focus:border-turquesa focus:ring-1;
 }
 
 .form-error {
@@ -25,7 +23,7 @@
 }
 
 .form-label {
-  @apply font-medium inline-block py-2 text-gray-800;
+  @apply font-medium inline-block py-2;
 }
 
 .form-input.error,
@@ -34,17 +32,25 @@
   @apply border-red-500 focus:ring focus:ring-red-200;
 }
 
+input[type='file'] {
+  @apply relative text-base text-center;
+}
+
+input[type='file']::file-selector-button {
+
+  @apply absolute bg-turquesa text-white hover:bg-teal-300 top-0 left-0 h-full w-1/4 border-none rounded-r-2xl;
+}
 
 
 
-/*=======Botones============*/
+/* BOTONES */
 
 .btn-nuevo {
   @apply inline-block px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-600 hover:to-blue-500;
 }
 
 .btn-cancelar {
-  @apply px-3 py-2 mx-1 bg-gray-500 rounded hover:bg-gray-700;
+  @apply text-white px-3 py-2 mx-1 bg-gray-500 rounded hover:bg-gray-700;
 }
 
 .btn-spinner,
@@ -55,5 +61,5 @@
 }
 
 .btn-indigo {
-  @apply px-6 py-3 rounded bg-indigo-600 text-white text-sm leading-4 font-bold whitespace-nowrap hover:bg-orange-400 focus:bg-orange-400;
+  @apply px-6 py-3 text-white text-sm leading-4 rounded-md bg-indigo-400 hover:bg-softIndigo font-bold whitespace-nowrap focus:bg-indigo-400;
 }

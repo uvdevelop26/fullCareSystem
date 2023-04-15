@@ -1,14 +1,14 @@
 <template>
-    <div class="grid md:grid-cols-2 p-6 border shadow-lg rounded-lg bg-white">
-        <div class="md:mr-ml-9">
-            <div class="py-3">
+    <div class="grid md:grid-cols-2 border shadow-xl rounded-lg overflow-hidden bg-white">
+        <div class="md:mr-ml-9 p-5">
+            <div class="pb-3">
                 <slot name="logo" />
             </div>
             <div class="py-3">
                 <slot name="image" />
             </div>
         </div>
-        <div class="md:ml-9">
+        <div class="p-5 rounded-t-3xl md:rounded-l-3xl md:rounded-r-none bg-fondColor">
             <div>
                 <slot name="welcome" />
             </div>

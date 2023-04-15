@@ -9,30 +9,30 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
-
+use App\Http\Requests\StoreResidente;
 use function GuzzleHttp\Promise\all;
 
 class ResidenteController extends Controller
 {
-    function __construct()
-    {
-        $this->middleware('can:ver-residente', ['only' => ['index']]);
-        $this->middleware('can:crear-residente', ['only' => ['create', 'store']]);
-        $this->middleware('can:editar-residente', ['only' => ['edit', 'update']]);
-        $this->middleware('can:borrar-residente', ['only' => ['destroy']]);
-    }
+
 
     public function index(Request $request)
     {
+        $queries = ['search', 'search_ciudad', 'search_estado', 'search_sexo'];
+        $residentes = Residente::with('persona.ciudade')
+            ->filter($request->only($queries))
+            ->get();
 
-        $queries = ['search'];
+        $residentesData = Residente::with('persona.ciudade')
+            ->get();
+
+        $ciudades = Ciudade::all();
 
         return Inertia::render('Residentes/Index', [
+            'residentes' => $residentes,
+            'residentesData' => $residentesData,
             'filters' => $request->all($queries),
-            'residentes' => Residente::filter($request->only($queries))
-                ->with('persona.ciudade')
-                ->orderBy('id', 'desc')
-                ->paginate(10)
+            'ciudades' => $ciudades
         ]);
     }
 
@@ -40,50 +40,36 @@ class ResidenteController extends Controller
     public function create()
     {
         $ciudades = Ciudade::all();
-        return Inertia::render('Residentes/Nuevos', ['ciudades' => $ciudades]);
+        return Inertia::render('Residentes/Nuevo', ['ciudades' => $ciudades]);
     }
 
 
-    public function store(Request $request)
+    public function store(StoreResidente $request)
     {
-        $request->validate([
-            'nombres' =>  ['required', 'max:100'],
-            'apellidos' => ['required', 'max:100'],
-            'ci_numero' => ['nullable', 'max:100'],
-            'fecha_nacimiento' => 'required',
-            'telefono' => ['nullable', 'max:30'],
-            'edad' => 'required',
-            'sexo' => 'required',
-            'direccion' => ['required', 'max:200'],
-            'ciudade_id' => 'required',
-            'fecha_ingreso' => 'required',
-            'estado' => 'required',
-        ]);
-
 
         $persona = Persona::create([
-            'nombres' => $request['nombres'],
-            'apellidos' => $request['apellidos'],
-            'ci_numero' => $request['ci_numero'],
-            'fecha_nacimiento' => $request['fecha_nacimiento'],
-            'telefono' => $request['telefono'],
-            'edad' => $request['edad'],
-            'sexo' => $request['sexo'],
-            'direccion' => $request['direccion'],
-            'ciudade_id' => $request['ciudade_id'],
+            'nombres' => $request->nombres,
+            'apellidos' => $request->apellidos,
+            'ci_numero' => $request->ci_numero,
+            'fecha_nacimiento' => $request->fecha_nacimiento,
+            'telefono' => $request->telefono,
+            'edad' => $request->edad,
+            'sexo' => $request->sexo,
+            'direccion' => $request->direccion,
+            'ciudade_id' => $request->ciudade_id,
         ]);
 
 
-          Residente::create([
-            'foto' => $request['foto'],
-            'fecha_ingreso' => $request['fecha_ingreso'],
-            'estado' => $request['estado'],
+        Residente::create([
+            'foto' => $request->foto,
+            'fecha_ingreso' => $request->fecha_ingreso,
+            'estado' => $request->estado,
             'persona_id' => $persona->id,
         ]);
 
 
 
-        return Redirect::route('residentes.index')->with('success', 'Residente Creado');
+        return Redirect::route('residentes.index');
     }
 
 

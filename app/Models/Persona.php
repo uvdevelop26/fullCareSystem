@@ -36,6 +36,7 @@ class Persona extends Model
         return $this->hasMany(Familiare::class);
     }
 
+    //relación de uno a muchos con residentes
     public function residentes()
     {
         return $this->hasMany(Residente::class);

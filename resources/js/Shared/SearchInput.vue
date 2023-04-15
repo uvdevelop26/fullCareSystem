@@ -2,27 +2,28 @@
 import Icon from './Icon.vue';
 
 export default {
-    components:{
+    components: {
         Icon
     },
     props: {
-        modelValue: String
+        label: String,
+        modelValue: String,
+        id: String,
+        
+ 
     },
 
-    emits: ['update:modelValue', 'reset'],
+    emits: ['update:modelValue'],
 }
 
 </script>
 <template>
-    <div class="flex items-center">
-        <div class="flex w-full max-w-xl relative">
-            <input type="text" class="relative bg-white  focus:ring-0 focus:outline-cyan-600 px-6 py-2 w-full rounded-3xl border-none " autocomplete="off"
+        <div :class="$attrs.class" class="relative">
+            <label v-if="label" class="form-label" :for="id">{{ label }}:</label>
+            <input type="search"
+                class="relative bg-white border-turquesa px-6 py-2 w-full rounded focus:border-turquesa focus:ring focus:ring-turquesa focus:ring-opacity-5"
                 name="search" placeholder="buscar..." :value="modelValue"
-                @input="$emit('update:modelValue', $event.target.value)" />
-                <Icon name="search" class="w-4 h-4 absolute right-3 top-3 fill-textColor" />
+                @input="$emit('update:modelValue', $event.target.value)" :id="id" />
+            <Icon name="search" class="w-4 h-4 absolute right-2 top-12 lg:right-5 fill-turquesa" />
         </div>
-        <button class="ml-3  hover:text-cyan-600 text-sm focus:text-cyan-700" type="button"
-            @click="$emit('reset')">Reset</button>
-    </div>
-
 </template>
