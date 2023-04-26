@@ -12,7 +12,6 @@ class ResidenteFactory extends Factory
     public function definition()
     {
         
-        
         return [
             'foto' => $this->faker->imageUrl(150, 150),
             'fecha_ingreso' => $this->faker->date(),

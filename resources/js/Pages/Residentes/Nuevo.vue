@@ -30,15 +30,15 @@ export default {
             sexo: "",
             direccion: "",
             ciudade_id: "",
-
             foto: "",
             fecha_ingreso: "",
             estado: ""
         });
 
         const guardar = async () => {
-            console.log(form)
-            form.post(route('residentes.store'), form);
+            form.post(route('residentes.store'),{
+                forceFormData: true
+            } );
         }
 
 
@@ -58,10 +58,10 @@ export default {
             <span class="text-turquesa drop-shadow-md">Crear Residente</span>
         </h1>
         <div class="max-w-4xl overflow-hidden pt-2">
-            <form>
+            <form @submit.prevent="guardar">
                 <div class="py-3 px-3 flex flex-wrap bg-white border rounded-md">
                     <text-input type="file" label="Foto" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="foto"
-                        v-model="form.foto" :error="errors.foto" />
+                        :error="errors.foto" @input="form.foto = $event.target.files[0]" />
                     <text-input type="date" label="Fecha Ingreso" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="fecha_ingreso"
                         v-model="form.fecha_ingreso" :error="errors.fecha_ingreso" />
 
@@ -101,7 +101,7 @@ export default {
                         <Link type="button" :href="route('residentes.index')" class="btn-cancelar">
                         <span class="text-white font-bold">Cancelar</span>
                         </Link>
-                        <button class="btn-indigo mx-1" type="submit" @click.prevent="guardar()">
+                        <button class="btn-indigo mx-1" type="submit">
                             Crear Residente
                         </button>
                     </div>
@@ -113,102 +113,3 @@ export default {
 </template>
 <style></style>
 
-
-<!-- <template>
-    <div>
-        <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
-            <form>
-                <div class="flex flex-wrap -mb-8 -mr-6 p-8">
-                    
-                    
-                </div>
-
-                <div
-                    class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
-                >
-                    
-                    
-                    
-                </div>
-            </form>
-        </div>
-    </div>
-</template> -->
-
-<!-- <script>
-import Layout from "../../Shared/Layout.vue";
-import TextInput from "../../Shared/TextInput.vue";
-import SelectInput from "../../Shared/SelectInput.vue";
-import LoadingButton from "../../Shared/LoadingButton.vue";
-import { Head, Link } from "@inertiajs/inertia-vue3";
-import { reactive, ref } from "vue";
-import { useForm } from "@inertiajs/inertia-vue3";
-
-//import axios from "axios";
-
-export default {
-    components: {
-        Head,
-        Link,
-        TextInput,
-        LoadingButton,
-        SelectInput,
-      
-    },
-
-    layout: Layout,
-
-    props: {
-        errors: Object,
-        ciudades: Object
-    },
-
-    setup() {
-        // const test = ref("");
-
-        const nombres = ref("");
-        const apellidos = ref("");
-        const ci_numero = ref("");
-        const fecha_nacimiento = ref("");
-        const telefono = ref("");
-        const edad = ref("");
-        const sexo = ref("");
-        const direccion = ref("");
-        const ciudade_id = ref("");
-
-        const foto = ref("");
-        const fecha_ingreso = ref("");
-        const estado = ref("");
-
-        const personas = useForm({
-            nombres: "",
-            apellidos: "",
-            ci_numero: "",
-            fecha_nacimiento: "",
-            telefono: "",
-            edad: "",
-            sexo: "",
-            direccion: "",
-            ciudade_id: "",
-
-            foto: "",
-            fecha_ingreso: "",
-            estado: "",
-
-            residentes: [],
-        });
-
-   
-
-      
-
-        return {
-            personas,
-
-            guardar,
-        };
-    },
-}; 
-</script>
-
-<style></style>-->

@@ -9,7 +9,7 @@ export default {
 
     setup() {
         const showFilters = ref(false);
-
+       
         return { showFilters }
     }
 }
@@ -22,7 +22,8 @@ export default {
                     <Icon name="filter" class="inline w-8 h-8 fill-indigo-400 group-hover:fill-softIndigo" />
                     <span class="capitalize text-sm font-bold text-indigo-400 group-hover:text-softIndigo">filtrar</span>
                 </div>
-                <Icon :name="showFilters ? 'up' : 'down'" class="w-5 h-5 inline fill-indigo-400 group-hover:fill-softIndigo" />
+                <Icon :name="showFilters ? 'up' : 'down'"
+                    class="w-5 h-5 inline fill-indigo-400 group-hover:fill-softIndigo" />
             </button>
         </div>
         <transition name="slide">

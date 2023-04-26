@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreResidente extends FormRequest
+class ResidenteRequest extends FormRequest
 {
 
     public function authorize()
@@ -25,7 +25,7 @@ class StoreResidente extends FormRequest
             'sexo' => 'required',
             'direccion' => 'required|max:200',
             'ciudade_id' => 'required',
-            'foto' => 'nullable',
+            'foto' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
             'fecha_ingreso' => 'required',
             'estado' => 'required',
         ];

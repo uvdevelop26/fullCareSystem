@@ -25,7 +25,8 @@ module.exports = {
                 'wild-caribean': '#1dd1a1',
                 'softIndigo': '#6C63FF',
                 'textColor': '#A7A9A8',
-                'fondColor': '#F1F1F1'
+                'fondColor': '#F1F1F1',
+                'turquesa': '#35CDBE'
             },
 
             width: {

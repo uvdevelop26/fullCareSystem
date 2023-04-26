@@ -4,11 +4,10 @@ import { Head, Link } from "@inertiajs/inertia-vue3";
 import SearchInput from '../../Shared/SearchInput.vue';
 import Icon from '../../Shared/Icon.vue';
 import Pagination from '../../Shared/Pagination.vue'
-/* import Card from '../../Shared/Card.vue'; */
+import Card from '../../Shared/Card.vue';
 import SelectInput from '../../Shared/SelectInput.vue';
 import Filters from '../../Shared/Filters.vue'
-import { computed } from 'vue';
-import { watchEffect, reactive, ref } from 'vue';
+import { watchEffect, reactive, computed } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 import { pickBy } from 'lodash';
 
@@ -21,7 +20,7 @@ export default {
         Link,
         Icon,
         Pagination,
-        /*     Card, */
+        Card,
         Icon,
         Head,
         SelectInput,
@@ -31,16 +30,22 @@ export default {
 
     props: {
         residentes: Array,
-        residentesData: Array,
         ciudades: Array,
         filters: Object
 
     },
     setup(props) {
-        const residentesData = props.residentesData;
 
+        //PARA MOSTRAR IMAGEN
+        const urlbase = (url) => {
+            if (url.includes('https')) {
+                return url;
+            } else {
+                return url.replace('public/', 'storage/')
+            }
+        }
 
-
+        //BUSQUEDA
         const form = reactive({
             search: props.filters.search,
             search_ciudad: props.filters.search_ciudad,
@@ -53,43 +58,28 @@ export default {
             Inertia.replace(route('residentes.index', Object.keys(query).length ? query : {}))
         });
 
+        //LIMPIAR CAMPOS DE BUSQUEDA
         const limpiarCampos = () => {
+
             form.search = null;
             form.search_ciudad = '';
+
             form.search_estado = '';
             form.search_sexo = '';
         }
 
+        //ELIMINAR RESIDENTE
 
-        //info para mostrar en las cards -  puede ser reactive nomas en vez de computed
-        const getInfoData = computed(() => {
-            const titleg = 'residentes por genero';
-            const women = residentesData.filter(item => item.persona.sexo === 'femenino').length;
-            const men = residentesData.filter(item => item.persona.sexo === 'masculino').length;
-            const total = women + men;
+        const eliminarResidente = (data) => {
+            data._method = "DELETE";
+            Inertia.post('/residentes/' + data.id, data);
+        }
 
-            const titlee = 'residentes por estado';
-            const active = residentesData.filter(item => item.estado === 'Activo').length;
-            const inactive = residentesData.filter(item => item.estado === 'Inactivo').length;
+        //INFO PARA CARD - USAR REACTIVE O COMPUTED
 
-            return [
-                {
-                    id: 1, title: titleg, info: [
-                        { name: 'mujeres', canti: women },
-                        { name: 'hombres', canti: men },
-                        { name: 'total', canti: total }
-                    ]
-                },
-                {
-                    id: 2, title: titlee, info: [
-                        { name: 'activos', canti: active },
-                        { name: 'inactivos', canti: inactive }
-                    ]
-                }
-            ]
-        })
 
-        return { getInfoData, form, limpiarCampos }
+
+        return { form, limpiarCampos, urlbase, eliminarResidente }
     }
 
 
@@ -119,23 +109,23 @@ export default {
                         <search-input id="nombre" label="Nombres/Apellidos/CI" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
                             v-model="form.search" />
                         <select-input id="ciudades" label="Ciudad" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
-                        v-model="form.search_ciudad">
-                        <option :value="null" />
-                        <option v-for="ciudad in ciudades" :key="ciudad.id" :value="ciudad.id">
-                            {{ ciudad.nombre_ciudad }}
-                        </option>
-                    </select-input>
-                    <select-input id="estado" label="Estado" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
-                        v-model="form.search_estado">
-                        <option :value="null" />
-                        <option value="activo">
-                            Activo
-                        </option>
-                        <option value="inactivo">
-                            Inactivo
-                        </option>
-                    </select-input>
-                    <select-input id="sexo" label="Sexo" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
+                            v-model="form.search_ciudad">
+                            <option :value="null" />
+                            <option v-for="ciudad in ciudades" :key="ciudad.id" :value="ciudad.id">
+                                {{ ciudad.nombre_ciudad }}
+                            </option>
+                        </select-input>
+                        <select-input id="estado" label="Estado" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
+                            v-model="form.search_estado">
+                            <option :value="null" />
+                            <option value="activo">
+                                Activo
+                            </option>
+                            <option value="inactivo">
+                                Inactivo
+                            </option>
+                        </select-input>
+                        <select-input id="sexo" label="Sexo" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
                             v-model="form.search_sexo">
                             <option :value="null" />
                             <option value="femenino">
@@ -147,7 +137,7 @@ export default {
                         </select-input>
                     </div>
                     <div class="py-3 text-right">
-                        <button class="btn-indigo mx-1" type="button" @click="limpiarCampos()">
+                        <button class="btn-indigo mx-1 hover:bg-softIndigo" type="button" @click="limpiarCampos()">
                             Limpiar
                         </button>
                     </div>
@@ -174,10 +164,12 @@ export default {
                     </tr>
                 </thead>
                 <transition-group appear tag="tbody" name="list">
-                    <tr class="text-center shadow group" v-for="residente in residentes" :key="residente.id">
-                        <td class="py-1 px-1 bg-white group-hover:bg-fondColor rounded-l-xl">
-                            <img :src="residente.foto" class="w-12 h-12 border-2 border-indigo-400 rounded-full mx-auto"
-                                alt="foto">
+                    <tr class="text-center shadow group" v-for="residente in residentes" :key="residente.id"
+                        v-if="residentes.length">
+                        <td class="py-1 px-1 bg-white group-hover:bg-fondColor rounded-xl">
+                            <div class="inline-block h-12 w-12 border-2 border-softIndigo rounded-full overflow-hidden">
+                                <img :src="urlbase(residente.foto)" class="w-full h-full object-cover" alt="foto">
+                            </div>
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
                             {{ residente.persona.nombres }}
@@ -202,38 +194,44 @@ export default {
                             </span>
                         </td>
                         <td class="py-2 px-2 rounded-r-xl bg-white group-hover:bg-fondColor">
-                            <Link class="inline-block bg-fondColor px-3 py-3 mr-2 rounded-full hover:shadow-md">
-                            <Icon name="edit" class="w-3 h-3 fill-textColor" />
-                            </Link>
-                            <Link class="inline-block px-3 py-3 rounded-full bg-softIndigo hover:shadow-md">
-                            <Icon name="delete" class="w-3 h-3 fill-white" />
-                            </Link>
+                            <div class="w-full h-full flex items-center">
+                                <Link class="inline-block bg-fondColor px-3 py-3 mr-2 rounded-full hover:shadow-md"
+                                    :href="route('residentes.edit', residente.id)">
+                                <Icon name="edit" class="w-3 h-3 fill-textColor" />
+                                </Link>
+                                <button class="inline-block px-3 py-3 rounded-full bg-softIndigo hover:shadow-md"
+                                    @click="eliminarResidente(residente)">
+                                    <Icon name="delete" class="w-3 h-3 fill-white" />
+                                </button>
+                            </div>
                         </td>
+                    </tr>
+                    <tr v-else class="text-center shadow group">
+                        <span class="inline-block py-2 text-indigo-400 text-md">No se encuentran resultados</span>
                     </tr>
                 </transition-group>
             </table>
         </div>
         <!-- PAGINACIÓN -->
-        <!--  <pagination class="mt-6" :links="residentes.links" /> -->
+        <!--   <pagination class="mt-6" :links="residentes.links" /> -->
         <!-- INFORMACIÓN ADICIONAL -->
-        <!--  <div class="py-8 md:flex md:justify-evenly md:gap-3 md:overflow-x-auto">
-                                <Card v-for="item in getInfoData" :key="item.id">
-                                    <template #icon-header>
-                                        <div class="bg-teal-50 inline-block border border-turquesa p-4 rounded-md">
-                                            <Icon name="residentes" class="w-7 h-7 fill-turquesa" />
-                                        </div>
-                                    </template>
-                                    <div class="">
-                                        <h2 class="font-bold text-lg text-turquesa capitalize">{{ item.title }}</h2>
-                                        <ul class="flex">
-                                            <li v-for="info in item.info" :key="info.name" class="pr-2">
-                                                <span class="text-sm capitalize mr-1">{{ info.name }}:</span>
-                                                <span class="text-sm font-bold text-md">{{ info.canti }}</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </Card>
-                            </div> -->
+        <div class="py-8 md:flex md:justify-evenly md:gap-3 md:overflow-x-auto">
+            <!-- <Card>
+                <template #icon-header>
+                    <div class="bg-indigo-50 inline-block border border-indigo-400 p-4 rounded-md">
+                        <Icon name="residentes" class="w-7 h-7 fill-indigo-400" />
+                    </div>
+                </template>
+                <div class="">
+                    <h2 class="font-bold text-lg text-turquesa capitalize"></h2>
+                    <ul class="flex">
+                        <li class="pr-2">
+                            li
+                        </li>
+                    </ul>
+                </div>
+            </Card> -->
+        </div>
     </div>
 </template>
 <style scoped>

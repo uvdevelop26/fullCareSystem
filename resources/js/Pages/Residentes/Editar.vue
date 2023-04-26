@@ -1,210 +1,32 @@
-<template>
-    <div>
-        <Head title="Editar Residente" />
-        <h1 class="mb-5 text-2xl font-bold text-cyan-900">Editar Residente</h1>
-        <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
-            <form>
-                <div class="flex flex-wrap -mb-8 -mr-6 p-8">
-                    <text-input
-                        v-model="residentes.nombres"
-                        type="text"
-                        label="Nombres"
-                        class="pb-7 pr-6 w-full lg:w-1/2"
-                        :id="nombres"
-                        name="nombres"
-                        :error="errors.nombres"
-                    />
-                    <!-- v-model="personas.nombres" -->
-                    <text-input
-                        v-model="residentes.apellidos"
-                        type="text"
-                        label="Apellidos"
-                        class="pb-7 pr-6 w-full lg:w-1/2"
-                        :id="apellidos"
-                        name="apellidos"
-                        :error="errors.apellidos"
-                    />
-                    <!-- v-model="personas.apellidos" -->
-                    <text-input
-                        v-model="residentes.ci_numero"
-                        type="text"
-                        label="CI"
-                        class="pb-7 pr-6 w-full lg:w-1/2"
-                        :id="ci_numero"
-                        name="ci_numero"
-                        :error="ci_numero"
-                    />
-                    <!-- v-model="personas.ci_numero" -->
-                    <text-input
-                        v-model="residentes.fecha_nacimiento"
-                        type="date"
-                        label="Fecha de Nacimiento"
-                        class="pb-7 pr-6 w-full lg:w-1/2"
-                        :id="fecha_nacimiento"
-                        name="fecha_nacimiento"
-                        :error="errors.fecha_nacimiento"
-                    />
-                    <!-- v-model="personas.fecha_nacimiento" -->
-                    <text-input
-                        v-model="residentes.telefono"
-                        type="text"
-                        label="Teléfono"
-                        class="pb-7 pr-6 w-full lg:w-1/2"
-                        :id="telefono"
-                        name="telefono"
-                        :error="errors.telefono"
-                    />
-                    <!-- v-model="persona.telefono" -->
-                    <text-input
-                        v-model="residentes.edad"
-                        type="number"
-                        label="edad"
-                        class="pb-7 pr-6 w-full lg:w-1/2"
-                        :id="edad"
-                        name="edad"
-                        :error="errors.edad"
-                    />
-                    <!-- v-model="persona.edad" -->
-                    <select-input
-                        class="pb-8 pr-6 w-full lg:w-1/2"
-                        label="Sexo"
-                        :error="errors.sexo"
-                        v-model="residentes.sexo"
-                    >
-                        <option :value="null" />
-                        <!-- :value="persona.sexo" -->
-                        <option value="Femenino">Femenino</option>
-                        <option value="Masculino">Masculino</option>
-                    </select-input>
-                    <!-- v-model="personas.sexo" -->
-                    <text-input
-                        v-model="residentes.direccion"
-                        type="text"
-                        label="Direccion"
-                        class="pb-7 pr-6 w-full lg:w-1/2"
-                        :id="direccion"
-                        name="direccion"
-                        :error="errors.direccion"
-                    />
-                    <!-- v-model="persona.direccion" -->
-                    <select-input
-                        v-model="residentes.ciudade_id"
-                        class="pb-8 pr-6 w-full lg:w-1/2"
-                        label="Ciudad"
-                        :error="errors.ciudade_id"
-                    >
-                        <option :value="null" />
-                        <option v-for="ciudade in ciudades" 
-                        :value="ciudade.id"
-                       >
-                        {{ciudade.nombre_ciudad}}
-                    </option>
-                        
-                    </select-input>
-                    <!-- v-model="persona.ciudade_id" -->
-                    <text-input
-                        v-model="residentes.foto"
-                        type="text"
-                        label="Foto"
-                        class="pb-7 pr-6 w-full lg:w-1/2"
-                        :id="foto"
-                        name="foto"
-                        :error="errors.foto"
-                    />
-                    <!-- v-model="residente[0].foto" -->
-                    <text-input
-                        v-model="residentes.fecha_ingreso"
-                        type="date"
-                        label="Fecha Ingreso"
-                        class="pb-7 pr-6 w-full lg:w-1/2"
-                        :id="fecha_ingreso"
-                        name="fecha_ingreso"
-                        :error="errors.fecha_ingreso"
-                    />
-                    <!-- v-model="residente[0].fecha_ingreso" -->
-                    <select-input
-                        v-model="residentes.estado"
-                        class="pb-8 pr-6 w-full lg:w-1/2"
-                        label="Estado"
-                        :error="errors.estado"
-                    >
-                        <option :value="null" />
-                        <option value="Activo">Activo</option>
-                        <option value="Inactivo">Inactivo</option>
-                    </select-input>
-                    ><!-- v-model="residente[0].estado" -->
-                </div>
-                <div
-                    class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
-                >
-                    <Link
-                        type="button"
-                        :href="route('residentes.index')"
-                        class="btn-cancelar"
-                    >
-                        <span class="text-white font-bold">Cancelar</span>
-                    </Link>
-                    <!--  <loading-button class="btn-indigo mx-1" type="submit">Crear Ingreso</loading-button>  -->
-                    <button
-                        class="btn-indigo mx-1"
-                        @click.prevent="actualizarResidente()"
-                        type="submit"
-                    >
-                        Actualizar Residente
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</template>
-
 <script>
-import Layout from "../../Shared/Layout.vue";
-import TextInput from "../../Shared/TextInput.vue";
+import LayoutApp from '../../Layouts/LayoutApp.vue';
+import Icon from '../../Shared/Icon.vue';
+import TextInput from '../../Shared/TextInput.vue';
 import SelectInput from "../../Shared/SelectInput.vue";
-/* import LoadingButton from "../../Shared/LoadingButton.vue"; */
-import { Head, Link } from "@inertiajs/inertia-vue3";
-import { reactive, ref } from "vue";
-import { useForm } from "@inertiajs/inertia-vue3";
+import { Link, Head } from '@inertiajs/inertia-vue3';
+import { useForm } from '@inertiajs/inertia-vue3';
 
 export default {
+
+    layout: LayoutApp,
+
     components: {
-        Head,
-        Link,
+        Icon,
         TextInput,
         SelectInput,
+        Link,
+        Head,
     },
 
     props: {
-        residente: Object,
-        persona: Object,
-        ciudades: Object,
-        errors: Object,
+        residente: Array,
+        persona: Array,
+        ciudades: Array,
+        errors: Object
     },
 
-    layout: Layout,
-
     setup(props) {
-        const residentes = useForm({
-            /* const personas = useForm({
-           _method: "PUT",
-           id: props.persona.id,
-           nombres: props.persona.nombres,
-           apellidos: props.persona.apellidos,
-           ci_numero: props.persona.ci_numero,
-           fecha_nacimiento: props.persona.fecha_nacimiento,
-           telefono: props.persona.telefono,
-           edad: props.persona.edad,
-           sexo: props.persona.sexo,
-           direccion: props.persona.direccion,
-           ciudade_id: props.persona.ciudade_id,
-
-           id_residente: props.residente[0].id,
-           foto: props.residente[0].foto,
-           fecha_ingreso: props.residente[0].fecha_ingreso,
-           estado: props.residente[0].estado
-
-       });*/
+        const form = useForm({
             _method: "PUT",
             id: props.persona.id,
             nombres: props.persona.nombres,
@@ -217,27 +39,94 @@ export default {
             direccion: props.persona.direccion,
             ciudade_id: props.persona.ciudade_id,
 
-            id_residente: props.residente.id,
-            foto: props.residente.foto,
+            residente_id: props.residente.id,
+            foto: null,
             fecha_ingreso: props.residente.fecha_ingreso,
             estado: props.residente.estado,
+            persona_id: props.residente.persona_id
         });
 
-        const actualizarResidente = () => {
-            residentes.post(
-                route("residentes.update", residentes.id_residente),
-                {
-                    preserveScroll: true,
-                }
-            );
+        const onImageChange = (e) => {
+            form.foto = e.target.files[0];
+        }
 
-            /*  personas.id_residente = props.residente[0].id;
-             personas.foto = props.residente[0].foto;
-             personas.fecha_ingreso = props.residente[0].fecha_ingreso;
-             personas.estado = props.residente[0].estado;*/
-        };
+        const actualizar = async () => {
+            form.post(route('residentes.update', form.residente_id), {
+                preserveScroll: true,
+                forceFormData: true
+            })
+        }
 
-        return { residentes, actualizarResidente };
-    },
-};
+        return { form, actualizar, onImageChange }
+
+    }
+
+}
 </script>
+
+<template>
+    <div>
+
+        <Head title="Editar Residente" />
+        <h1 class="py-3 px-2 max-w-4xl flex items-center gap-4 bg-white rounded-md border text-2xl">
+            <div class="inline-block p-2 bg-teal-50 border border-turquesa rounded-md">
+                <Icon name="residentes" class="w-7 h-7 fill-turquesa" />
+            </div>
+            <span class="text-turquesa drop-shadow-md">Editar Residente</span>
+        </h1>
+        <div class="max-w-4xl overflow-hidden pt-2">
+            <form @submit.prevent="actualizar">
+                <div class="py-3 px-3 flex flex-wrap bg-white border rounded-md">
+                    <text-input type="file" label="Foto" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="foto"
+                        @change="onImageChange" accept="image/*" />
+                    <text-input type="date" label="Fecha Ingreso" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="fecha_ingreso"
+                        v-model="form.fecha_ingreso" :error="errors.fecha_ingreso" />
+                    <text-input type="text" label="Nombres" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="nombres"
+                        v-model="form.nombres" :error="errors.nombres" />
+                    <text-input type="text" label="Apellidos" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="apellidos"
+                        v-model="form.apellidos" :error="errors.apellidos" />
+                    <text-input type="text" label="CI" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="ci_numero"
+                        v-model="form.ci_numero" :error="errors.ci_numero" />
+                    <text-input type="date" label="Fecha de Nacimiento" class="pb-5 lg:pr-3 w-full lg:w-1/2"
+                        :id="fecha_nacimiento" v-model="form.fecha_nacimiento" :error="errors.fecha_nacimiento" />
+                    <text-input type="text" label="Teléfono" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="telefono"
+                        v-model="form.telefono" :error="errors.telefono" />
+                    <text-input type="number" label="edad" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="edad"
+                        v-model="form.edad" :error="errors.edad" />
+                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Sexo" :id="sexo" v-model="form.sexo"
+                        :error="errors.sexo">
+                        <option :value="null" />
+                        <option value="Femenino">Femenino</option>
+                        <option value="Masculino">Masculino</option>
+                    </select-input>
+                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Ciudad" :id="ciudad" v-model="form.ciudade_id"
+                        :error="errors.ciudade_id">
+                        <option :value="null" />
+                        <option v-for="ciudade in ciudades" :value="ciudade.id">
+                            {{ ciudade.nombre_ciudad }}
+                        </option>
+                    </select-input>
+                    <text-input type="text" label="Dirección" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="direccion"
+                        v-model="form.direccion" :error="errors.direccion" />
+                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Estado" :id="estado" v-model="form.estado"
+                        :error="errors.estado">
+                        <option :value="null" />
+                        <option value="Activo">Activo</option>
+                        <option value="Inactivo">Inactivo</option>
+                    </select-input>
+                    <div class="py-4 lg:pr-2 flex w-full items-center justify-end bg-white border-t">
+                        <Link type="button" :href="route('residentes.index')" class="btn-cancelar">
+                        <span class="text-white font-bold">Cancelar</span>
+                        </Link>
+                        <button class="btn-indigo mx-1" type="submit">
+                            Editar Residente
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</template>
+
+
+        
