@@ -1,125 +1,213 @@
-<template>
-    <div>
-
-        <Head title="Empleados" />
-        <h1 class="mb-7 text-3xl font-bold text-cyan-600">Empleados</h1>
-        <div class="flex items-center justify-between mb-6">
-            <Link class="btn-nuevo" type="button" :href="route('empleados.create')"  v-if="can.create">
-            <span class="text-white font-bold">Nuevo Empleado</span>
-            </Link>
-        </div>
-        <div class="bg-white rounded-md shadow overflow-x-auto">
-            <table class="w-full whitespace-nowrap text-sm">
-                <thead>
-                    <tr class="text-center text-sm uppercase">
-                        <th class="py-3 px-4">Nombres</th>
-                        <th class="py-3 px-4">Apellidos</th>
-                        <th class="py-3 px-4">CI</th>
-                        <th class="py-3 px-4">Fecha Nacimiento</th>
-                        <th class="py-3 px-4">Teléfono</th>
-                        <th class="py-3 px-4">Edad</th>
-                        <th class="py-3 px-4">Sexo</th>
-                        <th class="py-3 px-4">Direccion</th>
-                        <th class="py-3 px-4">Ciudad</th>
-                        <th class="py-3 px-4">Fecha Ingreso</th>
-                        <th class="py-3 px-4">Email</th>
-                        <th class="py-3 px-4">Profesion</th>
-                        <th class="py-3 px-4">Sección</th>
-                        <th class="py-3 px-4" v-if="can.edit || can.delete">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="empleado in empleados.data" :key="empleado.id"
-                        class="text-center text-sm text-gray-600 hover:bg-gray-100" :class="{}">
-                        <td class="border-t py-3">
-                            {{ empleado.persona.nombres }}
-                        </td>
-                        <td class="border-t py-3">
-                            {{ empleado.persona.apellidos }}
-                        </td>
-                        <td class="border-t py-3">
-                            {{ empleado.persona.ci_numero }}
-                        </td>
-                        <td class="border-t py-3">
-                            {{ empleado.persona.fecha_nacimiento }}
-                        </td>
-                        <td class="border-t py-3">
-                            {{ empleado.persona.telefono }}
-                        </td>
-                        <td class="border-t py-3">
-                            {{ empleado.persona.edad }}
-                        </td>
-                        <td class="border-t py-3">
-                            {{ empleado.persona.sexo }}
-                        </td>
-                        <td class="border-t py-3">
-                            {{ empleado.persona.direccion }}
-                        </td>
-                        <td class="border-t py-3">
-                            {{ empleado.persona.ciudade.nombre_ciudad }}
-                        </td>
-                        <td class="border-t py-3">
-                            {{ empleado.fecha_ingreso }}
-                        </td>
-                        <td class="border-t py-3">
-                            {{ empleado.email }}
-                        </td>
-                        <td class="border-t py-3">
-                            {{ empleado.profesion }}
-                        </td>
-                        <td class="border-t py-3">
-                            {{ empleado.seccion.nombre_seccion }}
-                        </td>
-                        <td class="border-t py-3" v-if="can.edit || can.delete">
-                            <Link class="mx-1 inline-block"
-                                :href="route('empleados.edit', empleado.id)" v-if="can.edit">
-                            <icon name="edit" class="w-4 h-4 fill-gray-600 hover:fill-cyan-800" />
-                            </Link>
-                            <button class="mx-1"
-                                @click="eliminarEmpleado(empleado)" v-if="can.delete">
-                                <icon name="delete" class="w-4 h-4 fill-gray-600 hover:fill-cyan-800" />
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <pagination class="mt-6" :links="empleados.links" />
-        </div>
-    </div>
-</template>
 <script>
-import Layout from '../../Shared/Layout.vue'
-import { Head, Link } from '@inertiajs/inertia-vue3'
+import LayoutApp from '../../Layouts/LayoutApp.vue';
+import { Head, Link } from '@inertiajs/inertia-vue3';
+import SearchInput from '../../Shared/SearchInput.vue';
 import Icon from '../../Shared/Icon.vue'
 import Pagination from "../../Shared/Pagination.vue";
-import { Inertia } from "@inertiajs/inertia";
+import SelectInput from '../../Shared/SelectInput.vue';
+import Filters from '../../Shared/Filters.vue';
+import { watchEffect, reactive } from 'vue';
+import { Inertia } from '@inertiajs/inertia';
+import { pickBy } from 'lodash';
 
 export default {
+
+    layout: LayoutApp,
+
     components: {
         Head,
         Link,
         Icon,
-        Pagination
-
+        Pagination,
+        SelectInput,
+        Filters,
+        SearchInput
     },
 
-    layout: Layout,
+
 
     props: {
-        empleados: Object,
-        can: Object
+        empleados: Array,
+        ciudades: Array,
+        seccions: Array,
+        filters: Object
     },
 
     setup(props) {
+
+        //BUSQUEDA
+        const form = reactive({
+            search: props.filters.search,
+            search_ciudad: props.filters.search_ciudad,
+            search_seccion: props.filters.search_seccion
+
+        })
+
+        watchEffect(() => {
+            const query = pickBy(form);
+            Inertia.replace(route('empleados.index', Object.keys(query).length ? query : {}));
+        });
+
+        //ELIMINAR EMPLEADO
         const eliminarEmpleado = (data) => {
             data._method = "DELETE";
-            Inertia.post("/empleados/" + data.id, data);
-
+            Inertia.post('/empleados/' + data.id, data)
         }
 
-        return { eliminarEmpleado }
+
+        return { form, eliminarEmpleado }
     }
 
 }
-
 </script>
+<template>
+    <div>
+
+        <Head title="Empleados" />
+        <!-- HEADER -->
+        <div class="py-3 mb-3 max-w-7xl border-b border-turquesa flex justify-between">
+            <h1 class="uppercase">
+                <span class="text-turquesa text-2xl font-semibold">Empleados</span>
+            </h1>
+            <Link :href="route('empleados.create')"
+                class="px-5 py-1 md:px-12 bg-indigo-400 rounded-xl text-white hover:shadow-md hover:bg-softIndigo ">
+            <Icon name="plus" class="w-4 h-4 inline fill-white mr-1" />
+            Nuevo
+            </Link>
+        </div>
+        <!-- FILTER AREA  -->
+        <div class="py-2">
+            <filters>
+                <div class="py-3 px-3 border border-turquesa rounded-md">
+                    <div class="lg:flex lg:flex-wrap">
+                        <search-input id="nombre" label="Nombres/Apellidos/CI" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
+                            v-model="form.search" />
+                        <select-input id="ciudades" label="Ciudad" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
+                            v-model="form.search_ciudad">
+                            <option :value="null" />
+                            <option v-for="ciudad in ciudades" :key="ciudad.id" :value="ciudad.id">
+                                {{ ciudad.nombre_ciudad }}
+                            </option>
+                        </select-input>
+                        <select-input id="ciudades" label="Sección" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
+                            v-model="form.search_seccion">
+                            <option :value="null" />
+                            <option v-for="seccion in seccions" :key="seccion.id" :value="seccion.id">
+                                {{ seccion.nombre_seccion }}
+                            </option>
+                        </select-input>
+                    </div>
+                </div>
+            </filters>
+        </div>
+
+        <!-- TABLE -->
+        <div class="overflow-x-auto py-4 max-w-7xl">
+            <table
+                class="w-full whitespace-nowrap border-separate border-spacing-y-2 text-sm rounded-md overflow-hidden shadow-md">
+                <thead class="">
+                    <tr class="capitalize shadow">
+                        <th class="py-3 px-4 bg-turquesa rounded-l-xl text-white font-bold">Nombres</th>
+                        <th class="py-3 px-4 bg-turquesa text-white font-bold">Cédula </th>
+                        <th class="py-3 px-4 bg-turquesa text-white font-bold">Nacimiento</th>
+                        <th class="py-3 px-4 bg-turquesa text-white font-bold">Telefono</th>
+                        <th class="py-3 px-4 bg-turquesa text-white font-bold">edad</th>
+                        <th class="py-3 px-4 bg-turquesa text-white font-bold">sexo</th>
+                        <th class="py-3 px-4 bg-turquesa text-white font-bold">direccion</th>
+                        <th class="py-3 px-4 bg-turquesa text-white font-bold">Ingreso</th>
+                        <th class="py-3 px-4 bg-turquesa text-white font-bold">email</th>
+                        <th class="py-3 px-4 bg-turquesa text-white font-bold">Profesion/Seccion</th>
+                        <th class="py-3 px-4 bg-turquesa rounded-r-xl text-white font-bold">Acciones</th>
+                    </tr>
+                </thead>
+                <transition-group appear tag="tbody" name="list">
+                    <tr class="text-center shadow group" v-for="empleado in empleados" :key="empleado.id"
+                        v-if="empleados.length">
+                        <td class="py-1 px-1 bg-white group-hover:bg-fondColor rounded-l-xl">
+                            {{ empleado.persona.nombres }}
+                            {{ empleado.persona.apellidos }}
+                        </td>
+                        <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
+                            {{ empleado.persona.ci_numero }}
+                        </td>
+                        <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
+                            {{ empleado.persona.fecha_nacimiento }}
+                        </td>
+                        <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
+                            {{ empleado.persona.telefono }}
+                        </td>
+                        <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
+                            {{ empleado.persona.edad }}
+                        </td>
+                        <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
+                            {{ empleado.persona.sexo }}
+                        </td>
+                        <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
+                            <span class="block text-indigo-400 font-semibold">
+                                {{ empleado.persona.ciudade.nombre_ciudad }}
+                            </span>
+                            {{ empleado.persona.direccion }}
+                        </td>
+                        <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
+                            {{ empleado.fecha_ingreso }}
+                        </td>
+                        <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
+                            {{ empleado.email }}
+                        </td>
+                        <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
+                            <span class="block text-indigo-400 font-semibold">
+                                {{ empleado.seccion.nombre_seccion }}
+                            </span>
+                            {{ empleado.profesion }}
+                        </td>
+                        <td class="py-2 px-2 rounded-r-xl bg-white group-hover:bg-fondColor">
+                            <div class="w-full h-full flex items-center">
+                                <Link class="inline-block bg-fondColor px-3 py-3 mr-2 rounded-full hover:shadow-md"
+                                    :href="route('empleados.edit', empleado.id)">
+                                <Icon name="edit" class="w-3 h-3 fill-textColor" />
+                                </Link>
+                                <button class="inline-block px-3 py-3 rounded-full bg-softIndigo hover:shadow-md"
+                                    @click="eliminarEmpleado(empleado)">
+                                    <Icon name="delete" class="w-3 h-3 fill-white" />
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr v-else class="text-center shadow group">
+                        <span class="inline-block py-2 text-indigo-400 text-md">No se encuentran resultados</span>
+                    </tr>
+                </transition-group>
+            </table>
+        </div>
+    </div>
+</template>
+<style scoped>
+/* LIST TRANSITIONS */
+.list-enter-from {
+    opacity: 0;
+    transform: translateX(-60px);
+}
+
+.list-enter-to {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.list-enter-active {
+    transition: all 0.4s ease;
+}
+
+.list-leave-from {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.list-leave-to {
+    opacity: 0;
+    transform: translateX(-60px);
+}
+
+.list-leave-active {
+    transition: all 0.4s ease;
+}
+</style>

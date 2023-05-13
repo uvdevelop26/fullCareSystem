@@ -1,3 +1,53 @@
+<script>
+import LayoutApp from "../../Layouts/LayoutApp.vue";
+import Icon from "../../Shared/Icon.vue";
+import TextInput from "../../Shared/TextInput.vue";
+import SelectInput from "../../Shared/SelectInput.vue";
+import { Head, Link } from "@inertiajs/inertia-vue3";
+import { useForm } from "@inertiajs/inertia-vue3";
+
+
+export default {
+
+    layout: LayoutApp,
+
+
+    components: {
+        Head,
+        Link,
+        TextInput,
+        SelectInput,
+        Icon
+    },
+
+
+
+    props: {
+        dias: Array,
+        errors: Object
+    },
+
+    setup() {
+
+        const form = useForm({
+            turno: "",
+            empleado_id: "",
+            dias: []
+
+        });
+
+        const guardar = async () => {
+            form.post(route('turnos.store'), form);
+        };
+
+
+        return {
+            form,
+            guardar
+        };
+    },
+};
+</script>
 <template>
     <div>
 
@@ -6,9 +56,10 @@
         <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
             <form>
                 <div class="flex flex-wrap -mb-8 -mr-6 p-8">
-                    <text-input v-model="form.empleado_id" type="text" label="Empleado"
-                        class="pb-7 pr-6 w-full lg:w-1/2" :id="empleado_id" name="empleado_id" :error="errors.empleado_id"/>
-                    <select-input v-model="form.turno" class="pb-8 pr-6 w-full lg:w-1/2" label="Turno" :error="errors.empleado_id">
+                    <text-input v-model="form.empleado_id" type="text" label="Empleado" class="pb-7 pr-6 w-full lg:w-1/2"
+                        :id="empleado_id" name="empleado_id" :error="errors.empleado_id" />
+                    <select-input v-model="form.turno" class="pb-8 pr-6 w-full lg:w-1/2" label="Turno"
+                        :error="errors.empleado_id">
                         <option :value="null" />
                         <option value="Mañana">Mañana</option>
                         <option value="Tarde">Tarde</option>
@@ -38,57 +89,3 @@
         </div>
     </div>
 </template>
-
-<script>
-
-import Layout from "../../Shared/Layout.vue";
-import TextInput from "../../Shared/TextInput.vue";
-import SelectInput from "../../Shared/SelectInput.vue";
-import { Head, Link } from "@inertiajs/inertia-vue3";
-import { reactive, ref } from "vue";
-import { useForm } from "@inertiajs/inertia-vue3";
-
-
-export default {
-    components: {
-        Head,
-        Link,
-        TextInput,
-        SelectInput,
-
-    },
-
-    layout: Layout,
-
-    props: {
-        dias: Object,
-        errors: Object
-    },
-
-    setup() {
-
-
-        const turno = ref("");
-        const empleado_id = ref("");
-        const dias = ref([]);
-
-
-        const form = useForm({
-            turno: "",
-            empleado_id: "",
-            dias: []
-
-        });
-
-        const guardar = async () => {
-            form.post(route('turnos.store'), form);
-        };
-
-
-        return {
-            form,
-            guardar
-        };
-    },
-};
-</script>

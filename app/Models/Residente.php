@@ -42,7 +42,7 @@ class Residente extends Model
   }
 
 
-//SCOPE PARA LAS BÚSQUEDAS
+  //SCOPE PARA LAS BÚSQUEDAS
   public function scopeFilter($query, array $filters)
   {
     $query->when($filters['search'] ?? null, function ($query, $search) {

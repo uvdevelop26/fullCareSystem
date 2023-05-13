@@ -11,7 +11,9 @@ return new class extends Migration
     {
         Schema::create('turnos', function (Blueprint $table) {
             $table->id();
-            $table->string('turno', 45);
+            $table->string('nombre_turnos', 45);
+            $table->time('hora_entrada');
+            $table->time('hora_salida');
             $table->unsignedBigInteger('empleado_id');
 
             $table->foreign('empleado_id')

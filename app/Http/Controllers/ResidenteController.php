@@ -29,8 +29,8 @@ class ResidenteController extends Controller
 
         return Inertia::render('Residentes/Index', [
             'residentes' => $residentes,
-            'filters' => $request->all($queries),
-            'ciudades' => $ciudades
+            'ciudades' => $ciudades,
+            'filters' => $request->all($queries)
         ]);
     }
 

@@ -9,15 +9,13 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class SeccionFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+
     public function definition()
     {
+        $seccions = ['cocina', 'enfermeria', 'ayudante', 'administrativo', 'otro'];
+
         return [
-            'nombre_seccion' => $this->faker->word(),
+            'nombre_seccion' => $this->faker->randomElement($seccions),
             'descripcion' => $this->faker->sentence(),
         ];
     }

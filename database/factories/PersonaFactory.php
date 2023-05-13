@@ -14,6 +14,8 @@ class PersonaFactory extends Factory
     
     public function definition()
     {
+        $sexos = ['femenino', 'masculino'];
+
         return [
             'nombres' => $this->faker->firstName(50),
             'apellidos' => $this->faker->lastName(50),
@@ -21,7 +23,7 @@ class PersonaFactory extends Factory
             'fecha_nacimiento' => $this->faker->date(),
             'telefono' => $this->faker->phoneNumber(20),
             'edad' => $this->faker->numberBetween(1, 100),
-            'sexo' => $this->faker->randomElement(['femenino', 'masculino']),
+            'sexo' => $this->faker->randomElement($sexos),
             'direccion' => $this->faker->sentence(),
             'ciudade_id' => Ciudade::all()->random()->id
         ];

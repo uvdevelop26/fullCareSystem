@@ -8,15 +8,16 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ResidenteFactory extends Factory
 {
-   
+
     public function definition()
     {
-        
+        $estados = ['activo', 'inactivo'];
+
         return [
             'foto' => $this->faker->imageUrl(150, 150),
             'fecha_ingreso' => $this->faker->date(),
-            'estado' => $this->faker->randomElement(['Activo', 'Inactivo']),
-            'persona_id' =>Persona::all()->random()->id,
+            'estado' => $this->faker->randomElement($estados),
+            'persona_id' => Persona::all()->random()->id,
         ];
     }
 }

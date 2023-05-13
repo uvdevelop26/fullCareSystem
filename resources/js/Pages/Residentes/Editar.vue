@@ -96,8 +96,8 @@ export default {
                     <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Sexo" :id="sexo" v-model="form.sexo"
                         :error="errors.sexo">
                         <option :value="null" />
-                        <option value="Femenino">Femenino</option>
-                        <option value="Masculino">Masculino</option>
+                        <option value="femenino">Femenino</option>
+                        <option value="masculino">Masculino</option>
                     </select-input>
                     <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Ciudad" :id="ciudad" v-model="form.ciudade_id"
                         :error="errors.ciudade_id">

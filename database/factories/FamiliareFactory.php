@@ -9,17 +9,16 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 class FamiliareFactory extends Factory
 {
-    
+
     public function definition()
-    {
-        $residente = Residente::all();
-        $persona = Persona::all();
+    {   
+        $parentezcos = ['hijo/a', 'hermano/a', 'sobrino/a', 'otro'];
 
         return [
-            'parentezco' => $this->faker->randomElement(['Hijo/a', 'Hermano/a', 'sobrino/a', 'otro']),
+            'parentezco' => $this->faker->randomElement($parentezcos),
             'email' => $this->faker->email(),
-            'residente_id' => $this->faker->numberBetween(1, $residente->count()),
-            'persona_id' => $this->faker->numberBetween(1, $persona->count())
+            'residente_id' => Residente::all()->random()->id,
+            'persona_id' => Persona::all()->random()->id
         ];
     }
 }

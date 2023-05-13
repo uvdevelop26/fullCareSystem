@@ -1,97 +1,34 @@
-<template>
-    <div>
-
-        <Head title="Familiares" />
-        <h1 class="mb-5 text-2xl font-bold text-cyan-900">Editar Familiar</h1>
-        <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
-            <form>
-                <div class="flex flex-wrap -mb-8 -mr-6 p-8">
-                    <text-input v-model="familiares.nombres" type="text" label="Nombres"
-                        class="pb-7 pr-6 w-full lg:w-1/2" :id="nombres" name="nombres" :error="errors.nombres" />
-                    <text-input v-model="familiares.apellidos" type="text" label="Apellidos"
-                        class="pb-7 pr-6 w-full lg:w-1/2" :id="apellidos" name="apellidos" :error="errors.apellidos" />
-                    <text-input v-model="familiares.ci_numero" type="text" label="CI" class="pb-7 pr-6 w-full lg:w-1/2"
-                        :id="ci_numero" name="ci_numero" :error="ci_numero" />
-                    <text-input v-model="familiares.fecha_nacimiento" type="date" label="Fecha de Nacimiento"
-                        class="pb-7 pr-6 w-full lg:w-1/2" :id="fecha_nacimiento" name="fecha_nacimiento"
-                        :error="errors.fecha_nacimiento" />
-                    <text-input v-model="familiares.telefono" type="text" label="Teléfono"
-                        class="pb-7 pr-6 w-full lg:w-1/2" :id="telefono" name="telefono" :error="errors.telefono" />
-                    <text-input v-model="familiares.edad" type="number" label="edad" class="pb-7 pr-6 w-full lg:w-1/2"
-                        :id="edad" name="edad" :error="errors.edad" />
-                    <select-input v-model="familiares.sexo" class="pb-8 pr-6 w-full lg:w-1/2" label="Sexo"
-                        :error="errors.sexo">
-                        <option :value="null" />
-                        <option value="Femenino">Femenino</option>
-                        <option value="Masculino">Masculino</option>
-                    </select-input>
-                    <text-input v-model="familiares.direccion" type="text" label="Direccion"
-                        class="pb-7 pr-6 w-full lg:w-1/2" :id="direccion" name="direccion" :error="errors.direccion" />
-                    <select-input v-model="familiares.ciudade_id" class="pb-8 pr-6 w-full lg:w-1/2" label="Ciudad"
-                        :error="errors.ciudade_id">
-                        <option :value="null" />
-                        <option v-for="ciudade in ciudades" :value="ciudade.id">
-                            {{ ciudade.nombre_ciudad }}
-                        </option>
-                    </select-input>
-
-                    <select-input v-model="familiares.parentezco" class="pb-8 pr-6 w-full lg:w-1/2" label="Parentezco"
-                        :error="errors.parentezco">
-                        <option :value="familiares.parentezco" />
-                        <option value="Hijo">Hijo/a</option>
-                        <option value="Hermano/a">Hermano/a</option>
-                        <option value="Sobrino/a">Sobrino/a</option>
-                        <option value="Otro">Otro</option>
-                    </select-input>
-                    <text-input v-model="familiares.email" type="text" label="Email" class="pb-7 pr-6 w-full lg:w-1/2"
-                        :id="email" name="email" :error="errors.email" />
-                    <text-input v-model="familiares.residente_id" type="text" label="Residente"
-                        class="pb-7 pr-6 w-full lg:w-1/2" :id="residente_id" name="residente_id"
-                        :error="errors.residente_id" />
-
-                </div>
-                <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
-                    <Link type="button" :href="route('familiares.index')" class="btn-cancelar">
-                    <span class="text-white font-bold">Cancelar</span>
-                    </Link>
-
-                    <button class="btn-indigo mx-1" @click.prevent="actualizarFamiliar()" type="submit">
-                        Actualizar Familiar
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</template>
-
 <script>
-import Layout from "../../Shared/Layout.vue";
+import LayoutApp from "../../Layouts/LayoutApp.vue";
+import Icon from "../../Shared/Icon.vue";
 import TextInput from "../../Shared/TextInput.vue";
 import SelectInput from "../../Shared/SelectInput.vue";
-/* import LoadingButton from "../../Shared/LoadingButton.vue"; */
 import { Head, Link } from "@inertiajs/inertia-vue3";
-import { reactive, ref } from "vue";
 import { useForm } from "@inertiajs/inertia-vue3";
 
 export default {
+
+    layout: LayoutApp,
+
+
     components: {
         Head,
         Link,
         TextInput,
         SelectInput,
+        Icon
     },
 
     props: {
-        familiare: Object,
-        persona: Object,
+        familiare: Array,
+        persona: Array,
+        ciudades: Array,
         errors: Object,
-        ciudades: Object
     },
 
-    layout: Layout,
 
     setup(props) {
-        const familiares = useForm({
+        const form = useForm({
             _method: "PUT",
             id: props.persona.id,
             nombres: props.persona.nombres,
@@ -108,18 +45,87 @@ export default {
             parentezco: props.familiare.parentezco,
             email: props.familiare.email,
             residente_id: props.familiare.residente_id,
+            persona_id: props.familiare.persona_id
         });
 
-        const actualizarFamiliar = () => {
-            familiares.post(
-                route("familiares.update", familiares.id_familiare),
+        const actualizar = () => {
+            form.post(
+                route("familiares.update", form.id_familiare),
                 {
                     preserveScroll: true,
-                }
-            );
+                });
         };
 
-        return { familiares, actualizarFamiliar };
+        return { form, actualizar };
     },
 };
 </script>
+<template>
+    <div>
+
+        <Head title="Editar Familiar" />
+        <h1 class="py-3 px-2 max-w-4xl flex items-center gap-4 bg-white rounded-md border text-2xl">
+            <div class="inline-block p-2 bg-teal-50 border border-turquesa rounded-md">
+                <Icon name="family" class="w-7 h-7 fill-turquesa" />
+            </div>
+            <span class="text-turquesa drop-shadow-md">Editar Familiar</span>
+        </h1>
+        <div class="max-w-4xl overflow-hidden pt-2">
+            <form @submit.prevent="actualizar">
+                <div class="py-3 px-3 flex flex-wrap bg-white border rounded-md">
+                    <text-input type="text" label="Nombres" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="nombres"
+                        v-model="form.nombres" :error="errors.nombres" />
+                    <text-input type="text" label="Apellidos" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="apellidos"
+                        v-model="form.apellidos" :error="errors.apellidos" />
+                    <text-input type="text" label="CI" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="ci_numero"
+                        v-model="form.ci_numero" :error="errors.ci_numero" />
+
+                    <text-input type="date" label="Fecha de Nacimiento" class="pb-5 lg:pr-3 w-full lg:w-1/2"
+                        :id="fecha_nacimiento" v-model="form.fecha_nacimiento" :error="errors.fecha_nacimiento" />
+                    <text-input type="text" label="Teléfono" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="telefono"
+                        v-model="form.telefono" :error="errors.telefono" />
+                    <text-input type="number" label="edad" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="edad"
+                        v-model="form.edad" :error="errors.edad" />
+                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Sexo" :id="sexo" v-model="form.sexo"
+                        :error="errors.sexo">
+                        <option :value="null" />
+                        <option value="femenino">Femenino</option>
+                        <option value="masculino">Masculino</option>
+                    </select-input>
+                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Ciudad" :id="ciudad" v-model="form.ciudade_id"
+                        :error="errors.ciudade_id">
+                        <option :value="null" />
+                        <option v-for="ciudad in ciudades" :key="ciudad.nombre_ciudad" :value="ciudad.id">
+                            {{ ciudad.nombre_ciudad }}
+                        </option>
+                    </select-input>
+                    <text-input type="text" label="Dirección" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="direccion"
+                        v-model="form.direccion" :error="errors.direccion" />
+                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Parentezco" :id="parentezco"
+                        v-model="form.parentezco" :error="errors.parentezco">
+                        <option :value="null" />
+                        <option value="hijo/a">Hijo/a</option>
+                        <option value="hermano/a">Hermano/a</option>
+                        <option value="sobrino/a">Sobrino/a</option>
+                        <option value="otro">Otro</option>
+                    </select-input>
+                    <text-input type="email" label="Email" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="email"
+                        v-model="form.email" :error="errors.email" />
+                    <text-input type="text" label="Residente" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="residente"
+                        v-model="form.residente_id" :error="errors.residente_id" />
+                    <div class="py-4 lg:pr-2 flex w-full items-center justify-end bg-white border-t">
+                        <Link type="button" :href="route('familiares.index')" class="btn-cancelar">
+                        <span class="text-white font-bold">Cancelar</span>
+                        </Link>
+                        <button class="btn-indigo mx-1" type="submit">
+                            Editar Familiar
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</template>
+
+

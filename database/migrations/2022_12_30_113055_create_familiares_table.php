@@ -13,13 +13,13 @@ return new class extends Migration
             $table->id();
             $table->string('parentezco', 200);
             $table->string('email');
-            $table->unsignedBigInteger('residente_id')->nullable();
+            $table->unsignedBigInteger('residente_id');
             $table->unsignedBigInteger('persona_id');
 
             $table->foreign('residente_id')
                 ->references('id')
                 ->on('residentes')
-                ->onDelete('set null');
+                ->onDelete('cascade');
             $table->foreign('persona_id')
                 ->references('id')
                 ->on('personas')

@@ -11,22 +11,22 @@ use Inertia\Inertia;
 
 class TurnoController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('can:ver-jornada', ['only' => ['index', 'show']]);
-        $this->middleware('can:crear-jornada', ['only' => ['create', 'store']]);
-        $this->middleware('can:editar-jornada', ['only' => ['edit', 'update']]);
-        $this->middleware('can:borrar-jornada', ['only' => ['destroy']]);
-    }
 
-    public function index()
+
+    public function index(Request $request)
     {
+        $queries = ['search', 'search_turno'];
+
         $turnos = Turno::has('dias')
             ->with('dias', 'empleado.persona')
             ->orderBy('id', 'desc')
+            ->filter($request->only($queries))
             ->get();
 
-        return Inertia::render('Turnos/Index', ['turnos' => $turnos]);
+        return Inertia::render('Turnos/Index', [
+            'turnos' => $turnos,
+            'filters' => $request->all($queries)
+        ]);
     }
 
 

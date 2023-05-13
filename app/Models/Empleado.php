@@ -44,7 +44,35 @@ class Empleado extends Model
         return $this->hasMany(User::class);
     }
 
-    public function turnos(){
+    public function turnos()
+    {
         return $this->hasMany(Turno::class);
+    }
+
+
+    //SCOPE PARA BÚSQUEDAS
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['search'] ?? null, function ($query, $search) {
+            $query->where(function ($query) use ($search) {
+                $query->whereHas('persona', function ($query) use ($search) {
+                    $query->where('nombres', 'like', '%' . $search . '%')
+                        ->orWhere('apellidos', 'like', '%' . $search . '%')
+                        ->orWhere('ci_numero', 'like', '%' . $search . '%');
+                });
+            });
+        })->when($filters['search_ciudad'] ?? null, function ($query, $search) {
+            $query->where(function ($query) use ($search) {
+                $query->whereHas('persona.ciudade', function ($query) use ($search) {
+                    $query->where('id', $search);
+                });
+            });
+        })->when($filters['search_seccion'] ?? null, function ($query, $search) {
+            $query->where(function ($query) use ($search) {
+                $query->whereHas('seccion', function ($query) use ($search) {
+                    $query->where('id', $search);
+                });
+            });
+        });
     }
 }

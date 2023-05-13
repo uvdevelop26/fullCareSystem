@@ -7,7 +7,7 @@ import Pagination from '../../Shared/Pagination.vue'
 import Card from '../../Shared/Card.vue';
 import SelectInput from '../../Shared/SelectInput.vue';
 import Filters from '../../Shared/Filters.vue'
-import { watchEffect, reactive, computed } from 'vue';
+import { watchEffect, reactive } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 import { pickBy } from 'lodash';
 
@@ -55,7 +55,7 @@ export default {
 
         watchEffect(() => {
             const query = pickBy(form);
-            Inertia.replace(route('residentes.index', Object.keys(query).length ? query : {}))
+            Inertia.replace(route('residentes.index', Object.keys(query).length ? query : {}));
         });
 
         //LIMPIAR CAMPOS DE BUSQUEDA
@@ -105,7 +105,7 @@ export default {
         <div class="py-2">
             <filters>
                 <div class="py-3 px-3 border border-turquesa rounded-md">
-                    <div class=" lg:flex lg:flex-wrap">
+                    <div class="lg:flex lg:flex-wrap">
                         <search-input id="nombre" label="Nombres/Apellidos/CI" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
                             v-model="form.search" />
                         <select-input id="ciudades" label="Ciudad" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
@@ -166,7 +166,7 @@ export default {
                 <transition-group appear tag="tbody" name="list">
                     <tr class="text-center shadow group" v-for="residente in residentes" :key="residente.id"
                         v-if="residentes.length">
-                        <td class="py-1 px-1 bg-white group-hover:bg-fondColor rounded-xl">
+                        <td class="py-1 px-1 bg-white group-hover:bg-fondColor rounded-l-xl">
                             <div class="inline-block h-12 w-12 border-2 border-softIndigo rounded-full overflow-hidden">
                                 <img :src="urlbase(residente.foto)" class="w-full h-full object-cover" alt="foto">
                             </div>
@@ -188,8 +188,8 @@ export default {
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">{{ residente.fecha_ingreso }}</td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            <span class="inline-block px-3 py-1 rounded-2xl "
-                                :class="[residente.estado === 'Activo' ? 'border border-softIndigo text-softIndigo bg-indigo-100' : 'border border-red-500 text-red-500 bg-red-100']">
+                            <span class="inline-block px-3 py-1 rounded-2xl"
+                                :class="[residente.estado === 'activo' ? 'border border-softIndigo text-softIndigo bg-indigo-100' : 'border border-red-500 text-red-500 bg-red-100']">
                                 {{ residente.estado }}
                             </span>
                         </td>
