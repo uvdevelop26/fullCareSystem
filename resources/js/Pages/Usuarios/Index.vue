@@ -1,6 +1,49 @@
+<script>
+import Layout from '../../Shared/Layout.vue'
+import { Head, Link } from '@inertiajs/inertia-vue3'
+import Icon from '../../Shared/Icon.vue'
+/* import Pagination from "../../Shared/Pagination.vue"; */
+import { Inertia } from "@inertiajs/inertia";
+
+export default {
+
+    components: {
+        Head,
+        Link,
+        Icon,
+        /* Pagination */
+
+    },
+
+    layout: Layout,
+
+    props: {
+        users: Object,
+
+
+    },
+
+    setup(props) {
+
+        const eliminarUsuario = (data) => {
+            data._method = "DELETE";
+            Inertia.post("/usuarios/" + data.id, data);
+        };
+
+
+
+        return {
+            eliminarUsuario
+        }
+    }
+
+
+
+}
+
+</script>
 <template>
     <div>
-
         <Head title="Usuarios" />
         <h1 class="mb-7 text-3xl font-bold text-cyan-600">Usuarios</h1>
         <div class="flex items-center justify-between mb-6">
@@ -50,51 +93,6 @@
                     </tr>
                 </tbody>
             </table>
-            <!--  <pagination class="mt-6" :links="user.links" /> -->
         </div>
     </div>
 </template>
-<script>
-import Layout from '../../Shared/Layout.vue'
-import { Head, Link } from '@inertiajs/inertia-vue3'
-import Icon from '../../Shared/Icon.vue'
-/* import Pagination from "../../Shared/Pagination.vue"; */
-import { Inertia } from "@inertiajs/inertia";
-
-export default {
-
-    components: {
-        Head,
-        Link,
-        Icon,
-        /* Pagination */
-
-    },
-
-    layout: Layout,
-
-    props: {
-        users: Object,
-
-
-    },
-
-    setup(props) {
-
-        const eliminarUsuario = (data) => {
-            data._method = "DELETE";
-            Inertia.post("/usuarios/" + data.id, data);
-        };
-
-
-
-        return {
-            eliminarUsuario
-        }
-    }
-
-
-
-}
-
-</script>

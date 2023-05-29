@@ -14,9 +14,8 @@ class SueldoFactory extends Factory
     public function definition()
     {
         return [
-            'monto' => $this->faker->randomDigit(),
-            'categoria' => $this->faker->word(),
-            'observacion' => $this->faker->sentence(),
+            'fecha' => $this->faker->date(),
+            'monto' => $this->faker->randomFloat(2, 50000, 200000),
             'empleado_id' => Empleado::all()->random()->id,
         ];
     }

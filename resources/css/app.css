@@ -32,6 +32,10 @@
   @apply border-red-500 focus:ring focus:ring-red-200;
 }
 
+.form-checkbox{
+  @apply ml-1 rounded border-gray-300 text-indigo-400 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50;
+}
+
 input[type='file'] {
   @apply relative text-base text-center;
 }

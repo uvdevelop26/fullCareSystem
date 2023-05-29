@@ -39,12 +39,6 @@ Route::get('/', function () {
     ]);
 });
 
-//Login
-
-/* Route::get('/', function () {
-    return Inertia::render('Auth/Login');
-}); */
-
 //dashboard
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])

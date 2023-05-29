@@ -13,6 +13,8 @@ return new class extends Migration
             $table->id();
             $table->date('fecha_permiso');
             $table->string('justificacion');
+            $table->string('estado', 100);
+            $table->string('observacion')->nullable();
             $table->unsignedBigInteger('empleado_id');
 
             $table->foreign('empleado_id')

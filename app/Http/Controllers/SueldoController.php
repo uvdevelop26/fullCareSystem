@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SueldoRequest;
 use App\Models\Empleado;
+use App\Models\Seccion;
 use App\Models\Sueldo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -11,25 +13,22 @@ use Illuminate\Support\Facades\Auth;
 
 class SueldoController extends Controller
 {
-    function __construct()
-    {
-        $this->middleware('can:ver-sueldo', ['only' => ['index', 'show']]);
-        $this->middleware('can:crear-sueldo', ['only' => ['create', 'store']]);
-        $this->middleware('can:editar-sueldo', ['only' => ['edit', 'update']]);
-        $this->middleware('can:borrar-sueldo', ['only' => ['destroy']]);
-    }
 
-    public function index()
+
+    public function index(Request $request)
     {
+        $queries = ['search', 'search_seccion', 'search_anho', 'search_mes'];
+
+        $sueldos = Sueldo::with('empleado.persona', 'empleado.seccion')
+            ->orderBy('id', 'desc')
+            ->filter($request->only($queries))
+            ->get();
+        $seccions = Seccion::all();
+
         return Inertia::render('Sueldos/Index', [
-            'sueldos' => Sueldo::with('empleado.persona')
-                ->orderBy('id', 'desc')
-                ->paginate(10),
-            'can' => [
-                'create' => Auth::user()->can('crear-sueldo'),
-                'edit' => Auth::user()->can('editar-sueldo'),
-                'delete' => Auth::user()->can('borrar-sueldo'),
-            ]
+            'sueldos' => $sueldos,
+            'seccions' => $seccions,
+            'filters' => $request->all($queries)
         ]);
     }
 
@@ -39,23 +38,16 @@ class SueldoController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(SueldoRequest $request)
     {
-        $request->validate([
-            'monto' => 'required',
-            'categoria' => ['required', 'max:200'],
-            'observacion' => ['required', 'max:300'],
-            'empleado_id' => 'nullable'
-        ]);
 
         Sueldo::create([
-            'monto' => $request['monto'],
-            'categoria' => $request['categoria'],
-            'observacion' => $request['observacion'],
-            'empleado_id' => $request['empleado_id']
+            'fecha' => $request->fecha,
+            'monto' => $request->monto,
+            'empleado_id' => $request->empleado_id
         ]);
 
-        return Redirect::route('sueldos.index')->with('success', 'Sueldo Creado');
+        return Redirect::route('sueldos.index');
     }
 
 
@@ -76,18 +68,17 @@ class SueldoController extends Controller
     }
 
 
-    public function update(Request $request, Sueldo $sueldo)
+    public function update(SueldoRequest $request, Sueldo $sueldo)
     {
-        $request->validate([
-            'monto' => 'required',
-            'categoria' => ['required', 'max:200'],
-            'observacion' => ['required', 'max:300'],
-            'empleado_id' => 'nullable'
+        
+
+        $sueldo->update([
+            'fecha' => $request->fecha,
+            'monto' => $request->monto,
+            'empleado_id' => $request->empleado_id
         ]);
 
-        $sueldo->update($request->all());
-
-        return Redirect::route('sueldos.index')->with('success', 'Sueldo Creado');
+        return Redirect::route('sueldos.index');
     }
 
 

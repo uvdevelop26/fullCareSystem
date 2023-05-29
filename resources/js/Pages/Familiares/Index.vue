@@ -38,7 +38,6 @@ export default {
             search: props.filters.search,
             search_ciudad: props.filters.search_ciudad,
             search_residente: props.filters.search_residente
-
         });
 
         watchEffect(() => {

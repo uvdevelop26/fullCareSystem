@@ -15,24 +15,20 @@ return new class extends Migration
     {
         Schema::create('sueldos', function (Blueprint $table) {
             $table->id();
-            $table->double('monto', 8, 2);
-            $table->string('categoria', 200);
-            $table->string('observacion', 300);
-            $table->unsignedBigInteger('empleado_id')->nullable();
+            $table->date('fecha');
+            $table->decimal('monto', 8, 2);
+            $table->unsignedBigInteger('empleado_id');
 
             $table->foreign('empleado_id')
                 ->references('id')
                 ->on('empleados')
-                ->onDelete('set null');
+                ->onDelete('cascade');
+
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+  
     public function down()
     {
         Schema::dropIfExists('sueldos');

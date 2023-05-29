@@ -1,59 +1,23 @@
-<template>
-    <div>
-        <Head title="Crear Sueldo" />
-        <h1 class="mb-5 text-2xl font-bold text-cyan-900">Crear Sueldo</h1>
-        <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
-            <form>
-                <div class="flex flex-wrap -mb-8 -mr-6 p-8">
-                    <text-input v-model="sueldos.monto" type="text" label="Sueldo" class="pb-7 pr-6 w-full lg:w-1/2"
-                        :id="monto" name="Monto" :error="errors.monto" />
-                    <select-input v-model="sueldos.categoria" class="pb-8 pr-6 w-full lg:w-1/2" label="Categoria"
-                        :error="errors.categoria">
-                        <option :value="null" />
-                        <option value="R1">R1</option>
-                        <option value="R2">R2</option>
-                        <option value="R3">R3</option>
-                    </select-input>
-                    <text-input v-model="sueldos.observacion" type="text" label="Observacion"
-                        class="pb-7 pr-6 w-full lg:w-1/2" :id="ci_numero" name="observacion"
-                        :error="errors.observacion" />
-                    <text-input v-model="sueldos.empleado_id" type="text" label="Empleado"
-                        class="pb-7 pr-6 w-full lg:w-1/2" :id="empleado_id" name="empleado_id"
-                        :error="errors.empleado_id" />
-                </div>
-                <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
-                    <Link type="button" :href="route('sueldos.index')" class="btn-cancelar">
-                    <span class="text-white font-bold">Cancelar</span>
-                    </Link>
-                    <!--  <loading-button class="btn-indigo mx-1" type="submit">Crear Ingreso</loading-button>  -->
-                    <button class="btn-indigo mx-1" @click.prevent="guardar()" type="submit">
-                        Crear Sueldo
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</template>
-
 <script>
-import Layout from "../../Shared/Layout.vue";
+import LayoutApp from "../../Layouts/LayoutApp.vue";
+import Icon from "../../Shared/Icon.vue";
 import TextInput from "../../Shared/TextInput.vue";
 import SelectInput from "../../Shared/SelectInput.vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
-import { reactive, ref } from "vue";
 import { useForm } from "@inertiajs/inertia-vue3";
 
 
 export default {
+
+    layout: LayoutApp,
+
     components: {
         Head,
         Link,
         TextInput,
         SelectInput,
-
+        Icon
     },
-
-    layout: Layout,
 
     props: {
         errors: Object,
@@ -61,34 +25,51 @@ export default {
 
     setup() {
 
-        const monto = ref("");
-        const categoria = ref("");
-        const observacion = ref("");
-        const empleado_id = ref("");
-
-
-        const sueldos = useForm({
-            categoria: "",
+        const form = useForm({
+            fecha: "",
             monto: "",
-            observacion: "",
-            empleado_id: "",
-
+            empleado_id: ""
         });
 
 
 
         const guardar = async () => {
-
-
-            sueldos.post(route("sueldos.store"), sueldos);
-
+            form.post(route("sueldos.store"), form);
         };
 
-        return {
-            sueldos,
-
-            guardar,
-        };
+        return { form, guardar };
     },
 };
 </script>
+<template>
+    <div>
+        <Head title="Registrar Sueldo" />
+        <h1 class="py-3 px-2 max-w-4xl flex items-center gap-4 bg-white rounded-md border text-2xl">
+            <div class="inline-block p-2 bg-teal-50 border border-turquesa rounded-md">
+                <Icon name="sueldos" class="w-7 h-7 fill-turquesa" />
+            </div>
+            <span class="text-turquesa drop-shadow-md">Registrar Sueldo</span>
+        </h1>
+        <div class="max-w-4xl overflow-hidden pt-2">
+            <form @submit.prevent="guardar">
+                <div class="py-3 px-3 flex flex-wrap bg-white border rounded-md">
+                    <text-input type="date" label="Fecha" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="fecha"
+                        v-model="form.fecha" :error="errors.fecha" />
+                    <text-input type="number" label="monto" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="edad"
+                        v-model="form.monto" :error="errors.monto" />
+                    <text-input type="text" label="Empleado" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="empleado_id"
+                        v-model="form.empleado_id" :error="errors.empleado_id" />
+                    <div class="py-4 lg:pr-2 flex w-full items-center justify-end bg-white border-t">
+                        <Link type="button" :href="route('sueldos.index')" class="btn-cancelar">
+                         <span class="text-white font-bold">Cancelar</span>
+                        </Link>
+                        <button class="btn-indigo mx-1" type="submit">
+                            Registrar Sueldo
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</template>
+

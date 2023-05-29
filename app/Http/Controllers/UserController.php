@@ -20,16 +20,6 @@ class UserController extends Controller
 {
     use HasRoles;
 
-    public function __construct()
-    {
-        $this->middleware('can:ver-usuario', ['only' => ['index', 'show']]);
-        $this->middleware('can:crear-usuario', ['only' => ['create', 'store']]);
-        $this->middleware('can:editar-usuario', ['only' => ['edit', 'update']]);
-        $this->middleware('can:borrar-usuario', ['only' => ['destroy']]);
-    }
-
-
-
     public function index()
     {
 
@@ -38,12 +28,6 @@ class UserController extends Controller
             'users' => User::with('empleado.persona', 'roles')
                 ->orderBy('id', 'desc')
                 ->get(),
-
-            'can' => [
-                'create' => Auth::user()->can('crear-usuario'),
-                'edit' => Auth::user()->can('editar-usuario'),
-                'delete' => Auth::user()->can('borrar-usuario'),
-            ]
         ]);
     }
 

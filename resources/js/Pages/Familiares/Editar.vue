@@ -26,7 +26,6 @@ export default {
         errors: Object,
     },
 
-
     setup(props) {
         const form = useForm({
             _method: "PUT",

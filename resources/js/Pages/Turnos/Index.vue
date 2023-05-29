@@ -45,14 +45,21 @@ export default {
         //array de búsqueda de turnos
         const searchTurnos = ['mañana', 'tarde', 'noche', 'madrugada'];
 
+        //ELIMINAR TURNO
+        const eliminarTurno = (data) => {
+            data._method = "DELETE";
+            Inertia.post('/turnos/' + data.id, data)
+        }
 
-        return { form, searchTurnos }
+
+        return { form, searchTurnos, eliminarTurno }
     }
 
 }
 </script>
 <template>
     <div>
+
         <Head title="Turnos" />
 
         <!-- HEADER -->
@@ -123,11 +130,12 @@ export default {
                         </td>
                         <td class="py-2 px-2 rounded-r-xl bg-white group-hover:bg-fondColor">
                             <div class="w-full h-full flex items-center justify-center">
-                                <Link class="inline-block bg-fondColor px-3 py-3 mr-2 rounded-full hover:shadow-md">
+                                <Link class="inline-block bg-fondColor px-3 py-3 mr-2 rounded-full hover:shadow-md"
+                                    :href="route('turnos.edit', turno.id)">
                                 <Icon name="edit" class="w-3 h-3 fill-textColor" />
                                 </Link>
                                 <button class="inline-block px-3 py-3 rounded-full bg-softIndigo hover:shadow-md"
-                                    @click="eliminarEmpleado()">
+                                    @click="eliminarTurno(turno)">
                                     <Icon name="delete" class="w-3 h-3 fill-white" />
                                 </button>
                             </div>

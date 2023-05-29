@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Redis;
 use Inertia\Inertia;
+use App\Http\Requests\TurnoRequest;
+use App\Models\Familiare;
 
 class TurnoController extends Controller
 {
@@ -32,26 +34,23 @@ class TurnoController extends Controller
 
     public function create()
     {
-        $dias = Dia::get();
+        $dias = Dia::all();
         return Inertia::render('Turnos/Nuevo', ['dias' => $dias]);
     }
 
-    public function store(Request $request)
+    public function store(TurnoRequest $request)
     {
-        $request->validate([
-            'turno' => 'required',
-            'empleado_id' => 'required',
-            'dias' => 'required'
-        ]);
 
         $turno = Turno::create([
-            'turno' => $request['turno'],
-            'empleado_id' => $request['empleado_id']
+            'nombre_turnos' => $request->nombre_turnos,
+            'hora_entrada' => $request->hora_entrada,
+            'hora_salida' => $request->hora_salida,
+            'empleado_id' => $request->empleado_id
         ]);
 
-        $turno->dias()->attach($request['dias']);
+        $turno->dias()->attach($request->nombre_dias);
 
-        return Redirect::route('turnos.index')->with('success', 'Jornada Asignada');
+        return Redirect::route('turnos.index');
     }
 
 
@@ -61,9 +60,11 @@ class TurnoController extends Controller
 
     public function edit(Turno $turno)
     {
-        $dias = Dia::get();
+        $dias = Dia::all();
 
         $turnosHasDias = array_column(json_decode($turno->dias, true), 'id');
+        //array_colum: (extrae la columna 'id', del array asociativo de php que le pasamos)
+        //"json_decode" convierte un objeto json a un array asociativo de php
 
         return Inertia::render('Turnos/Editar', [
             'turno' => $turno,
@@ -73,24 +74,25 @@ class TurnoController extends Controller
     }
 
 
-    public function update(Request $request, $id)
+    public function update(TurnoRequest $request, Turno $turno)
     {
-        $turno = Turno::find($id);
 
         $turno->update([
-            'turno' => $request['turno'],
-            'empleado_id' => $request['empleado_id']
+            'nombre_turnos' => $request->nombre_turnos,
+            'hora_entrada' => $request->hora_entrada,
+            'hora_salida' => $request->hora_salida,
+            'empleado_id' => $request->empleado_id
         ]);
 
-        $turno->dias()->sync($request['dias']);
+        $turno->dias()->sync($request->nombre_dias);
 
-        return Redirect::route('turnos.index')->with('success', 'Turnos Actualizados');
+        return Redirect::route('turnos.index');
     }
 
     public function destroy(Turno $turno)
     {
         $turno->delete();
 
-        return Redirect::route('turnos.index')->with('success', 'Jornada Eliminada');
+        return Redirect::route('turnos.index');
     }
 }

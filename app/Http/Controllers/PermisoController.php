@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PermisoRequest;
 use App\Models\Permiso;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -10,26 +11,20 @@ use Illuminate\Support\Facades\Auth;
 
 class PermisoController extends Controller
 {
-    function __construct()
-    {
-        $this->middleware('can:ver-permiso', ['only' => ['index']]);
-        $this->middleware('can:crear-permiso', ['only' => ['create', 'store']]);
-        $this->middleware('can:editar-permiso', ['only' => ['edit', 'update']]);
-        $this->middleware('can:borrar-permiso', ['only' => ['destroy']]);
-    }
 
 
-    public function index()
+
+    public function index(Request $request)
     {
+        $queries = ['search', 'search_estado', 'search_motivo'];
+        $permisos = Permiso::with('empleado.persona')
+            ->orderBy('id', 'desc')
+            ->filter($request->only($queries))
+            ->get();
+
         return Inertia::render('Permisos/Index', [
-            'permisos' => Permiso::with('empleado.persona')
-                ->orderBy('id', 'desc')
-                ->paginate(10),
-            'can' => [
-                'create' => Auth::user()->can('crear-empleado'),
-                'edit' => Auth::user()->can('editar-empleado'),
-                'delete' => Auth::user()->can('borrar-empleado'),
-            ]
+            'permisos' => $permisos,
+            'filters' => $request->all($queries)
         ]);
     }
 
@@ -39,21 +34,19 @@ class PermisoController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(PermisoRequest $request)
     {
-        $request->validate([
-            'fecha_permiso' => 'required',
-            'justificacion' => 'required',
-            'empleado_id' => 'required'
-        ]);
+
 
         Permiso::create([
-            'fecha_permiso' => $request['fecha_permiso'],
-            'justificacion' => $request['justificacion'],
-            'empleado_id' => $request['empleado_id']
+            'fecha_permiso' => $request->fecha_permiso,
+            'justificacion' => $request->justificacion,
+            'estado' => $request->estado,
+            'observacion' => $request->observacion,
+            'empleado_id' => $request->empleado_id
         ]);
 
-        return Redirect::route('permisos.index')->with('success', 'Permiso Creado');
+        return Redirect::route('permisos.index');
     }
 
 
@@ -69,24 +62,24 @@ class PermisoController extends Controller
     }
 
 
-    public function update(Request $request, Permiso $permiso)
+    public function update(PermisoRequest $request, Permiso $permiso)
     {
-        $request->validate([
-            'fecha_permiso' => 'required',
-            'justificacion' => 'required',
-            'empleado_id' => 'required'
+
+        $permiso->update([
+            'fecha_permiso' => $request->fecha_permiso,
+            'justificacion' => $request->justificacion,
+            'estado' => $request->estado,
+            'observacion' => $request->observacion,
+            'empleado_id' => $request->empleado_id
         ]);
-
-        $permiso->update($request->all());
-
-
-        return Redirect::route('permisos.index')->with('success', 'Permiso Creado');
+       
+        return Redirect::route('permisos.index');
     }
 
     public function destroy(Permiso $permiso)
     {
         $permiso->delete();
 
-        return Redirect::route('permisos.index')->with('success', 'Permiso Eliminado');
+        return Redirect::route('permisos.index');
     }
 }

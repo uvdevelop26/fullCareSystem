@@ -41,8 +41,8 @@ const menu = reactive([
         submenu: [
             { name: 'admin. empleados', href: '/empleados' },
             { name: 'sueldos', href: '/sueldos' },
-            { name: 'jornadas de Trabajo', href: '/turnos' },
-            { name: 'Permisos', href: '/permisos' }
+            { name: 'jornadas laborales', href: '/turnos' },
+            { name: 'solicitar permiso', href: '/permisos' }
         ],
         toggle_submenu: false
 
@@ -52,7 +52,7 @@ const menu = reactive([
         name: 'usuarios',
         icon_name: 'usuarios',
         submenu: [
-            { name: 'admin. usuarios', href: '/users' },
+            { name: 'admin. usuarios', href: '/usuarios' },
             { name: 'roles', href: '/roles' },
             { name: 'acceso', href: '/acceso' }
         ],
