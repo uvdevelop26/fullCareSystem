@@ -15,6 +15,7 @@ use App\Http\Controllers\SueldoController;
 use App\Http\Controllers\TurnoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SuministroController;
+use App\Http\Controllers\VacacioneController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -74,6 +75,10 @@ Route::resource('turnos', TurnoController::class)
 
 //Permisos
 Route::resource('permisos', PermisoController::class)
+    ->middleware('auth:sanctum', 'verified');
+
+//Vacaciones
+Route::resource('vacaciones', VacacioneController::class)
     ->middleware('auth:sanctum', 'verified');
 
 //Usuarios

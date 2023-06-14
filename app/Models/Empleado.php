@@ -48,6 +48,10 @@ class Empleado extends Model
     {
         return $this->hasMany(Turno::class);
     }
+    public function vacaciones()
+    {
+        return $this->hasMany(Vacacione::class);
+    }
 
 
     //SCOPE PARA BÚSQUEDAS

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Http\Requests\UserRequest;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -20,14 +20,22 @@ class UserController extends Controller
 {
     use HasRoles;
 
-    public function index()
+    public function index(Request $request)
     {
 
+        $queries = ['search', 'search_rol'];
+
+        $users = User::with('empleado.persona', 'roles')
+            ->orderBy('id', 'desc')
+            ->filter($request->only($queries))
+            ->get();
+
+        $roles = Role::all();
 
         return Inertia::render('Usuarios/Index', [
-            'users' => User::with('empleado.persona', 'roles')
-                ->orderBy('id', 'desc')
-                ->get(),
+            'users' => $users,
+            'filters' => $request->all($queries),
+            'roles' => $roles
         ]);
     }
 
@@ -42,14 +50,8 @@ class UserController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        $request->validate([
-            'username' => 'required',
-            'password' => 'required',
-            'empleado_id' => 'required',
-            'role_id' => 'required'
-        ]);
 
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
@@ -58,8 +60,7 @@ class UserController extends Controller
         $user->assignRole($request->input('role_id'));
 
 
-
-        return Redirect::route('usuarios.index')->with('success', 'Usuario Creado');
+        return Redirect::route('usuarios.index');
     }
 
 
@@ -71,6 +72,8 @@ class UserController extends Controller
 
     public function edit($id)
     {
+
+     
         $user = User::find($id);
         $roles = Role::all();
         $userRole = $user->roles->all();
@@ -86,14 +89,9 @@ class UserController extends Controller
     }
 
 
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
-        $request->validate([
-            'username' => 'required',
-            'empleado_id' => 'required',
-            'role_id' => 'required'
-        ]);
-
+        
         $input = $request->all();
         if (!empty($input['password'])) {
             $input['password'] = Hash::make($input['password']);
@@ -111,16 +109,15 @@ class UserController extends Controller
 
 
 
-        return Redirect::route('usuarios.index')->with('success', 'Usuario Actualizado.');
+        return Redirect::route('usuarios.index');
     }
 
     public function destroy($id)
     {
         $user = User::find($id);
-        //  $user = User::where('id', $id);
 
         $user->delete();
 
-        return Redirect::route('usuarios.index')->with('success', 'Usuario Eliminado');
+        return Redirect::route('usuarios.index');
     }
 }

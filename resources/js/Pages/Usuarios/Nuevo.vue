@@ -1,96 +1,84 @@
+<script>
+import LayoutApp from "../../Layouts/LayoutApp.vue";
+import Icon from "../../Shared/Icon.vue";
+import TextInput from "../../Shared/TextInput.vue";
+import SelectInput from "../../Shared/SelectInput.vue";
+import { Head, Link } from "@inertiajs/inertia-vue3";
+import { useForm } from "@inertiajs/inertia-vue3";
+
+
+export default {
+
+    layout: LayoutApp,
+
+    components: {
+        Head,
+        Link,
+        TextInput,
+        SelectInput,
+        Icon
+    },
+
+
+    props: {
+        roles: Array,
+        errors: Object
+    },
+
+    setup() {
+
+        const form = useForm({
+            empleado_id: "",
+            username: "",
+            password: "",
+            role_id: ""
+        });
+
+         const guardar = async () => {
+             form.post(route("usuarios.store"), form);
+         };
+
+        return { form, guardar };
+    },
+};
+</script>
 <template>
     <div>
 
-        <Head title="Crear Familiar" />
-        <h1 class="mb-5 text-2xl font-bold text-cyan-900">Crear Usuario</h1>
-        <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
-            <form>
-                <div class="flex flex-wrap -mb-8 -mr-6 p-8">
-                    <text-input v-model="users.username" type="text" label="Nombre de Usuario"
-                        class="pb-7 pr-6 w-full lg:w-1/2" :id="username" name="username" :error="errors.username" />
-                    <text-input v-model="users.password" type="password" label="Password"
-                        class="pb-7 pr-6 w-full lg:w-1/2" :id="password" name="password" :error="errors.password"  />
-                    <text-input v-model="users.empleado_id" type="text" label="Empleado"
-                        class="pb-7 pr-6 w-full lg:w-1/2" :id="empleado_id" :error="errors.empleado_id" name="empleado_id" />
-                    <select-input  class="pb-8 pr-6 w-full lg:w-1/2" label="Roles" v-model="users.role_id" :error="errors.role_id">
+        <Head title="Crear Usuario" />
+        <h1 class="py-3 px-2 max-w-4xl flex items-center gap-4 bg-white rounded-md border text-2xl">
+            <div class="inline-block p-2 bg-teal-50 border border-turquesa rounded-md">
+                <Icon name="users" class="w-7 h-7 fill-turquesa" />
+            </div>
+            <span class="text-turquesa drop-shadow-md">Crear Usuario</span>
+        </h1>
+        <div class="max-w-4xl overflow-hidden pt-2">
+            <form @submit.prevent="guardar">
+                <div class="py-3 px-3 flex flex-wrap bg-white border rounded-md">
+                    <text-input type="text" label="Empleado" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="empleado"
+                        v-model="form.empleado_id" :error="errors.empleado_id" />
+                    <text-input type="text" label="Nombre de Usuario" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="username"
+                        v-model="form.username" :error="errors.username" />
+                    <text-input type="password" label="Contraseña" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="password"
+                        v-model="form.password" :error="errors.password" />
+                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Roles" :id="role_id"
+                        v-model="form.role_id" :error="errors.role_id">
                         <option :value="null" />
-                        <option v-for="role in roles" :value="role.id">
+                        <option v-for="role in roles" :key="role.id" :value="role.id">
                             {{ role.name }}
                         </option>
                     </select-input>
-                </div>
-                <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
-                    <Link type="button" :href="route('usuarios.index')" class="btn-cancelar">
-                    <span class="text-white font-bold">Cancelar</span>
-                    </Link>
-                    <!--  <loading-button class="btn-indigo mx-1" type="submit">Crear Ingreso</loading-button>  -->
-                    <button class="btn-indigo mx-1" @click.prevent="guardar()" type="submit">
-                        Crear Usuario
-                    </button>
+                    <div class="py-4 lg:pr-2 flex w-full items-center justify-end bg-white border-t">
+                        <Link type="button" :href="route('usuarios.index')" class="btn-cancelar">
+                        <span class="text-white font-bold">Cancelar</span>
+                        </Link>
+                        <button class="btn-indigo mx-1" type="submit">
+                            Crear Usuario
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>
     </div>
 </template>
 
-<script>
-
-import Layout from "../../Shared/Layout.vue";
-import TextInput from "../../Shared/TextInput.vue";
-import SelectInput from "../../Shared/SelectInput.vue";
-import { Head, Link } from "@inertiajs/inertia-vue3";
-import { reactive, ref } from "vue";
-import { useForm } from "@inertiajs/inertia-vue3";
-
-
-export default {
-    components: {
-        Head,
-        Link,
-        TextInput,
-        SelectInput,
-
-    },
-
-    layout: Layout,
-
-    props: {
-        roles: Object,
-        errors: Object
-    },
-
-    setup() {
-
-
-        const username = ref("");
-        const password = ref("");
-        const empleado_id = ref("");
-        const role_id = ref("");
-
-
-        const users = useForm({
-            username: "",
-            password: "",
-            empleado_id: "",
-            role_id: ""
-
-        });
-
-
-
-        const guardar = async () => {
-
-            console.log(users);
-
-            users.post(route("usuarios.store"), users);
-
-        };
-
-        return {
-            users,
-
-            guardar,
-        };
-    },
-};
-</script>

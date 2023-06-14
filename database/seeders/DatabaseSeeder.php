@@ -20,6 +20,7 @@ use App\Models\Residente;
 use App\Models\Seccion;
 use App\Models\Sueldo;
 use App\Models\Turno;
+use App\Models\Vacacione;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -36,6 +37,7 @@ class DatabaseSeeder extends Seeder
         $this->call(DiaSeeder::class);
         Permiso::factory(20)->create();
         Sueldo::factory(20)->create();
+        Vacacione::factory(10)->create();
         Ingreso::factory(20)->create();
         Egreso::factory(20)->create();
         Enfermedade::factory(20)->create();

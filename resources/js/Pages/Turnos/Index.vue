@@ -51,7 +51,6 @@ export default {
             Inertia.post('/turnos/' + data.id, data)
         }
 
-
         return { form, searchTurnos, eliminarTurno }
     }
 
