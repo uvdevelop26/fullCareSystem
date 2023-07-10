@@ -90,6 +90,7 @@ export default {
                 </div>
             </filters>
         </div>
+        <!-- TABLE -->
         <div class="overflow-x-auto py-4 max-w-7xl">
             <table
                 class="w-full whitespace-nowrap border-separate border-spacing-y-2 text-sm rounded-md overflow-hidden shadow-md">

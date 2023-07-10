@@ -20,83 +20,25 @@ class PermissionSeeder extends Seeder
 
         //CREA EL ARRAY CON LOS PERMISOS
         $permissions = [
-            //tabla residentes
-            'ver-residente',
-            'crear-residente',
-            'editar-residente',
-            'borrar-residente',
+            //módulo residentes
+            'residentes',
 
-            //tabla familiares
-            'ver-familiare',
-            'crear-familiare',
-            'editar-familiare',
-            'borrar-familiare',
+            //módulo empleados
+            'empleados',
 
-            //tabla Empleados
-            'ver-empleado',
-            'crear-empleado',
-            'editar-empleado',
-            'borrar-empleado',
+            //módulo usuarios
+            'usuarios',
 
-            //tabla sueldos
-            'ver-sueldo',
-            'crear-sueldo',
-            'editar-sueldo',
-            'borrar-sueldo',
+            //módulo
+            'finanzas',
 
-            //tabla Jornadas
-            'ver-jornada',
-            'crear-jornada',
-            'editar-jornada',
-            'borrar-jornada',
+            //módulo salud
+            'salud',
 
-            //tabla permisos
-            'ver-permisos',
-            'crear-permisos',
-            'editar-permisos',
-            'borrar-permisos',
+            //módulo reportes
+            'reportes',
+            
 
-            //tabla usuarios
-            'ver-usuario',
-            'crear-usuario',
-            'editar-usuario',
-            'borrar-usuario',
-
-            //tabla roles
-            'ver-rol',
-            'crear-rol',
-            'editar-rol',
-            'borrar-rol',
-
-            //tabla permissions
-            'ver-permission',
-            'crear-permission',
-            'editar-permission',
-            'borrar-permission',
-
-            //tabla ingresos
-            'ver-ingreso',
-            'crear-ingreso',
-            'editar-ingreso',
-            'borrar-ingreso',
-
-            //tabla egresos
-            'ver-egreso',
-            'crear-egreso',
-            'editar-egreso',
-            'borrar-egreso',
-
-            //tabla-historial
-            'ver-historial',
-            'crear-historial',
-            'editar-historial',
-            'borrar-historial',
-
-            //medicamentos
-            'ver-medicamento',
-            'crear-medicamento',
-            'editar-medicamento',
-            'borrar-medicamento'
         ];
 
 
@@ -110,11 +52,9 @@ class PermissionSeeder extends Seeder
 
         //ROL 1 -- ENFERMERO -- LE DA SOLO ESTOS PERMISOS
         $role1 = Role::create(['name' => 'enfermero']);
-        $role1->givePermissionTo('ver-empleado');
-        $role1->givePermissionTo('ver-sueldo');
-        $role1->givePermissionTo('ver-jornada');
-        $role1->givePermissionTo('ver-historial');
-        $role1->givePermissionTo('ver-medicamento');
+        $role1->givePermissionTo('empleados');
+        $role1->givePermissionTo('salud');
+        $role1->givePermissionTo('reportes');
 
 
         //ROL 2 -- ADMIN -- LE DA TODOS LOS PERMISOS
@@ -153,7 +93,7 @@ class PermissionSeeder extends Seeder
         //USUARIO 3 = ES ENFERMERO
 
         $user = \App\Models\User::factory()->create([
-            'username' => 'EjemploUser',
+            'username' => 'enfermeroUser',
             'empleado_id' => 3,
             'password' => Hash::make(12345678),
         ]);

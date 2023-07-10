@@ -13,7 +13,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombres', 100);
             $table->string('apellidos', 100);
-            $table->string('ci_numero', 100)->nullable(); //familiares no necesita ci
+            $table->string('ci_numero', 100); 
             $table->date('fecha_nacimiento');
             $table->string('telefono', 30)->nullable(); //residentes pueden no tener telefono
             $table->smallInteger('edad');

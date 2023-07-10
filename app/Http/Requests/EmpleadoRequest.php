@@ -18,7 +18,7 @@ class EmpleadoRequest extends FormRequest
         return [
             'nombres' =>  'required|max:100',
             'apellidos' => 'required|max:100',
-            'ci_numero' => 'nullable|max:100',
+            'ci_numero' => 'required|max:100',
             'fecha_nacimiento' => 'required',
             'telefono' => 'nullable|max:30',
             'edad' => 'required|min:1|max:105',

@@ -20,25 +20,13 @@ use \Illuminate\Auth\Middleware\Authorize;
 
 class PermissionController extends Controller
 {
-    function __construct()
-    {
-        $this->middleware('can:ver-permission', ['only' => ['index', 'show']]);
-        $this->middleware('can:crear-permission', ['only' => ['create', 'store']]);
-        $this->middleware('can:editar-permission', ['only' => ['edit', 'update']]);
-        $this->middleware('can:borrar-permission', ['only' => ['destroy']]);
-    }
-
+    
     public function index()
     {
 
         $permissions = Permission::orderBy('id', 'desc')->paginate(8);
         return Inertia::render('Permissions/Index',[
                 'permissions' => $permissions,
-                'can' => [
-                    'create' => Auth::user()->can('crear-permission'),
-                    'edit' => Auth::user()->can('editar-permission'),
-                    'delete' => Auth::user()->can('borrar-permission'),
-                ]
 
             ]);
     }

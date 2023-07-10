@@ -3,7 +3,7 @@ import NavigationMenu from '../Shared/NavigationMenu.vue'
 import Icon from '../Shared/Icon.vue';
 import FullcareLogo from '../Shared/FullcareLogo.vue';
 import { Link } from '@inertiajs/inertia-vue3';
-import { ref, reactive, onMounted, onUnmounted } from 'vue';
+import { ref, reactive, onMounted, onUnmounted, computed, toRefs  } from 'vue';
 
 //show and hide menu to logout 
 const showUserDropdown = ref(false)
@@ -119,6 +119,15 @@ onUnmounted(() => {
 
 
 });
+
+const userPermissions =()=>{
+    return 
+};
+
+
+const prueba = userPermissions();
+
+console.log(prueba)
 
 
 </script>

@@ -9,13 +9,6 @@ use Illuminate\Support\Facades\Redirect;
 
 class IngresoController extends Controller
 {
-    function __construct()
-    {
-        $this->middleware('can:ver-ingreso', ['only' => ['index']]);
-        $this->middleware('can:crear-ingreso', ['only' => ['create', 'store']]);
-        $this->middleware('can:editar-ingreso', ['only' => ['edit', 'update']]);
-        $this->middleware('can:borrar-ingreso', ['only' => ['destroy']]);
-    }
 
     public function index()
     {
