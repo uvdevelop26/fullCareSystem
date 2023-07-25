@@ -17,7 +17,12 @@ export default {
         Link
     },
 
-    props: ['ciudades', 'errors'],
+    props: {
+        ciudades: Array,
+        estado_residentes: Array,
+        errors: Object
+    },
+
 
     setup() {
         const form = useForm({
@@ -32,13 +37,13 @@ export default {
             ciudade_id: "",
             foto: "",
             fecha_ingreso: "",
-            estado: ""
+            estado_residente_id: ""
         });
 
         const guardar = async () => {
-            form.post(route('residentes.store'),{
+            form.post(route('residentes.store'), {
                 forceFormData: true
-            } );
+            });
         }
 
 
@@ -78,13 +83,14 @@ export default {
                         v-model="form.telefono" :error="errors.telefono" />
                     <text-input type="number" label="edad" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="edad"
                         v-model="form.edad" :error="errors.edad" />
-                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Sexo" :id="sexo" v-model="form.sexo" :error="errors.sexo">
+                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Sexo" :id="sexo" v-model="form.sexo"
+                        :error="errors.sexo">
                         <option :value="null" />
                         <option value="femenino">Femenino</option>
                         <option value="masculino">Masculino</option>
                     </select-input>
-                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Ciudad" :id="ciudad"
-                        v-model="form.ciudade_id" :error="errors.ciudade_id">
+                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Ciudad" :id="ciudad" v-model="form.ciudade_id"
+                        :error="errors.ciudade_id">
                         <option :value="null" />
                         <option v-for="ciudad in ciudades" :key="ciudad.nombre_ciudad" :value="ciudad.id">
                             {{ ciudad.nombre_ciudad }}
@@ -92,10 +98,13 @@ export default {
                     </select-input>
                     <text-input type="text" label="Dirección" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="direccion"
                         v-model="form.direccion" :error="errors.direccion" />
-                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Estado" :id="estado" v-model="form.estado" :error="errors.estado">
+                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Estado" :id="estado" 
+                    v-model="form.estado_residente_id">
                         <option :value="null" />
-                        <option value="Activo">Activo</option>
-                        <option value="Inactivo">Inactivo</option>
+                        <option v-for="estado_residente in estado_residentes" :key="estado_residente.id" 
+                        :value="estado_residente.id">
+                            {{ estado_residente.nombre_estado }}
+                        </option>
                     </select-input>
                     <div class="py-4 lg:pr-2 flex w-full items-center justify-end bg-white border-t">
                         <Link type="button" :href="route('residentes.index')" class="btn-cancelar">

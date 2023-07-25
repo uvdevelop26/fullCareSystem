@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use App\Http\Requests\ResidenteRequest;
+use App\Models\EstadoResidente;
+
 use function GuzzleHttp\Promise\all;
 use Illuminate\Support\Facades\Storage;
 
@@ -19,17 +21,19 @@ class ResidenteController extends Controller
 
     public function index(Request $request)
     {
-        $queries = ['search', 'search_ciudad', 'search_estado', 'search_sexo'];
-        $residentes = Residente::with('persona.ciudade')
+        $queries = ['search', 'search_ciudad', 'search_sexo', 'search_estado'];
+        $residentes = Residente::with('persona.ciudade', 'estado_residente')
             ->orderBy('id', 'desc')
             ->filter($request->only($queries))
             ->get();
 
         $ciudades = Ciudade::all();
+        $estado_residentes = EstadoResidente::all();
 
         return Inertia::render('Residentes/Index', [
             'residentes' => $residentes,
             'ciudades' => $ciudades,
+            'estado_residentes' => $estado_residentes,
             'filters' => $request->all($queries)
         ]);
     }
@@ -38,7 +42,14 @@ class ResidenteController extends Controller
     public function create()
     {
         $ciudades = Ciudade::all();
-        return Inertia::render('Residentes/Nuevo', ['ciudades' => $ciudades]);
+        $estado_residentes = EstadoResidente::all();
+        return Inertia::render(
+            'Residentes/Nuevo',
+            [
+                'ciudades' => $ciudades,
+                'estado_residentes' => $estado_residentes
+            ]
+        );
     }
 
 
@@ -67,8 +78,8 @@ class ResidenteController extends Controller
         Residente::create([
             'foto' => $image_path,
             'fecha_ingreso' => $request->fecha_ingreso,
-            'estado' => $request->estado,
             'persona_id' => $persona->id,
+            'estado_residente_id' => $request->estado_residente_id
         ]);
 
         sleep(1);
@@ -87,11 +98,13 @@ class ResidenteController extends Controller
     {
         $persona = $residente->persona;
         $ciudades = Ciudade::all();
+        $estado_residentes = EstadoResidente::all();
 
         return Inertia::render('Residentes/Editar', [
             'residente' => $residente,
             'persona' => $persona,
-            'ciudades' => $ciudades
+            'ciudades' => $ciudades,
+            'estado_residentes' => $estado_residentes
         ]);
     }
 
@@ -115,7 +128,7 @@ class ResidenteController extends Controller
 
         $residente->update([
             'fecha_ingreso' => $request->fecha_ingreso,
-            'estado' => $request->estado,
+            'estado_residente_id' => $request->estado_residente_id,
             'persona_id' => $persona->id,
         ]);
 

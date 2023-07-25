@@ -8,6 +8,7 @@ use App\Models\Caracteristica;
 use App\Models\Egreso;
 use App\Models\Empleado;
 use App\Models\Enfermedade;
+use App\Models\EstadoResidente;
 use App\Models\Familiare;
 use App\Models\Historiale;
 use App\Models\Horario;
@@ -30,6 +31,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(CiudadeSeeder::class);
         Persona::factory(100)->create();
+        $this->call(EstadoResidenteSeeder::class);
         Residente::factory(20)->create();
         Familiare::factory(20)->create();
         Seccion::factory(4)->create();

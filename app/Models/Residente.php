@@ -15,8 +15,8 @@ class Residente extends Model
   protected $fillable = [
     'foto',
     'fecha_ingreso',
-    'estado',
-    'persona_id'
+    'persona_id',
+    'estado_residente_id'
   ];
 
 
@@ -24,6 +24,11 @@ class Residente extends Model
   public function persona()
   {
     return $this->belongsTo(Persona::class);
+  }
+
+  public function estado_residente()
+  {
+    return $this->belongsTo(EstadoResidente::class);
   }
 
   public function familiares()
@@ -59,14 +64,16 @@ class Residente extends Model
           $query->where('id', $search);
         });
       });
-    })->when($filters['search_estado'] ?? null, function ($query, $search) {
-      $query->where(function ($query) use ($search) {
-        $query->where('estado', $search);
-      });
     })->when($filters['search_sexo'] ?? null, function ($query, $search) {
       $query->where(function ($query) use ($search) {
         $query->whereHas('persona', function ($query) use ($search) {
           $query->where('sexo', $search);
+        });
+      });
+    })->when($filters['search_estado'] ?? null, function ($query, $search) {
+      $query->where(function ($query) use ($search) {
+        $query->whereHas('estado_residente', function ($query) use ($search) {
+          $query->where('id', $search);
         });
       });
     });

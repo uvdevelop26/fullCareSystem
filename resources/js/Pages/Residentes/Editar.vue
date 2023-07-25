@@ -22,6 +22,7 @@ export default {
         residente: Array,
         persona: Array,
         ciudades: Array,
+        estado_residentes: Array,
         errors: Object
     },
 
@@ -42,7 +43,7 @@ export default {
             residente_id: props.residente.id,
             foto: null,
             fecha_ingreso: props.residente.fecha_ingreso,
-            estado: props.residente.estado,
+            estado_residente_id: props.residente.estado_residente_id,
             persona_id: props.residente.persona_id
         });
 
@@ -108,11 +109,13 @@ export default {
                     </select-input>
                     <text-input type="text" label="Dirección" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="direccion"
                         v-model="form.direccion" :error="errors.direccion" />
-                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Estado" :id="estado" v-model="form.estado"
-                        :error="errors.estado">
+                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Estado" :id="estado"
+                        v-model="form.estado_residente_id">
                         <option :value="null" />
-                        <option value="Activo">Activo</option>
-                        <option value="Inactivo">Inactivo</option>
+                        <option v-for="estado_residente in estado_residentes" :key="estado_residente.id"
+                            :value="estado_residente.id">
+                            {{ estado_residente.nombre_estado }}
+                        </option>
                     </select-input>
                     <div class="py-4 lg:pr-2 flex w-full items-center justify-end bg-white border-t">
                         <Link type="button" :href="route('residentes.index')" class="btn-cancelar">

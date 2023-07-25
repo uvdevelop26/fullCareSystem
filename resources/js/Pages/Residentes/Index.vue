@@ -31,6 +31,7 @@ export default {
     props: {
         residentes: Array,
         ciudades: Array,
+        estado_residentes: Array,
         filters: Object
 
     },
@@ -58,15 +59,6 @@ export default {
             Inertia.replace(route('residentes.index', Object.keys(query).length ? query : {}));
         });
 
-        //LIMPIAR CAMPOS DE BUSQUEDA
-        const limpiarCampos = () => {
-
-            form.search = null;
-            form.search_ciudad = '';
-
-            form.search_estado = '';
-            form.search_sexo = '';
-        }
 
         //ELIMINAR RESIDENTE
 
@@ -79,7 +71,7 @@ export default {
 
 
 
-        return { form, limpiarCampos, urlbase, eliminarResidente }
+        return { form, urlbase, eliminarResidente }
     }
 
 
@@ -115,16 +107,6 @@ export default {
                                 {{ ciudad.nombre_ciudad }}
                             </option>
                         </select-input>
-                        <select-input id="estado" label="Estado" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
-                            v-model="form.search_estado">
-                            <option :value="null" />
-                            <option value="activo">
-                                Activo
-                            </option>
-                            <option value="inactivo">
-                                Inactivo
-                            </option>
-                        </select-input>
                         <select-input id="sexo" label="Sexo" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
                             v-model="form.search_sexo">
                             <option :value="null" />
@@ -133,6 +115,13 @@ export default {
                             </option>
                             <option value="masculino">
                                 Masculino
+                            </option>
+                        </select-input>
+                        <select-input id="estado" label="Estado" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
+                            v-model="form.search_estado">
+                            <option :value="null" />
+                            <option v-for="estado_residente in estado_residentes" :key="estado_residente.id" :value="estado_residente.id">
+                                {{ estado_residente.nombre_estado }}
                             </option>
                         </select-input>
                     </div>
@@ -189,9 +178,9 @@ export default {
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">{{ residente.fecha_ingreso }}</td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
                             <span class="inline-block px-3 py-1 rounded-2xl"
-                                :class="[residente.estado === 'activo' ? 'border border-softIndigo text-softIndigo bg-indigo-100' : 'border border-red-500 text-red-500 bg-red-100']">
-                                {{ residente.estado }}
-                            </span>
+                                :class="[residente.estado_residente.nombre_estado === 'activo' ? 'border border-softIndigo text-softIndigo bg-indigo-100' : 'border border-red-500 text-red-500 bg-red-100']">
+                                {{ residente.estado_residente.nombre_estado }}
+                            </span>     
                         </td>
                         <td class="py-2 px-2 rounded-r-xl bg-white group-hover:bg-fondColor">
                             <div class="w-full h-full flex items-center">

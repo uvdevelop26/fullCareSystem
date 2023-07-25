@@ -13,7 +13,6 @@ return new class extends Migration
             $table->id();
             $table->string('foto', 500)->nullable();
             $table->date('fecha_ingreso');
-            $table->string('estado', 20);
             $table->unsignedBigInteger('persona_id');
 
             $table->foreign('persona_id')

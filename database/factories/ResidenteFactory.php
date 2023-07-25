@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\EstadoResidente;
 use App\Models\Persona;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -11,13 +12,11 @@ class ResidenteFactory extends Factory
 
     public function definition()
     {
-        $estados = ['activo', 'inactivo'];
-
         return [
             'foto' => $this->faker->imageUrl(150, 150),
             'fecha_ingreso' => $this->faker->date(),
-            'estado' => $this->faker->randomElement($estados),
             'persona_id' => Persona::all()->random()->id,
+            'estado_residente_id' => EstadoResidente::all()->random()->id
         ];
     }
 }
