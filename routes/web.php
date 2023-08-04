@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\ContactarFamiliarController;
 use App\Http\Controllers\EgresoController;
 use App\Http\Controllers\EmpleadoController;
-use App\Http\Controllers\EnviarCorreoController;
 use App\Http\Controllers\FamiliareController;
 use App\Http\Controllers\HistorialeController;
 use App\Http\Controllers\IngresoController;
@@ -58,9 +58,11 @@ Route::resource('familiares', FamiliareController::class)
     ->middleware('auth:sanctum', 'verified');
 
 //Correo Electrónico
-Route::resource('emails', EnviarCorreoController::class)
-    ->middleware('auth:sanctum', 'verified');
-    
+Route::controller(ContactarFamiliarController::class)->group(function(){
+    Route::get('contactar-familiar/{email}', 'index')->name('contactar-familiar.index');
+    Route::post('contactar-familiar/create', 'enviarCorreo')->name('contactar-familiar.enviarCorreo');
+});
+
 //Empleados
 Route::resource('empleados', EmpleadoController::class)
     ->middleware('auth:sanctum', 'verified');

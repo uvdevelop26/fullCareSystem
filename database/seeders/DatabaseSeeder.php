@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
         $this->call(EstadoResidenteSeeder::class);
         Residente::factory(20)->create();
         Familiare::factory(20)->create();
-        Seccion::factory(4)->create();
+        $this->call(SeccionSeeder::class);
         Empleado::factory(20)->create();
         $this->call(DiaSeeder::class);
         Permiso::factory(20)->create();

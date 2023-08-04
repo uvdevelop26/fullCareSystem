@@ -163,10 +163,14 @@ export default {
                                     class="inline-block bg-fondColor px-3 py-3 mr-2 rounded-full hover:shadow-md">
                                 <Icon name="edit" class="w-3 h-3 fill-textColor" />
                                 </Link>
-                                <button class="inline-block px-3 py-3 rounded-full bg-softIndigo hover:shadow-md"
+                                <button class="inline-block px-3 py-3 mr-2 rounded-full bg-softIndigo hover:shadow-md"
                                     @click="eliminarFamiliare(familiare)">
                                     <Icon name="delete" class="w-3 h-3 fill-white" />
                                 </button>
+                                <Link :href="route('contactar-familiar.index', familiare.email)"
+                                    class="inline-block bg-fondColor px-3 py-3  rounded-full hover:shadow-md">
+                                <Icon name="email" class="w-3 h-3 fill-textColor" />
+                                </Link>
                             </div>
                         </td>
                     </tr>

@@ -15,9 +15,8 @@ class EmpleadoFactory extends Factory
     {
         
         return [
-            'fecha_ingreso' => $this->faker->date(),
+            'fecha_inicio' => $this->faker->date(),
             'email' => $this->faker->email(),
-            'profesion' => $this->faker->jobTitle(),
             'seccion_id' => Seccion::all()->random()->id,
             'persona_id' => Persona::all()->random()->id,
         ];

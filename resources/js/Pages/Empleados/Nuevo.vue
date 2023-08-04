@@ -33,9 +33,8 @@ export default {
             sexo: "",
             direccion: "",
             ciudade_id: "",
-            fecha_ingreso: "",
+            fecha_inicio: "",
             email: "",
-            profesion: "",
             seccion_id: "",
         });
 
@@ -94,12 +93,10 @@ export default {
                     </select-input>
                     <text-input type="text" label="Dirección" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="direccion"
                         v-model="form.direccion" :error="errors.direccion" />
-                    <text-input type="date" label="Fecha Ingreso" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="fecha_ingreso"
-                        v-model="form.fecha_ingreso" :error="errors.fecha_ingreso" />
+                    <text-input type="date" label="Fecha Inicio" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="fecha_inicio"
+                        v-model="form.fecha_inicio" :error="errors.fecha_inicio" />
                     <text-input type="email" label="Correo" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="email"
                         v-model="form.email" :error="errors.email" />
-                    <text-input type="text" label="Profesion" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="profesion"
-                        v-model="form.profesion" :error="errors.profesion" />
                     <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Sección" :id="seccion_id"
                         v-model="form.seccion_id" :error="errors.seccion_id">
                         <option :value="null" />

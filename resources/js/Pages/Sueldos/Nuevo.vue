@@ -43,6 +43,7 @@ export default {
 </script>
 <template>
     <div>
+
         <Head title="Registrar Sueldo" />
         <h1 class="py-3 px-2 max-w-4xl flex items-center gap-4 bg-white rounded-md border text-2xl">
             <div class="inline-block p-2 bg-teal-50 border border-turquesa rounded-md">
@@ -55,13 +56,13 @@ export default {
                 <div class="py-3 px-3 flex flex-wrap bg-white border rounded-md">
                     <text-input type="date" label="Fecha" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="fecha"
                         v-model="form.fecha" :error="errors.fecha" />
-                    <text-input type="number" label="monto" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="edad"
-                        v-model="form.monto" :error="errors.monto" />
                     <text-input type="text" label="Empleado" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="empleado_id"
                         v-model="form.empleado_id" :error="errors.empleado_id" />
+                    <text-input type="number" label="Monto" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="edad"
+                        v-model="form.monto" :error="errors.monto" />
                     <div class="py-4 lg:pr-2 flex w-full items-center justify-end bg-white border-t">
                         <Link type="button" :href="route('sueldos.index')" class="btn-cancelar">
-                         <span class="text-white font-bold">Cancelar</span>
+                        <span class="text-white font-bold">Cancelar</span>
                         </Link>
                         <button class="btn-indigo mx-1" type="submit">
                             Registrar Sueldo

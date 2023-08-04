@@ -9,22 +9,23 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class InformacionesMailable extends Mailable
+class ContactarFamiliarMailable extends Mailable
 {
     use Queueable, SerializesModels;
 
-   // public $subject = "Reporte Sobre Interno";
+   
+ 
 
-    public function __construct(public String $email, public String $mensaje)
+    
+    public function __construct(public String $mensaje)
     {
         //
     }
 
-    
     public function envelope()
     {
         return new Envelope(
-            subject: 'Informaciones Mailable',
+            subject: 'Fullcare Avisos',
         );
     }
 

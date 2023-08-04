@@ -67,9 +67,8 @@ class EmpleadoController extends Controller
         ]);
 
         Empleado::create([
-            'fecha_ingreso' => $request->fecha_ingreso,
+            'fecha_inicio' => $request->fecha_inicio,
             'email' => $request->email,
-            'profesion' => $request->profesion,
             'seccion_id' => $request->seccion_id,
             'persona_id' => $persona->id
         ]);
@@ -119,9 +118,8 @@ class EmpleadoController extends Controller
         ]);
 
         $empleado->update([
-            'fecha_ingreso' => $request->fecha_ingreso,
+            'fecha_inicio' => $request->fecha_inicio,
             'email' => $request->email,
-            'profesion' => $request->profesion,
             'seccion_id' => $request->seccion_id,
             'persona_id' => $persona->id
         ]);

@@ -25,9 +25,8 @@ class EmpleadoRequest extends FormRequest
             'sexo' => 'required',
             'direccion' => 'required|max:200',
             'ciudade_id' => 'required',
-            'fecha_ingreso' => 'required',
+            'fecha_inicio' => 'required',
             'email' => 'required|max:100|email',
-            'profesion' => 'required|max:200',
             'seccion_id' => 'required',
         ];
     }
@@ -38,7 +37,7 @@ class EmpleadoRequest extends FormRequest
             'ci_numero' => 'ci',
             'fecha_nacimiento' => 'fecha de nacimiento',
             'ciudade_id' => 'ciudad',
-            'fecha_ingreso' => 'fecha ingreso',
+            'fecha_inicio' => 'fecha de inicio',
             'seccion_id' => 'seccion'
         ];
     }

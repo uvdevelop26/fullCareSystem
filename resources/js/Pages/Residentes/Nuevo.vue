@@ -99,7 +99,7 @@ export default {
                     <text-input type="text" label="Dirección" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="direccion"
                         v-model="form.direccion" :error="errors.direccion" />
                     <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Estado" :id="estado" 
-                    v-model="form.estado_residente_id">
+                    v-model="form.estado_residente_id" :error="errors.estado_residente_id">
                         <option :value="null" />
                         <option v-for="estado_residente in estado_residentes" :key="estado_residente.id" 
                         :value="estado_residente.id">

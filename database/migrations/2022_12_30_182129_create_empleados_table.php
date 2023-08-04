@@ -11,9 +11,8 @@ return new class extends Migration
     {
         Schema::create('empleados', function (Blueprint $table) {
             $table->id();
-            $table->date('fecha_ingreso');
+            $table->date('fecha_inicio');
             $table->string('email');
-            $table->string('profesion', 200)->nullable();
             $table->unsignedBigInteger('seccion_id');
             $table->unsignedBigInteger('persona_id');
 

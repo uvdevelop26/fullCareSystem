@@ -114,9 +114,9 @@ export default {
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">edad</th>
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">sexo</th>
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">direccion</th>
-                        <th class="py-3 px-4 bg-turquesa text-white font-bold">Ingreso</th>
+                        <th class="py-3 px-4 bg-turquesa text-white font-bold">Inicio</th>
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">email</th>
-                        <th class="py-3 px-4 bg-turquesa text-white font-bold">Profesion/Seccion</th>
+                        <th class="py-3 px-4 bg-turquesa text-white font-bold">Seccion</th>
                         <th class="py-3 px-4 bg-turquesa rounded-r-xl text-white font-bold">Acciones</th>
                     </tr>
                 </thead>
@@ -149,7 +149,7 @@ export default {
                             {{ empleado.persona.direccion }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            {{ empleado.fecha_ingreso }}
+                            {{ empleado.fecha_inicio }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
                             {{ empleado.email }}
@@ -158,7 +158,7 @@ export default {
                             <span class="block text-indigo-400 font-semibold">
                                 {{ empleado.seccion.nombre_seccion }}
                             </span>
-                            {{ empleado.profesion }}
+                            {{ empleado.seccion.descripcion }}
                         </td>
                         <td class="py-2 px-2 rounded-r-xl bg-white group-hover:bg-fondColor">
                             <div class="w-full h-full flex items-center">
