@@ -15,37 +15,10 @@ class Turno extends Model
         'nombre_turnos',
         'hora_entrada',
         'hora_salida',
-        'empleado_id'
     ];
 
-
-
-    public function empleado()
-    {
-        return $this->belongsTo(Empleado::class);
+    public function jornadas(){
+        return $this->hasMany(Jornada::class);
     }
 
-    //relacion muchos a muchos
-    public function dias()
-    {
-        return $this->belongsToMany(Dia::class);
-    }
-
-    //SCOPE PARA BUSQUEDA
-    public function scopeFilter($query, array $filters)
-    {
-        $query->when($filters['search'] ?? null, function ($query, $search) {
-            $query->where(function ($query) use ($search) {
-                $query->whereHas('empleado.persona', function ($query) use ($search) {
-                    $query->where('nombres', 'like', '%' . $search . '%')
-                        ->orWhere('apellidos', 'like', '%' . $search . '%')
-                        ->orWhere('ci_numero', 'like', '%' . $search . '%');
-                });
-            });
-        })->when($filters['search_turno'] ?? null, function ($query, $search) {
-            $query->where(function ($query) use ($search) {
-                $query->where('nombre_turnos', $search);
-            });
-        });
-    }
 }

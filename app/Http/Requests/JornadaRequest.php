@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TurnoRequest extends FormRequest
+class JornadaRequest extends FormRequest
 {
     
     public function authorize()
@@ -15,11 +15,9 @@ class TurnoRequest extends FormRequest
    
     public function rules()
     {
-        return [
-            'nombre_turnos' => 'required',
-            'hora_entrada' => 'required',
-            'hora_salida' => 'required',
+        return [ 
             'empleado_id' => 'required',
+            'turno_id' => 'required',
             'nombre_dias' => 'required'
         ];
     }
@@ -27,10 +25,8 @@ class TurnoRequest extends FormRequest
     public function attributes()
     {
         return [
-            'nombre_turnos' => 'turno',
-            'hora_entrada' => 'hora entrada',
-            'hora_salida' =>'hora salida',
             'empleado_id' => 'empleado',
+            'turno_id' => 'turno',
             'nombre_dias' => 'dias'
         ];
     }

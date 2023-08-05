@@ -9,14 +9,14 @@ return new class extends Migration
 
     public function up()
     {
-        Schema::create('dia_turno', function (Blueprint $table) {
+        Schema::create('dia_jornada', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('turno_id');
+            $table->unsignedBigInteger('jornada_id');
             $table->unsignedBigInteger('dia_id');
 
-            $table->foreign('turno_id')
+            $table->foreign('jornada_id')
                 ->references('id')
-                ->on('turnos')
+                ->on('jornadas')
                 ->onDelete('cascade');
             $table->foreign('dia_id')
                 ->references('id')
@@ -26,13 +26,9 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+   
     public function down()
     {
-        Schema::dropIfExists('dia_turno');
+        Schema::dropIfExists('dia_jornada');
     }
 };

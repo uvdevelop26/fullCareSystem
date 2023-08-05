@@ -11,10 +11,13 @@ class Dia extends Model
 
     protected $table = 'dias';
 
-    //relacion de muchos a muchos
+    protected $fillable = [
+        'nombre_dias'
+    ];
 
-    public function turnos()
+    //relacion de muchos a muchos
+    public function jornadas()
     {
-        return $this->belongsToMany(Turno::class);
+        return $this->belongsToMany(Jornada::class);
     }
 }

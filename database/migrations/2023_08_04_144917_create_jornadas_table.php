@@ -6,28 +6,22 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+
     public function up()
     {
-        Schema::create('vacaciones', function (Blueprint $table) {
+        Schema::create('jornadas', function (Blueprint $table) {
             $table->id();
-            $table->date('fecha_inicio');
-            $table->date('fecha_fin');
-            $table->integer('duracion');
-            $table->string('observacion')->nullable();
             $table->unsignedBigInteger('empleado_id');
-
+            $table->unsignedBigInteger('turno_id');
 
             $table->foreign('empleado_id')
                 ->references('id')
                 ->on('empleados')
                 ->onDelete('cascade');
-            
-
+            $table->foreign('turno_id')
+                ->references('id')
+                ->on('turnos')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -35,6 +29,6 @@ return new class extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('vacaciones');
+        Schema::dropIfExists('jornadas');
     }
 };

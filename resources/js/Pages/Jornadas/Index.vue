@@ -24,6 +24,7 @@ export default {
     },
 
     props: {
+        jornadas: Array,
         turnos: Array,
         filters: Object
     },
@@ -32,26 +33,23 @@ export default {
     setup(props) {
 
         //BUSQUEDA
-        const form = reactive({
+       const form = reactive({
             search: props.filters.search,
             search_turno: props.filters.search_turno
         })
 
-        watchEffect(() => {
+         watchEffect(() => {
             const query = pickBy(form);
-            Inertia.replace(route('turnos.index', Object.keys(query).length ? query : {}));
+            Inertia.replace(route('jornadas.index', Object.keys(query).length ? query : {}));
         });
 
-        //array de búsqueda de turnos
-        const searchTurnos = ['mañana', 'tarde', 'noche', 'madrugada'];
-
         //ELIMINAR TURNO
-        const eliminarTurno = (data) => {
+        const eliminarJornada = (data) => {
             data._method = "DELETE";
-            Inertia.post('/turnos/' + data.id, data)
+            Inertia.post('/jornadas/' + data.id, data)
         }
 
-        return { form, searchTurnos, eliminarTurno }
+        return {  eliminarJornada, form }
     }
 
 }
@@ -66,7 +64,7 @@ export default {
             <h1 class="uppercase">
                 <span class="text-turquesa text-2xl font-semibold">Turnos</span>
             </h1>
-            <Link :href="route('turnos.create')"
+            <Link :href="route('jornadas.create')"
                 class="px-5 py-1 md:px-12 bg-indigo-400 rounded-xl text-white hover:shadow-md hover:bg-softIndigo ">
             <Icon name="plus" class="w-4 h-4 inline fill-white mr-1" />
             Nuevo
@@ -81,8 +79,8 @@ export default {
                     <select-input id="turno" label="Turno" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
                         v-model="form.search_turno">
                         <option :value="null" />
-                        <option v-for="searchTurno in searchTurnos" :value="searchTurno">
-                            {{ searchTurno }}
+                        <option v-for="turno in turnos" :value="turno.id">
+                            {{ turno.nombre_turnos }}
                         </option>
                     </select-input>
                 </div>
@@ -105,24 +103,24 @@ export default {
                     </tr>
                 </thead>
                 <transition-group appear tag="tbody" name="list">
-                    <tr class="text-center shadow group" v-for="turno in turnos" :key="turno.id" v-if="turnos.length">
+                    <tr class="text-center shadow group" v-for="jornada in jornadas" :key="jornada.id" v-if="jornadas.length">
                         <td class="py-1 px-1 bg-white group-hover:bg-fondColor rounded-l-xl">
-                            {{ turno.empleado.persona.nombres }}
+                            {{ jornada.empleado.persona.nombres }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            {{ turno.empleado.persona.apellidos }}
+                            {{ jornada.empleado.persona.apellidos }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            {{ turno.nombre_turnos }}
+                            {{ jornada.turno.nombre_turnos }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            {{ turno.hora_entrada }}
+                            {{ jornada.turno.hora_entrada }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            {{ turno.hora_salida }}
+                            {{ jornada.turno.hora_salida }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            <span v-for="dias in turno.dias"
+                            <span v-for="dias in jornada.dias"
                                 class="inline-block px-3 py-1 mr-2 rounded-2xl border border-softIndigo text-softIndigo bg-indigo-100">
                                 {{ dias.nombre_dias }}
                             </span>
@@ -130,11 +128,11 @@ export default {
                         <td class="py-2 px-2 rounded-r-xl bg-white group-hover:bg-fondColor">
                             <div class="w-full h-full flex items-center justify-center">
                                 <Link class="inline-block bg-fondColor px-3 py-3 mr-2 rounded-full hover:shadow-md"
-                                    :href="route('turnos.edit', turno.id)">
+                                    :href="route('jornadas.edit', jornada.id)">
                                 <Icon name="edit" class="w-3 h-3 fill-textColor" />
                                 </Link>
                                 <button class="inline-block px-3 py-3 rounded-full bg-softIndigo hover:shadow-md"
-                                    @click="eliminarTurno(turno)">
+                                    @click="eliminarJornada(jornada)">
                                     <Icon name="delete" class="w-3 h-3 fill-white" />
                                 </button>
                             </div>

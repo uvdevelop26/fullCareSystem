@@ -43,9 +43,9 @@ class Empleado extends Model
         return $this->hasMany(User::class);
     }
 
-    public function turnos()
+    public function jornadas()
     {
-        return $this->hasMany(Turno::class);
+        return $this->hasMany(Jornada::class);
     }
     public function vacaciones()
     {

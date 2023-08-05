@@ -6,6 +6,7 @@ use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\FamiliareController;
 use App\Http\Controllers\HistorialeController;
 use App\Http\Controllers\IngresoController;
+use App\Http\Controllers\JornadaController;
 use App\Http\Controllers\MedicamentoController;
 use App\Http\Controllers\PermisoController;
 use App\Http\Controllers\PermissionController;
@@ -58,7 +59,7 @@ Route::resource('familiares', FamiliareController::class)
     ->middleware('auth:sanctum', 'verified');
 
 //Correo Electrónico
-Route::controller(ContactarFamiliarController::class)->group(function(){
+Route::controller(ContactarFamiliarController::class)->group(function () {
     Route::get('contactar-familiar/{email}', 'index')->name('contactar-familiar.index');
     Route::post('contactar-familiar/create', 'enviarCorreo')->name('contactar-familiar.enviarCorreo');
 });
@@ -72,7 +73,7 @@ Route::resource('sueldos', SueldoController::class)
     ->middleware('auth:sanctum', 'verified');
 
 //Jornadas de Trabajo
-Route::resource('turnos', TurnoController::class)
+Route::resource('jornadas', JornadaController::class)
     ->middleware('auth:sanctum', 'verified');
 
 //Permisos
