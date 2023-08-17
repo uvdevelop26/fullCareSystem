@@ -41,12 +41,13 @@ class Jornada extends Model
             $query->where(function ($query) use ($search) {
                 $query->whereHas('empleado.persona', function ($query) use ($search) {
                     $query->where('nombres', 'like', '%' . $search . '%')
-                        ->orWhere('apellidos', 'like', '%' . $search . '%');
+                        ->orWhere('apellidos', 'like', '%' . $search . '%')
+                        ->orWhere('ci_numero', 'like', '%' . $search . '%');
                 });
             });
         })->when($filters['search_turno'] ?? null, function ($query, $search) {
             $query->where(function ($query) use ($search) {
-                $query->whereHas('turno', function ($query) use ($search){
+                $query->whereHas('turno', function ($query) use ($search) {
                     $query->where('id', $search);
                 });
             });

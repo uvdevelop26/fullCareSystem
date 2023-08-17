@@ -15,15 +15,22 @@ class Vacacione extends Model
         'fecha_inicio',
         'fecha_fin',
         'duracion',
-        'estado',
         'observacion',
-        'empleado_id'
+        'empleado_id',
+        'estado_variacione_id',
     ];
 
+    //relaciones de uno a muchos
     public function empleado()
     {
         return $this->belongsTo(Empleado::class);
     }
+
+    public function estadoVariacione()
+    {
+        return $this->belongsTo(EstadoVariacione::class);
+    }
+
 
 
     //SCOPE PARA LA BUSQUEDA
@@ -39,7 +46,9 @@ class Vacacione extends Model
             });
         })->when($filters['search_estado'] ?? null, function ($query, $search) {
             $query->where(function ($query) use ($search) {
-                $query->where('estado', $search);
+                $query->whereHas('estadoVariacione', function ($query) use ($search) {
+                    $query->where('id', $search);
+                });
             });
         });
     }

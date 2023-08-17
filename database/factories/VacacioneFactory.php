@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Empleado;
+use App\Models\EstadoVariacione;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,9 +20,9 @@ class VacacioneFactory extends Factory
             'fecha_inicio' => $this->faker->date(),
             'fecha_fin' => $this->faker->date(),
             'duracion' => $this->faker->numberBetween(1, 15),
-            'estado' => $this->faker->randomElement($estados),
             'observacion' => $this->faker->sentence(),
-            'empleado_id' => Empleado::all()->random()->id
+            'empleado_id' => Empleado::all()->random()->id,
+            'estado_variacione_id' => EstadoVariacione::all()->random()->id
         ];
     }
 }

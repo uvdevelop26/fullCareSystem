@@ -50,6 +50,7 @@ class User extends Authenticatable
         return $this->belongsTo(Empleado::class);
     }
 
+
     //SCOPE PARA BÚSQUEDAS
     public function scopeFilter($query, array $filters)
     {

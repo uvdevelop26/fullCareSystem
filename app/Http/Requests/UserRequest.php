@@ -17,7 +17,7 @@ class UserRequest extends FormRequest
     {
         return [
             'username' => 'required',
-            'password' => 'required',
+            'password' => 'required|confirmed',
             'empleado_id' => 'required',
             'role_id' => 'required'
         ];

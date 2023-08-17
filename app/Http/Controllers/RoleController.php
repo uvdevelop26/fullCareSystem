@@ -17,10 +17,9 @@ use \Illuminate\Auth\Middleware\Authorize;
 class RoleController extends Controller
 {
 
-
-
     public function index(Request $request)
     {
+       
         $queries = ['search'];
 
         $roles = Role::with('permissions')
@@ -30,7 +29,7 @@ class RoleController extends Controller
 
         return Inertia::render('Roles/Index', [
             'roles' => $roles,
-            'filters' => $request->all($queries)
+            'filters' => $request->all($queries),
         ]);
     }
 
@@ -47,24 +46,15 @@ class RoleController extends Controller
 
     public function store(Request $request)
     {
-
-
         $role = Role::create([
             'name' => $request->input('name')
         ]);
 
         $role->syncPermissions($request->input('permissions'));
 
-
-
         return Redirect::route('roles.index')->with('success', 'Rol Creado');
     }
 
-
-    public function show($id)
-    {
-        //
-    }
 
 
     public function edit(Role $role)
@@ -92,14 +82,7 @@ class RoleController extends Controller
 
         $role->syncPermissions($request['permissions']);
 
-        return Redirect::route('roles.index')->with('success', 'Rol Actualizado');
-        /*  $role->update($request->all());
-        //almacenamos en la variable permissions el array de permisos si es que tiene
-        $permissions = $request->permissions ?? [];
-
-        $role->syncPermissions($permissions);
-
-        return Redirect::route('roles.index')->with('success', 'Rol Actualizado'); */
+        return Redirect::route('roles.index');
     }
 
 
@@ -107,6 +90,15 @@ class RoleController extends Controller
     {
         $role->delete();
 
-        return Redirect::route('roles.index')->with('success', 'Rol Eliminado');
+        return Redirect::route('roles.index');
     }
+
+  /*   public function getRole()
+    {
+        $user = Auth::user();
+        $userRole = $user->getRoleNames();
+
+
+        return Inertia::render('Layouts/LayoutApp', ['userRole' => $userRole]);
+    } */
 }

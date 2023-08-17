@@ -38,7 +38,6 @@ class PermissionSeeder extends Seeder
             //módulo reportes
             'reportes',
             
-
         ];
 
 

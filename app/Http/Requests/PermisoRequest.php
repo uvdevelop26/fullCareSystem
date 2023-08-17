@@ -16,19 +16,22 @@ class PermisoRequest extends FormRequest
     public function rules()
     {
         return [
-            'fecha_permiso' => 'required',
-            'justificacion' => 'required',
-            'estado' => 'required',
-            'observacion' => 'nullable',
-            'empleado_id' => 'required'
+            'fecha_inicio' => 'required',
+            'fecha_fin' => 'required',
+            'duracion' => 'required',
+            'motivo' => 'nullable',
+            'empleado_id' => 'required',
+            'estado_variacione_id' => 'required',
         ];
     }
 
     public function attributes()
     {
         return [
-            'fecha_permiso' => 'fecha de permiso',
+            'fecha_inicio' => 'fecha inicio',
+            'fecha_fin'  => 'fecha fin',
             'empleado_id' => 'empleado',
+            'estado_variacione_id' => 'estado',
         ];
     }
 }

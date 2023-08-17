@@ -111,12 +111,12 @@ export default {
             <filters>
                 <div class="py-3 px-3 border border-turquesa rounded-md">
                     <div class="lg:flex lg:flex-wrap">
-                        <search-input id="nombre" label="Nombres/Apellidos/CI"
+                        <search-input id="nombre" label="Nombres, Apellidos o C.I"
                             class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2" v-model="form.search" />
                         <select-input id="ciudades" label="Sección" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
                         v-model="form.search_seccion">
                             <option :value="null" />
-                            <option v-for="seccion in seccions" :key="seccion.id" :value="seccion.id">
+                            <option v-for="seccion in seccions" :key="seccion.id" :value="seccion.id" class="capitalize">
                                 {{ seccion.nombre_seccion }}
                             </option>
                         </select-input>
@@ -129,7 +129,7 @@ export default {
                             </select-input>
                             <select-input id="mes" label="Mes" class="text-sm pb-1 lg:pr-3 w-full" v-model="form.search_mes">
                                 <option :value="null" />
-                                <option v-for="mes in meses" :key="mes.id" :value="mes.id">
+                                <option v-for="mes in meses" :key="mes.id" :value="mes.id" class="capitalize">
                                     {{ mes.mes }}
                                 </option>
                             </select-input>
@@ -146,6 +146,7 @@ export default {
                     <tr class="capitalize shadow">
                         <th class="py-3 px-4 bg-turquesa rounded-l-xl text-white font-bold">Nombres</th>
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">Apellidos</th>
+                        <th class="py-3 px-4 bg-turquesa text-white font-bold">C.I.</th>
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">Sección</th>
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">Fecha</th>
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">Monto</th>
@@ -159,6 +160,9 @@ export default {
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
                             {{ sueldo.empleado.persona.apellidos }}
+                        </td>
+                        <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
+                            {{ sueldo.empleado.persona.ci_numero }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
                             {{ sueldo.empleado.seccion.nombre_seccion }}

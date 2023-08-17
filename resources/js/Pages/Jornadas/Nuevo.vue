@@ -63,7 +63,7 @@ export default {
 <template>
     <div>
 
-        <Head title="Crear Turno" />
+        <Head title="Crear Jornada" />
         <h1 class="py-3 px-2 max-w-4xl flex items-center gap-4 bg-white rounded-md border text-2xl">
             <div class="inline-block p-2 bg-teal-50 border border-turquesa rounded-md">
                 <Icon name="jornadas" class="w-7 h-7 fill-turquesa" />
@@ -77,7 +77,7 @@ export default {
                         v-model="form.empleado_id" :error="errors.empleado_id" />
                     <select-input v-model="form.turno_id" class="pb-8 pr-6 w-full lg:w-1/2" label="Turno" :error="errors.turno_id">
                         <option :value="null" />
-                        <option v-for="turno in turnos" :key="turno.id" :value="turno.id">
+                        <option v-for="turno in turnos" :key="turno.id" :value="turno.id" class="capitalize">
                             {{ turno.nombre_turnos }}
                         </option>
                     </select-input>

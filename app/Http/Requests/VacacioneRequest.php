@@ -19,9 +19,11 @@ class VacacioneRequest extends FormRequest
             'fecha_inicio' => 'required',
             'fecha_fin' => 'required',
             'duracion' => 'required',
-            'estado' => 'required',
             'observacion' => 'nullable',
-            'empleado_id' => 'required'
+            'empleado_id' => 'required',
+            'estado_variacione_id' => 'required',
+            
+            
         ];
     }
 
@@ -30,7 +32,8 @@ class VacacioneRequest extends FormRequest
         return [
             'fecha_inicio' => 'fecha de inicio',
             'fecha_fin' => 'fecha fin',
-            'empleado_id' => 'empleado'
+            'empleado_id' => 'empleado',
+            'estado_variacione_id' => 'estado'
         ];
     }
 }

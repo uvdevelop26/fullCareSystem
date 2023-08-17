@@ -66,7 +66,7 @@ export default {
 <template>
     <div>
 
-        <Head title="Editar Turno" />
+        <Head title="Editar Jornada" />
         <h1 class="py-3 px-2 max-w-4xl flex items-center gap-4 bg-white rounded-md border text-2xl">
             <div class="inline-block p-2 bg-teal-50 border border-turquesa rounded-md">
                 <Icon name="jornadas" class="w-7 h-7 fill-turquesa" />

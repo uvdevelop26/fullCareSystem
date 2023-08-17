@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\VacacioneRequest;
+use App\Models\EstadoVacacione;
+use App\Models\EstadoVariacione;
 use App\Models\Vacacione;
-use Database\Factories\VacacioneFactory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -15,13 +16,17 @@ class VacacioneController extends Controller
     public function index(Request $request)
     {
         $queries = ['search', 'search_estado'];
-        $vacaciones = Vacacione::with('empleado.persona')
+
+        $estadoVariaciones = EstadoVariacione::all();
+
+        $vacaciones = Vacacione::with('empleado.persona', 'estadoVariacione')
             ->orderBy('id', 'desc')
             ->filter($request->only($queries))
             ->get();
 
         return Inertia::render('Vacaciones/Index', [
             'vacaciones' => $vacaciones,
+            'estadoVariaciones' => $estadoVariaciones,
             'filters' => $request->all($queries)
         ]);
     }
@@ -29,7 +34,13 @@ class VacacioneController extends Controller
 
     public function create()
     {
-        return Inertia::render('Vacaciones/Nuevo');
+        $estadoVariaciones = EstadoVariacione::all();
+        return Inertia::render(
+            'Vacaciones/Nuevo',
+            [
+                'estadoVariaciones' => $estadoVariaciones
+            ]
+        );
     }
 
 
@@ -40,9 +51,9 @@ class VacacioneController extends Controller
             'fecha_inicio' => $request->fecha_inicio,
             'fecha_fin' => $request->fecha_fin,
             'duracion' => $request->duracion,
-            'estado' => $request->estado,
             'observacion' => $request->observacion,
-            'empleado_id' => $request->empleado_id
+            'empleado_id' => $request->empleado_id,
+            'estado_variacione_id' => $request->estado_variacione_id
         ]);
 
         return Redirect::route('vacaciones.index');
@@ -57,7 +68,14 @@ class VacacioneController extends Controller
 
     public function edit(Vacacione $vacacione)
     {
-        return Inertia::render('Vacaciones/Editar', ['vacacione' => $vacacione]);
+        $estadoVariaciones = EstadoVariacione::all();
+        return Inertia::render(
+            'Vacaciones/Editar',
+            [
+                'vacacione' => $vacacione,
+                'estadoVariaciones' => $estadoVariaciones
+            ]
+        );
     }
 
 
@@ -67,9 +85,9 @@ class VacacioneController extends Controller
             'fecha_inicio' => $request->fecha_inicio,
             'fecha_fin' => $request->fecha_fin,
             'duracion' => $request->duracion,
-            'estado' => $request->estado,
             'observacion' => $request->observacion,
-            'empleado_id' => $request->empleado_id
+            'empleado_id' => $request->empleado_id,
+            'estado_variacione_id' => $request->estado_variacione_id,
         ]);
 
         return Redirect::route('vacaciones.index');
@@ -81,6 +99,5 @@ class VacacioneController extends Controller
         $vacacione->delete();
 
         return Redirect::route('vacaciones.index');
-
     }
 }

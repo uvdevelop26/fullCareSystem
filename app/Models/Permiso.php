@@ -12,16 +12,22 @@ class Permiso extends Model
     protected $table = 'permisos';
 
     protected $fillable =  [
-        'fecha_permiso',
-        'justificacion',
-        'estado',
-        'observacion',
-        'empleado_id'
+        'fecha_inicio',
+        'fecha_fin',
+        'duracion',
+        'motivo',
+        'empleado_id',
+        'estado_variacione_id'
     ];
 
     public function empleado()
     {
         return $this->belongsTo(Empleado::class);
+    }
+
+    public function estadoVariacione()
+    {
+        return $this->belongsTo(EstadoVariacione::class);
     }
 
     //SCOPE PARA BUSQUEDA
@@ -37,11 +43,9 @@ class Permiso extends Model
             });
         })->when($filters['search_estado'] ?? null, function ($query, $search) {
             $query->where(function ($query) use ($search) {
-                $query->where('estado', $search);
-            });
-        })->when($filters['search_motivo'] ?? null, function ($query, $search) {
-            $query->where(function ($query) use ($search) {
-                $query->where('justificacion', $search);
+                $query->whereHas('estadoVariacione', function ($query) use ($search) {
+                    $query->where('id', $search);
+                });
             });
         });
     }

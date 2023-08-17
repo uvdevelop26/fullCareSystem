@@ -11,10 +11,10 @@ return new class extends Migration
     {
         Schema::create('permisos', function (Blueprint $table) {
             $table->id();
-            $table->date('fecha_permiso');
-            $table->string('justificacion');
-            $table->string('estado', 100);
-            $table->string('observacion')->nullable();
+            $table->date('fecha_inicio');
+            $table->date('fecha_fin');
+            $table->integer('duracion');
+            $table->string('motivo')->nullable();
             $table->unsignedBigInteger('empleado_id');
 
             $table->foreign('empleado_id')

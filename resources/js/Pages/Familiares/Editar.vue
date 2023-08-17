@@ -94,7 +94,7 @@ export default {
                     <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Ciudad" :id="ciudad" v-model="form.ciudade_id"
                         :error="errors.ciudade_id">
                         <option :value="null" />
-                        <option v-for="ciudad in ciudades" :key="ciudad.nombre_ciudad" :value="ciudad.id">
+                        <option v-for="ciudad in ciudades" :key="ciudad.nombre_ciudad" :value="ciudad.id" class="capitalize">
                             {{ ciudad.nombre_ciudad }}
                         </option>
                     </select-input>
@@ -108,7 +108,7 @@ export default {
                         <option value="sobrino/a">Sobrino/a</option>
                         <option value="otro">Otro</option>
                     </select-input>
-                    <text-input type="email" label="Email" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="email"
+                    <text-input type="text" label="Email" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="email"
                         v-model="form.email" :error="errors.email" />
                     <text-input type="text" label="Residente" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="residente"
                         v-model="form.residente_id" :error="errors.residente_id" />

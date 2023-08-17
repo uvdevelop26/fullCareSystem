@@ -3,7 +3,16 @@ import NavigationMenu from '../Shared/NavigationMenu.vue'
 import Icon from '../Shared/Icon.vue';
 import FullcareLogo from '../Shared/FullcareLogo.vue';
 import { Link } from '@inertiajs/inertia-vue3';
-import { ref, reactive, onMounted, onUnmounted, computed, toRefs  } from 'vue';
+import { ref, reactive, onMounted, onUnmounted } from 'vue';
+import { usePage } from '@inertiajs/inertia-vue3';
+import { defineProps } from 'vue';
+
+/* const props = defineProps({
+    auth: Array, 
+});
+ */
+
+
 
 //show and hide menu to logout 
 const showUserDropdown = ref(false)
@@ -11,6 +20,8 @@ const showUserDropdown = ref(false)
 //variable to show/hide navbar depending on screen sizes
 const isMobile = ref();
 let mql
+
+
 
 
 //object for the menu
@@ -106,28 +117,22 @@ const handleMqlChange = (e) => {
     isMobile.value = e.matches
 }
 
+
 onMounted(() => {
     mql = window.matchMedia('(min-width: 768px)');
     isMobile.value = mql.matches
 
     mql.addEventListener('change', handleMqlChange)
-
 })
+
 
 onUnmounted(() => {
     mql.removeEventListener('change', handleMqlChange)
 
-
 });
 
-const userPermissions =()=>{
-    return 
-};
+//console.log(props)
 
-
-const prueba = userPermissions();
-
-console.log(prueba)
 
 
 </script>

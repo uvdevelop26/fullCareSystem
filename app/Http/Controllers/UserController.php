@@ -64,16 +64,11 @@ class UserController extends Controller
     }
 
 
-    public function show($id)
-    {
-        //
-    }
-
 
     public function edit($id)
     {
 
-     
+
         $user = User::find($id);
         $roles = Role::all();
         $userRole = $user->roles->all();
@@ -91,7 +86,7 @@ class UserController extends Controller
 
     public function update(UserRequest $request, $id)
     {
-        
+
         $input = $request->all();
         if (!empty($input['password'])) {
             $input['password'] = Hash::make($input['password']);
@@ -120,4 +115,6 @@ class UserController extends Controller
 
         return Redirect::route('usuarios.index');
     }
+
+
 }

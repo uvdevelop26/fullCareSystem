@@ -62,7 +62,7 @@ export default {
         <!-- HEADER -->
         <div class="py-3 mb-3 max-w-7xl border-b border-turquesa flex justify-between">
             <h1 class="uppercase">
-                <span class="text-turquesa text-2xl font-semibold">Turnos</span>
+                <span class="text-turquesa text-2xl font-semibold">Jornadas Laborales</span>
             </h1>
             <Link :href="route('jornadas.create')"
                 class="px-5 py-1 md:px-12 bg-indigo-400 rounded-xl text-white hover:shadow-md hover:bg-softIndigo ">
@@ -74,12 +74,12 @@ export default {
         <filters>
             <div class="py-3 px-3 border border-turquesa rounded-md">
                 <div class="lg:flex lg:flex-wrap">
-                    <search-input id="nombre" label="Nombres/Apellidos/CI" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
+                    <search-input id="nombre" label="Nombres, Apellidos o C.I" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
                         v-model="form.search" />
                     <select-input id="turno" label="Turno" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
                         v-model="form.search_turno">
                         <option :value="null" />
-                        <option v-for="turno in turnos" :value="turno.id">
+                        <option v-for="turno in turnos" :key="turno.id" :value="turno.id" class="capitalize">
                             {{ turno.nombre_turnos }}
                         </option>
                     </select-input>
@@ -95,6 +95,7 @@ export default {
                     <tr class="capitalize shadow">
                         <th class="py-3 px-4 bg-turquesa rounded-l-xl text-white font-bold">Nombres</th>
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">Apellidos </th>
+                        <th class="py-3 px-4 bg-turquesa text-white font-bold">C.I. </th>
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">Turno</th>
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">Entrada</th>
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">Salida</th>
@@ -109,6 +110,9 @@ export default {
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
                             {{ jornada.empleado.persona.apellidos }}
+                        </td>
+                        <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
+                            {{ jornada.empleado.persona.ci_numero }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
                             {{ jornada.turno.nombre_turnos }}

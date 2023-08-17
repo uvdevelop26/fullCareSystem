@@ -25,6 +25,7 @@ export default {
     },
     props: {
         vacaciones: Array,
+        estadoVariaciones: Array,
         filters: Object
     },
 
@@ -40,8 +41,8 @@ export default {
             Inertia.replace(route('vacaciones.index', Object.keys(query).length ? query : {}))
         });
 
-         //ELIMINAR FAMILIAR
-         const eliminarVacacion = (data) => {
+        //ELIMINAR FAMILIAR
+        const eliminarVacacion = (data) => {
             data._method = "DELETE";
             Inertia.post('/vacaciones/' + data.id, data)
         }
@@ -54,7 +55,7 @@ export default {
 <template>
     <div>
 
-        <Head title="familiares" />
+        <Head title="vacaciones" />
         <!-- HEADER -->
         <div class="py-3 mb-3 max-w-7xl border-b border-turquesa flex justify-between">
             <h1 class="uppercase">
@@ -71,19 +72,14 @@ export default {
             <filters>
                 <div class="py-3 px-3 border border-turquesa rounded-md">
                     <div class=" lg:flex lg:flex-wrap">
-                        <search-input id="nombre" label="Nomb/Apell/CI" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
+                        <search-input id="nombre" label="Nombres, Apellidos o CI" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
                             v-model="form.search" />
                         <select-input id="estado" label="Estado" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
                             v-model="form.search_estado">
                             <option :value="null" />
-                            <option value="pendiente">
-                                pendiente
-                            </option>
-                            <option value="aprobado">
-                                aprobado
-                            </option>
-                            <option value="rechazado">
-                                rechazado
+                            <option v-for="estadoVariacione in estadoVariaciones" :key="estadoVariacione.id"
+                                :value="estadoVariacione.id" class="capitalize">
+                                {{ estadoVariacione.nombre_estado }}
                             </option>
                         </select-input>
                     </div>
@@ -135,8 +131,8 @@ export default {
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
                             <span class="inline-block px-3 py-1 rounded-2xl"
-                                :class="[vacacione.estado === 'aprobado' ? 'border border-softIndigo text-softIndigo bg-indigo-100' : 'border border-red-500 text-red-500 bg-red-100']">
-                                {{ vacacione.estado }}
+                                :class="[vacacione.estado_variacione.nombre_estado === 'aprobado' ? 'border border-softIndigo text-softIndigo bg-indigo-100' : 'border border-red-500 text-red-500 bg-red-100']">
+                                {{ vacacione.estado_variacione.nombre_estado }}
                             </span>
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">

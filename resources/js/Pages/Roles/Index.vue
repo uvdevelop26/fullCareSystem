@@ -25,6 +25,7 @@ export default {
 
     props: {
         roles: Array,
+        userRole: Array,
         filters: Object
     },
 

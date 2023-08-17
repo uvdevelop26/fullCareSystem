@@ -31,9 +31,10 @@ export default {
             id: props.user.id,
             username: props.user.username,
             password: props.user.password,
+            password_confirmation: props.user.password,
             empleado_id: props.user.empleado_id,
             role_id: props.userRole[0].id
-          
+
         });
 
         const actualizar = () => {
@@ -69,6 +70,8 @@ export default {
                         v-model="form.username" :error="errors.username" />
                     <text-input type="password" label="Contraseña" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="password"
                         v-model="form.password" :error="errors.password" />
+                    <text-input type="password" label="Re-escribir la contraseña" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="password_confirmation"
+                        v-model="form.password_confirmation" :error="errors.password" />
                     <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Roles" :id="role_id" v-model="form.role_id"
                         :error="errors.role_id">
                         <option :value="null" />

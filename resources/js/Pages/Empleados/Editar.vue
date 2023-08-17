@@ -95,7 +95,7 @@ export default {
                     <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Ciudad" :id="ciudad" v-model="form.ciudade_id"
                         :error="errors.ciudade_id">
                         <option :value="null" />
-                        <option v-for="ciudad in ciudades" :key="ciudad.nombre_ciudad" :value="ciudad.id">
+                        <option v-for="ciudad in ciudades" :key="ciudad.nombre_ciudad" :value="ciudad.id" class="capitalize">
                             {{ ciudad.nombre_ciudad }}
                         </option>
                     </select-input>
@@ -103,12 +103,12 @@ export default {
                         v-model="form.direccion" :error="errors.direccion" />
                     <text-input type="date" label="Fecha de Inicio" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="fecha_inicio"
                         v-model="form.fecha_inicio" :error="errors.fecha_inicio" />
-                    <text-input type="email" label="Correo" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="email"
+                    <text-input type="text" label="Correo" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="email"
                         v-model="form.email" :error="errors.email" />
                     <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Sección" :id="seccion_id"
                         v-model="form.seccion_id" :error="errors.seccion_id">
                         <option :value="null" />
-                        <option v-for="seccion in seccions" :key="seccion.id" :value="seccion.id">
+                        <option v-for="seccion in seccions" :key="seccion.id" :value="seccion.id" class="capitalize">
                             {{ seccion.nombre_seccion }}
                         </option>
                     </select-input>

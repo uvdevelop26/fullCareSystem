@@ -24,10 +24,9 @@ export default {
         Filters
     },
 
-
-
     props: {
         permisos: Array,
+        estadoVariaciones: Array,
         filters: Object
     },
 
@@ -37,7 +36,6 @@ export default {
         const form = reactive({
             search: props.filters.search,
             search_estado: props.filters.search_estado,
-            search_motivo: props.filters.search_motivo
         });
 
         watchEffect(() => {
@@ -45,8 +43,6 @@ export default {
             Inertia.replace(route('permisos.index', Object.keys(query).length ? query : {}))
         });
 
-        //Array para select input
-        const motivos = ['enfermedad', 'duelo', 'viaje', 'emergencia familiar', 'otros'];
 
         //ELIMINAR FAMILIAR
         const eliminarPermiso = (data) => {
@@ -55,7 +51,7 @@ export default {
         }
 
 
-        return { form, motivos, eliminarPermiso }
+        return { eliminarPermiso, form }
 
     }
 }
@@ -63,7 +59,7 @@ export default {
 <template>
     <div>
 
-        <Head title="familiares" />
+        <Head title="Permisos" />
         <!-- HEADER -->
         <div class="py-3 mb-3 max-w-7xl border-b border-turquesa flex justify-between">
             <h1 class="uppercase">
@@ -80,23 +76,14 @@ export default {
             <filters>
                 <div class="py-3 px-3 border border-turquesa rounded-md">
                     <div class=" lg:flex lg:flex-wrap">
-                        <search-input id="nombre" label="Nomb/Apell/CI" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
+                        <search-input id="nombre" label="Nombres, Apellidos o C.I" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
                             v-model="form.search" />
                         <select-input id="estado" label="Estado" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
                             v-model="form.search_estado">
                             <option :value="null" />
-                            <option value="pendiente">
-                                pendiente
-                            </option>
-                            <option value="aprobado">
-                                aprobado
-                            </option>
-                        </select-input>
-                        <select-input id="justificacion" label="Justificacion" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
-                            v-model="form.search_motivo">
-                            <option :value="null" />
-                            <option v-for="motivo in motivos" :key="motivo" :value="motivo">
-                                {{ motivo }}
+                            <option v-for="estadoVariacione in estadoVariaciones" :key="estadoVariacione.id"
+                                :value="estadoVariacione.id" class="capitalize">
+                                {{ estadoVariacione.nombre_estado }}
                             </option>
                         </select-input>
                     </div>
@@ -117,10 +104,11 @@ export default {
                         <th class="py-3 px-4 bg-turquesa rounded-l-xl text-white font-bold">nombres</th>
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">apellidos</th>
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">CI</th>
-                        <th class="py-3 px-4 bg-turquesa text-white font-bold">fecha permiso</th>
-                        <th class="py-3 px-4 bg-turquesa text-white font-bold">justificacion</th>
+                        <th class="py-3 px-4 bg-turquesa text-white font-bold">fecha inicio</th>
+                        <th class="py-3 px-4 bg-turquesa text-white font-bold">fecha fin</th>
+                        <th class="py-3 px-4 bg-turquesa text-white font-bold">duracion</th>
+                        <th class="py-3 px-4 bg-turquesa text-white font-bold">motivo</th>
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">estado</th>
-                        <th class="py-3 px-4 bg-turquesa text-white font-bold">observacion</th>
                         <th class="py-3 px-4 bg-turquesa rounded-r-xl text-white font-bold">acciones</th>
                     </tr>
                 </thead>
@@ -137,19 +125,22 @@ export default {
                             {{ permiso.empleado.persona.ci_numero }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            {{ permiso.fecha_permiso }}
+                            {{ permiso.fecha_inicio }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            {{ permiso.justificacion }}
+                            {{ permiso.fecha_fin }}
+                        </td>
+                        <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
+                            {{ permiso.duracion }}
+                        </td>
+                        <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
+                            {{ permiso.motivo }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
                             <span class="inline-block px-3 py-1 rounded-2xl"
-                                :class="[permiso.estado === 'aprobado' ? 'border border-softIndigo text-softIndigo bg-indigo-100' : 'border border-red-500 text-red-500 bg-red-100']">
-                                {{ permiso.estado }}
+                                :class="[permiso.estado_variacione.nombre_estado === 'aprobado' ? 'border border-softIndigo text-softIndigo bg-indigo-100' : 'border border-red-500 text-red-500 bg-red-100']">
+                                {{ permiso.estado_variacione.nombre_estado }}
                             </span>
-                        </td>
-                        <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            {{ permiso.observacion }}
                         </td>
                         <td class="py-2 px-2 rounded-r-xl  bg-white group-hover:bg-fondColor">
                             <div class="w-full h-full flex items-center">

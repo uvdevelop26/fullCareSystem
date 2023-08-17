@@ -31,12 +31,13 @@ export default {
             empleado_id: "",
             username: "",
             password: "",
+            password_confirmation: "",
             role_id: ""
         });
 
-         const guardar = async () => {
-             form.post(route("usuarios.store"), form);
-         };
+        const guardar = async () => {
+            form.post(route("usuarios.store"), form);
+        };
 
         return { form, guardar };
     },
@@ -61,8 +62,10 @@ export default {
                         v-model="form.username" :error="errors.username" />
                     <text-input type="password" label="Contraseña" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="password"
                         v-model="form.password" :error="errors.password" />
-                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Roles" :id="role_id"
-                        v-model="form.role_id" :error="errors.role_id">
+                    <text-input type="password" label="Re-escribir la contraseña" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="password_confirmation"
+                        v-model="form.password_confirmation" :error="errors.password" />
+                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Roles" :id="role_id" v-model="form.role_id"
+                        :error="errors.role_id">
                         <option :value="null" />
                         <option v-for="role in roles" :key="role.id" :value="role.id">
                             {{ role.name }}

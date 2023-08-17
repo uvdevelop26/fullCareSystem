@@ -80,19 +80,19 @@ export default {
             <filters>
                 <div class="py-3 px-3 border border-turquesa rounded-md">
                     <div class="lg:flex lg:flex-wrap">
-                        <search-input id="nombre" label="Nombres/Apellidos/CI" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
+                        <search-input id="nombre" label="Nombres, Apellidos o C.I" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
                             v-model="form.search" />
                         <select-input id="ciudades" label="Ciudad" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
                             v-model="form.search_ciudad">
                             <option :value="null" />
-                            <option v-for="ciudad in ciudades" :key="ciudad.id" :value="ciudad.id">
+                            <option v-for="ciudad in ciudades" :key="ciudad.id" :value="ciudad.id" class="capitalize">
                                 {{ ciudad.nombre_ciudad }}
                             </option>
                         </select-input>
                         <select-input id="ciudades" label="Sección" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
                             v-model="form.search_seccion">
                             <option :value="null" />
-                            <option v-for="seccion in seccions" :key="seccion.id" :value="seccion.id">
+                            <option v-for="seccion in seccions" :key="seccion.id" :value="seccion.id" class="capitalize">
                                 {{ seccion.nombre_seccion }}
                             </option>
                         </select-input>
