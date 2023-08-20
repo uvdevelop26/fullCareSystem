@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\IngresoRequest;
+use App\Models\Categoria;
 use App\Models\Ingreso;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Redirect;
 
@@ -12,7 +15,9 @@ class IngresoController extends Controller
 
     public function index()
     {
-        $ingresos = Ingreso::orderBy('id', 'desc')->paginate(8);
+        $ingresos = Ingreso::with('user', 'categoria')
+            ->orderBy('id', 'desc')
+            ->get();
 
         return Inertia::render(
             'Ingresos/Index',
@@ -25,29 +30,26 @@ class IngresoController extends Controller
 
     public function create()
     {
-        return Inertia::render('Ingresos/Nuevo');
+        $categorias = Categoria::where('tipo', 'ingresos')->get();
+
+        return Inertia::render('Ingresos/Nuevo', ['categorias' => $categorias]);
     }
 
-    public function store(Request $request)
+    public function store(IngresoRequest $request)
     {
-
-        $request->validate(
-            [
-                'tipo' => 'required',
-                'ingreso_fecha' => 'required',
-                'monto' => 'required'
-            ]
-        );
+        $user_id = Auth::user()->id;
 
         Ingreso::create([
-            'tipo' => $request->tipo,
-            'subtipo' => $request->subtipo,
+            'fecha_ingreso' => $request->fecha_ingreso,
+            'concepto' => $request->concepto,
             'detalle' => $request->detalle,
-            'ingreso_fecha' => $request->ingreso_fecha,
-            'monto' => $request->monto
+            'monto' => $request->monto,
+            'nro_comprobante' => $request->nro_comprobante,
+            'user_id' => $user_id,
+            'categoria_id' => $request->categoria_id
         ]);
 
-        return Redirect::route('ingresos.index')->with('success', 'Ingreso Registrado');
+        return Redirect::route('ingresos.index');
     }
 
     public function show($id)
@@ -58,28 +60,40 @@ class IngresoController extends Controller
 
     public function edit(Ingreso $ingreso)
     {
+        $categorias = Categoria::where('tipo', 'ingresos')->get();
 
-        return Inertia::render('Ingresos/Editar', ['ingreso' => $ingreso]);
+        return Inertia::render(
+            'Ingresos/Editar',
+            [
+                'ingreso' => $ingreso,
+                'categorias' => $categorias
+            ]
+        );
     }
 
 
-    public function update(Request $request, Ingreso $ingreso)
+    public function update(IngresoRequest $request, Ingreso $ingreso)
     {
-        $request->validate(
-            [
-                'tipo' => 'required',
-                'ingreso_fecha' => 'required',
-                'monto' => 'required'
-            ]
-        );
-        $ingreso->update($request->all());
-        return Redirect::route('ingresos.index')->with('success', 'Ingreso Actualizado');
+        $user_id = Auth::user()->id;
+
+        $ingreso->update([
+            'fecha_ingreso' => $request->fecha_ingreso,
+            'concepto' => $request->concepto,
+            'detalle' => $request->detalle,
+            'monto' => $request->monto,
+            'nro_comprobante' => $request->nro_comprobante,
+            'user_id' => $user_id,
+            'categoria_id' => $request->categoria_id
+        ]);
+
+        return Redirect::route('ingresos.index');
     }
 
 
     public function destroy(Ingreso $ingreso)
     {
         $ingreso->delete();
-        return Redirect::route('ingresos.index')->with('success', 'Ingreso Eliminado');
+        
+        return Redirect::route('ingresos.index');
     }
 }

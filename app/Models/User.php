@@ -50,6 +50,16 @@ class User extends Authenticatable
         return $this->belongsTo(Empleado::class);
     }
 
+    public function ingresos()
+    {
+        return $this->hasMany(Ingreso::class);
+    }
+
+    public function egresos()
+    {
+        return $this->hasMany(Egreso::class);
+    }
+
 
     //SCOPE PARA BÚSQUEDAS
     public function scopeFilter($query, array $filters)

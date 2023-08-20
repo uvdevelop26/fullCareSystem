@@ -66,7 +66,7 @@ const menu = reactive([
         submenu: [
             { name: 'admin. usuarios', href: '/usuarios' },
             { name: 'roles', href: '/roles' },
-            { name: 'acceso', href: '/acceso' }
+            { name: 'permisos de Acceso', href: '/permissions' }
         ],
         toggle_submenu: false
 
@@ -87,7 +87,7 @@ const menu = reactive([
         name: 'salud',
         icon_name: 'historial',
         submenu: [
-            { name: 'historial clinico', href: '/historial' },
+            { name: 'historial clinico', href: '/historiales' },
             { name: 'medicamentos', href: '/medicamentos' },
             { name: 'control de suministros', href: '/control' },
         ],

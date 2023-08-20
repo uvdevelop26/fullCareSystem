@@ -32,20 +32,22 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(CiudadeSeeder::class);
-        Persona::factory(100)->create();
+        Persona::factory(10)->create();
         $this->call(EstadoResidenteSeeder::class);
-        Residente::factory(20)->create();
+        Residente::factory(12)->create();
         Familiare::factory(20)->create();
         $this->call(SeccionSeeder::class);
-        Empleado::factory(20)->create();
-        Sueldo::factory(20)->create();
+        Empleado::factory(18)->create();
+        Sueldo::factory(18)->create();
         $this->call(DiaSeeder::class);
         $this->call(TurnoSeeder::class);
         $this->call(EstadoVariacioneSeeder::class);
-        Permiso::factory(20)->create(); 
+        Permiso::factory(10)->create(); 
         Vacacione::factory(10)->create();
-        Ingreso::factory(20)->create();
-        Egreso::factory(20)->create();
+        $this->call(PermissionSeeder::class);
+        $this->call(CategoriaSeeder::class);
+        Ingreso::factory(10)->create();
+        Egreso::factory(10)->create();
         Enfermedade::factory(20)->create();
         Incidencia::factory(20)->create();
         Caracteristica::factory(20)->create();

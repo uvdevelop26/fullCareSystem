@@ -20,15 +20,18 @@ use \Illuminate\Auth\Middleware\Authorize;
 
 class PermissionController extends Controller
 {
-    
-    public function index()
+
+    public function index(Request $request)
     {
+        $queries = ['search'];
 
-        $permissions = Permission::orderBy('id', 'desc')->paginate(8);
-        return Inertia::render('Permissions/Index',[
-                'permissions' => $permissions,
-
-            ]);
+        $permissions = Permission::orderBy('id', 'desc')
+            ->filter($request->only($queries))
+            ->get();
+        return Inertia::render('Permissions/Index', [
+            'permissions' => $permissions,
+            'filters' => $request->all($queries),
+        ]);
     }
 
 
@@ -40,9 +43,15 @@ class PermissionController extends Controller
 
     public function store(Request $request)
     {
-        Permission::create($request->all());
+        $request->validate([
+            'name' => 'required'
+        ]);
 
-        return Redirect::route('permissions.index')->with('success', 'Permisco Creado');
+        Permission::create([
+            'name' => $request->name
+        ]);
+
+        return Redirect::route('permissions.index');
     }
 
 
@@ -62,9 +71,13 @@ class PermissionController extends Controller
 
     public function update(Request $request, Permission $permission)
     {
+        $request->validate([
+            'name' => 'required'
+        ]);
+
         $permission->update($request->all());
 
-        return Redirect::route('permissions.index')->with('success', 'Permiso Actualizado');
+        return Redirect::route('permissions.index');
     }
 
 
@@ -72,6 +85,6 @@ class PermissionController extends Controller
     {
         $permission->delete();
 
-        return Redirect::route('permissions.index')->with('success', 'Permiso Eliminado');
+        return Redirect::route('permissions.index');
     }
 }

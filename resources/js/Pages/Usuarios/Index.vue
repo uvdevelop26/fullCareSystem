@@ -77,12 +77,12 @@ export default {
             <filters>
                 <div class="py-3 px-3 border border-turquesa rounded-md">
                     <div class="lg:flex lg:flex-wrap">
-                        <search-input id="nombre" label="Nombres/Apellidos/CI" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
+                        <search-input id="nombre" label="Nombre, Apellido o C.I" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
                             v-model="form.search" />
                         <select-input id="roles" label="Rol" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
                             v-model="form.search_rol">
                             <option :value="null" />
-                            <option v-for="rol in roles" :key="rol.id" :value="rol.id">
+                            <option v-for="rol in roles" :key="rol.id" :value="rol.id" class="capitalize">
                                 {{ rol.name }}
                             </option>
                         </select-input>

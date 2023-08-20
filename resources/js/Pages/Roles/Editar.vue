@@ -1,82 +1,92 @@
-<template>
-    <div>
-        <Head title="Roles" />
-        <h1 class="mb-5 text-2xl font-bold text-cyan-900">Editar Rol</h1>
-        <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
-            <form>
-
-                <div class="flex-wrap -mb-8 -mr-6 p-8">
-                    <text-input v-model="roles.name" type="text" label="Rol" class="pb-7 pr-6 w-full lg:w-1/2"
-                        :id="name" name="name" />
-
-                    <div class="flex-wrap -mb-8 -mr-6 p-8">
-                        <div class="block">Permisos para este Rol</div>
-                        <div v-for="permission in permissions" :key="permission.id">
-                            <label for="">
-                                <input type="checkbox" :id="permission.name" :value="permission.id" v-model="roles.permissions">
-                                {{ permission.name }}
-                            </label>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
-                    <Link type="button" :href="route('roles.index')" class="btn-cancelar">
-                    <span class="text-white font-bold">Cancelar</span>
-                    </Link>
-                    <button class="btn-indigo mx-1" @click.prevent="actualizarRol()" type="submit">
-                        Actualizar Rol
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</template>
-
 <script>
-import Layout from "../../Shared/Layout.vue";
+import LayoutApp from "../../Layouts/LayoutApp.vue";
+import Icon from "../../Shared/Icon.vue";
 import TextInput from "../../Shared/TextInput.vue";
 import SelectInput from "../../Shared/SelectInput.vue";
-/* import LoadingButton from "../../Shared/LoadingButton.vue"; */
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import { reactive, ref } from "vue";
 import { useForm } from "@inertiajs/inertia-vue3";
 
 export default {
+    layout: LayoutApp,
+
     components: {
         Head,
         Link,
         TextInput,
         SelectInput,
+        Icon
     },
 
     props: {
-        role: Object,
-        permissions: Object,
-        roleHasPermissions: Object,
+        role: Array,
+        permissions: Array,
+        roleHasPermissions: Array,
+        errors: Object
     },
 
-    layout: Layout,
+
 
     setup(props) {
 
-        const roles = useForm({
+        const form = useForm({
             _method: "PUT",
             id: props.role.id,
             name: props.role.name,
-            permissions: props.roleHasPermissions   
+            permissions: props.roleHasPermissions
         });
 
-        const actualizarRol = () => {
-            roles.post(
-                route("roles.update", roles.id),
+        const actualizar = () => {
+            form.post(
+                route("roles.update", form.id),
                 {
                     preserveScroll: true,
                 }
             );
         };
 
-        return { roles, actualizarRol };
+        return { form, actualizar };
     },
 };
 </script>
+<template>
+    <div>
+
+        <Head title="Editar Rol" />
+        <h1 class="py-3 px-2 max-w-4xl flex items-center gap-4 bg-white rounded-md border text-2xl">
+            <div class="inline-block p-2 bg-teal-50 border border-turquesa rounded-md">
+                <Icon name="jornadas" class="w-7 h-7 fill-turquesa" />
+            </div>
+            <span class="text-turquesa drop-shadow-md">Editar Rol</span>
+        </h1>
+        <div class="max-w-4xl overflow-hidden pt-2">
+            <form @submit.prevent="actualizar">
+                <div class="py-3 px-3  bg-white border rounded-md">
+                    <text-input type="text" v-model="form.name" label="Nombre del Rol" class="pb-5 lg:pr-3 w-full lg:w-1/2"
+                        :id="name" :error="errors.name" />
+                    <div class="flex-wrap">
+                        <div class="block pb-2">Permisos para este Rol</div>
+                        <div v-for="permission in permissions" :key="permission.id">
+                            <div class="flex items-center gap-1">
+                                <input type="checkbox" :id="permission.name" :value="permission.id"
+                                    v-model="form.permissions">
+                                <label :for="permission.name" class="capitalize"> {{ permission.name }}</label>
+                            </div>
+                        </div>
+                        <div v-if="errors.permissions" class="form-error"> {{ errors.permissions }}</div>
+                    </div>
+                    <div class="py-4 lg:pr-2 flex w-full items-center justify-end bg-white border-t">
+                        <Link type="button" :href="route('roles.index')" class="btn-cancelar">
+                        <span class="text-white font-bold">Cancelar</span>
+                        </Link>
+                        <button class="btn-indigo mx-1" type="submit">
+                            Actualizar Rol
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</template>
+
+

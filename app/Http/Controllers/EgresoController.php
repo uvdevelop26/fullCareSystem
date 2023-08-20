@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EgresoRequest;
+use App\Models\Categoria;
 use App\Models\Egreso;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
@@ -13,29 +16,42 @@ class EgresoController extends Controller
 
     public function index()
     {
-        $egresos = Egreso::orderBy('id', 'desc')->paginate(8);
+        $egresos = Egreso::with('user', 'categoria')
+            ->orderBy('id', 'desc')
+            ->get();
 
-        return Inertia::render('Egresos/Index', ['egresos' => $egresos]);
+        return Inertia::render(
+            'Egresos/Index',
+            [
+                'egresos' => $egresos
+            ]
+        );
     }
 
 
     public function create()
     {
-        return Inertia::render('Egresos/Nuevo');
+        $categorias = Categoria::where('tipo', 'egresos')->get();
+
+        return Inertia::render('Egresos/Nuevo', ['categorias' => $categorias]);
     }
 
 
-    public function store(Request $request)
+    public function store(EgresoRequest $request)
     {
-        $request->validate([
-            'tipo' => 'required',
-            'egreso_fecha' => 'required',
-            'monto' => 'required'
+        $user_id = Auth::user()->id;
+
+        Egreso::create([
+            'fecha_egreso' => $request->fecha_egreso,
+            'concepto' => $request->concepto,
+            'detalle' => $request->detalle,
+            'monto' => $request->monto,
+            'nro_comprobante' => $request->nro_comprobante,
+            'user_id' => $user_id,
+            'categoria_id' => $request->categoria_id
         ]);
 
-        Egreso::create($request->all());
-
-        return Redirect::route('egresos.index')->with('success', 'Egreso Registrado');
+        return Redirect::route('egresos.index');
     }
 
 
@@ -47,26 +63,35 @@ class EgresoController extends Controller
 
     public function edit(Egreso $egreso)
     {
-        return Inertia::render('Egresos/Editar', ['egreso' => $egreso]);
+        $categorias = Categoria::where('tipo', 'egresos')->get();
+
+        return Inertia::render('Egresos/Editar', [
+            'egreso' => $egreso,
+            'categorias' => $categorias
+        ]);
     }
 
 
-    public function update(Request $request, Egreso $egreso)
+    public function update(EgresoRequest $request, Egreso $egreso)
     {
-        $request->validate([
-            'tipo' => 'required',
-            'egreso_fecha' => 'required',
-            'monto' => 'required'
-        ]);
+        $user_id = Auth::user()->id;
 
-        $egreso->update($request->all());
-        return Redirect::route('egresos.index')->with('success', 'Egreso Actualizado');
+        $egreso->update([
+            'fecha_egreso' => $request->fecha_egreso,
+            'concepto' => $request->concepto,
+            'detalle' => $request->detalle,
+            'monto' => $request->monto,
+            'nro_comprobante' => $request->nro_comprobante,
+            'user_id' => $user_id,
+            'categoria_id' => $request->categoria_id
+        ]);
+        return Redirect::route('egresos.index');
     }
 
 
     public function destroy(Egreso $egreso)
     {
         $egreso->delete();
-        return Redirect::route('egresos.index')->with('success', 'Egreso Eliminado');
+        return Redirect::route('egresos.index');
     }
 }

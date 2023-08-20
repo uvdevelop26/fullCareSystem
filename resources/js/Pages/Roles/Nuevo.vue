@@ -1,89 +1,82 @@
+<script>
+import LayoutApp from "../../Layouts/LayoutApp.vue";
+import Icon from "../../Shared/Icon.vue";
+import TextInput from "../../Shared/TextInput.vue";
+import SelectInput from "../../Shared/SelectInput.vue";
+import { Head, Link } from "@inertiajs/inertia-vue3";
+import { useForm } from "@inertiajs/inertia-vue3";
+
+
+export default {
+    layout: LayoutApp,
+
+    components: {
+        Head,
+        Link,
+        TextInput,
+        SelectInput,
+        Icon
+    },
+
+    props: {
+        permissions: Array,
+        errors: Object
+    },
+
+    setup() {
+
+        const form = useForm({
+            name: "",
+            permissions: [],
+
+        });
+
+        const guardar = async () => {
+
+            form.post(route("roles.store"), form);
+        };
+
+        return { form, guardar };
+    },
+};
+</script>
 <template>
     <div>
 
         <Head title="Crear Roles" />
-        <h1 class="mb-5 text-2xl font-bold text-cyan-900">Crear Rol</h1>
-        <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
-            <form>
-                <div class="flex flex-wrap -mb-8 -mr-6 p-8">
-                    <text-input v-model="roles.name" type="text" label="Nombre del Rol"
-                        class="pb-7 pr-6 w-full lg:w-1/2" :id="name" name="name" />
-                </div>
-                <div class="flex-wrap -mb-8 -mr-6 p-8">
-                    <div class="block">Permisos para este Rol</div>
-                    <div v-for="permission in permissions" :key="permission.id">
-                        <div class="flex items-center gap-1">
-                            <input type="checkbox" :id="permission.name" :value="permission.id" v-model="roles.permissions">
-                            <label :for="permission.name">{{ permission.name }}</label>
+        <h1 class="py-3 px-2 max-w-4xl flex items-center gap-4 bg-white rounded-md border text-2xl">
+            <div class="inline-block p-2 bg-teal-50 border border-turquesa rounded-md">
+                <Icon name="roles" class="w-7 h-7 fill-turquesa" />
+            </div>
+            <span class="text-turquesa drop-shadow-md">Crear Roles</span>
+        </h1>
+        <div class="max-w-4xl overflow-hidden pt-2">
+            <form @submit.prevent="guardar">
+                <div class="py-3 px-3  bg-white border rounded-md">
+                    <text-input type="text" v-model="form.name" label="Nombre del Rol" class="pb-5 lg:pr-3 w-full lg:w-1/2"
+                        :id="name" :error="errors.name" />
+                    <div class="flex-wrap">
+                        <div class="block pb-2">Permisos para este Rol:</div>
+                        <div v-for="permission in permissions" :key="permission.id">
+                            <div class="flex items-center gap-1">
+                                <input type="checkbox" :id="permission.name" :value="permission.id"
+                                    v-model="form.permissions">
+                                <label :for="permission.name" class="capitalize">{{ permission.name }}</label>
+                            </div>
                         </div>
+                        <div v-if="errors.permissions" class="form-error"> {{ errors.permissions }}</div>
                     </div>
-                </div>
-                <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
-                    <Link type="button" :href="route('roles.index')" class="btn-cancelar">
-                    <span class="text-white font-bold">Cancelar</span>
-                    </Link>
-
-                    <button class="btn-indigo mx-1" type="submit" @click.prevent="guardar()">
-                        Crear Rol
-                    </button>
+                    <div class="py-4 lg:pr-2 flex w-full items-center justify-end bg-white border-t">
+                        <Link type="button" :href="route('roles.index')" class="btn-cancelar">
+                        <span class="text-white font-bold">Cancelar</span>
+                        </Link>
+                        <button class="btn-indigo mx-1" type="submit">
+                            Crear Rol
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>
     </div>
 </template>
 
-<script>
-
-import Layout from "../../Shared/Layout.vue";
-import TextInput from "../../Shared/TextInput.vue";
-import SelectInput from "../../Shared/SelectInput.vue";
-import { Head, Link } from "@inertiajs/inertia-vue3";
-import { reactive, ref } from "vue";
-import { useForm } from "@inertiajs/inertia-vue3";
-
-
-export default {
-    components: {
-        Head,
-        Link,
-        TextInput,
-        SelectInput,
-
-    },
-
-    layout: Layout,
-
-    props: {
-        permissions: Object
-    },
-
-    setup() {
-
-
-        const name = ref("");
-        const premissions = ref([]);
-
-
-        const roles = useForm({
-            name: "",
-            permissions: [],
-
-        });
-
-
-
-        const guardar = async () => {
-
-            console.log(roles);
-
-            roles.post(route("roles.store"), roles);
-
-        };
-
-        return {
-            roles,
-            guardar
-        };
-    },
-};
-</script>

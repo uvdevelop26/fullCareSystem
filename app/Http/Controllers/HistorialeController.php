@@ -18,7 +18,7 @@ class HistorialeController extends Controller
     {
         $historiales = Historiale::with('residente.persona')
             ->orderBy('id', 'desc')
-            ->paginate(8);
+            ->get();
 
         return Inertia::render('Historiales/Index', [
             'historiales' => $historiales,

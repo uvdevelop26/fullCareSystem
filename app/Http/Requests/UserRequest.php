@@ -26,8 +26,8 @@ class UserRequest extends FormRequest
     public function attributes()
     {
         return [
-            'username' => 'Nombre de Usuario',
-            'password' => 'Contraseña',
+            'username' => 'nombre de usuario',
+            'password' => 'contraseña',
             'empleado_id' => 'empleado',
             'role_id' => 'roles'
         ];

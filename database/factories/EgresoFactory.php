@@ -2,26 +2,24 @@
 
 namespace Database\Factories;
 
+use App\Models\Categoria;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Egreso>
- */
+
 class EgresoFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+    
     public function definition()
     {
         return [
-            'tipo' => $this->faker->word(),
-            'subtipo' => $this->faker->word(),
+            'fecha_egreso' => $this->faker->date(),
+            'concepto' => $this->faker->word(),
             'detalle' => $this->faker->sentence(),
-            'egreso_fecha' => $this->faker->date(),
-            'monto' => $this->faker->numberBetween(1000, 5000)
+            'monto' => $this->faker->numberBetween(100000, 500000),
+            'nro_comprobante' => $this->faker->numberBetween(10, 100),
+            'user_id' => User::all()->random()->id,
+            'categoria_id' => Categoria::all()->random()->id
         ];
     }
 }

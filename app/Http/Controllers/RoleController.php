@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RoleRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Permission;
 use App\Models\Role;
@@ -21,15 +22,19 @@ class RoleController extends Controller
     {
        
         $queries = ['search'];
-
+        
         $roles = Role::with('permissions')
             ->orderBy('id', 'desc')
             ->filter($request->only($queries))
             ->get();
+        
+        $rolesToSearch = Role::all();
 
         return Inertia::render('Roles/Index', [
             'roles' => $roles,
+            'rolesToSearch' => $rolesToSearch,
             'filters' => $request->all($queries),
+
         ]);
     }
 
@@ -44,7 +49,7 @@ class RoleController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(RoleRequest $request)
     {
         $role = Role::create([
             'name' => $request->input('name')
@@ -52,7 +57,7 @@ class RoleController extends Controller
 
         $role->syncPermissions($request->input('permissions'));
 
-        return Redirect::route('roles.index')->with('success', 'Rol Creado');
+        return Redirect::route('roles.index');
     }
 
 
@@ -71,7 +76,7 @@ class RoleController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(RoleRequest $request, $id)
     {
 
         $role = Role::find($id);
@@ -92,13 +97,4 @@ class RoleController extends Controller
 
         return Redirect::route('roles.index');
     }
-
-  /*   public function getRole()
-    {
-        $user = Auth::user();
-        $userRole = $user->getRoleNames();
-
-
-        return Inertia::render('Layouts/LayoutApp', ['userRole' => $userRole]);
-    } */
 }

@@ -12,10 +12,22 @@ class Egreso extends Model
     protected $table = 'egresos';
 
     protected $fillable = [
-        'tipo',
-        'subtipo',
+        'fecha_egreso',
+        'concepto',
         'detalle',
-        'egreso_fecha',
-        'monto'
+        'monto',
+        'nro_comprobante',
+        'user_id',
+        'categoria_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function categoria()
+    {
+        return $this->belongsTo(Categoria::class);
+    }
 }

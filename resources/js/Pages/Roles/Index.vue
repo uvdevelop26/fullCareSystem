@@ -1,7 +1,6 @@
 <script>
 import LayoutApp from '../../Layouts/LayoutApp.vue';
 import { Head, Link } from '@inertiajs/inertia-vue3'
-import SearchInput from '../../Shared/SearchInput.vue';
 import Icon from '../../Shared/Icon.vue'
 import SelectInput from '../../Shared/SelectInput.vue';
 import Filters from '../../Shared/Filters.vue';
@@ -17,7 +16,6 @@ export default {
         Head,
         Link,
         Icon,
-        SearchInput,
         SelectInput,
         Filters
     },
@@ -26,6 +24,7 @@ export default {
     props: {
         roles: Array,
         userRole: Array,
+        rolesToSearch: Array,
         filters: Object
     },
 
@@ -43,13 +42,14 @@ export default {
             Inertia.replace(route('roles.index', Object.keys(query).length ? query : {}));
         });
 
-        /* const formDelete = useForm({});
+        //ELIMINAR ROL
 
-        function eliminarRol(id) {
-            formDelete.delete(route('roles.destroy', id))
-        };
-       */
-        return { form }
+        const eliminarRole = (data)=>{
+            data._method = "DELETE";
+            Inertia.post('/roles/' + data.id, data)
+        }
+        
+        return { form, eliminarRole }
     }
 
 
@@ -77,14 +77,13 @@ export default {
             <filters>
                 <div class="py-3 px-3 border border-turquesa rounded-md">
                     <div class="lg:flex lg:flex-wrap">
-                        <search-input id="rol" label="Rol" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2" v-model="form.search" />
-                        <!-- <select-input id="roles" label="Rol" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
-                            v-model="form.search_rol">
+                        <select-input id="roles" label="Nombre del Rol" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
+                            v-model="form.search">
                             <option :value="null" />
-                            <option v-for="rol in roles" :key="rol.id" :value="rol.id">
-                                {{ rol.name }}
+                            <option v-for="roles in rolesToSearch" :key="roles.id" :value="roles.id">
+                                {{ roles.name }}
                             </option>
-                        </select-input> -->
+                        </select-input>
                     </div>
                 </div>
             </filters>
