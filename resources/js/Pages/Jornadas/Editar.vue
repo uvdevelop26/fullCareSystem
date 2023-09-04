@@ -65,14 +65,15 @@ export default {
 </script>
 <template>
     <div>
-
         <Head title="Editar Jornada" />
+        <!-- HEADER -->
         <h1 class="py-3 px-2 max-w-4xl flex items-center gap-4 bg-white rounded-md border text-2xl">
             <div class="inline-block p-2 bg-teal-50 border border-turquesa rounded-md">
                 <Icon name="jornadas" class="w-7 h-7 fill-turquesa" />
             </div>
             <span class="text-turquesa drop-shadow-md">Editar Jornada</span>
         </h1>
+        <!-- FORMULARIO -->
         <div class="max-w-4xl overflow-hidden pt-2">
             <form @submit.prevent="actualizar">
                 <div class="py-3 px-3 flex flex-wrap bg-white border rounded-md">

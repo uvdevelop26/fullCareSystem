@@ -1,97 +1,33 @@
-<template>
-    <div>
-        <Head title="Medicamentos" />
-        <h1 class="mb-7 text-3xl font-bold text-cyan-600">Medicamentos</h1>
-        <div class="flex items-center justify-between mb-6">
-            <Link class="btn-nuevo" type="button" :href="route('medicamentos.create')" v-if="can.create">
-            <span class="text-white font-bold">Nuevo Medicamento</span>
-            </Link>
-        </div>
-        <div class="bg-white rounded-md shadow overflow-x-auto">
-            <table class="w-full whitespace-nowrap text-sm">
-                <thead>
-                    <tr class="text-center text-sm uppercase">
-                        <th class="py-3 px-4">Residente</th>
-                        <th class="py-3 px-4">Medicamento</th>
-                        <th class="py-3 px-4">Suministro</th>
-                        <th class="py-3 px-4">Vencimiento</th>
-                        <th class="py-4 px-6">Dosis/Cantidad</th>
-                        <th class="py-4 px-6">Stock</th>
-                        <th class="py-4 px-6">Horarios</th>
-                        <th class="py-4 px-6" v-if="can.edit || can.delete">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="medicamento in medicamentos" :key="medicamento.id"
-                        class="text-center text-sm text-gray-600 hover:bg-gray-100" :class="{}">
-                        <td class="border-t py-3">
-                            {{ medicamento.residente.persona.nombres }}
-                        </td>
-                        <td class="border-t py-3">
-                            {{ medicamento.nombre_medicamento }}
-                        </td>
-                        <td class="border-t py-3">
-                            {{ medicamento.via_suministro }}
-                        </td>
-                        <td class="border-t py-3">
-                            {{ medicamento.fecha_vencimiento }}
-                        </td>
-                        <td class="border-t py-3">
-                            {{ medicamento.dosis_cantidad }}
-                        </td>
-                        <td class="border-t py-3">
-                            {{ medicamento.stock }}
-                        </td>
-                        <td class="border-t py-3">
-                          <span v-for="horario in medicamento.horarios" 
-                          class="inline-block p-1 mx-1 rounded-lg text-white font-bold bg-gradient-to-r from-indigo-400 to-indigo-500 ">
-                        {{ horario.hora }}
-                        </span>  
-                        </td>
-                      
-                        <td class="border-t py-3" v-if="can.edit || can.delete">
-                            <Link class="mx-1 inline-block" :href="route('medicamentos.edit', medicamento.id)" v-if="can.edit">
-                            <icon name="edit" class="w-4 h-4 fill-gray-600 hover:fill-cyan-800" />
-                            </Link>
-                            <button class="mx-1"  @click="eliminarMedicamento(medicamento)" v-if="can.delete">
-                                <icon name="delete" class="w-4 h-4 fill-gray-600 hover:fill-cyan-800" />
-                            </button>
-                        </td>
-
-                    </tr>
-                </tbody>
-            </table>
-           <!--  <pagination class="mt-6" :links="ingresos.links" /> -->
-        </div>
-    </div>
-
-</template>
-
 <script>
-import Layout from '../../Shared/Layout.vue';
-import { Head, Link, useForm } from '@inertiajs/inertia-vue3'
+import LayoutApp from '../../Layouts/LayoutApp.vue';
+import { Head, Link } from '@inertiajs/inertia-vue3'
+import SearchInput from '../../Shared/SearchInput.vue';
 import Icon from '../../Shared/Icon.vue'
-/* import Pagination from '../../Shared/Pagination.vue'; */
+import SelectInput from '../../Shared/SelectInput.vue';
+import Filters from '../../Shared/Filters.vue';
+import { watchEffect, reactive } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
+import { pickBy } from 'lodash';
+
 export default {
+
+    layout: LayoutApp,
 
     components: {
         Head,
         Link,
         Icon,
-/*         Pagination */
-
+        SearchInput,
+        SelectInput,
+        Filters
     },
 
     props: {
-        medicamentos: Object,
-        can: Object
+        medicamentos: Array,
+
     },
 
-    layout: Layout,
-
     setup() {
-        const formDelete = useForm({});
 
         const eliminarMedicamento = (data) => {
             data._method = "DELETE";
@@ -103,7 +39,119 @@ export default {
 
 }
 </script>
+<template>
+    <div>
 
-<style>
+        <Head title="Medicamentos" />
+        <!-- header -->
+        <div class="py-3 mb-3 max-w-7xl border-b border-turquesa flex justify-between">
+            <h1 class="uppercase">
+                <span class="text-turquesa text-2xl font-semibold">Medicamentos</span>
+            </h1>
+            <Link :href="route('medicamentos.create')"
+                class="px-5 py-1 md:px-12 bg-indigo-400 rounded-xl text-white hover:shadow-md hover:bg-softIndigo ">
+            <Icon name="plus" class="w-4 h-4 inline fill-white mr-1" />
+            Nuevo
+            </Link>
+        </div>
+        <!-- filter area -->
+        <!-- table -->
+        <div class="overflow-x-auto py-4 max-w-7xl">
+            <table
+                class="w-full whitespace-nowrap border-separate border-spacing-y-2 text-sm rounded-md overflow-hidden shadow-md">
+                <thead>
+                    <tr class="capitalize shadow">
+                        <th class="py-3 px-4 bg-turquesa rounded-l-xl text-white font-bold">residente</th>
+                        <th class="py-3 px-4 bg-turquesa text-white font-bold">medicamento</th>
+                        <th class="py-3 px-4 bg-turquesa text-white font-bold">descripcion</th>
+                        <th class="py-3 px-4 bg-turquesa text-white font-bold">dosis</th>
+                        <th class="py-3 px-4 bg-turquesa text-white font-bold">indicaciones</th>
+                        <th class="py-3 px-4 bg-turquesa text-white font-bold">efectos secundarios</th>
+                        <th class="py-3 px-4 bg-turquesa text-white font-bold">presentacion</th>
+                        <th class="py-3 px-4 bg-turquesa text-white font-bold">horario</th>
+                        <th class="py-3 px-4 bg-turquesa rounded-r-xl text-white font-bold">Acciones</th>
+                    </tr>
+                </thead>
+                <transition-group appear tag="tbody" name="list">
+                    <tr v-for="medicamento in medicamentos" :key="medicamento.id" v-if="medicamentos.length"
+                        class="text-center shadow group">
+                        <td class="py-1 px-1 bg-white group-hover:bg-fondColor rounded-l-xl">
+                            {{ medicamento.residente.persona.nombres }}
+                            {{ medicamento.residente.persona.apellidos }}
+                        </td>
+                        <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
+                            {{ medicamento.nombre }}
+                        </td>
+                        <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
+                            {{ medicamento.descripcion }}
+                        </td>
+                        <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
+                            {{ medicamento.dosis }}
+                        </td>
+                        <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
+                            {{ medicamento.indicaciones }}
+                        </td>
+                        <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
+                            {{ medicamento.efectos_secundarios }}
+                        </td>
+                        <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
+                            {{ medicamento.presentacione.nombre }}
+                        </td>
+                        <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
+                            <span v-for="horario in medicamento.horarios"
+                                class="inline-block p-1 mx-1 rounded-lg text-white font-bold bg-gradient-to-r from-indigo-400 to-indigo-500 ">
+                                {{ horario.hora }}
+                            </span>
+                        </td>
+                        <td class="py-2 px-2 rounded-r-xl bg-white group-hover:bg-fondColor">
+                            <div class="w-full h-full flex items-center">
+                                <Link class="inline-block bg-fondColor px-3 py-3 mr-2 rounded-full hover:shadow-md"
+                                    :href="route('medicamentos.edit', medicamento.id)">
+                                <Icon name="edit" class="w-3 h-3 fill-textColor" />
+                                </Link>
+                                <button class="inline-block px-3 py-3 rounded-full bg-softIndigo hover:shadow-md"
+                                    @click="eliminarMedicamento(medicamento)">
+                                    <Icon name="delete" class="w-3 h-3 fill-white" />
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr v-else class="text-center shadow group">
+                        <span class="inline-block py-2 text-indigo-400 text-md">No se encuentran resultados</span>
+                    </tr>
+                </transition-group>
+            </table>
+        </div>
+    </div>
+</template>
 
+<style scoped>
+/* LIST TRANSITIONS */
+.list-enter-from {
+    opacity: 0;
+    transform: translateX(-60px);
+}
+
+.list-enter-to {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.list-enter-active {
+    transition: all 0.4s ease;
+}
+
+.list-leave-from {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.list-leave-to {
+    opacity: 0;
+    transform: translateX(-60px);
+}
+
+.list-leave-active {
+    transition: all 0.4s ease;
+}
 </style>

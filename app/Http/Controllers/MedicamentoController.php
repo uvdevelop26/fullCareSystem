@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MedicamentoRequest;
 use App\Models\Horario;
 use App\Models\Medicamento;
+use App\Models\Presentacione;
 use App\Models\Turno;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -20,8 +22,7 @@ class MedicamentoController extends Controller
 
     public function index()
     {
-        $medicamentos = Medicamento::has('horarios')
-            ->with('horarios', 'residente.persona')
+        $medicamentos = Medicamento::with('residente.persona', 'presentacione', 'horarios')
             ->orderBy('id', 'desc')
             ->get();
         return Inertia::render('Medicamentos/Index', [
@@ -32,27 +33,37 @@ class MedicamentoController extends Controller
 
     public function create()
     {
-        $horarios = Horario::get();
+        $presentaciones = Presentacione::all();
         return Inertia::render('Medicamentos/Nuevo', [
-            'horarios' => $horarios
+            'presentaciones' => $presentaciones
         ]);
     }
 
 
-    public function store(Request $request)
+    public function store(MedicamentoRequest $request)
     {
         $medicamento = Medicamento::create([
-            'nombre_medicamento' => $request['nombre_medicamento'],
-            'via_suministro' => $request['via_suministro'],
-            'fecha_vencimiento' => $request['fecha_vencimiento'],
-            'dosis_cantidad' => $request['dosis_cantidad'],
-            'stock' => $request['stock'],
-            'residente_id' => $request['residente_id']
+            'nombre' => $request->nombre,
+            'descripcion' => $request->descripcion,
+            'dosis' => $request->dosis,
+            'indicaciones' => $request->indicaciones,
+            'efectos_secundarios' => $request->efectos_secundarios,
+            'residente_id' => $request->residente_id,
+            'presentacione_id' => $request->presentacione_id
         ]);
 
-        $medicamento->horarios()->attach($request['horarios']);
 
-        return Redirect::route('medicamentos.index')->with('success', 'Medicamento Registrado');
+
+        $horariosData = $request->horarios;
+
+        foreach ($horariosData as $horarioData) {
+            $horario = new Horario([
+                'hora' => $horarioData['valor'],
+            ]);
+
+            $medicamento->horarios()->save($horario);
+        }
+        return Redirect::route('medicamentos.index');
     }
 
 
@@ -64,33 +75,47 @@ class MedicamentoController extends Controller
 
     public function edit(Medicamento $medicamento)
     {
-        $horarios = Horario::get();
+        //$horarios = Horario::get();
 
-        $medicamentoHasHorario = array_column(json_decode($medicamento->horarios, true), 'id');
+        //  $medicamentoHasHorario = array_column(json_decode($medicamento->horarios, true), 'id');
+        $horarios = $medicamento->horarios;
+        $medicamentoHasHorario = $horarios->toArray();
+
+        $presentaciones = Presentacione::all();
 
         return Inertia::render('Medicamentos/Editar', [
             'medicamento' => $medicamento,
-            'horarios' => $horarios,
-            'medicamentoHasHorario' => $medicamentoHasHorario
+            'medicamentoHasHorario' => $medicamentoHasHorario,
+            'presentaciones' => $presentaciones
         ]);
     }
 
 
-    public function update(Request $request, $id)
+    public function update(MedicamentoRequest $request, Medicamento $medicamento)
     {
-        $medicamento = Medicamento::find($id);
+
+        //Actualizar los datos de "medicamentos"
         $medicamento->update([
-            'nombre_medicamento' => $request['nombre_medicamento'],
-            'via_suministro' => $request['via_suministro'],
-            'fecha_vencimiento' => $request['fecha_vencimiento'],
-            'dosis_cantidad' => $request['dosis_cantidad'],
-            'stock' => $request['stock'],
-            'residente_id' => $request['residente_id']
+            'nombre' => $request->nombre,
+            'descripcion' => $request->descripcion,
+            'dosis' => $request->dosis,
+            'indicaciones' => $request->indicaciones,
+            'efectos_secundarios' => $request->efectos_secundarios,
+            'residente_id' => $request->residente_id,
+            'presentacione_id' => $request->presentacione_id
         ]);
 
-        $medicamento->horarios()->sync($request['horarios']);
+        //recuperar horarios existentes
+        $horariosExistentes = $medicamento->horarios;
 
-        return Redirect::route('medicamentos.index')->with('success', 'Medicamento Registrado');
+        //nuevos horarios proporcionados por el usuario
+        $nuevosHorarios = $request->horarios;
+
+        //actualiza horarios existentes
+        
+
+
+       // return Redirect::route('medicamentos.index');
     }
 
 
@@ -98,6 +123,6 @@ class MedicamentoController extends Controller
     {
         $medicamento->delete();
 
-        return Redirect::route('medicamentos.index')->with('success', 'Medicamento Registrado');
+        return Redirect::route('medicamentos.index');
     }
 }

@@ -1,94 +1,57 @@
-<template>
-    <div>
-        <Head title="Empleados" />
-        <h1 class="mb-5 text-2xl font-bold text-cyan-900">Editar Empleados</h1>
-        <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
-            <form>
-                <div class="flex flex-wrap -mb-8 -mr-6 p-8">
-                    <text-input v-model="form.nombre_medicamento" type="text" label="Medicamento"
-                        class="pb-7 pr-6 w-full lg:w-1/2" :id="nombre_medicamento" name="nombre_medicamento" />
-                    <select-input v-model="form.via_suministro" class="pb-8 pr-6 w-full lg:w-1/2"
-                        label="Via Suministro">
-                        <option :value="null" />
-                        <option value="Via Oral">Oral</option>
-                        <option value="Via Subcutanea">Subcutanea</option>
-                        <option value="Sanguinea">Sanguinea</option>
-                        <option value="Otros">Otros</option>
-                    </select-input>
-                    <text-input v-model="form.fecha_vencimiento" type="date" label="Fecha de Vencimiento"
-                        class="pb-7 pr-6 w-full lg:w-1/2" :id="fecha_vencimiento" name="fecha_vencimiento" />
-                    <text-input v-model="form.dosis_cantidad" type="text" label="Dosis/Cantidad"
-                        class="pb-7 pr-6 w-full lg:w-1/2" :id="dosis_cantidad" name="dosis_cantidad" />
-                    <text-input v-model="form.stock" type="number" label="Stock" class="pb-7 pr-6 w-full lg:w-1/2"
-                        :id="stock" name="stock" />
-                    <text-input v-model="form.residente_id" type="text" label="Residente"
-                        class="pb-7 pr-6 w-full lg:w-1/2" :id="residente_id" name="residente_id" />
-
-                </div>
-                <div class="flex-wrap -mb-8 -mr-6 p-8">
-                    <div class="block py-2 font-bold text-center text-2xl text-cyan-700">Horarios de Suministro</div>
-                    <div v-for="horario in horarios" :key="horario.id">
-                        <div class="flex items-center gap-1">
-                            <input type="checkbox" :id="horario.hora" :value="horario.id" v-model="form.horarios">
-                            <label :for="horario.hora">{{ horario.hora }}</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
-                    <Link type="button" :href="route('medicamentos.index')" class="btn-cancelar">
-                    <span class="text-white font-bold">Cancelar</span>
-                    </Link>
-
-                    <button class="btn-indigo mx-1" type="submit" @click.prevent="guardar()">
-                        Editar Medicamento
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</template>
-
 <script>
-import Layout from "../../Shared/Layout.vue";
+import LayoutApp from "../../Layouts/LayoutApp.vue";
 import TextInput from "../../Shared/TextInput.vue";
 import SelectInput from "../../Shared/SelectInput.vue";
-/* import LoadingButton from "../../Shared/LoadingButton.vue"; */
+import Icon from "../../Shared/Icon.vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import { reactive, ref } from "vue";
 import { useForm } from "@inertiajs/inertia-vue3";
 
 export default {
+
+    layout: LayoutApp,
+
     components: {
         Head,
         Link,
         TextInput,
         SelectInput,
+        Icon
     },
 
     props: {
-        medicamento: Object,
-        horarios: Object,
-        medicamentoHasHorario: Array
+        medicamento: Array,
+        medicamentoHasHorario: Array,
+        presentaciones: Array,
+        errors: Object
     },
 
-    layout: Layout,
 
     setup(props) {
 
         const form = useForm({
             _method: "PUT",
             id: props.medicamento.id,
-            nombre_medicamento: props.medicamento.nombre_medicamento,
-            via_suministro: props.medicamento.via_suministro,
-            fecha_vencimiento: props.medicamento.fecha_vencimiento,
-            dosis_cantidad: props.medicamento.dosis_cantidad,
-            stock: props.medicamento.stock,
+            nombre: props.medicamento.nombre,
+            descripcion: props.medicamento.descripcion,
+            dosis: props.medicamento.dosis,
+            indicaciones: props.medicamento.indicaciones,
+            efectos_secundarios: props.medicamento.efectos_secundarios,
             residente_id: props.medicamento.residente_id,
+            presentacione_id: props.medicamento.presentacione_id,
             horarios: props.medicamentoHasHorario
 
         });
 
-        const guardar = () => {
+        const eliminarHorario = (index)=>{
+            form.horarios.splice(index, 1);
+        }
+
+        const agregarHorario = ()=>{
+            form.horarios.push({ valor: ''})
+        }
+
+        const actualizar = () => {
             form.post(
                 route("medicamentos.update", form.id),
                 {
@@ -97,7 +60,79 @@ export default {
             );
         };
 
-        return { form, guardar };
+        return { form, actualizar, eliminarHorario, agregarHorario };
     },
 };
 </script>
+<template>
+    <div>
+
+        <Head title="Editar Empleados" />
+        <!-- header -->
+        <h1 class="py-3 px-2 max-w-4xl flex items-center gap-4 bg-white rounded-md border text-2xl">
+            <div class="inline-block p-2 bg-teal-50 border border-turquesa rounded-md">
+                <Icon name="medicine" class="w-7 h-7 fill-turquesa" />
+            </div>
+            <span class="text-turquesa drop-shadow-md">Editar Medicamento</span>
+        </h1>
+        <!-- formulario -->
+        <div class="max-w-4xl overflow-hidden pt-2">
+            <form @submit.prevent="actualizar">
+                <div class="py-3 px-3 flex flex-wrap bg-white border rounded-md">
+                    <text-input type="text" label="Residente" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="residente_id"
+                        v-model="form.residente_id" name="residente_id" :error="errors.residente_id"/>
+                    <text-input type="text" label="Nombre del Medicamento" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="nombre"
+                        v-model="form.nombre" :error="errors.nombre" />
+                    <div class="pb-5 lg:pr-3 w-full lg:w-1/2">
+                        <label for="descripcion" class="form-label">Descripcion:</label>
+                        <textarea name="descripcion" :id="descripcion" cols="20" rows="3" class="form-textarea"
+                            v-model="form.descripcion"></textarea>
+                        <span v-if="errors.descripcion" class="text-red-500">{{ errors.descripcion }}</span>
+                    </div>
+                    <text-input type="text" label="Dosis" class="pb-5 lg:pr-3 w-full lg:w-1/2" v-model="form.dosis"
+                        :id="dosis" name="dosis" :error="errors.dosis" />
+                    <div class="pb-5 lg:pr-3 w-full lg:w-1/2">
+                        <label for="indicaciones" class="form-label">Indicaciones:</label>
+                        <textarea name="indicaciones" :id="indicaciones" cols="20" rows="3" class="form-textarea"
+                            v-model="form.indicaciones"></textarea>
+                        <span v-if="errors.indicaciones" class="text-red-500">{{ errors.indicaciones }}</span>
+                    </div>
+                    <div class="pb-5 lg:pr-3 w-full lg:w-1/2">
+                        <label for="efectos_secundarios" class="form-label">Efectos Secundarios:</label>
+                        <textarea name="indicaciones" :id="efectos_secundarios" cols="20" rows="3" class="form-textarea"
+                            v-model="form.efectos_secundarios"></textarea>
+                        <span v-if="errors.efectos_secundarios" class="text-red-500">{{ errors.efectos_secundarios }}</span>
+                    </div>
+                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Presentacion" :id="presentacione_id"
+                        v-model="form.presentacione_id" :error="errors.presentacione_id">
+                        <option :value="null" />
+                        <option v-for="presentacione in presentaciones" :key="presentacione.id" :value="presentacione.id"
+                            class="capitalize">
+                            {{ presentacione.nombre }}
+                        </option>
+                    </select-input>
+                    <div class="flex-wrap">
+                        <div class="block pb-2">Horarios de Suministro:</div>
+                        <div v-for="(horario, index) in form.horarios" :key="index">
+                            <input type="text" v-model="horario.hora" placeholder="HH:MM" >
+                            <button type="button" @click="eliminarHorario(index)">Eliminar</button>
+                        </div>
+                        <button type="button" @click="agregarHorario">Agregar Horario</button>
+                        <span v-if="errors.horarios" class="text-red-500">{{ errors.horarios }}</span>
+                    </div>
+                    <div class="py-4 lg:pr-2 flex w-full items-center justify-end bg-white border-t">
+                        <Link type="button" :href="route('medicamentos.index')" class="btn-cancelar">
+                        <span class="text-white font-bold">Cancelar</span>
+                        </Link>
+                        <button class="btn-indigo mx-1" type="submit">
+                            Editar Medicamento
+                        </button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</template>
+
+

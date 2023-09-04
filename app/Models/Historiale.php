@@ -12,31 +12,31 @@ class Historiale extends Model
     protected $table = 'historiales';
 
     protected $fillable = [
-        'fecha_historial',
+        'fecha_registro',
+        'diagnostico',
+        'tratamiento',
         'observaciones',
         'residente_id',
-        'caracteristica_id',
-        'enfermedade_id',
-        'incidencia_id'
+        'caracteristica_id'
     ];
-
-    public function residente()
-    {
-        return $this->belongsTo(Residente::class);
-    }
 
     public function caracteristica()
     {
         return $this->belongsTo(Caracteristica::class);
     }
 
-    public function enfermedade()
+    public function residente()
     {
-        return $this->belongsTo(Enfermedade::class);
+        return $this->belongsTo(Residente::class);
     }
 
-    public function incidencia()
+    public function enfermedades()
     {
-        return $this->belongsTo(Incidencia::class);
+        return $this->belongsToMany(Enfermedade::class);
+    }
+
+    public function alergias()
+    {
+        return $this->belongsToMany(Alergia::class);
     }
 }

@@ -15,14 +15,13 @@ return new class extends Migration
     {
         Schema::create('historiales', function (Blueprint $table) {
             $table->id();
-            $table->date('fecha_historial');
-            $table->string('observaciones');
-
+            $table->date('fecha_registro');
+            $table->string('diagnostico');
+            $table->string('tratamiento');
+            $table->string('observaciones')->nullable();
             $table->unsignedBigInteger('residente_id');
-            $table->unsignedBigInteger('caracteristica_id')->nullable();
-            $table->unsignedBigInteger('enfermedade_id')->nullable();
-            $table->unsignedBigInteger('incidencia_id')->nullable();
-
+            $table->unsignedBigInteger('caracteristica_id');
+          
             $table->foreign('residente_id')
                 ->references('id')
                 ->on('residentes')
@@ -30,24 +29,11 @@ return new class extends Migration
             $table->foreign('caracteristica_id')
                 ->references('id')
                 ->on('caracteristicas')
-                ->onDelete('set null');
-            $table->foreign('enfermedade_id')
-                ->references('id')
-                ->on('enfermedades')
-                ->onDelete('set null');
-            $table->foreign('incidencia_id')
-                ->references('id')
-                ->on('incidencias')
-                ->onDelete('set null');
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('historiales');

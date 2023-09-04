@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
         Persona::factory(10)->create();
         $this->call(EstadoResidenteSeeder::class);
         Residente::factory(12)->create();
-        Familiare::factory(20)->create();
+        Familiare::factory(18)->create();
         $this->call(SeccionSeeder::class);
         Empleado::factory(18)->create();
         Sueldo::factory(18)->create();
@@ -48,11 +48,12 @@ class DatabaseSeeder extends Seeder
         $this->call(CategoriaSeeder::class);
         Ingreso::factory(10)->create();
         Egreso::factory(10)->create();
-        Enfermedade::factory(20)->create();
-        Incidencia::factory(20)->create();
         Caracteristica::factory(20)->create();
-        Historiale::factory(20)->create();
+        $this->call(EnfermedadeSeeder::class);
+        $this->call(AlergiaSeeder::class);
+        Historiale::factory(10)->create();
+        $this->call(PresentacioneSeeder::class);
         Medicamento::factory(15)->create();
-        Horario::factory(10)->create();
+        //Horario::factory(10)->create();
     }
 }

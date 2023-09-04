@@ -5,22 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Incidencia extends Model
+class Alergia extends Model
 {
     use HasFactory;
 
-    protected $table = 'incidencias';
+    protected  $table = 'alergias';
 
     protected $fillable = [
-        'cirugias',
-        'alergias',
-        'recomendaciones',
+        'nombre',
+        'descripcion',
     ];
 
     public function historiales()
     {
-        return $this->hasMany(Historiale::class);
+        return $this->belongsToMany(Historiale::class);
     }
-
-
 }

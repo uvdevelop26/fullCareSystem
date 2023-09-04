@@ -2,24 +2,24 @@
 
 namespace Database\Factories;
 
+use App\Models\Presentacione;
 use App\Models\Residente;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Medicamento>
- */
+
 class MedicamentoFactory extends Factory
 {
-    
+
     public function definition()
     {
         return [
-            'nombre_medicamento' => $this->faker->word(),
-            'via_suministro' => $this->faker->randomElement(['via oral', 'via subcutanea', 'sanguinea', 'otros']),
-            'fecha_vencimiento' => $this->faker->date(),
-            'dosis_cantidad' => $this->faker->word(),
-            'stock' => $this->faker->numberBetween(1, 100),
-            'residente_id' => Residente::all()->random()->id
+            'nombre' => $this->faker->word(),
+            'descripcion' => $this->faker->sentence(),
+            'dosis' => $this->faker->word(),
+            'indicaciones' => $this->faker->sentence(),
+            'efectos_secundarios' => $this->faker->sentence(),
+            'residente_id' => Residente::all()->random()->id,
+            'presentacione_id' => Presentacione::all()->random()->id,
         ];
     }
 }

@@ -6,10 +6,10 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-
+    
     public function up()
     {
-        Schema::create('enfermedades', function (Blueprint $table) {
+        Schema::create('alergias', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
             $table->string('descripcion');
@@ -17,9 +17,9 @@ return new class extends Migration
         });
     }
 
-
+   
     public function down()
     {
-        Schema::dropIfExists('enfermedades');
+        Schema::dropIfExists('alergias');
     }
 };

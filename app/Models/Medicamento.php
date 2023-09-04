@@ -12,19 +12,28 @@ class Medicamento extends Model
     protected $table = 'medicamentos';
 
     protected $fillable = [
-        'nombre_medicamento',
-        'via_suministro',
-        'fecha_vencimiento',
-        'dosis_cantidad',
-        'stock',
-        'residente_id'
+        'nombre',
+        'descripcion',
+        'dosis',
+        'indicaciones',
+        'efectos_secundarios',
+        'residente_id',
+        'presentacione_id'
     ];
 
 
+    //Relación de uno a muchos
     public function residente()
     {
         return $this->belongsTo(Residente::class);
     }
+
+    public function presentacione()
+    {
+        return $this->belongsTo(Presentacione::class);
+    }
+
+    //relación de muchos a muchos
 
     public function horarios()
     {

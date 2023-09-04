@@ -3,7 +3,6 @@ import LayoutApp from '../../Layouts/LayoutApp.vue';
 import { Head, Link } from '@inertiajs/inertia-vue3';
 import SearchInput from '../../Shared/SearchInput.vue';
 import Icon from '../../Shared/Icon.vue'
-import Pagination from "../../Shared/Pagination.vue";
 import SelectInput from '../../Shared/SelectInput.vue';
 import Filters from '../../Shared/Filters.vue';
 import { watchEffect, reactive } from 'vue';
@@ -18,7 +17,6 @@ export default {
         Head,
         Link,
         Icon,
-        Pagination,
         SelectInput,
         Filters,
         SearchInput
