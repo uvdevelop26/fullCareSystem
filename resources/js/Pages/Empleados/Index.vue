@@ -46,6 +46,8 @@ export default {
             Inertia.replace(route('empleados.index', Object.keys(query).length ? query : {}));
         });
 
+      
+
         //ELIMINAR EMPLEADO
         const eliminarEmpleado = (data) => {
             data._method = "DELETE";
@@ -78,8 +80,8 @@ export default {
             <filters>
                 <div class="py-3 px-3 border border-turquesa rounded-md">
                     <div class="lg:flex lg:flex-wrap">
-                        <search-input id="nombre" label="Nombres, Apellidos o C.I" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
-                            v-model="form.search" />
+                        <search-input id="nombre" label="Nombres, Apellidos o C.I"
+                            class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2" v-model="form.search" />
                         <select-input id="ciudades" label="Ciudad" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
                             v-model="form.search_ciudad">
                             <option :value="null" />
@@ -137,11 +139,11 @@ export default {
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
                             {{ empleado.persona.edad }}
                         </td>
-                        <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
+                        <td class="py-2 px-2 bg-white group-hover:bg-fondColor capitalize">
                             {{ empleado.persona.sexo }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            <span class="block text-indigo-400 font-semibold">
+                            <span class="block text-indigo-400 font-semibold capitalize">
                                 {{ empleado.persona.ciudade.nombre_ciudad }}
                             </span>
                             {{ empleado.persona.direccion }}
@@ -153,7 +155,7 @@ export default {
                             {{ empleado.email }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            <span class="block text-indigo-400 font-semibold">
+                            <span class="block font-semibold text-indigo-400 capitalize">
                                 {{ empleado.seccion.nombre_seccion }}
                             </span>
                             {{ empleado.seccion.descripcion }}

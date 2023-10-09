@@ -30,7 +30,7 @@ export default {
     const form = useForm({
       _method: "PUT",
       id: props.egreso.id,
-      fecha_egreso: props.egreso.fecha_egreso,
+      fecha: props.egreso.fecha,
       concepto: props.egreso.concepto,
       detalle: props.egreso.detalle,
       monto: props.egreso.monto,
@@ -63,8 +63,8 @@ export default {
     <div class="max-w-4xl overflow-hidden pt-2">
       <form @submit.prevent="actualizar">
         <div class="py-3 px-3 flex flex-wrap bg-white border rounded-md">
-          <text-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Fecha" type="date" v-model="form.fecha_egreso"
-            :error="errors.fecha_egreso" :id="fecha_egreso" />
+          <text-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Fecha" type="date" v-model="form.fecha"
+            :error="errors.fecha" :id="fecha" />
           <text-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Concepto" :id="concepto" v-model="form.concepto"
             :error="errors.concepto" />
           <div class="pb-5 lg:pr-3 w-full lg:w-1/2">

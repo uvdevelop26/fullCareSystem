@@ -142,11 +142,11 @@ export default {
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
                             {{ familiare.persona.edad }}
                         </td>
-                        <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
+                        <td class="py-2 px-2 bg-white group-hover:bg-fondColor capitalize">
                             {{ familiare.persona.sexo }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            <span class="block text-indigo-400 font-semibold">
+                            <span class="block text-indigo-400 font-semibold capitalize">
                                 {{ familiare.persona.ciudade.nombre_ciudad }}
                             </span>
                             {{ familiare.persona.direccion }}

@@ -13,17 +13,23 @@ use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 
+use function PHPUnit\Framework\isEmpty;
+
 class HistorialeController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
+        $queries = ['search', 'search_anho', 'search_mes'];
+
         $historiales = Historiale::with('residente.persona', 'caracteristica', 'enfermedades', 'alergias')
             ->orderBy('id', 'desc')
+            ->filter($request->only($queries))
             ->get();
 
         return Inertia::render('Historiales/Index', [
             'historiales' => $historiales,
+            'filters' => $request->all($queries)
         ]);
     }
 
@@ -43,175 +49,49 @@ class HistorialeController extends Controller
     public function store(HistorialeRequest $request)
     {
 
-        if (empty($request->alergias) && empty($request->enfermedades)) {
+        $caracteristica = Caracteristica::create([
+            'peso' => $request->peso,
+            'altura' => $request->altura,
+            'temperatura' => $request->temperatura,
+            'presion_arterial' => $request->presion_arterial,
+        ]);
 
-            $caracteristica = Caracteristica::create([
-                'peso' => $request->peso,
-                'altura' => $request->altura,
-                'temperatura' => $request->temperatura,
-                'presion_arterial' => $request->presion_arterial
-            ]);
+        $historiale = Historiale::create([
+            'fecha_registro' => $request->fecha_registro,
+            'diagnostico' => $request->diagnostico,
+            'tratamiento' => $request->tratamiento,
+            'observaciones' => $request->observaciones,
+            'residente_id' => $request->residente_id,
+            'caracteristica_id' => $caracteristica->id
+        ]);
 
-            $enfermedade =  Enfermedade::create([
-                'nombre' => $request->nombre_enfermedad,
-                'descripcion' => $request->descripcion_enfermedad,
-            ]);
+        $enfermedadesData = $request->enfermedades;
 
-            $alergia = Alergia::create([
-                'nombre' => $request->nombre_alergia,
-                'descripcion' => $request->descripcion_alergia,
-            ]);
-
-            $historiale  = Historiale::create([
-                'fecha_registro' => $request->fecha_registro,
-                'diagnostico' => $request->diagnostico,
-                'tratamiento' => $request->tratamiento,
-                'observaciones' => $request->observaciones,
-                'residente_id' => $request->residente_id,
-                'caracteristica_id' => $caracteristica->id
-            ]);
-
-            $historiale->enfermedades()->attach($enfermedade->id);
-
-            $historiale->alergias()->attach($alergia->id);
-
-            return Redirect::route('historiales.index');
-        } else if (empty($request->enfermedades) && !empty($request->alergias)) {
-
-            $caracteristica = Caracteristica::create([
-                'peso' => $request->peso,
-                'altura' => $request->altura,
-                'temperatura' => $request->temperatura,
-                'presion_arterial' => $request->presion_arterial
-            ]);
-
-            $enfermedade =  Enfermedade::create([
-                'nombre' => $request->nombre_enfermedad,
-                'descripcion' => $request->descripcion_enfermedad,
-            ]);
-
-            $historiale  = Historiale::create([
-                'fecha_registro' => $request->fecha_registro,
-                'diagnostico' => $request->diagnostico,
-                'tratamiento' => $request->tratamiento,
-                'observaciones' => $request->observaciones,
-                'residente_id' => $request->residente_id,
-                'caracteristica_id' => $caracteristica->id
-            ]);
-
-            $historiale->enfermedades()->attach($enfermedade->id);
-
-            $historiale->alergias()->attach($request->alergias);
-
-            if ($request->nombre_alergia !== null) {
-
-                $alergia = Alergia::create([
-                    'nombre' => $request->nombre_alergia,
-                    'descripcion' => $request->descripcion_alergia,
+        foreach ($enfermedadesData as $enfermedadeData) {
+            if ($enfermedadeData['valor'] !== null) {
+                $enfermedade = new Enfermedade([
+                    'nombre' => $enfermedadeData['valor'],
                 ]);
 
-                $historiale->alergias()->attach($alergia->id);
+                $historiale->enfermedades()->save($enfermedade);
             }
-
-            return Redirect::route('historiales.index');
-        } else if (!empty($request->enfermedades) && empty($request->alergias)) {
-
-            $caracteristica = Caracteristica::create([
-                'peso' => $request->peso,
-                'altura' => $request->altura,
-                'temperatura' => $request->temperatura,
-                'presion_arterial' => $request->presion_arterial
-            ]);
-
-            $alergia = Alergia::create([
-                'nombre' => $request->nombre_alergia,
-                'descripcion' => $request->descripcion_alergia,
-            ]);
-
-            $historiale  = Historiale::create([
-                'fecha_registro' => $request->fecha_registro,
-                'diagnostico' => $request->diagnostico,
-                'tratamiento' => $request->tratamiento,
-                'observaciones' => $request->observaciones,
-                'residente_id' => $request->residente_id,
-                'caracteristica_id' => $caracteristica->id
-            ]);
-
-            $historiale->alergias()->attach($alergia->id);
-
-            $historiale->enfermedades()->attach($request->enfermedades);
-
-            if ($request->nombre_enfermedades !== null) {
-
-                $enfermedade =  Enfermedade::create([
-                    'nombre' => $request->nombre_enfermedad,
-                    'descripcion' => $request->descripcion_enfermedad,
-                ]);
-
-                $historiale->enfermedades()->attach($enfermedade->id);
-            }
-
-            return Redirect::route('historiales.index');
-
-        } else if (!empty($request->enfermedades) && !empty($request->alergias)) {
-
-            $caracteristica = Caracteristica::create([
-                'peso' => $request->peso,
-                'altura' => $request->altura,
-                'temperatura' => $request->temperatura,
-                'presion_arterial' => $request->presion_arterial
-            ]);
-
-            $historiale  = Historiale::create([
-                'fecha_registro' => $request->fecha_registro,
-                'diagnostico' => $request->diagnostico,
-                'tratamiento' => $request->tratamiento,
-                'observaciones' => $request->observaciones,
-                'residente_id' => $request->residente_id,
-                'caracteristica_id' => $caracteristica->id
-            ]);
-
-            $historiale->enfermedades()->attach($request->enfermedades);
-
-            $historiale->alergias()->attach($request->alergias);
-
-            if ($request->nombre_enfermedades !==null && $request->nombre_alergias !== null) {
-
-                $enfermedade =  Enfermedade::create([
-                    'nombre' => $request->nombre_enfermedad,
-                    'descripcion' => $request->descripcion_enfermedad,
-                ]);
-
-                $alergia = Alergia::create([
-                    'nombre' => $request->nombre_alergia,
-                    'descripcion' => $request->descripcion_alergia,
-                ]);
-
-
-                $historiale->alergias()->attach($alergia->id);
-
-                $historiale->enfermedades()->attach($enfermedade->id);
-
-            } else if ($request->nombre_enfermedades !== null && $request->nombre_alergias == null) {
-
-               /*  $enfermedade =  Enfermedade::create([
-                    'nombre' => $request->nombre_enfermedad,
-                    'descripcion' => $request->descripcion_enfermedad,
-                ]);
-
-                $historiale->enfermedades()->attach($enfermedade->id); */
-            } else if ($request->nombre_enfermedades == null && $request->nombre_alergias !== null) {
-
-               /*  $alergia = Alergia::create([
-                    'nombre' => $request->nombre_alergia,
-                    'descripcion' => $request->descripcion_alergia,
-                ]);
-
-                $historiale->alergias()->attach($alergia->id); */
-            }
-
-            return Redirect::route('historiales.index');
         }
+
+        $alergiasData = $request->alergias;
+
+        foreach ($alergiasData as $alergiaData) {
+            if ($alergiaData['valor'] !== null) {
+                $alergia = new Alergia([
+                    'nombre' => $alergiaData['valor'],
+                ]);
+
+                $historiale->alergias()->save($alergia);
+            }
+        }
+
+
+
+        return Redirect::route('historiales.index');
     }
 
 

@@ -20,7 +20,7 @@ class Residente extends Model
   ];
 
 
-  //relacion uno a muchos con personas
+  //relacion uno a muchos  (pertenece a)
   public function persona()
   {
     return $this->belongsTo(Persona::class);
@@ -30,6 +30,8 @@ class Residente extends Model
   {
     return $this->belongsTo(EstadoResidente::class);
   }
+
+  //relación de uno a muchos (tiene varios)
 
   public function familiares()
   {
@@ -44,6 +46,11 @@ class Residente extends Model
   public function medicamentos()
   {
     return $this->hasMany(Medicamento::class);
+  }
+
+  public function rutinas()
+  {
+    return $this->hasMany(Rutina::class);
   }
 
 

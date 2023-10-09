@@ -13,7 +13,6 @@ class Enfermedade extends Model
 
     protected $fillable = [
         'nombre',
-        'descripcion',
     ];
 
     public function historiales()

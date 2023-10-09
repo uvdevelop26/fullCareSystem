@@ -38,15 +38,29 @@ export default {
             temperatura: "",
             presion_arterial: "",
 
-            enfermedades: [],
-            alergias: [],
-
-            nombre_enfermedad: "",
-            descripcion_enfermedad: "",
-            nombre_alergia: "",
-            descripcion_alergia: ""
+            enfermedades: [{ valor: '' }],
+            alergias: [{ valor: '' }],
 
         });
+
+        //enfermedades
+        const agregarEnfermedad = ()=>{
+            form.enfermedades.push({ valor: ''})
+        }
+
+        const eliminarEnfermedad = (index)=>{
+            form.enfermedades.splice(index, 1);
+        }
+
+        //alergias
+        const agregarAlergia = ()=>{
+            form.alergias.push({ valor: ''})
+        }
+
+        const eliminarAlergia = (index)=>{
+            form.alergias.splice(index, 1);
+        }
+
 
 
 
@@ -56,11 +70,7 @@ export default {
 
         };
 
-        return {
-            form,
-
-            guardar,
-        };
+        return { form, guardar, agregarEnfermedad, eliminarEnfermedad, agregarAlergia, eliminarAlergia };
     },
 };
 </script>
@@ -91,47 +101,25 @@ export default {
                         class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="temperatura" :error="errors.temperatura" />
                     <text-input v-model="form.presion_arterial" type="number" label="Presion Arterial"
                         class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="presion_arterial" :error="errors.presion_arterial" />
-                    <div class="w-full lg:flex lg:justify-between">
-                        <div class="pb-5 lg:pr-3 lg:w-1/2">
-                            <span class="block py-2">Enfermedad/es:</span>
-                            <div class="w-full">
-                                <div class="pb-1 pr-8 lg:pr-20 flex items-center justify-between"
-                                    v-for="enfermedad in enfermedades" :key="enfermedad.id">
-                                    <label class="form-label">{{ enfermedad.nombre }}</label>
-                                    <input type="checkbox" v-model="form.enfermedades" :value="enfermedad.id"
-                                        class="form-checkbox">
-                                </div>
-                            </div>
-                            <div v-if="errors.enfermedades" class="form-error"> {{ errors.enfermedades }}</div>
-                            <text-input v-model="form.nombre_enfermedad" type="text" label="Otro"
-                                class="pb-5 lg:pr-3 w-full" placeholder="especificar.." :id="nombre_enfermedad" />
-                            <div v-if="errors.nombre_enfermedad" class="form-error"> {{ errors.nombre_enfermedad }}</div>
-                            <textarea name="descripcion" :id="descripcion_enfermedad" cols="20" rows="2"
-                                class="form-textarea" placeholder="Descripcion.."
-                                v-model="form.descripcion_enfermedad"></textarea>
-                            <span v-if="errors.descripcion_enfermedad" class="text-red-500">{{
-                                errors.descripcion_enfermedad }}</span>
+                   <!-- INSERTAR ENFERMEDADES -->
+                   <div class="flex-wrap">
+                        <div class="block pb-2">Enfermedades:</div>
+                        <div v-for="(enfermedad, index) in form.enfermedades" :key="index">
+                            <input type="text" v-model="enfermedad.valor" placeholder="HH:MM" >
+                            <button type="button" @click="eliminarEnfermedad(index)">Eliminar</button>
                         </div>
-                        <div class="pb-5 lg:pr-3 lg:w-1/2">
-                            <span class="block py-2">Alergia/as:</span>
-                            <div class="w-full">
-                                <div class="pb-1 pr-8 lg:pr-20 flex items-center justify-between"
-                                    v-for="alergia in alergias" :key="alergia.id">
-                                    <label class="form-label">{{ alergia.nombre }}</label>
-                                    <input type="checkbox" v-model="form.alergias" :value="alergia.id"
-                                        class="form-checkbox">
-                                </div>
-                            </div>
-                            <div v-if="errors.alergias" class="form-error"> {{ errors.alergias }}</div>
-                            <text-input v-model="form.nombre_alergia" type="text" label="Otro" class="pb-5 lg:pr-3 w-full"
-                                placeholder="especificar.." :id="nombre_alergia" />
-                            <div v-if="errors.nombre_alergia" class="form-error"> {{ errors.nombre_alergia }}</div>
-                            <textarea name="descripcion" :id="descripcion_alergia" cols="20" rows="2" class="form-textarea"
-                                placeholder="Descripcion.." v-model="form.descripcion_alergia"></textarea>
-                            <span v-if="errors.descripcion_alergia" class="text-red-500">{{
-                                errors.descripcion_alergia }}</span>
-                        </div>
+                        <button type="button" @click="agregarEnfermedad">Agregar Enfermedad</button>
                     </div>
+                    <!-- Insertar Alergias -->
+                    <div class="flex-wrap">
+                        <div class="block pb-2">Alergias:</div>
+                        <div v-for="(alergia, index) in form.alergias" :key="index">
+                            <input type="text" v-model="alergia.valor" placeholder="HH:MM" >
+                            <button type="button" @click="eliminarAlergia(index)">Eliminar</button>
+                        </div>
+                        <button type="button" @click="agregarAlergia">Agregar Alergia</button>
+                    </div>
+                    <!-- datos de historial -->
                     <div class="pb-5 lg:pr-3 w-full lg:w-1/2">
                         <label for="diagnostico" class="form-label">Diagnostico:</label>
                         <textarea name="diagnostico" :id="diagnostico" cols="20" rows="3" class="form-textarea "

@@ -13,7 +13,7 @@ class EgresoFactory extends Factory
     public function definition()
     {
         return [
-            'fecha_egreso' => $this->faker->date(),
+            'fecha' => $this->faker->date(),
             'concepto' => $this->faker->word(),
             'detalle' => $this->faker->sentence(),
             'monto' => $this->faker->numberBetween(100000, 500000),

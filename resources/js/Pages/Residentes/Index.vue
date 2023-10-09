@@ -107,7 +107,7 @@ export default {
                         <select-input id="sexo" label="Sexo" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
                             v-model="form.search_sexo">
                             <option :value="null" />
-                            <option value="femenino">
+                            <option value="femenino" >
                                 Femenino
                             </option>
                             <option value="masculino">
@@ -166,15 +166,15 @@ export default {
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">{{ residente.persona.telefono }}</td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">{{ residente.persona.edad }}</td>
-                        <td class="py-2 px-2 bg-white group-hover:bg-fondColor">{{ residente.persona.sexo }}</td>
+                        <td class="py-2 px-2 bg-white group-hover:bg-fondColor capitalize">{{ residente.persona.sexo }}</td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            <span class="block text-indigo-400 font-semibold"> {{ residente.persona.ciudade.nombre_ciudad }}
+                            <span class="block text-indigo-400 font-semibold capitalize"> {{ residente.persona.ciudade.nombre_ciudad }}
                             </span>
                             {{ residente.persona.direccion }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">{{ residente.fecha_ingreso }}</td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            <span class="inline-block px-3 py-1 rounded-2xl"
+                            <span class="inline-block px-3 py-1 rounded-2xl capitalize"
                                 :class="[residente.estado_residente.nombre_estado === 'activo' ? 'border border-softIndigo text-softIndigo bg-indigo-100' : 'border border-red-500 text-red-500 bg-red-100']">
                                 {{ residente.estado_residente.nombre_estado }}
                             </span>     

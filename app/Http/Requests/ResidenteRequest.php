@@ -19,14 +19,14 @@ class ResidenteRequest extends FormRequest
             'nombres' =>  'required|max:100',
             'apellidos' => 'required|max:100',
             'ci_numero' => 'required|max:100',
-            'fecha_nacimiento' => 'required',
+            'fecha_nacimiento' => 'required|date',
             'telefono' => 'nullable|max:30',
             'edad' => 'required|min:1|max:105',
             'sexo' => 'required',
             'direccion' => 'required|max:200',
             'ciudade_id' => 'required',
             'foto' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
-            'fecha_ingreso' => 'required',
+            'fecha_ingreso' => 'required|date',
             'estado_residente_id' => 'required',
         ];
     }

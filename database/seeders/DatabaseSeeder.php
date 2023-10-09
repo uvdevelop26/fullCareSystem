@@ -20,6 +20,7 @@ use App\Models\Medicamento;
 use App\Models\Permiso;
 use App\Models\Persona;
 use App\Models\Residente;
+use App\Models\Rutina;
 use App\Models\Seccion;
 use App\Models\Sueldo;
 use App\Models\Turno;
@@ -53,7 +54,8 @@ class DatabaseSeeder extends Seeder
         $this->call(AlergiaSeeder::class);
         Historiale::factory(10)->create();
         $this->call(PresentacioneSeeder::class);
-        Medicamento::factory(15)->create();
+        Medicamento::factory(8)->create();
+        Rutina::factory(8)->create();
         //Horario::factory(10)->create();
     }
 }

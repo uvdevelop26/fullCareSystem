@@ -14,16 +14,22 @@ class EgresoController extends Controller
 {
 
 
-    public function index()
+    public function index(Request $request)
     {
+        $queries = ['search_comprobante', 'search_categoria', 'search_anho', 'search_mes'];
+
         $egresos = Egreso::with('user', 'categoria')
             ->orderBy('id', 'desc')
+            ->filter($request->only($queries))
             ->get();
+        $categorias = Categoria::where('tipo', 'egresos')->get();
 
         return Inertia::render(
             'Egresos/Index',
             [
-                'egresos' => $egresos
+                'egresos' => $egresos,
+                'categorias' => $categorias,
+                'filters' => $request->all($queries)
             ]
         );
     }
@@ -42,7 +48,7 @@ class EgresoController extends Controller
         $user_id = Auth::user()->id;
 
         Egreso::create([
-            'fecha_egreso' => $request->fecha_egreso,
+            'fecha' => $request->fecha,
             'concepto' => $request->concepto,
             'detalle' => $request->detalle,
             'monto' => $request->monto,
@@ -77,7 +83,7 @@ class EgresoController extends Controller
         $user_id = Auth::user()->id;
 
         $egreso->update([
-            'fecha_egreso' => $request->fecha_egreso,
+            'fecha' => $request->fecha,
             'concepto' => $request->concepto,
             'detalle' => $request->detalle,
             'monto' => $request->monto,

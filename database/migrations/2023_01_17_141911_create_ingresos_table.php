@@ -11,10 +11,10 @@ return new class extends Migration
     {
         Schema::create('ingresos', function (Blueprint $table) {
             $table->id();
-            $table->date('fecha_ingreso');
+            $table->date('fecha');
             $table->string('concepto', 100);
             $table->string('detalle')->nullable();
-            $table->decimal('monto', 8, 2);
+            $table->decimal('monto', 10, 2);
             $table->integer('nro_comprobante')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
 

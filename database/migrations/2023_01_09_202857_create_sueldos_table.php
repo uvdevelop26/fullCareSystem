@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('sueldos', function (Blueprint $table) {
             $table->id();
             $table->date('fecha');
-            $table->decimal('monto', 8, 2);
+            $table->decimal('monto', 10, 2);
             $table->unsignedBigInteger('empleado_id');
 
             $table->foreign('empleado_id')

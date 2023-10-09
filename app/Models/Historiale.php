@@ -39,4 +39,26 @@ class Historiale extends Model
     {
         return $this->belongsToMany(Alergia::class);
     }
+
+    //SCOPE PARA BUSQUEDA
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['search'] ?? null, function ($query, $search) {
+            $query->where(function ($query) use ($search) {
+                $query->whereHas('residente.persona', function ($query) use ($search) {
+                    $query->where('nombres', 'like', '%' . $search . '%')
+                        ->orWhere('apellidos', 'like', '%' . $search . '%')
+                        ->orWhere('ci_numero', 'like', '%' . $search . '%');
+                });
+            });
+        })->when($filters['search_anho'] ?? null, function ($query, $search) {
+            $query->where(function ($query) use ($search) {
+                $query->whereYear('fecha_registro', $search);
+            });
+        })->when($filters['search_mes'] ?? null, function ($query, $search) {
+            $query->where(function ($query) use ($search) {
+                $query->whereMonth('fecha_registro', $search);
+            });
+        });
+    }
 }

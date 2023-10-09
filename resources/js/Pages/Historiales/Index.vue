@@ -24,10 +24,50 @@ export default {
 
     props: {
         historiales: Array,
-
+        filters: Object
     },
 
     setup(props) {
+        //para buscar años
+        const Datayears = () => {
+            const years = [];
+            for (let i = 2009; i <= 2030; i++) {
+                years.push(i);
+            }
+
+            return years;
+        }
+
+        const showYears = Datayears();
+
+        //para buscar meses
+        const meses = [
+            { id: 1, mes: 'enero' },
+            { id: 2, mes: 'febrero' },
+            { id: 3, mes: 'marzo' },
+            { id: 4, mes: 'abril' },
+            { id: 5, mes: 'mayo' },
+            { id: 6, mes: 'junio' },
+            { id: 7, mes: 'julio' },
+            { id: 8, mes: 'agosto' },
+            { id: 9, mes: 'septiembre' },
+            { id: 10, mes: 'octubre' },
+            { id: 11, mes: 'noviembre' },
+            { id: 12, mes: 'diciembre' }]
+
+        //BUSQUEDA
+        const form = reactive({
+            search: props.filters.search,
+            search_anho: props.filters.search_anho,
+            search_mes: props.filters.search_mes
+        });
+
+        watchEffect(() => {
+            const query = pickBy(form);
+            Inertia.replace(route('historiales.index', Object.keys(query).length ? query : {}))
+        });
+
+        return { form, showYears, meses }
 
     }
 
@@ -50,6 +90,37 @@ export default {
             </Link>
         </div>
         <!-- FILTER AREA -->
+        <div class="py-2">
+            <filters>
+                <div class="py-3 px-3 border border-turquesa rounded-md">
+                    <div class=" lg:flex lg:flex-wrap">
+                        <search-input id="nombre" label="Nombres, Apellidos o C.I"
+                            class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2" v-model="form.search" />
+                        <div class="flex gap-2 w-full lg:w-1/2">
+                            <select-input id="anhos" label="Año" class="text-sm pb-1 lg:pr-3 w-full"
+                                v-model="form.search_anho">
+                                <option :value="null" />
+                                <option v-for="years in showYears" :key="years" :value="years">
+                                    {{ years }}
+                                </option>
+                            </select-input>
+                            <select-input id="mes" label="Mes" class="text-sm pb-1 lg:pr-3 w-full"
+                                v-model="form.search_mes">
+                                <option :value="null" />
+                                <option v-for="mes in meses" :key="mes.id" :value="mes.id" class="capitalize">
+                                    {{ mes.mes }}
+                                </option>
+                            </select-input>
+                        </div>
+                    </div>
+                    <div class="py-3 text-right">
+                        <button class="btn-indigo mx-1 hover:bg-softIndigo" type="button" @click="limpiarCampos()">
+                            Limpiar
+                        </button>
+                    </div>
+                </div>
+            </filters>
+        </div>
         <!-- TABLE -->
         <div class="overflow-x-auto py-4 max-w-7xl">
             <table

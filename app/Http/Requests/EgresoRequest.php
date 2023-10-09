@@ -16,7 +16,7 @@ class EgresoRequest extends FormRequest
     public function rules()
     {
         return [
-            'fecha_egreso' => 'required',
+            'fecha' => 'required',
             'concepto' => 'required',
             'detalle' => 'nullable',
             'monto' => 'required',
@@ -28,7 +28,6 @@ class EgresoRequest extends FormRequest
     public function attributes()
     {
         return [
-            'fecha_egreso' => 'fecha',
             'nro_comprobante' => 'comprobante nro',
             'categoria_id' => 'categoria'
         ];

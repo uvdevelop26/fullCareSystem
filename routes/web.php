@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BalanceController;
 use App\Http\Controllers\ContactarFamiliarController;
 use App\Http\Controllers\EgresoController;
 use App\Http\Controllers\EmpleadoController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\PermisoController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ResidenteController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\RutinaController;
 use App\Http\Controllers\SueldoController;
 use App\Http\Controllers\TurnoController;
 use App\Http\Controllers\UserController;
@@ -104,6 +106,14 @@ Route::resource('ingresos', IngresoController::class)
 Route::resource('egresos', EgresoController::class)
     ->middleware('auth:sanctum', 'verified');
 
+//Balances
+Route::controller(BalanceController::class)->group(function () {
+    Route::get('balance', 'index')->name('balance.index');
+    Route::post('obtener-movimientos', 'obtenerMovimiento')->name('obtener-movimientos');
+});
+
+
+
 //historial clinico
 Route::resource('historiales', HistorialeController::class)
     ->middleware('auth:sanctum', 'verified');
@@ -111,6 +121,11 @@ Route::resource('historiales', HistorialeController::class)
 //Medicamentos
 Route::resource('medicamentos', MedicamentoController::class)
     ->middleware('auth:sanctum', 'verified');
+
+//rutinas
+Route::resource('rutinas', RutinaController::class)
+    ->middleware('auth:sanctum', 'verified');
+
 
 Route::resource('suministros', SuministroController::class)
     ->middleware('auth:sanctum', 'verified');;

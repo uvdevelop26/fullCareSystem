@@ -13,8 +13,15 @@ class Horario extends Model
 
     protected $fillable = ['hora'];
 
+
+    //relación de muchos a muchos
     public function medicamentos()
     {
         return $this->belongsToMany(Medicamento::class);
+    }
+
+    public function rutinas()
+    {
+        return $this->belongsToMany(Rutina::class);
     }
 }

@@ -34,7 +34,7 @@ export default {
             duracion: props.permiso.duracion,
             motivo: props.permiso.motivo,
             empleado_id: props.permiso.empleado_id,
-            estado_variacione_id: props.estado_variacione_id
+            estado_variacione_id: props.permiso.estado_variacione_id
         });
 
         watch([() => form.fecha_inicio, () => form.fecha_fin], () => {

@@ -41,7 +41,7 @@ export default {
 
         });
 
-        //agregar horarios
+        //horarios
 
         const agregarHorario = ()=>{
             form.horarios.push({ valor: ''})

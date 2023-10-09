@@ -13,16 +13,23 @@ use Illuminate\Support\Facades\Redirect;
 class IngresoController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
+        $queries = ['search_comprobante', 'search_categoria', 'search_anho', 'search_mes'];
+
         $ingresos = Ingreso::with('user', 'categoria')
             ->orderBy('id', 'desc')
+            ->filter($request->only($queries))
             ->get();
+            
+        $categorias = Categoria::where('tipo', 'ingresos')->get();
 
         return Inertia::render(
             'Ingresos/Index',
             [
-                'ingresos' => $ingresos
+                'ingresos' => $ingresos,
+                'categorias' => $categorias,
+                'filters' => $request->all($queries)
             ]
         );
     }
@@ -40,7 +47,7 @@ class IngresoController extends Controller
         $user_id = Auth::user()->id;
 
         Ingreso::create([
-            'fecha_ingreso' => $request->fecha_ingreso,
+            'fecha' => $request->fecha,
             'concepto' => $request->concepto,
             'detalle' => $request->detalle,
             'monto' => $request->monto,
@@ -77,7 +84,7 @@ class IngresoController extends Controller
         $user_id = Auth::user()->id;
 
         $ingreso->update([
-            'fecha_ingreso' => $request->fecha_ingreso,
+            'fecha' => $request->fecha,
             'concepto' => $request->concepto,
             'detalle' => $request->detalle,
             'monto' => $request->monto,

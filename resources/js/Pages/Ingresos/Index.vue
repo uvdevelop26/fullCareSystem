@@ -1,10 +1,14 @@
 
 <script>
 import LayoutApp from '../../Layouts/LayoutApp.vue';
-import { Head, Link, useForm } from '@inertiajs/inertia-vue3'
+import { Head, Link } from '@inertiajs/inertia-vue3'
+import SearchInput from '../../Shared/SearchInput.vue';
+import SelectInput from '../../Shared/SelectInput.vue';
 import Icon from '../../Shared/Icon.vue'
-import Pagination from '../../Shared/Pagination.vue';
+import Filters from '../../Shared/Filters.vue';
+import { watchEffect, reactive } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
+import { pickBy } from 'lodash';
 export default {
 
     layout: LayoutApp,
@@ -13,16 +17,19 @@ export default {
         Head,
         Link,
         Icon,
-        Pagination
+        Filters,
+        SearchInput,
+        SelectInput
     },
 
     props: {
-        ingresos: Array
+        ingresos: Array,
+        categorias: Array,
+        filters: Object
     },
 
 
-    setup() {
-
+    setup(props) {
 
         //ELIMINAR INGRESO
 
@@ -31,8 +38,49 @@ export default {
             Inertia.post('/ingresos/' + data.id, data)
         }
 
+        //Objetos para búsqueda
+        const Datayears = () => {
+            const years = [];
+            for (let i = 2009; i <= 2030; i++) {
+                years.push(i);
+            }
 
-        return { eliminarIngreso }
+            return years;
+        }
+
+        const showYears = Datayears();
+
+        const meses = [
+            { id: 1, mes: 'enero' },
+            { id: 2, mes: 'febrero' },
+            { id: 3, mes: 'marzo' },
+            { id: 4, mes: 'abril' },
+            { id: 5, mes: 'mayo' },
+            { id: 6, mes: 'junio' },
+            { id: 7, mes: 'julio' },
+            { id: 8, mes: 'agosto' },
+            { id: 9, mes: 'septiembre' },
+            { id: 10, mes: 'octubre' },
+            { id: 11, mes: 'noviembre' },
+            { id: 12, mes: 'diciembre' }]
+
+
+        //Busqueda
+        const form = reactive({
+            search_comprobante: props.filters.search_comprobante,
+            search_categoria: props.filters.search_categoria,
+            search_anho: props.filters.search_anho,
+            search_mes: props.filters.search_mes
+
+        });
+
+        watchEffect(() => {
+            const query = pickBy(form);
+            Inertia.replace(route('ingresos.index', Object.keys(query).length ? query : {}))
+        });
+
+
+        return { eliminarIngreso, form, showYears, meses }
     }
 
 }
@@ -53,6 +101,40 @@ export default {
             </Link>
         </div>
         <!-- FILTER AREA -->
+        <div class="py-2">
+            <filters>
+                <div class="py-3 px-3 border border-turquesa rounded-md">
+                    <div class="lg:flex lg:flex-wrap">
+                        <search-input id="comprobante" label="Comprobante N°" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
+                            v-model="form.search_comprobante" />
+                        <select-input id="categoria" label="Categoria" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
+                            v-model="form.search_categoria">
+                            <option :value="null" />
+                            <option v-for="categoria in categorias" :key="categoria.id" :value="categoria.id"
+                                class="capitalize">
+                                {{ categoria.nombre }}
+                            </option>
+                        </select-input>
+                        <div class="flex gap-2 w-full lg:w-1/2">
+                            <select-input id="anhos" label="Año" class="text-sm pb-1 lg:pr-3 w-full"
+                                v-model="form.search_anho">
+                                <option :value="null" />
+                                <option v-for="years in showYears" :key="years" :value="years">
+                                    {{ years }}
+                                </option>
+                            </select-input>
+                            <select-input id="mes" label="Mes" class="text-sm pb-1 lg:pr-3 w-full"
+                                v-model="form.search_mes">
+                                <option :value="null" />
+                                <option v-for="mes in meses" :key="mes.id" :value="mes.id" class="capitalize">
+                                    {{ mes.mes }}
+                                </option>
+                            </select-input>
+                        </div>
+                    </div>
+                </div>
+            </filters>
+        </div>
 
 
         <!-- TABLE -->
@@ -76,7 +158,7 @@ export default {
                     <tr v-for="ingreso in ingresos" :key="ingreso.id" class="text-center shadow group"
                         v-if="ingresos.length">
                         <td class="py-1 px-1 bg-white group-hover:bg-fondColor rounded-l-xl">
-                            {{ ingreso.fecha_ingreso }}
+                            {{ ingreso.fecha }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
                             {{ ingreso.concepto }}
@@ -91,7 +173,7 @@ export default {
                             {{ ingreso.nro_comprobante }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            <span class="block text-indigo-400 font-semibold"> {{ ingreso.categoria.nombre}}
+                            <span class="block text-indigo-400 capitalize font-semibold"> {{ ingreso.categoria.nombre }}
                             </span>
                             {{ ingreso.categoria.descripcion }}
                         </td>

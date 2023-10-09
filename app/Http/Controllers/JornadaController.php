@@ -77,7 +77,7 @@ class JornadaController extends Controller
         $dias = Dia::all();
         $turnos = Turno::all();
 
-        $jornadaHasDias = array_column(json_decode($jornada->dias, true), 'hora');
+        $jornadaHasDias = array_column(json_decode($jornada->dias, true), 'id');
         //array_colum: (extrae la columna 'id', del array asociativo de php que le pasamos)
         //"json_decode" convierte un objeto json a un array asociativo de php
 

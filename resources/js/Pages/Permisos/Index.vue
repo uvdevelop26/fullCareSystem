@@ -101,11 +101,10 @@ export default {
                 class="w-full whitespace-nowrap border-separate border-spacing-y-2 text-sm rounded-md overflow-hidden shadow-md">
                 <thead class="">
                     <tr class="capitalize shadow">
-                        <th class="py-3 px-4 bg-turquesa rounded-l-xl text-white font-bold">nombres</th>
-                        <th class="py-3 px-4 bg-turquesa text-white font-bold">apellidos</th>
+                        <th class="py-3 px-4 bg-turquesa rounded-l-xl text-white font-bold">nombres</th>            
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">CI</th>
-                        <th class="py-3 px-4 bg-turquesa text-white font-bold">fecha inicio</th>
-                        <th class="py-3 px-4 bg-turquesa text-white font-bold">fecha fin</th>
+                        <th class="py-3 px-4 bg-turquesa text-white font-bold">Inicio Permiso</th>
+                        <th class="py-3 px-4 bg-turquesa text-white font-bold">Fin Permiso</th>
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">duracion</th>
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">motivo</th>
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">estado</th>
@@ -117,8 +116,6 @@ export default {
                         v-if="permisos.length">
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor rounded-l-xl">
                             {{ permiso.empleado.persona.nombres }}
-                        </td>
-                        <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
                             {{ permiso.empleado.persona.apellidos }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
@@ -137,7 +134,7 @@ export default {
                             {{ permiso.motivo }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            <span class="inline-block px-3 py-1 rounded-2xl"
+                            <span class="inline-block px-3 py-1 rounded-2xl capitalize"
                                 :class="[permiso.estado_variacione.nombre_estado === 'aprobado' ? 'border border-softIndigo text-softIndigo bg-indigo-100' : 'border border-red-500 text-red-500 bg-red-100']">
                                 {{ permiso.estado_variacione.nombre_estado }}
                             </span>

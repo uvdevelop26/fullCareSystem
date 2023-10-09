@@ -16,7 +16,7 @@ class IngresoRequest extends FormRequest
     public function rules()
     {
         return [
-            'fecha_ingreso' => 'required',
+            'fecha' => 'required',
             'concepto' => 'required',
             'detalle' => 'nullable',
             'monto' => 'required',
@@ -30,7 +30,6 @@ class IngresoRequest extends FormRequest
     public function attributes()
     {
         return [
-            'fecha_ingreso' => 'fecha',
             'nro_comprobante' => 'comprobante nro',
             'categoria_id' => 'categoria'
         ];

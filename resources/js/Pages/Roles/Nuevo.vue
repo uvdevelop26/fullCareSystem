@@ -31,10 +31,7 @@ export default {
 
         });
 
-        const guardar = async () => {
-
-            form.post(route("roles.store"), form);
-        };
+      
 
         return { form, guardar };
     },
