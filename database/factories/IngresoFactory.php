@@ -14,8 +14,11 @@ class IngresoFactory extends Factory
     
     public function definition()
     {
+        //fecha
+        $fecha = $this->faker->dateTimeBetween('2009-01-01', '2023-12-31');
+
         return [
-            'fecha' => $this->faker->date(),
+            'fecha' => $fecha,
             'concepto' => $this->faker->word(),
             'detalle' => $this->faker->sentence(),
             'monto' => $this->faker->numberBetween(100000, 500000),

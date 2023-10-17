@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BalanceController;
 use App\Http\Controllers\ContactarFamiliarController;
+use App\Http\Controllers\ControlController;
 use App\Http\Controllers\EgresoController;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\FamiliareController;
@@ -112,8 +113,6 @@ Route::controller(BalanceController::class)->group(function () {
     Route::post('obtener-movimientos', 'obtenerMovimiento')->name('obtener-movimientos');
 });
 
-
-
 //historial clinico
 Route::resource('historiales', HistorialeController::class)
     ->middleware('auth:sanctum', 'verified');
@@ -126,6 +125,6 @@ Route::resource('medicamentos', MedicamentoController::class)
 Route::resource('rutinas', RutinaController::class)
     ->middleware('auth:sanctum', 'verified');
 
-
-Route::resource('suministros', SuministroController::class)
+//suministro de medicamentos
+Route::resource('controlmed', ControlController::class)
     ->middleware('auth:sanctum', 'verified');;

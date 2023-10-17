@@ -13,9 +13,10 @@ class EmpleadoFactory extends Factory
     
     public function definition()
     {
+        $fechaInicio = $this->faker->dateTimeBetween('2009-01-01', '2023-12-31');
         
         return [
-            'fecha_inicio' => $this->faker->date(),
+            'fecha_inicio' => $fechaInicio,
             'email' => $this->faker->email(),
             'seccion_id' => Seccion::all()->random()->id,
             'persona_id' => Persona::all()->random()->id,

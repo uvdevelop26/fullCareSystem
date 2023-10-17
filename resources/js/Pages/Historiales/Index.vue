@@ -67,7 +67,15 @@ export default {
             Inertia.replace(route('historiales.index', Object.keys(query).length ? query : {}))
         });
 
-        return { form, showYears, meses }
+
+        //Eliminar Historial
+        const eliminarHistorial = (data) => {
+            data._method = "DELETE";
+            Inertia.post('/historiales/' + data.id, data)
+        }
+
+
+        return { form, showYears, meses, eliminarHistorial }
 
     }
 
@@ -84,7 +92,7 @@ export default {
                 <span class="text-turquesa text-2xl font-semibold">Historial Clínico</span>
             </h1>
             <Link :href="route('historiales.create')"
-                class="px-5 py-1 md:px-12 bg-indigo-400 rounded-xl text-white hover:shadow-md hover:bg-softIndigo ">
+                class="px-5 py-1 md:px-12 bg-indigo-400 rounded-xl text-white hover:shadow-md hover:bg-softIndigo">
             <Icon name="plus" class="w-4 h-4 inline fill-white mr-1" />
             Nuevo
             </Link>
@@ -128,9 +136,8 @@ export default {
                 <thead>
                     <tr class="capitalize shadow">
                         <th class="py-3 px-4 bg-turquesa rounded-l-xl text-white font-bold">Nombres</th>
-                        <th class="py-3 px-4 bg-turquesa text-white font-bold">Fecha registro</th>
+                        <th class="py-3 px-4 bg-turquesa text-white font-bold">Fecha</th>
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">Enfermedades</th>
-                        <th class="py-3 px-4 bg-turquesa text-white font-bold">Alergias</th>
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">Diagnostico</th>
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">Observaciones</th>
                         <th class="py-3 px-4 bg-turquesa rounded-r-xl text-white font-bold">Acciones</th>
@@ -153,12 +160,6 @@ export default {
                             </span>
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            <span v-for="alergias in historiale.alergias"
-                                class="inline-block px-3 py-1 mr-2 rounded-2xl border border-softIndigo text-softIndigo bg-indigo-100">
-                                {{ alergias.nombre }}
-                            </span>
-                        </td>
-                        <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
                             {{ historiale.diagnostico }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
@@ -170,7 +171,7 @@ export default {
                                     :href="route('historiales.edit', historiale.id)">
                                 <Icon name="edit" class="w-3 h-3 fill-textColor" />
                                 </Link>
-                                <button class="inline-block px-3 py-3 rounded-full bg-softIndigo hover:shadow-md">
+                                <button class="inline-block px-3 py-3 rounded-full bg-softIndigo hover:shadow-md" @click="eliminarHistorial(historiale)">
                                     <Icon name="delete" class="w-3 h-3 fill-white" />
                                 </button>
                                 <Link class="inline-block bg-fondColor px-3 py-3 mr-2 rounded-full hover:shadow-md">

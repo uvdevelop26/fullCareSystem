@@ -13,8 +13,10 @@ class HistorialeFactory extends Factory
    
     public function definition()
     {
+        $fechaRegistro = $this->faker->dateTimeBetween('2009-01-01', '2023-12-31');
+
         return [
-            'fecha_registro' => $this->faker->date(),
+            'fecha_registro' => $fechaRegistro,
             'diagnostico' => $this->faker->sentence(),
             'tratamiento' => $this->faker->sentence(),
             'observaciones' => $this->faker->sentence(),

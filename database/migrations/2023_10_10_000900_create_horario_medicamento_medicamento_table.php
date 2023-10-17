@@ -9,18 +9,19 @@ return new class extends Migration
 
     public function up()
     {
-        Schema::create('alergia_historiale', function (Blueprint $table) {
+        Schema::create('horario_medicamento_medicamento', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('historiale_id');
-            $table->unsignedBigInteger('alergia_id');
+            $table->unsignedBigInteger('medicamento_id');
+            $table->unsignedBigInteger('horario_medicamento_id');
 
-            $table->foreign('historiale_id')
+            $table->foreign('medicamento_id')
                 ->references('id')
-                ->on('historiales')
+                ->on('medicamentos')
                 ->onDelete('cascade');
-            $table->foreign('alergia_id')
+
+            $table->foreign('horario_medicamento_id')
                 ->references('id')
-                ->on('alergias')
+                ->on('horario_medicamento')
                 ->onDelete('cascade');
             $table->timestamps();
         });
@@ -29,6 +30,6 @@ return new class extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('alergia_historiale');
+        Schema::dropIfExists('horario_medicamento_medicamento');
     }
 };

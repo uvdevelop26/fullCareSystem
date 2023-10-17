@@ -22,9 +22,6 @@ export default {
     props: {
         caracteristica: Array,
         historialeHasEnfermedade: Array,
-        historialeHasAlergias: Array,
-        enfermedades: Array,
-        alergias: Array,
         historiale: Array,
         errors: Object,
     },
@@ -49,11 +46,18 @@ export default {
             presion_arterial: props.caracteristica.presion_arterial,
 
             enfermedade_id: props.historialeHasEnfermedade,
-            alergia_id: props.historialeHasAlergias,
-    
 
 
         });
+
+         //enfermedades
+         const agregarEnfermedad = () => {
+            form.enfermedade_id.push()
+        }
+
+        const eliminarEnfermedad = (index) => {
+            form.enfermedade_id.splice(index, 1);
+        }
 
 
         const actualizar = () => {
@@ -65,7 +69,7 @@ export default {
             );
         };
 
-        return { form, actualizar };
+        return { form, actualizar, agregarEnfermedad, eliminarEnfermedad };
     },
 };
 </script>
@@ -73,7 +77,7 @@ export default {
 <template>
     <div>
 
-        <Head title="Empleados" />
+        <Head title="Editar Historial" />
         <!-- HEADER -->
         <h1 class="py-3 px-2 max-w-4xl flex items-center gap-4 bg-white rounded-md border text-2xl">
             <div class="inline-block p-2 bg-teal-50 border border-turquesa rounded-md">
@@ -85,59 +89,34 @@ export default {
         <div class="max-w-4xl overflow-hidden pt-2">
             <form @submit.prevent="actualizar">
                 <div class="py-3 px-3 flex flex-wrap bg-white border rounded-md">
+                    <!-- RESIDENTE Y CARACTERÍSTICAS FÍSICAS -->
                     <text-input v-model="form.residente_id" type="text" label="Residente"
                         class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="residente_id" :error="errors.residente_id" />
                     <text-input v-model="form.fecha_registro" type="date" label="Fecha" class="pb-5 lg:pr-3 w-full lg:w-1/2"
                         :id="fecha_registro" :error="errors.fecha_registro" />
-                    <text-input v-model="form.peso" type="number" label="Peso" class="pb-5 lg:pr-3 w-full lg:w-1/2"
-                        :id="peso" :error="errors.peso" />
-                    <text-input v-model="form.altura" type="number" label="Altura" class="pb-5 lg:pr-3 w-full lg:w-1/2"
+                    <text-input v-model="form.peso" type="text" label="Peso" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="peso"
+                        :error="errors.peso" />
+                    <text-input v-model="form.altura" type="text" label="Altura" class="pb-5 lg:pr-3 w-full lg:w-1/2"
                         :id="altura" :error="errors.altura" />
-                    <text-input v-model="form.temperatura" type="number" label="Temperatura"
+                    <text-input v-model="form.temperatura" type="text" label="Temperatura"
                         class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="temperatura" :error="errors.temperatura" />
-                    <text-input v-model="form.presion_arterial" type="number" label="Presion Arterial"
+                    <text-input v-model="form.presion_arterial" type="text" label="Presion Arterial"
                         class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="presion_arterial" :error="errors.presion_arterial" />
-                    <div class="w-full lg:flex lg:justify-between">
-                        <div class="pb-5 lg:pr-3 lg:w-1/2">
-                            <span class="block py-2">Enfermedad/es:</span>
-                            <div class="w-full">
-                                <div class="pb-1 pr-8 lg:pr-20 flex items-center justify-between"
-                                    v-for="enfermedad in enfermedades" :key="enfermedad.id">
-                                    <label class="form-label">{{ enfermedad.nombre }}</label>
-                                    <input type="checkbox" v-model="form.enfermedade_id" :value="enfermedad.id"
-                                        class="form-checkbox">
-                                </div>
-                            </div>
-                            <div v-if="errors.enfermedades" class="form-error"> {{ errors.enfermedades }}</div>
-                            <text-input v-model="form.nombre_enfermedad" type="text" label="Otro"
-                                class="pb-5 lg:pr-3 w-full" placeholder="especificar.." :id="nombre_enfermedad" />
-                            <div v-if="errors.nombre_enfermedad" class="form-error"> {{ errors.nombre_enfermedad }}</div>
-                            <textarea name="descripcion" :id="descripcion_enfermedad" cols="20" rows="2"
-                                class="form-textarea" placeholder="Descripcion.."
-                                v-model="form.descripcion_enfermedad"></textarea>
-                            <span v-if="errors.descripcion_enfermedad" class="text-red-500">{{
-                                errors.descripcion_enfermedad }}</span>
+                    <!-- EDITAR ENFERMEDADES -->
+                    <div class="flex-wrap pb-5 lg:pr-3 w-full lg:w-1/2">
+                        <div class="block pb-2">Enfermedades:</div>
+                        <div v-for="(enfermedad, index) in form.enfermedade_id" :key="index" class="flex gap-2 my-1">
+                            <input type="text" class="border-turquesa rounded-md w-full" v-model="enfermedad.nombre"
+                                placeholder="" >
+                            <button type="button"
+                                class="px-3 py-1 bg-indigo-400 rounded-xl text-white hover:shadow-md hover:bg-softIndigo"
+                                @click="eliminarEnfermedad(index)">Eliminar</button>
                         </div>
-                        <div class="pb-5 lg:pr-3 lg:w-1/2">
-                            <span class="block py-2">Alergia/as:</span>
-                            <div class="w-full">
-                                <div class="pb-1 pr-8 lg:pr-20 flex items-center justify-between"
-                                    v-for="alergia in alergias" :key="alergia.id">
-                                    <label class="form-label">{{ alergia.nombre }}</label>
-                                    <input type="checkbox" v-model="form.alergia_id" :value="alergia.id"
-                                        class="form-checkbox">
-                                </div>
-                            </div>
-                            <div v-if="errors.alergias" class="form-error"> {{ errors.alergias }}</div>
-                            <text-input v-model="form.nombre_alergia" type="text" label="Otro" class="pb-5 lg:pr-3 w-full"
-                                placeholder="especificar.." :id="nombre_alergia" />
-                            <div v-if="errors.nombre_alergia" class="form-error"> {{ errors.nombre_alergia }}</div>
-                            <textarea name="descripcion" :id="descripcion_alergia" cols="20" rows="2" class="form-textarea"
-                                placeholder="Descripcion.." v-model="form.descripcion_alergia"></textarea>
-                            <span v-if="errors.descripcion_alergia" class="text-red-500">{{
-                                errors.descripcion_alergia }}</span>
-                        </div>
+                        <button type="button"
+                            class="px-3 py-1 mt-2 bg-indigo-400 rounded-xl text-white hover:shadow-md hover:bg-softIndigo"
+                            @click="agregarEnfermedad">Agregar Enfermedad</button>
                     </div>
+                    <!-- DATOS DEL HISTORIAL -->
                     <div class="pb-5 lg:pr-3 w-full lg:w-1/2">
                         <label for="diagnostico" class="form-label">Diagnostico:</label>
                         <textarea name="diagnostico" :id="diagnostico" cols="20" rows="3" class="form-textarea "
@@ -168,10 +147,9 @@ export default {
             </form>
         </div>
 
-        
+
     </div>
-    
-    </template>
+</template>
 
 
 

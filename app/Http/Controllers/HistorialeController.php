@@ -22,7 +22,7 @@ class HistorialeController extends Controller
     {
         $queries = ['search', 'search_anho', 'search_mes'];
 
-        $historiales = Historiale::with('residente.persona', 'caracteristica', 'enfermedades', 'alergias')
+        $historiales = Historiale::with('residente.persona', 'caracteristica', 'enfermedades')
             ->orderBy('id', 'desc')
             ->filter($request->only($queries))
             ->get();
@@ -37,11 +37,10 @@ class HistorialeController extends Controller
     public function create()
     {
         $enfermedades = Enfermedade::all();
-        $alergias = Alergia::all();
 
         return Inertia::render('Historiales/Nuevo', [
             'enfermedades' => $enfermedades,
-            'alergias' => $alergias
+
         ]);
     }
 
@@ -65,10 +64,11 @@ class HistorialeController extends Controller
             'caracteristica_id' => $caracteristica->id
         ]);
 
+
         $enfermedadesData = $request->enfermedades;
 
         foreach ($enfermedadesData as $enfermedadeData) {
-            if ($enfermedadeData['valor'] !== null) {
+            if (!empty($enfermedadeData['valor'])) {
                 $enfermedade = new Enfermedade([
                     'nombre' => $enfermedadeData['valor'],
                 ]);
@@ -76,20 +76,6 @@ class HistorialeController extends Controller
                 $historiale->enfermedades()->save($enfermedade);
             }
         }
-
-        $alergiasData = $request->alergias;
-
-        foreach ($alergiasData as $alergiaData) {
-            if ($alergiaData['valor'] !== null) {
-                $alergia = new Alergia([
-                    'nombre' => $alergiaData['valor'],
-                ]);
-
-                $historiale->alergias()->save($alergia);
-            }
-        }
-
-
 
         return Redirect::route('historiales.index');
     }
@@ -105,21 +91,13 @@ class HistorialeController extends Controller
     {
         $caracteristica = Caracteristica::find($historiale->caracteristica_id);
 
-        $historialeHasEnfermedade = array_column(json_decode($historiale->enfermedades, true), 'id');
-
-        $historialeHasAlergias = array_column(json_decode($historiale->alergias, true), 'id');
-
-        $enfermedades = Enfermedade::all();
-
-        $alergias = Alergia::all();
+        //enfermedades relacionadas al historial
+        $historialeHasEnfermedade = Enfermedade::whereIn('id', array_column(json_decode($historiale->enfermedades, true), 'id'))->get();
 
 
         return Inertia::render('Historiales/Editar', [
             'caracteristica' => $caracteristica,
             'historialeHasEnfermedade' => $historialeHasEnfermedade,
-            'historialeHasAlergias' => $historialeHasAlergias,
-            'enfermedades' => $enfermedades,
-            'alergias' => $alergias,
             'historiale' => $historiale
         ]);
     }
@@ -128,32 +106,34 @@ class HistorialeController extends Controller
     public function update(HistorialeRequest $request, Historiale $historiale)
     {
 
+        $caracteristica = Caracteristica::find($historiale->caracteristica_id);
 
-        /*  $historiale = Historiale::findOrFail($id);
-        $caracteristica = Caracteristica::findOrFail($request->id_caracteristica);
-        $enfermedade = Enfermedade::findOrFail($request->id_enfermedade);
+        $caracteristica->update([
+            'peso' => $request->peso,
+            'altura' => $request->altura,
+            'temperatura' => $request->temperatura,
+            'presion_arterial' => $request->presion_arterial,
+        ]);
+
+        $historiale->update([
+            'fecha_registro' => $request->fecha_registro,
+            'diagnostico' => $request->diagnostico,
+            'tratamiento' => $request->tratamiento,
+            'observaciones' => $request->observaciones,
+            'residente_id' => $request->residente_id,
+            'caracteristica_id' => $caracteristica->id
+        ]);
+
+        //obtener enfermedades actuales
+        $enfermedadesActuales = $historiale->enfermedades->pluck('id')->toArray();
+
+        //comparar y eliminar enfermedades que ya no están presentes en el formulario
+        $enfermedadesEliminar = array_diff($enfermedadesActuales, $request->enfermedade_id);
+        
 
 
 
-        $historiale->fecha_historial = $request['fecha_historial'];
-        $historiale->observaciones = $request['observaciones'];
-        $historiale->residente_id = $request['residente_id'];
-
-        $historiale->save();
-
-        $caracteristica->peso = $request['peso'];
-        $caracteristica->altura = $request['altura'];
-        $caracteristica->temperatura = $request['temperatura'];
-        $caracteristica->presion_arterial = $request['presion_arterial'];
-
-        $caracteristica->save();
-
-        $enfermedade->nombre_enfermedades = $request['nombre_enfermedades'];
-        $enfermedade->tratamientos = $request['tratamientos'];
-        $enfermedade->alimentacion = $request['alimentacion'];
-        $enfermedade->recomendaciones = $request['recomendaciones'];
-
-        $enfermedade->save();
+        /* 
 
 
 
@@ -161,8 +141,10 @@ class HistorialeController extends Controller
     }
 
 
-    public function destroy($id)
+    public function destroy(Historiale $historiale)
     {
-        //
+        $historiale->delete();
+
+        return Redirect::route('historiales.index');
     }
 }

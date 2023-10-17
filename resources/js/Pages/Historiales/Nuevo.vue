@@ -19,7 +19,6 @@ export default {
 
     props: {
         enfermedades: Array,
-        alergias: Array,
         errors: Object
     },
 
@@ -39,29 +38,17 @@ export default {
             presion_arterial: "",
 
             enfermedades: [{ valor: '' }],
-            alergias: [{ valor: '' }],
 
         });
 
         //enfermedades
-        const agregarEnfermedad = ()=>{
-            form.enfermedades.push({ valor: ''})
+        const agregarEnfermedad = () => {
+            form.enfermedades.push({ valor: '' })
         }
 
-        const eliminarEnfermedad = (index)=>{
+        const eliminarEnfermedad = (index) => {
             form.enfermedades.splice(index, 1);
         }
-
-        //alergias
-        const agregarAlergia = ()=>{
-            form.alergias.push({ valor: ''})
-        }
-
-        const eliminarAlergia = (index)=>{
-            form.alergias.splice(index, 1);
-        }
-
-
 
 
         const guardar = async () => {
@@ -70,7 +57,7 @@ export default {
 
         };
 
-        return { form, guardar, agregarEnfermedad, eliminarEnfermedad, agregarAlergia, eliminarAlergia };
+        return { form, guardar, agregarEnfermedad, eliminarEnfermedad };
     },
 };
 </script>
@@ -89,35 +76,32 @@ export default {
         <div class="max-w-4xl overflow-hidden pt-2">
             <form @submit.prevent="guardar">
                 <div class="py-3 px-3 flex flex-wrap bg-white border rounded-md">
+                    <!-- RESIDENTE Y CARACTERÍSTICAS FÍSICAS -->
                     <text-input v-model="form.residente_id" type="text" label="Residente"
                         class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="residente_id" :error="errors.residente_id" />
                     <text-input v-model="form.fecha_registro" type="date" label="Fecha" class="pb-5 lg:pr-3 w-full lg:w-1/2"
                         :id="fecha_registro" :error="errors.fecha_registro" />
-                    <text-input v-model="form.peso" type="number" label="Peso" class="pb-5 lg:pr-3 w-full lg:w-1/2"
-                        :id="peso" :error="errors.peso" />
-                    <text-input v-model="form.altura" type="number" label="Altura" class="pb-5 lg:pr-3 w-full lg:w-1/2"
+                    <text-input v-model="form.peso" type="text" label="Peso" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="peso"
+                        :error="errors.peso" />
+                    <text-input v-model="form.altura" type="text" label="Altura" class="pb-5 lg:pr-3 w-full lg:w-1/2"
                         :id="altura" :error="errors.altura" />
-                    <text-input v-model="form.temperatura" type="number" label="Temperatura"
+                    <text-input v-model="form.temperatura" type="text" label="Temperatura"
                         class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="temperatura" :error="errors.temperatura" />
-                    <text-input v-model="form.presion_arterial" type="number" label="Presion Arterial"
+                    <text-input v-model="form.presion_arterial" type="text" label="Presion Arterial"
                         class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="presion_arterial" :error="errors.presion_arterial" />
-                   <!-- INSERTAR ENFERMEDADES -->
-                   <div class="flex-wrap">
+                    <!-- INSERTAR ENFERMEDADES -->
+                    <div class="flex-wrap pb-5 lg:pr-3 w-full lg:w-1/2">
                         <div class="block pb-2">Enfermedades:</div>
-                        <div v-for="(enfermedad, index) in form.enfermedades" :key="index">
-                            <input type="text" v-model="enfermedad.valor" placeholder="HH:MM" >
-                            <button type="button" @click="eliminarEnfermedad(index)">Eliminar</button>
+                        <div v-for="(enfermedad, index) in form.enfermedades" :key="index" class="flex gap-2 my-1">
+                            <input type="text" class="border-turquesa rounded-md w-full" v-model="enfermedad.valor"
+                                placeholder="">
+                            <button type="button"
+                                class="px-3 py-1 bg-indigo-400 rounded-xl text-white hover:shadow-md hover:bg-softIndigo"
+                                @click="eliminarEnfermedad(index)">Eliminar</button>
                         </div>
-                        <button type="button" @click="agregarEnfermedad">Agregar Enfermedad</button>
-                    </div>
-                    <!-- Insertar Alergias -->
-                    <div class="flex-wrap">
-                        <div class="block pb-2">Alergias:</div>
-                        <div v-for="(alergia, index) in form.alergias" :key="index">
-                            <input type="text" v-model="alergia.valor" placeholder="HH:MM" >
-                            <button type="button" @click="eliminarAlergia(index)">Eliminar</button>
-                        </div>
-                        <button type="button" @click="agregarAlergia">Agregar Alergia</button>
+                        <button type="button"
+                            class="px-3 py-1 mt-2 bg-indigo-400 rounded-xl text-white hover:shadow-md hover:bg-softIndigo"
+                            @click="agregarEnfermedad">Agregar Enfermedad</button>
                     </div>
                     <!-- datos de historial -->
                     <div class="pb-5 lg:pr-3 w-full lg:w-1/2">
@@ -149,6 +133,5 @@ export default {
                 </div>
             </form>
         </div>
-    </div>
-</template>
+</div></template>
 

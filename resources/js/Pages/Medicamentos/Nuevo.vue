@@ -43,11 +43,11 @@ export default {
 
         //horarios
 
-        const agregarHorario = ()=>{
-            form.horarios.push({ valor: ''})
+        const agregarHorario = () => {
+            form.horarios.push({ valor: '' })
         }
 
-        const eliminarHorario = (index)=>{
+        const eliminarHorario = (index) => {
             form.horarios.splice(index, 1);
         }
 
@@ -75,8 +75,9 @@ export default {
         <div class="max-w-4xl overflow-hidden pt-2">
             <form @submit.prevent="guardar">
                 <div class="py-3 px-3 flex flex-wrap bg-white border rounded-md">
+                    <!-- datos del medicamento -->
                     <text-input type="text" label="Residente" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="residente_id"
-                        v-model="form.residente_id" name="residente_id" :error="errors.residente_id"/>
+                        v-model="form.residente_id" name="residente_id" :error="errors.residente_id" />
                     <text-input type="text" label="Nombre del Medicamento" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="nombre"
                         v-model="form.nombre" :error="errors.nombre" />
                     <div class="pb-5 lg:pr-3 w-full lg:w-1/2">
@@ -107,15 +108,22 @@ export default {
                             {{ presentacione.nombre }}
                         </option>
                     </select-input>
-                    <div class="flex-wrap">
+                    <!-- Insertar Horarios -->
+                    <div class="flex-wrap pb-5 lg:pr-3 w-full lg:w-1/2">
                         <div class="block pb-2">Horarios de Suministro:</div>
-                        <div v-for="(horario, index) in form.horarios" :key="index">
-                            <input type="text" v-model="horario.valor" placeholder="HH:MM" >
-                            <button type="button" @click="eliminarHorario(index)">Eliminar</button>
+                        <div v-for="(horario, index) in form.horarios" :key="index" class="flex gap-2 my-1">
+                            <input type="text" class="border-turquesa rounded-md w-full" v-model="horario.valor"
+                                placeholder="HH:MM">
+                            <button type="button"
+                                class="px-3 py-1 bg-indigo-400 rounded-xl text-white hover:shadow-md hover:bg-softIndigo"
+                                @click="eliminarHorario(index)">Eliminar</button>
                         </div>
-                        <button type="button" @click="agregarHorario">Agregar Horario</button>
+                        <button type="button"
+                            class="px-3 py-1 mt-2 bg-indigo-400 rounded-xl text-white hover:shadow-md hover:bg-softIndigo"
+                            @click="agregarHorario">Agregar Horario</button>
                         <span v-if="errors.horarios" class="text-red-500">{{ errors.horarios }}</span>
                     </div>
+
                     <div class="py-4 lg:pr-2 flex w-full items-center justify-end bg-white border-t">
                         <Link type="button" :href="route('medicamentos.index')" class="btn-cancelar">
                         <span class="text-white font-bold">Cancelar</span>

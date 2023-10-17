@@ -24,17 +24,28 @@ export default {
 
     props: {
         medicamentos: Array,
-
+        filters: Object
     },
 
-    setup() {
+    setup(props) {
 
         const eliminarMedicamento = (data) => {
             data._method = "DELETE";
             Inertia.post("/medicamentos/" + data.id, data);
         };
 
-        return { eliminarMedicamento }
+        //BUSQUEDA
+        const form = reactive({
+            search_nombre: props.filters.search_nombre,
+            search_residente: props.filters.search_residente,
+        });
+
+        watchEffect(() => {
+            const query = pickBy(form);
+            Inertia.replace(route('medicamentos.index', Object.keys(query).length ? query : {}))
+        });
+
+        return { eliminarMedicamento, form }
     }
 
 }
@@ -55,6 +66,23 @@ export default {
             </Link>
         </div>
         <!-- filter area -->
+        <div class="py-2">
+            <filters>
+                <div class="py-3 px-3 border border-turquesa rounded-md">
+                    <div class=" lg:flex lg:flex-wrap">
+                        <search-input id="medicamentos" label="Medicamento"
+                            class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2" v-model="form.search_nombre" />
+                        <search-input id="Residente" label="Nombres, Apellidos o C.I"
+                            class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2" v-model="form.search_residente" />
+                    </div>
+                    <div class="py-3 text-right">
+                        <button class="btn-indigo mx-1 hover:bg-softIndigo" type="button" @click="limpiarCampos()">
+                            Limpiar
+                        </button>
+                    </div>
+                </div>
+            </filters>
+        </div>
         <!-- table -->
         <div class="overflow-x-auto py-4 max-w-7xl">
             <table
@@ -98,8 +126,8 @@ export default {
                             {{ medicamento.presentacione.nombre }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            <span v-for="horario in medicamento.horarios"
-                                class="inline-block p-1 mx-1 rounded-lg text-white font-bold bg-gradient-to-r from-indigo-400 to-indigo-500 ">
+                            <span v-for="horario in medicamento.horario_medicamentos"
+                                class="inline-block px-3 py-1 mr-2 rounded-2xl border border-softIndigo text-softIndigo bg-indigo-100">
                                 {{ horario.hora }}
                             </span>
                         </td>

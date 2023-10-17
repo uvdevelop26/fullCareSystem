@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\MedicamentoRequest;
 use App\Models\Horario;
+use App\Models\HorarioMedicamento;
 use App\Models\Medicamento;
 use App\Models\Presentacione;
 use App\Models\Turno;
@@ -17,16 +18,23 @@ use PhpParser\Node\Stmt\Return_;
 
 use \Illuminate\Auth\Middleware\Authorize;
 
+use function PHPUnit\Framework\isEmpty;
+
 class MedicamentoController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $medicamentos = Medicamento::with('residente.persona', 'presentacione', 'horarios')
+        $queries = ['search_nombre', 'search_residente'];
+        
+        $medicamentos = Medicamento::with('residente.persona', 'presentacione', 'horarioMedicamentos')
             ->orderBy('id', 'desc')
+            ->filter($request->only($queries))
             ->get();
+
         return Inertia::render('Medicamentos/Index', [
             'medicamentos' => $medicamentos,
+            'filters' => $request->all($queries)
         ]);
     }
 
@@ -42,6 +50,7 @@ class MedicamentoController extends Controller
 
     public function store(MedicamentoRequest $request)
     {
+
         $medicamento = Medicamento::create([
             'nombre' => $request->nombre,
             'descripcion' => $request->descripcion,
@@ -52,16 +61,16 @@ class MedicamentoController extends Controller
             'presentacione_id' => $request->presentacione_id
         ]);
 
-
-
         $horariosData = $request->horarios;
 
         foreach ($horariosData as $horarioData) {
-            $horario = new Horario([
-                'hora' => $horarioData['valor'],
-            ]);
+            if (!empty($horarioData['valor'])) {
+                $horario = new HorarioMedicamento([
+                    'hora' => $horarioData['valor'],
+                ]);
 
-            $medicamento->horarios()->save($horario);
+                $medicamento->horarioMedicamentos()->save($horario);
+            }
         }
         return Redirect::route('medicamentos.index');
     }
@@ -112,10 +121,10 @@ class MedicamentoController extends Controller
         $nuevosHorarios = $request->horarios;
 
         //actualiza horarios existentes
-        
 
 
-       // return Redirect::route('medicamentos.index');
+
+        // return Redirect::route('medicamentos.index');
     }
 
 

@@ -11,10 +11,10 @@ return new class extends Migration
     {
         Schema::create('caracteristicas', function (Blueprint $table) {
             $table->id();
-            $table->decimal('peso', 3, 2);
-            $table->decimal('altura', 3, 2);
-            $table->decimal('temperatura', 3, 2);
-            $table->decimal('presion_arterial', 3, 2);
+            $table->decimal('peso', 5, 2);
+            $table->decimal('altura', 5, 2);
+            $table->decimal('temperatura', 5, 2);
+            $table->decimal('presion_arterial', 5, 2);
             $table->timestamps();
         });
     }

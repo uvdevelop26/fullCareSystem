@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Horario extends Model
+class HorarioMedicamento extends Model
 {
     use HasFactory;
 
-    protected $table = 'horarios';
+    protected $table = 'horario_medicamento';
 
     protected $fillable = ['hora'];
 
@@ -20,8 +20,4 @@ class Horario extends Model
         return $this->belongsToMany(Medicamento::class);
     }
 
-    public function rutinas()
-    {
-        return $this->belongsToMany(Rutina::class);
-    }
 }

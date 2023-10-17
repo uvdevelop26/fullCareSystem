@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('horarios', function (Blueprint $table) {
+        Schema::create('horario_medicamento', function (Blueprint $table) {
             $table->id();
             $table->time('hora');
             $table->timestamps();

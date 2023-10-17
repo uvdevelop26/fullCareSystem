@@ -13,8 +13,10 @@ class SueldoFactory extends Factory
     
     public function definition()
     {
+        $fecha = $this->faker->dateTimeBetween('2009-01-01', '2023-12-31');
+
         return [
-            'fecha' => $this->faker->date(),
+            'fecha' => $fecha,
             'monto' => $this->faker->randomFloat(2, 50000, 200000),
             'empleado_id' => Empleado::all()->random()->id,
         ];

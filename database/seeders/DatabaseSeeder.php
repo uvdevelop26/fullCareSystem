@@ -51,7 +51,6 @@ class DatabaseSeeder extends Seeder
         Egreso::factory(10)->create();
         Caracteristica::factory(20)->create();
         $this->call(EnfermedadeSeeder::class);
-        $this->call(AlergiaSeeder::class);
         Historiale::factory(10)->create();
         $this->call(PresentacioneSeeder::class);
         Medicamento::factory(8)->create();

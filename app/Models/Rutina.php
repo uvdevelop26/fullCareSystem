@@ -13,7 +13,7 @@ class Rutina extends Model
 
     protected $fillable = [
         'nombre',
-        'observacion',
+        'descripcion',
         'residente_id',
     ];
 
@@ -24,8 +24,8 @@ class Rutina extends Model
     }
 
     //relación de muchos a muchos
-    public function horarios()
+   /*  public function horarios()
     {
         return $this->belongsToMany(Horario::class);
-    }
+    } */
 }

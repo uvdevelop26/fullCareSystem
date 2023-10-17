@@ -12,7 +12,7 @@ return new class extends Migration
         Schema::create('rutinas', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->string('observacion');
+            $table->string('descripcion');
             $table->unsignedBigInteger('residente_id');
 
             $table->foreign('residente_id')

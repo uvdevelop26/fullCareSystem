@@ -13,7 +13,7 @@ class RutinaFactory extends Factory
     {
         return [
             'nombre' => $this->faker->word(),
-            'observacion' => $this->faker->sentence(),
+            'descripcion' => $this->faker->sentence(),
             'residente_id' => Residente::all()->random()->id,
         ];
     }
