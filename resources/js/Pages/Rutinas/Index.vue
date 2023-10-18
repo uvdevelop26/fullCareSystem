@@ -3,6 +3,7 @@ import LayoutApp from '../../Layouts/LayoutApp.vue';
 import { Head, Link } from '@inertiajs/inertia-vue3'
 import Icon from '../../Shared/Icon.vue'
 import SelectInput from '../../Shared/SelectInput.vue';
+import SearchInput from '../../Shared/SearchInput.vue';
 import Filters from '../../Shared/Filters.vue';
 import { watchEffect, reactive } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
@@ -17,12 +18,14 @@ export default {
         Link,
         Icon,
         SelectInput,
+        SearchInput,
         Filters
     },
 
 
     props: {
-        rutinas: Array
+        rutinas: Array,
+        filters: Object
     },
 
 
@@ -30,23 +33,24 @@ export default {
     setup(props) {
 
         //BUSQUEDA
-       /*  const form = reactive({
-            search: props.filters.search,
+        const form = reactive({
+            search_nombre: props.filters.search_nombre,
+            search_residente: props.filters.search_residente,
         });
- */
-       /*  watchEffect(() => {
+
+        watchEffect(() => {
             const query = pickBy(form);
-            Inertia.replace(route('roles.index', Object.keys(query).length ? query : {}));
-        }); */
+            Inertia.replace(route('rutinas.index', Object.keys(query).length ? query : {}))
+        });
+      
 
-        //ELIMINAR ROL
-
-        const eliminarRutina = (data)=>{
+        //ELIMINAR 
+        const eliminarRutina = (data) => {
             data._method = "DELETE";
             Inertia.post('/rutinas/' + data.id, data)
         }
-        
-        return {  eliminarRutina }
+
+        return { eliminarRutina, form }
     }
 
 
@@ -70,21 +74,23 @@ export default {
             </Link>
         </div>
         <!-- FILTER AREA  -->
-        <!-- <div class="py-2">
+        <div class="py-2">
             <filters>
                 <div class="py-3 px-3 border border-turquesa rounded-md">
-                    <div class="lg:flex lg:flex-wrap">
-                        <select-input id="roles" label="Nombre del Rol" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
-                            v-model="form.search">
-                            <option :value="null" />
-                            <option v-for="roles in rolesToSearch" :key="roles.id" :value="roles.id">
-                                {{ roles.name }}
-                            </option>
-                        </select-input>
+                    <div class=" lg:flex lg:flex-wrap">
+                        <search-input id="rutina" label="Rutina"
+                            class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2" v-model="form.search_nombre" />
+                        <search-input id="Residente" label="Nombres, Apellidos o C.I"
+                            class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2" v-model="form.search_residente" />
+                    </div>
+                    <div class="py-3 text-right">
+                        <button class="btn-indigo mx-1 hover:bg-softIndigo" type="button" @click="limpiarCampos()">
+                            Limpiar
+                        </button>
                     </div>
                 </div>
             </filters>
-        </div> -->
+        </div>
         <!-- Table-->
         <div class="overflow-x-auto py-4 max-w-7xl">
             <table
@@ -93,7 +99,7 @@ export default {
                     <tr class="capitalize shadow">
                         <th class="py-3 px-4 bg-turquesa rounded-l-xl text-white font-bold">nombres</th>
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">rutina</th>
-                        <th class="py-3 px-4 bg-turquesa text-white font-bold">observación</th>
+                        <th class="py-3 px-4 bg-turquesa text-white font-bold">descripción</th>
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">horarios</th>
                         <th class="py-3 px-4 bg-turquesa rounded-r-xl text-white font-bold">Acciones</th>
                     </tr>
@@ -105,13 +111,16 @@ export default {
                             {{ rutina.residente.persona.apellidos }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            {{ rutina.nombre}}
+                            {{ rutina.nombre }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            {{ rutina.observacion}}
+                            {{ rutina.descripcion }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            {{ rutina.horarios}}
+                            <span v-for="horario in rutina.horario_rutinas"
+                                class="inline-block px-3 py-1 mr-2 rounded-2xl border border-softIndigo text-softIndigo bg-indigo-100">
+                                {{ horario.hora }}
+                            </span>
                         </td>
                         <td class="py-2 px-2 rounded-r-xl bg-white group-hover:bg-fondColor">
                             <div class="w-full h-full flex items-center justify-center">

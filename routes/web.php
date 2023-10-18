@@ -3,6 +3,8 @@
 use App\Http\Controllers\BalanceController;
 use App\Http\Controllers\ContactarFamiliarController;
 use App\Http\Controllers\ControlController;
+use App\Http\Controllers\ControlMedicamentoController;
+use App\Http\Controllers\ControlRutinaController;
 use App\Http\Controllers\EgresoController;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\FamiliareController;
@@ -125,6 +127,10 @@ Route::resource('medicamentos', MedicamentoController::class)
 Route::resource('rutinas', RutinaController::class)
     ->middleware('auth:sanctum', 'verified');
 
-//suministro de medicamentos
-Route::resource('controlmed', ControlController::class)
+//control de medicamentos
+Route::resource('control-medicamento', ControlMedicamentoController::class)
     ->middleware('auth:sanctum', 'verified');;
+
+//control de rutinas
+Route::resource('control-rutina', ControlRutinaController::class)
+    ->middleware('auth:sanctum', 'verified');

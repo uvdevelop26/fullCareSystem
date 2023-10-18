@@ -24,8 +24,26 @@ class Rutina extends Model
     }
 
     //relación de muchos a muchos
-   /*  public function horarios()
+    public function horarioRutinas()
     {
-        return $this->belongsToMany(Horario::class);
-    } */
+        return $this->belongsToMany(HorarioRutina::class);
+    }
+
+    //SCOPE PARA BUSQUEDA
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['search_residente'] ?? null, function ($query, $search) {
+            $query->where(function ($query) use ($search) {
+                $query->whereHas('residente.persona', function ($query) use ($search) {
+                    $query->where('nombres', 'like', '%' . $search . '%')
+                        ->orWhere('apellidos', 'like', '%' . $search . '%')
+                        ->orWhere('ci_numero', 'like', '%' . $search . '%');
+                });
+            });
+        })->when($filters['search_nombre'] ?? null, function ($query, $search) {
+            $query->where(function ($query) use ($search) {
+              $query->where('nombre', 'like', '%' . $search . '%');
+            });
+        });
+    }
 }

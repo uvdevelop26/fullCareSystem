@@ -45,6 +45,8 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+
+    //relación uno a muchos con las siguientes tablas
     public function empleado()
     {
         return $this->belongsTo(Empleado::class);
@@ -58,6 +60,16 @@ class User extends Authenticatable
     public function egresos()
     {
         return $this->hasMany(Egreso::class);
+    }
+
+    public function controlMedicamento()
+    {
+        return $this->hasMany(ControlMedicamento::class);
+    }
+
+    public function controlRutina()
+    {
+        return $this->hasMany(ControlRutina::class);
     }
 
 

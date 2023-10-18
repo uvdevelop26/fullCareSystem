@@ -91,7 +91,8 @@ const menu = reactive([
             { name: 'historial clinico', href: '/historiales' },
             { name: 'medicamentos', href: '/medicamentos' },
             { name: 'rutinas', href: '/rutinas' },
-            { name: 'control de suministros', href: '/controlmed' },
+            { name: 'control de medicamentos', href: '/control-medicamento' },
+            { name: 'control de rutinas', href: '/control-rutina' },
         ],
         toggle_submenu: false
 

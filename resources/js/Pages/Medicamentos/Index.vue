@@ -29,6 +29,7 @@ export default {
 
     setup(props) {
 
+        //eliminar
         const eliminarMedicamento = (data) => {
             data._method = "DELETE";
             Inertia.post("/medicamentos/" + data.id, data);
