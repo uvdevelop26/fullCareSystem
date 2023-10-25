@@ -5,6 +5,7 @@ use App\Http\Controllers\ContactarFamiliarController;
 use App\Http\Controllers\ControlController;
 use App\Http\Controllers\ControlMedicamentoController;
 use App\Http\Controllers\ControlRutinaController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EgresoController;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\FamiliareController;
@@ -48,12 +49,20 @@ Route::get('/', function () {
 
 //dashboard
 
-Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])
-    ->group(function () {
-        Route::get('/dashboard', function () {
-            return Inertia::render('Dashboard/Index');
-        })->name('dashboard');
+Route::controller(DashboardController::class)
+    ->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified', ])
+    ->group(function (){
+        Route::get('/dashboard', 'index')->name('dashboard');
     });
+
+/* Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])
+    ->group(function () {
+        Route::get('/dashboard', function () { return Inertia::render('Dashboard/Index'); })->name('dashboard');
+    }); */
+
+//reportes
+Route::get('historiales/{historiale}/pdf', [HistorialeController::class, 'pdf'])
+    ->name('historiales.pdf');
 
 //Residentes
 Route::resource('residentes', ResidenteController::class)
@@ -118,6 +127,7 @@ Route::controller(BalanceController::class)->group(function () {
 //historial clinico
 Route::resource('historiales', HistorialeController::class)
     ->middleware('auth:sanctum', 'verified');
+
 
 //Medicamentos
 Route::resource('medicamentos', MedicamentoController::class)

@@ -8,6 +8,8 @@ use App\Models\Caracteristica;
 use App\Models\Enfermedade;
 use App\Models\Historiale;
 use App\Models\Incidencia;
+use App\Models\Persona;
+use App\Models\Residente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -129,7 +131,7 @@ class HistorialeController extends Controller
 
         //comparar y eliminar enfermedades que ya no están presentes en el formulario
         $enfermedadesEliminar = array_diff($enfermedadesActuales, $request->enfermedade_id);
-        
+
 
 
 
@@ -146,5 +148,25 @@ class HistorialeController extends Controller
         $historiale->delete();
 
         return Redirect::route('historiales.index');
+    }
+
+    public function pdf(Historiale $historiale)
+    {
+        $caracteristica = Caracteristica::find($historiale->caracteristica_id);
+
+        //enfermedades relacionadas al historial
+        $historialeHasEnfermedade = Enfermedade::whereIn('id', array_column(json_decode($historiale->enfermedades, true), 'id'))->get();
+
+        $residente = Residente::find($historiale->residente_id);
+
+        $persona = Persona::find($residente->persona_id);
+
+        $pdf = app('dompdf.wrapper');
+
+        $pdf->getDomPDF()->set_option("enable_php", true);
+
+        $pdf->loadView('report', compact('historiale','residente', 'persona','caracteristica', 'historialeHasEnfermedade'));
+
+        return $pdf->stream();
     }
 }

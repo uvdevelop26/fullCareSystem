@@ -174,9 +174,11 @@ export default {
                                 <button class="inline-block px-3 py-3 rounded-full bg-softIndigo hover:shadow-md" @click="eliminarHistorial(historiale)">
                                     <Icon name="delete" class="w-3 h-3 fill-white" />
                                 </button>
-                                <Link class="inline-block bg-fondColor px-3 py-3 mr-2 rounded-full hover:shadow-md">
+                                <a class="inline-block bg-fondColor px-3 py-3 mr-2 rounded-full hover:shadow-md" :href="route('historiales.pdf', historiale.id)" target="_blank"><icon name="ver" class="w-3 h-3 fill-textColor" /></a>
+                                <!-- <Link class="inline-block bg-fondColor px-3 py-3 mr-2 rounded-full hover:shadow-md" 
+                                :href="route('historiales.pdf', historiale.id)">
                                 <icon name="ver" class="w-3 h-3 fill-textColor" />
-                                </Link>
+                                </Link> -->
                             </div>
                         </td>
                     </tr>
