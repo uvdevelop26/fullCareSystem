@@ -5,6 +5,7 @@ import TextInput from "../../Shared/TextInput.vue";
 import SelectInput from "../../Shared/SelectInput.vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import { useForm } from "@inertiajs/inertia-vue3";
+import DialogModal from '../../Components/DialogModal.vue'
 
 
 export default {
@@ -17,12 +18,15 @@ export default {
         Icon,
         TextInput,
         SelectInput,
+        DialogModal
 
     },
 
     props: ['ciudades', 'errors'],
 
     setup() {
+
+       
 
 
         const form = useForm({
@@ -98,6 +102,7 @@ export default {
                     </select-input>
                     <text-input type="text" label="Email" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="email"
                         v-model="form.email" :error="errors.email" />
+                  
                     <text-input type="text" label="Residente" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="residente"
                         v-model="form.residente_id" :error="errors.residente_id" />
                     <div class="py-4 lg:pr-2 flex w-full items-center justify-end bg-white border-t">
@@ -111,6 +116,9 @@ export default {
                 </div>
             </form>
         </div>
+        <!-- modal -->
+
+        
     </div>
 </template>
 

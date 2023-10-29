@@ -7,6 +7,8 @@ import Filters from '../../Shared/Filters.vue';
 import { watchEffect, reactive } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 import { pickBy } from 'lodash';
+import DialogModal from '../../Components/DialogModal.vue'
+import { ref } from 'vue';
 
 export default {
 
@@ -17,7 +19,8 @@ export default {
         Link,
         Icon,
         SelectInput,
-        Filters
+        Filters,
+        DialogModal
     },
 
 
@@ -32,6 +35,10 @@ export default {
 
     setup(props) {
 
+        const openModal = ref(false);
+
+        const catchData = ref();
+
         //BUSQUEDA
         const form = reactive({
             search: props.filters.search,
@@ -42,14 +49,24 @@ export default {
             Inertia.replace(route('roles.index', Object.keys(query).length ? query : {}));
         });
 
+        //MOSTRAR MODAL Y ASIGNAR DATOS
+        const showModal = (data) => {
+            openModal.value = true;
+            catchData.value = data
+        }
+
+
         //ELIMINAR ROL
 
-        const eliminarRole = (data)=>{
-            data._method = "DELETE";
-            Inertia.post('/roles/' + data.id, data)
+        const eliminarRole = () => {
+
+            catchData.value._method = "DELETE";
+            Inertia.post('/roles/' + catchData.value.id, catchData.value);
+
+            openModal.value = false;
         }
-        
-        return { form, eliminarRole }
+
+        return { form, eliminarRole, catchData, openModal, showModal }
     }
 
 
@@ -110,7 +127,7 @@ export default {
                                 <Icon name="edit" class="w-3 h-3 fill-textColor" />
                                 </Link>
                                 <button class="inline-block px-3 py-3 rounded-full bg-softIndigo hover:shadow-md"
-                                    @click="eliminarRole(role)">
+                                    @click="showModal(role)">
                                     <Icon name="delete" class="w-3 h-3 fill-white" />
                                 </button>
                             </div>
@@ -122,6 +139,30 @@ export default {
                 </transition-group>
             </table>
         </div>
+        <!-- MODAL PARA ELIMINAR -->
+        <dialog-modal :show="openModal">
+            <template v-slot:title>
+                <div class="font-bold">
+                    Eliminar Rol
+                </div>
+            </template>
+            <template v-slot:content>
+                <div v-if="catchData">
+                    ¿Está seguro que desea eliminar este Rol?
+                </div>
+            </template>
+            <template v-slot:footer>
+                <div>
+                    <button @click="openModal = false" class="btn-cancelar">
+                        Cancelar
+                    </button>
+                    <button @click="eliminarRole()"
+                        class="px-6 py-3 text-white text-sm leading-4 rounded-md bg-red-400 hover:bg-red-300 font-bold whitespace-nowrap focus:bg-red-400">
+                        Eliminar
+                    </button>
+                </div>
+            </template>
+        </dialog-modal>
     </div>
 </template>
 <style scoped>

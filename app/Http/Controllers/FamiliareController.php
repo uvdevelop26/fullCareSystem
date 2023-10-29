@@ -108,11 +108,13 @@ class FamiliareController extends Controller
         return Redirect::route('familiares.index');
     }
 
-    public function destroy(Familiare $familiare)
+    public function destroy($id)
     {
-        $persona = Persona::find($familiare->persona_id);
 
-        $persona->delete();
+
+        $familiare = Familiare::find($id);
+
+        $familiare->delete();
 
         return Redirect::route('familiares.index');
     }

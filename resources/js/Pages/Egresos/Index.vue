@@ -8,6 +8,8 @@ import Filters from '../../Shared/Filters.vue';
 import { watchEffect, reactive } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 import { pickBy } from 'lodash';
+import DialogModal from '../../Components/DialogModal.vue'
+import { ref } from 'vue';
 
 export default {
 
@@ -20,6 +22,7 @@ export default {
         SearchInput,
         SelectInput,
         Filters,
+        DialogModal
     },
 
     props: {
@@ -32,12 +35,9 @@ export default {
 
     setup(props) {
 
+        const openModal = ref(false);
 
-        //ELIMINAR EGRESO
-        const eliminarEgreso = (data) => {
-            data._method = "DELETE";
-            Inertia.post('/egresos/' + data.id, data)
-        }
+        const catchData = ref();
 
         //Objetos para búsqueda
         const Datayears = () => {
@@ -79,7 +79,22 @@ export default {
             Inertia.replace(route('egresos.index', Object.keys(query).length ? query : {}))
         });
 
-        return { eliminarEgreso, form, showYears, meses }
+        //MOSTRAR MODAL Y ASIGNAR DATOS
+        const showModal = (data) => {
+            openModal.value = true;
+            catchData.value = data
+        }
+
+        //ELIMINAR EGRESO
+        const eliminarEgreso = () => {
+
+            catchData.value._method = "DELETE";
+            Inertia.post('/egresos/' + catchData.value.id, catchData.value);
+
+            openModal.value = false;
+        }
+
+        return { eliminarEgreso, form, showYears, meses, catchData, openModal, showModal }
     }
 
 }
@@ -182,7 +197,7 @@ export default {
                                 <icon name="edit" class="w-3 h-3 fill-textColor" />
                                 </Link>
                                 <button class="inline-block px-3 py-3 rounded-full bg-softIndigo hover:shadow-md"
-                                    @click="eliminarEgreso(egreso)">
+                                    @click="showModal(egreso)">
                                     <icon name="delete" class="w-3 h-3 fill-white" />
                                 </button>
                             </div>
@@ -194,6 +209,30 @@ export default {
                 </transition-group>
             </table>
         </div>
+        <!-- MODAL PARA ELIMINAR -->
+        <dialog-modal :show="openModal">
+            <template v-slot:title>
+                <div class="font-bold">
+                    Eliminar Egreso
+                </div>
+            </template>
+            <template v-slot:content>
+                <div v-if="catchData">
+                    ¿Está seguro que desea eliminar este Egreso?
+                </div>
+            </template>
+            <template v-slot:footer>
+                <div>
+                    <button @click="openModal = false" class="btn-cancelar">
+                        Cancelar
+                    </button>
+                    <button @click="eliminarEgreso()"
+                        class="px-6 py-3 text-white text-sm leading-4 rounded-md bg-red-400 hover:bg-red-300 font-bold whitespace-nowrap focus:bg-red-400">
+                        Eliminar
+                    </button>
+                </div>
+            </template>
+        </dialog-modal>
     </div>
 </template>
 

@@ -95,9 +95,12 @@ class EgresoController extends Controller
     }
 
 
-    public function destroy(Egreso $egreso)
+    public function destroy($id)
     {
+        $egreso = Egreso::find($id);
+
         $egreso->delete();
+        
         return Redirect::route('egresos.index');
     }
 }

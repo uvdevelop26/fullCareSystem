@@ -8,6 +8,8 @@ import SearchInput from '../../Shared/SearchInput.vue';
 import { watchEffect, reactive } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 import { pickBy } from 'lodash';
+import DialogModal from '../../Components/DialogModal.vue'
+import { ref } from 'vue';
 
 export default {
 
@@ -18,8 +20,9 @@ export default {
         Link,
         Icon,
         SelectInput,
-        Filters, 
-        SearchInput
+        Filters,
+        SearchInput,
+        DialogModal
 
     },
 
@@ -33,6 +36,10 @@ export default {
 
     setup(props) {
 
+        const openModal = ref(false);
+
+        const catchData = ref();
+
         //BUSQUEDA
         const form = reactive({
             search: props.filters.search,
@@ -43,14 +50,23 @@ export default {
             Inertia.replace(route('permissions.index', Object.keys(query).length ? query : {}));
         });
 
-
-        //ELIMINAR PERMISO DE ACCESO
-        const eliminarPermiso = (data) => {
-            data._method = "DELETE";
-            Inertia.post('/permissions/' + data.id, data)
+        //MOSTRAR MODAL Y ASIGNAR DATOS
+        const showModal = (data) => {
+            openModal.value = true;
+            catchData.value = data
         }
 
-        return { eliminarPermiso, form }
+
+        //ELIMINAR PERMISO DE ACCESO
+        const eliminarPermiso = () => {
+
+            catchData.value._method = "DELETE";
+            Inertia.post('/permissions/' + catchData.value.id, catchData.value);
+
+            openModal.value = false;
+        }
+
+        return { eliminarPermiso, form, catchData, showModal, openModal }
     }
 
 
@@ -77,8 +93,8 @@ export default {
             <filters>
                 <div class="py-3 px-3 border border-turquesa rounded-md">
                     <div class="lg:flex lg:flex-wrap">
-                        <search-input id="nombre" label="Rol"
-                            class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2" v-model="form.search" />
+                        <search-input id="nombre" label="Rol" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
+                            v-model="form.search" />
                     </div>
                 </div>
             </filters>
@@ -106,7 +122,7 @@ export default {
                                 <icon name="edit" class="w-3 h-3 fill-textColor" />
                                 </Link>
                                 <button class="inline-block px-3 py-3 rounded-full bg-softIndigo hover:shadow-md"
-                                    @click="eliminarPermiso(permission)">
+                                    @click="showModal(permission)">
                                     <icon name="delete" class="w-3 h-3 fill-white" />
                                 </button>
                             </div>
@@ -118,6 +134,30 @@ export default {
                 </transition-group>
             </table>
         </div>
+        <!-- MODAL PARA ELIMINAR -->
+        <dialog-modal :show="openModal">
+            <template v-slot:title>
+                <div class="font-bold">
+                    Eliminar Permiso de Acceso
+                </div>
+            </template>
+            <template v-slot:content>
+                <div v-if="catchData">
+                    ¿Está seguro que desea eliminar este Permiso de Acceso?
+                </div>
+            </template>
+            <template v-slot:footer>
+                <div>
+                    <button @click="openModal = false" class="btn-cancelar">
+                        Cancelar
+                    </button>
+                    <button @click="eliminarPermiso()"
+                        class="px-6 py-3 text-white text-sm leading-4 rounded-md bg-red-400 hover:bg-red-300 font-bold whitespace-nowrap focus:bg-red-400">
+                        Eliminar
+                    </button>
+                </div>
+            </template>
+        </dialog-modal>
     </div>
 </template>
 <style scoped>

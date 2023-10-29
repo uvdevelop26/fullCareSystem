@@ -78,7 +78,7 @@ export default {
         <!-- HEADER -->
         <div class="py-3 mb-3 max-w-7xl border-b border-turquesa flex justify-between">
             <h1 class="uppercase">
-                <span class="text-turquesa text-2xl font-semibold">Suministro de medicamentos</span>
+                <span class="text-turquesa text-2xl font-semibold">Control de Rutinas</span>
             </h1>
         </div>
         <!-- FILTRO -->

@@ -8,6 +8,8 @@ import Filters from '../../Shared/Filters.vue';
 import { watchEffect, reactive } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 import { pickBy } from 'lodash';
+import DialogModal from '../../Components/DialogModal.vue'
+import { ref } from 'vue';
 
 
 export default {
@@ -21,6 +23,7 @@ export default {
         SearchInput,
         SelectInput,
         Filters,
+        DialogModal
     },
 
     props: {
@@ -32,24 +35,37 @@ export default {
 
     setup(props) {
 
+        const openModal = ref(false);
+
+        const catchData = ref();
+
         //BUSQUEDA
-       const form = reactive({
+        const form = reactive({
             search: props.filters.search,
             search_turno: props.filters.search_turno
         })
 
-         watchEffect(() => {
+        watchEffect(() => {
             const query = pickBy(form);
             Inertia.replace(route('jornadas.index', Object.keys(query).length ? query : {}));
         });
 
-        //ELIMINAR TURNO
-        const eliminarJornada = (data) => {
-            data._method = "DELETE";
-            Inertia.post('/jornadas/' + data.id, data)
+        //MOSTRAR MODAL Y ASIGNAR DATOS
+        const showModal = (data) => {
+            openModal.value = true;
+            catchData.value = data
         }
 
-        return {  eliminarJornada, form }
+        //ELIMINAR TURNO
+        const eliminarJornada = () => {
+
+            catchData.value._method = "DELETE";
+            Inertia.post('/jornadas/' + catchData.value.id, catchData.value);
+
+            openModal.value = false;
+        }
+
+        return { eliminarJornada, form, openModal, catchData, showModal }
     }
 
 }
@@ -104,7 +120,8 @@ export default {
                     </tr>
                 </thead>
                 <transition-group appear tag="tbody" name="list">
-                    <tr class="text-center shadow group" v-for="jornada in jornadas" :key="jornada.id" v-if="jornadas.length">
+                    <tr class="text-center shadow group" v-for="jornada in jornadas" :key="jornada.id"
+                        v-if="jornadas.length">
                         <td class="py-1 px-1 bg-white group-hover:bg-fondColor rounded-l-xl">
                             {{ jornada.empleado.persona.nombres }}
                         </td>
@@ -136,7 +153,7 @@ export default {
                                 <Icon name="edit" class="w-3 h-3 fill-textColor" />
                                 </Link>
                                 <button class="inline-block px-3 py-3 rounded-full bg-softIndigo hover:shadow-md"
-                                    @click="eliminarJornada(jornada)">
+                                    @click="showModal(jornada)">
                                     <Icon name="delete" class="w-3 h-3 fill-white" />
                                 </button>
                             </div>
@@ -148,6 +165,30 @@ export default {
                 </transition-group>
             </table>
         </div>
+        <!-- MODAL PARA ELIMINAR -->
+        <dialog-modal :show="openModal">
+            <template v-slot:title>
+                <div class="font-bold">
+                    Eliminar Jornada
+                </div>
+            </template>
+            <template v-slot:content>
+                <div v-if="catchData">
+                    ¿Está seguro que desea eliminar esta jornada?
+                </div>
+            </template>
+            <template v-slot:footer>
+                <div>
+                    <button @click="openModal = false" class="btn-cancelar">
+                        Cancelar
+                    </button>
+                    <button @click="eliminarJornada()"
+                        class="px-6 py-3 text-white text-sm leading-4 rounded-md bg-red-400 hover:bg-red-300 font-bold whitespace-nowrap focus:bg-red-400">
+                        Eliminar
+                    </button>
+                </div>
+            </template>
+        </dialog-modal>
     </div>
 </template>
 <style scoped>

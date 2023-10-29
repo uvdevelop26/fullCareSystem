@@ -5,12 +5,6 @@ import FullcareLogo from '../Shared/FullcareLogo.vue';
 import { Link } from '@inertiajs/inertia-vue3';
 import { ref, reactive, onMounted, onUnmounted } from 'vue';
 import { usePage } from '@inertiajs/inertia-vue3';
-import { defineProps } from 'vue';
-
-/* const props = defineProps({
-    auth: Array, 
-});
- */
 
 
 
@@ -134,7 +128,7 @@ onUnmounted(() => {
 
 });
 
-//console.log(props)
+
 
 
 
@@ -218,6 +212,9 @@ onUnmounted(() => {
                     </transition>
                 </NavigationMenu>
                 <div class="px-5 py-3 bg-fondColor md:px-8 md:py-8 md:flex-1 md:h-screen md:overflow-y-auto" scroll-region>
+                    <div v-if="$page.props.flash.message">
+                        {{ $page.props.flash.message }}
+                    </div>
                     <slot />
                 </div>
             </div>

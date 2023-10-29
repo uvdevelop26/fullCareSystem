@@ -94,8 +94,10 @@ class VacacioneController extends Controller
     }
 
 
-    public function destroy(Vacacione $vacacione)
+    public function destroy($id)
     {
+        $vacacione = Vacacione::find($id);
+        
         $vacacione->delete();
 
         return Redirect::route('vacaciones.index');

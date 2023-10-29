@@ -63,14 +63,14 @@ export default {
             <div class="inline-block p-2 bg-teal-50 border border-turquesa rounded-md">
                 <Icon name="medicine" class="w-7 h-7 fill-turquesa" />
             </div>
-            <span class="text-turquesa drop-shadow-md">Crear Rutinas</span>
+            <span class="text-turquesa drop-shadow-md">Editar Rutinas</span>
         </h1>
 
         <!-- Formulario -->
         <div class="max-w-4xl overflow-hidden pt-2">
             <form @submit.prevent="guardar">
                 <div class="py-3 px-3 flex flex-wrap bg-white border rounded-md">
-                    <!-- datos del medicamento -->
+                    <!-- datos del rutinas -->
                     <text-input type="text" label="Residente" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="residente_id"
                         v-model="form.residente_id" name="residente_id" :error="errors.residente_id" />
                     <text-input type="text" label="Rutina a realizar" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="nombre"
@@ -99,7 +99,7 @@ export default {
                     </div>
 
                     <div class="py-4 lg:pr-2 flex w-full items-center justify-end bg-white border-t">
-                        <Link type="button" :href="route('medicamentos.index')" class="btn-cancelar">
+                        <Link type="button" :href="route('rutinas.index')" class="btn-cancelar">
                         <span class="text-white font-bold">Cancelar</span>
                         </Link>
                         <button class="btn-indigo mx-1" type="submit">

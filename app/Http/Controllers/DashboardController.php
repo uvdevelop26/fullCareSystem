@@ -16,23 +16,26 @@ class DashboardController extends Controller
 
     public function index()
     {
-     /*    $user_id = Auth::user()->id;
 
-        $user = User::find($user_id)
-            ->with('empleado.persona')
-            ->get();
-
-        $mesActual = Carbon::now()->month; */
 
         $totalResidentes = Residente::count();
 
-     /*    $cumpleanioResidentes = Residente::with('persona')->whereHas('persona', function ($query) use ($mesActual) {
+        $mesActual = Carbon::now()->month;
+
+        $cumpleanioResidentes = Residente::with('persona')->whereHas('persona', function ($query) use ($mesActual) {
             $query->whereMonth('fecha_nacimiento', $mesActual);
-        })->get(); */
+        })->get();
+
+
+        /*   return Inertia::render('Dashboard/Index', [
+            'totalResidentes', $totalResidentes
+        ]); */
 
 
         return Inertia::render('Dashboard/Index', [
-            'totalResidentes', $totalResidentes
+            'totalResidentes' => $totalResidentes,
+            'cumpleanioResidentes' => $cumpleanioResidentes
+
         ]);
     }
 

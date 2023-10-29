@@ -53,8 +53,8 @@ class DatabaseSeeder extends Seeder
         $this->call(EnfermedadeSeeder::class);
         Historiale::factory(10)->create();
         $this->call(PresentacioneSeeder::class);
-        Medicamento::factory(8)->create();
-        Rutina::factory(8)->create();
+        Medicamento::factory(15)->create();
+        Rutina::factory(15)->create();
         //Horario::factory(10)->create();
     }
 }

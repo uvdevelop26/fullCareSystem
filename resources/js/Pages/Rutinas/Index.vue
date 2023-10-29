@@ -8,6 +8,8 @@ import Filters from '../../Shared/Filters.vue';
 import { watchEffect, reactive } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 import { pickBy } from 'lodash';
+import DialogModal from '../../Components/DialogModal.vue'
+import { ref } from 'vue';
 
 export default {
 
@@ -19,7 +21,8 @@ export default {
         Icon,
         SelectInput,
         SearchInput,
-        Filters
+        Filters,
+        DialogModal
     },
 
 
@@ -32,6 +35,10 @@ export default {
 
     setup(props) {
 
+        const openModal = ref(false);
+
+        const catchData = ref();
+
         //BUSQUEDA
         const form = reactive({
             search_nombre: props.filters.search_nombre,
@@ -42,15 +49,24 @@ export default {
             const query = pickBy(form);
             Inertia.replace(route('rutinas.index', Object.keys(query).length ? query : {}))
         });
-      
 
-        //ELIMINAR 
-        const eliminarRutina = (data) => {
-            data._method = "DELETE";
-            Inertia.post('/rutinas/' + data.id, data)
+        //MOSTRAR MODAL Y ASIGNAR DATOS
+        const showModal = (data) => {
+            openModal.value = true;
+            catchData.value = data
         }
 
-        return { eliminarRutina, form }
+
+        //ELIMINAR 
+        const eliminarRutina = () => {
+
+            catchData.value._method = "DELETE";
+            Inertia.post('/rutinas/' + catchData.value.id, catchData.value);
+
+            openModal.value = false;
+        }
+
+        return { eliminarRutina, form, catchData, openModal, showModal }
     }
 
 
@@ -78,8 +94,8 @@ export default {
             <filters>
                 <div class="py-3 px-3 border border-turquesa rounded-md">
                     <div class=" lg:flex lg:flex-wrap">
-                        <search-input id="rutina" label="Rutina"
-                            class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2" v-model="form.search_nombre" />
+                        <search-input id="rutina" label="Rutina" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
+                            v-model="form.search_nombre" />
                         <search-input id="Residente" label="Nombres, Apellidos o C.I"
                             class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2" v-model="form.search_residente" />
                     </div>
@@ -129,7 +145,7 @@ export default {
                                 <Icon name="edit" class="w-3 h-3 fill-textColor" />
                                 </Link>
                                 <button class="inline-block px-3 py-3 rounded-full bg-softIndigo hover:shadow-md"
-                                    @click="eliminarRutina(rutina)">
+                                    @click="showModal(rutina)">
                                     <Icon name="delete" class="w-3 h-3 fill-white" />
                                 </button>
                             </div>
@@ -141,6 +157,30 @@ export default {
                 </transition-group>
             </table>
         </div>
+        <!-- MODAL PARA ELIMINAR -->
+        <dialog-modal :show="openModal">
+            <template v-slot:title>
+                <div class="font-bold">
+                    Eliminar Rutinas
+                </div>
+            </template>
+            <template v-slot:content>
+                <div v-if="catchData">
+                    ¿Está seguro que desea eliminar esta Rutina?
+                </div>
+            </template>
+            <template v-slot:footer>
+                <div>
+                    <button @click="openModal = false" class="btn-cancelar">
+                        Cancelar
+                    </button>
+                    <button @click="eliminarRutina()"
+                        class="px-6 py-3 text-white text-sm leading-4 rounded-md bg-red-400 hover:bg-red-300 font-bold whitespace-nowrap focus:bg-red-400">
+                        Eliminar
+                    </button>
+                </div>
+            </template>
+        </dialog-modal>
     </div>
 </template>
 <style scoped>

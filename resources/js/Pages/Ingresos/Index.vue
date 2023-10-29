@@ -9,6 +9,10 @@ import Filters from '../../Shared/Filters.vue';
 import { watchEffect, reactive } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 import { pickBy } from 'lodash';
+import DialogModal from '../../Components/DialogModal.vue'
+import { ref } from 'vue';
+
+
 export default {
 
     layout: LayoutApp,
@@ -19,7 +23,8 @@ export default {
         Icon,
         Filters,
         SearchInput,
-        SelectInput
+        SelectInput,
+        DialogModal
     },
 
     props: {
@@ -31,12 +36,10 @@ export default {
 
     setup(props) {
 
-        //ELIMINAR INGRESO
+        const openModal = ref(false);
 
-        const eliminarIngreso = (data) => {
-            data._method = "DELETE";
-            Inertia.post('/ingresos/' + data.id, data)
-        }
+        const catchData = ref();
+
 
         //Objetos para búsqueda
         const Datayears = () => {
@@ -79,8 +82,24 @@ export default {
             Inertia.replace(route('ingresos.index', Object.keys(query).length ? query : {}))
         });
 
+        //MOSTRAR MODAL Y ASIGNAR DATOS
+        const showModal = (data) => {
+            openModal.value = true;
+            catchData.value = data
+        }
 
-        return { eliminarIngreso, form, showYears, meses }
+        //ELIMINAR INGRESO
+        const eliminarIngreso = () => {
+
+            catchData.value._method = "DELETE";
+            Inertia.post('/ingresos/' + catchData.value.id, catchData.value);
+
+            openModal.value = false;
+        }
+
+
+
+        return { eliminarIngreso, form, showYears, meses, catchData, openModal, showModal }
     }
 
 }
@@ -187,7 +206,7 @@ export default {
                                 <icon name="edit" class="w-3 h-3 fill-textColor" />
                                 </Link>
                                 <button class="inline-block px-3 py-3 rounded-full bg-softIndigo hover:shadow-md"
-                                    @click="eliminarIngreso(ingreso)">
+                                    @click="showModal(ingreso)">
                                     <icon name="delete" class="w-3 h-3 fill-white" />
                                 </button>
                             </div>
@@ -199,6 +218,30 @@ export default {
                 </transition-group>
             </table>
         </div>
+        <!-- MODAL PARA ELIMINAR -->
+        <dialog-modal :show="openModal">
+            <template v-slot:title>
+                <div class="font-bold">
+                    Eliminar Ingreso
+                </div>
+            </template>
+            <template v-slot:content>
+                <div v-if="catchData">
+                    ¿Está seguro que desea eliminar este Ingreso?
+                </div>
+            </template>
+            <template v-slot:footer>
+                <div>
+                    <button @click="openModal = false" class="btn-cancelar">
+                        Cancelar
+                    </button>
+                    <button @click="eliminarIngreso()"
+                        class="px-6 py-3 text-white text-sm leading-4 rounded-md bg-red-400 hover:bg-red-300 font-bold whitespace-nowrap focus:bg-red-400">
+                        Eliminar
+                    </button>
+                </div>
+            </template>
+        </dialog-modal>
     </div>
 </template>
 

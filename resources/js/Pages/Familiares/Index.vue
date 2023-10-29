@@ -9,8 +9,13 @@ import Filters from '../../Shared/Filters.vue';
 import { watchEffect, reactive } from 'vue';
 import { Inertia } from "@inertiajs/inertia";
 import { pickBy } from 'lodash';
+import DialogModal from '../../Components/DialogModal.vue';
+import { ref } from 'vue'
+
 
 export default {
+
+    layout: LayoutApp,
 
     components: {
         Head,
@@ -19,11 +24,10 @@ export default {
         SearchInput,
         Pagination,
         SelectInput,
-        Filters
-
+        Filters,
+        DialogModal
     },
 
-    layout: LayoutApp,
 
     props: {
         familiares: Array,
@@ -32,6 +36,10 @@ export default {
     },
 
     setup(props) {
+
+        const openModal = ref(false)
+
+        const catchData = ref()
 
         //BUSQUEDA
         const form = reactive({
@@ -45,15 +53,24 @@ export default {
             Inertia.replace(route('familiares.index', Object.keys(query).length ? query : {}))
         });
 
+        //MOSTRAR MODAL Y ASIGNAR DATOS
+        const showModal = (data) => {
+            openModal.value = true;
+            catchData.value = data
+        }
+
         //ELIMINAR FAMILIAR
-        const eliminarFamiliare = (data) => {
-            data._method = "DELETE";
-            Inertia.post('/familiares/' + data.id, data)
+        const eliminarFamiliare = () => {
+            
+            catchData.value._method = "DELETE";
+            Inertia.post('/familiares/' + catchData.value.id, catchData.value)
+
+            openModal.value = false;
         }
 
 
 
-        return { form, eliminarFamiliare }
+        return { form, eliminarFamiliare, openModal, showModal, catchData }
 
     }
 
@@ -76,6 +93,7 @@ export default {
             Nuevo
             </Link>
         </div>
+
 
         <!-- FILTER AREA -->
         <div class="py-2">
@@ -102,6 +120,7 @@ export default {
                 </div>
             </filters>
         </div>
+
         <!-- TABLE -->
         <div class="overflow-x-auto py-4 max-w-7xl">
             <table
@@ -164,7 +183,7 @@ export default {
                                 <Icon name="edit" class="w-3 h-3 fill-textColor" />
                                 </Link>
                                 <button class="inline-block px-3 py-3 mr-2 rounded-full bg-softIndigo hover:shadow-md"
-                                    @click="eliminarFamiliare(familiare)">
+                                    @click="showModal(familiare)">
                                     <Icon name="delete" class="w-3 h-3 fill-white" />
                                 </button>
                                 <Link :href="route('contactar-familiar.index', familiare.email)"
@@ -180,6 +199,31 @@ export default {
                 </transition-group>
             </table>
         </div>
+        <!-- MODAL PARA ELIMINAR -->
+        <dialog-modal :show="openModal">
+            <template v-slot:title>
+                <div class="font-bold">
+                    Eliminar Familiar
+                </div>
+            </template>
+            <template v-slot:content>
+                <div v-if="catchData">
+                    ¿Está seguro que desea eliminar al familiar {{ catchData.persona.nombres }} {{
+                        catchData.persona.apellidos }}?
+                </div>
+            </template>
+            <template v-slot:footer>
+                <div>
+                    <button @click="openModal = false" class="btn-cancelar">
+                        Cancelar
+                    </button>
+                    <button @click="eliminarFamiliare()"
+                        class="px-6 py-3 text-white text-sm leading-4 rounded-md bg-red-400 hover:bg-red-300 font-bold whitespace-nowrap focus:bg-red-400">
+                        Eliminar
+                    </button>
+                </div>
+            </template>
+        </dialog-modal>
     </div>
 </template>
 <style scoped>

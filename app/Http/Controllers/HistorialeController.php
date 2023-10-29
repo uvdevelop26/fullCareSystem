@@ -131,24 +131,19 @@ class HistorialeController extends Controller
 
         //comparar y eliminar enfermedades que ya no están presentes en el formulario
         $enfermedadesEliminar = array_diff($enfermedadesActuales, $request->enfermedade_id);
-
-
-
-
-        /* 
-
-
-
-        return Redirect::route('historiales.index'); */
     }
 
 
-    public function destroy(Historiale $historiale)
+    public function destroy($id)
     {
+        $historiale = Historiale::find($id);
+
         $historiale->delete();
 
         return Redirect::route('historiales.index');
     }
+
+
 
     public function pdf(Historiale $historiale)
     {

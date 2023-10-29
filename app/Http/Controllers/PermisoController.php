@@ -98,8 +98,10 @@ class PermisoController extends Controller
         return Redirect::route('permisos.index');
     }
 
-    public function destroy(Permiso $permiso)
+    public function destroy($id)
     {
+        $permiso = Permiso::find($id);
+        
         $permiso->delete();
 
         return Redirect::route('permisos.index');

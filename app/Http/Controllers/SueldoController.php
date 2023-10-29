@@ -70,7 +70,7 @@ class SueldoController extends Controller
 
     public function update(SueldoRequest $request, Sueldo $sueldo)
     {
-        
+
 
         $sueldo->update([
             'fecha' => $request->fecha,
@@ -82,8 +82,10 @@ class SueldoController extends Controller
     }
 
 
-    public function destroy(Sueldo $sueldo)
+    public function destroy($id)
     {
+        $sueldo = Sueldo::find($id);
+
         $sueldo->delete();
 
         return Redirect::route('sueldos.index')->with('success', 'Sueldo Eliminado');

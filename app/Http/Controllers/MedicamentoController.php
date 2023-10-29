@@ -128,8 +128,10 @@ class MedicamentoController extends Controller
     }
 
 
-    public function destroy(Medicamento $medicamento)
+    public function destroy($id)
     {
+        $medicamento = Medicamento::find($id);
+        
         $medicamento->delete();
 
         return Redirect::route('medicamentos.index');

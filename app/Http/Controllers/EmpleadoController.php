@@ -128,12 +128,13 @@ class EmpleadoController extends Controller
     }
 
 
-    public function destroy(Empleado $empleado)
+    public function destroy($id)
     {
-        $persona = Persona::find($empleado->persona_id);
+        $empleado = Empleado::find($id);
 
-        $persona->delete();
+        $empleado->delete();
 
         return Redirect::route('empleados.index');
+       
     }
 }

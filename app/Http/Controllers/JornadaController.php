@@ -103,8 +103,10 @@ class JornadaController extends Controller
         return Redirect::route('jornadas.index');
     }
 
-    public function destroy(Jornada $jornada)
+    public function destroy($id)
     {
+        $jornada = Jornada::find($id);
+        
         $jornada->delete();
 
         return Redirect::route('jornadas.index');

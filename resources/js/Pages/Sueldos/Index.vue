@@ -10,6 +10,8 @@ import Filters from '../../Shared/Filters.vue';
 import { watchEffect, reactive } from 'vue';
 import { Inertia } from "@inertiajs/inertia";
 import { pickBy } from 'lodash';
+import DialogModal from '../../Components/DialogModal.vue'
+import { ref } from 'vue';
 
 export default {
 
@@ -23,7 +25,8 @@ export default {
         SearchInput,
         SelectInput,
         TextInput,
-        Filters
+        Filters,
+        DialogModal
     },
 
     props: {
@@ -34,6 +37,10 @@ export default {
     },
 
     setup(props) {
+
+        const openModal = ref(false);
+
+        const catchData = ref();
 
         //BUSQUEDA
         //objetos para buscar años y meses
@@ -76,15 +83,25 @@ export default {
             Inertia.replace(route('sueldos.index', Object.keys(query).length ? query : {}))
         });
 
-
-        //ELIMINAR SUELDO
-        const eliminarSueldo = (data) => {
-            data._method = "DELETE";
-            Inertia.post('/sueldos/' + data.id, data)
+        //MOSTRAR MODAL Y ASIGNAR DATOS
+        const showModal = (data) => {
+            openModal.value = true;
+            catchData.value = data
         }
 
 
-        return { showYears, meses, eliminarSueldo, form }
+
+        //ELIMINAR SUELDO
+        const eliminarSueldo = () => {
+
+            catchData.value._method = "DELETE";
+            Inertia.post('/sueldos/' + catchData.value.id, catchData.value);
+
+            openModal.value = false;
+        }
+
+
+        return { showYears, meses, eliminarSueldo, form, openModal, catchData, showModal }
     }
 
 }
@@ -181,7 +198,7 @@ export default {
                                 <Icon name="edit" class="w-3 h-3 fill-textColor" />
                                 </Link>
                                 <button class="inline-block px-3 py-3 rounded-full bg-softIndigo hover:shadow-md"
-                                    @click="eliminarSueldo(sueldo)">
+                                    @click="showModal(sueldo)">
                                     <Icon name="delete" class="w-3 h-3 fill-white" />
                                 </button>
                             </div>
@@ -193,6 +210,30 @@ export default {
                 </transition-group>
             </table>
         </div>
+        <!-- MODAL PARA ELIMINAR -->
+        <dialog-modal :show="openModal">
+            <template v-slot:title>
+                <div class="font-bold">
+                    Eliminar Sueldo
+                </div>
+            </template>
+            <template v-slot:content>
+                <div v-if="catchData">
+                    ¿Está seguro que desea eliminar este sueldo?
+                </div>
+            </template>
+            <template v-slot:footer>
+                <div>
+                    <button @click="openModal = false" class="btn-cancelar">
+                        Cancelar
+                    </button>
+                    <button @click="eliminarSueldo()"
+                        class="px-6 py-3 text-white text-sm leading-4 rounded-md bg-red-400 hover:bg-red-300 font-bold whitespace-nowrap focus:bg-red-400">
+                        Eliminar
+                    </button>
+                </div>
+            </template>
+        </dialog-modal>
     </div>
 </template>
 <style scoped>

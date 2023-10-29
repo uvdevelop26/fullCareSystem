@@ -97,8 +97,10 @@ class IngresoController extends Controller
     }
 
 
-    public function destroy(Ingreso $ingreso)
+    public function destroy($id)
     {
+        $ingreso = Ingreso::find($id);
+        
         $ingreso->delete();
         
         return Redirect::route('ingresos.index');

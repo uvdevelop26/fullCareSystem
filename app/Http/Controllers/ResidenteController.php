@@ -84,7 +84,10 @@ class ResidenteController extends Controller
 
         sleep(1);
 
-        return Redirect::route('residentes.index');
+        // return Redirect::route('residentes.index')->with('message', 'Residente Creado Exitosamente');
+
+        return redirect()->route(route: 'residentes.index')
+            ->with(['message' => 'prueba exitosa']); 
     }
 
 
@@ -152,12 +155,13 @@ class ResidenteController extends Controller
     }
 
 
-    public function destroy(Residente $residente)
+    public function destroy($id)
     {
-        $persona = Persona::find($residente->persona_id);
+        $residente = Residente::find($id);
 
-        $persona->delete();
+        $residente->delete();
 
         return Redirect::route('residentes.index');
+       
     }
 }

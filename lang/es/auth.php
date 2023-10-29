@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'failed' => 'Estas credenciales existen.',
+    'failed' => 'Estas credenciales no existen.',
     'password' => 'La contraseña es incorrecta.',
     'throttle' => 'Demasiados intentos de acceso. Intente mas tarde.',
 

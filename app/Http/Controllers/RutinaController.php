@@ -76,8 +76,10 @@ class RutinaController extends Controller
     }
 
 
-    public function destroy(Rutina $rutina)
+    public function destroy($id)
     {
+        $rutina = Rutina::find($id);
+        
         $rutina->delete();
 
         return Redirect::route('rutinas.index');
