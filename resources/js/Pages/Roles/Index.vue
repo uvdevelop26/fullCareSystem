@@ -148,7 +148,7 @@ export default {
             </template>
             <template v-slot:content>
                 <div v-if="catchData">
-                    ¿Está seguro que desea eliminar este Rol?
+                    ¿Está seguro que desea eliminar este Rol {{ catchData.name }}?
                 </div>
             </template>
             <template v-slot:footer>

@@ -16,6 +16,7 @@ use App\Models\Historiale;
 use App\Models\Horario;
 use App\Models\Incidencia;
 use App\Models\Ingreso;
+use App\Models\Jornada;
 use App\Models\Medicamento;
 use App\Models\Permiso;
 use App\Models\Persona;
@@ -42,6 +43,7 @@ class DatabaseSeeder extends Seeder
         Sueldo::factory(18)->create();
         $this->call(DiaSeeder::class);
         $this->call(TurnoSeeder::class);
+        Jornada::factory(10)->create();
         $this->call(EstadoVariacioneSeeder::class);
         Permiso::factory(10)->create(); 
         Vacacione::factory(10)->create();

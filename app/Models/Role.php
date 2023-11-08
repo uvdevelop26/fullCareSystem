@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Spatie\Permission\Models\Role as OriginalRole;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Role extends OriginalRole
 {
@@ -15,6 +16,17 @@ class Role extends OriginalRole
         'updated_at',
         'created_at',
     ];
+
+    //Mutadores y Accesores
+    protected function name(): Attribute
+    {
+        return new Attribute(
+            get: fn($value) => ucwords($value),
+            set: fn($value) => strtolower($value)
+        );
+
+    }
+
 
     //SCOPE PARA BÚSQUEDAS
     public function scopeFilter($query, array $filters)

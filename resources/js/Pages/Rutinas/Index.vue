@@ -156,6 +156,7 @@ export default {
                     </tr>
                 </transition-group>
             </table>
+          
         </div>
         <!-- MODAL PARA ELIMINAR -->
         <dialog-modal :show="openModal">

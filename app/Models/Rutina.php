@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Rutina extends Model
 {
@@ -27,6 +28,16 @@ class Rutina extends Model
     public function horarioRutinas()
     {
         return $this->belongsToMany(HorarioRutina::class);
+    }
+
+    //Mutadores y Accesores
+    protected function descripcion(): Attribute
+    {
+        return new Attribute(
+            get: fn($value) => ucwords($value),
+            set: fn($value) => strtolower($value)
+        );
+
     }
 
     //SCOPE PARA BUSQUEDA

@@ -9,13 +9,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use App\Http\Requests\FamiliareRequest;
+use App\Models\Residente;
 
 class FamiliareController extends Controller
 {
 
     public function index(Request $request)
     {
+        
         $queries = ['search', 'search_ciudad', 'search_residente'];
+
+        $residentes = Residente::all();
+
         $familiares = Familiare::with('persona.ciudade', 'residente.persona')
             ->orderBy('id', 'desc')
             ->filter($request->only($queries))
@@ -25,6 +30,7 @@ class FamiliareController extends Controller
         return Inertia::render('Familiares/Index', [
             'familiares' => $familiares,
             'ciudades' => $ciudades,
+            'residentes' => $residentes,
             'filters' => $request->all($queries)
         ]);
     }

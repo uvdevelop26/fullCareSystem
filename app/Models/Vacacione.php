@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Vacacione extends Model
 {
@@ -30,6 +31,16 @@ class Vacacione extends Model
     {
         return $this->belongsTo(EstadoVariacione::class);
     }
+
+     //Mutadores y Accesores
+     protected function observacion(): Attribute
+     {
+         return new Attribute(
+             get: fn($value) => ucwords($value),
+             set: fn($value) => strtolower($value)
+         );
+ 
+     }
 
 
 

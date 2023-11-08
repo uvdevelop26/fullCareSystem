@@ -177,7 +177,7 @@ export default {
                 </template>
                 <template v-slot:content>
                     <div v-if="catchData">
-                        ¿Está seguro que desea eliminar este Medicamento?
+                        ¿Está seguro que desea eliminar el medicamento {{ catchData.nombre }}?
                     </div>
                 </template>
                 <template v-slot:footer>

@@ -6,6 +6,8 @@ import SelectInput from "../../Shared/SelectInput.vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import { useForm } from "@inertiajs/inertia-vue3";
 import DialogModal from '../../Components/DialogModal.vue'
+import SearchInput from "../../Shared/SearchInput.vue";
+import { ref } from 'vue';
 
 
 export default {
@@ -18,16 +20,20 @@ export default {
         Icon,
         TextInput,
         SelectInput,
-        DialogModal
+        DialogModal,
+        SearchInput
 
     },
 
-    props: ['ciudades', 'errors'],
+    props:{
+        ciudades: Array,
+        residentes: Array, 
+        errors: Object
+    },
 
     setup() {
 
-       
-
+        const openModal = ref(false)
 
         const form = useForm({
             nombres: "",
@@ -48,12 +54,13 @@ export default {
             form.post(route("familiares.store"), form);
         };
 
-        return { form, guardar }
+        return { form, guardar, openModal }
     },
 };
 </script>
 <template>
     <div>
+
         <Head title="Crear Familiar" />
         <h1 class="py-3 px-2 max-w-4xl flex items-center gap-4 bg-white rounded-md border text-2xl">
             <div class="inline-block p-2 bg-teal-50 border border-turquesa rounded-md">
@@ -86,7 +93,8 @@ export default {
                     <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Ciudad" :id="ciudad" v-model="form.ciudade_id"
                         :error="errors.ciudade_id">
                         <option :value="null" />
-                        <option v-for="ciudad in ciudades" :key="ciudad.nombre_ciudad" :value="ciudad.id" class="capitalize">
+                        <option v-for="ciudad in ciudades" :key="ciudad.nombre_ciudad" :value="ciudad.id"
+                            class="capitalize">
                             {{ ciudad.nombre_ciudad }}
                         </option>
                     </select-input>
@@ -102,7 +110,11 @@ export default {
                     </select-input>
                     <text-input type="text" label="Email" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="email"
                         v-model="form.email" :error="errors.email" />
-                  
+                    <!-- <div class="pb-5 lg:pr-3 w-full lg:w-1/2">
+                        <button class="bg-indigo-400" type="button"  @click="openModal = true">
+                            seleccionar Residente
+                        </button>
+                    </div> -->
                     <text-input type="text" label="Residente" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="residente"
                         v-model="form.residente_id" :error="errors.residente_id" />
                     <div class="py-4 lg:pr-2 flex w-full items-center justify-end bg-white border-t">
@@ -117,8 +129,32 @@ export default {
             </form>
         </div>
         <!-- modal -->
+        <dialog-modal :show="openModal">
+            <template #title>
+                <div>
+                    Seleccionar Residente
+                </div>
+            </template>
+            <template #content>
+                <div>
+                    <input type="text" v-model="searchTerm" name="" id="" placeholder="buscar Nombre del Residente" @input="searchResidente" class="w-full h-10 focus:border-turquesa rounded-md border-turquesa">
+                    <!-- LISTA DE RESULTADOS -->
+                    <ul >
+                        <li>resultado</li>
+                    </ul>
+                </div>
+            </template>
+            <template #footer>
+                <div>
+                    <button @click="openModal = false" class="btn-cancelar">
+                        Cancelar
+                    </button>   
+                </div>
+            </template>
 
-        
+
+        </dialog-modal>
+
     </div>
 </template>
 

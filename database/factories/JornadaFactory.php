@@ -16,5 +16,7 @@ class JornadaFactory extends Factory
             'empleado_id' => Empleado::all()->random()->id,
             'turno_id' => Turno::all()->random()->id
         ];
+
+        
     }
 }

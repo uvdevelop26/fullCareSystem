@@ -12,6 +12,7 @@ import DialogModal from '../../Components/DialogModal.vue'
 import { ref } from 'vue';
 
 
+
 export default {
     layout: LayoutApp,
 
@@ -40,6 +41,11 @@ export default {
         const openModal = ref(false);
 
         const catchData = ref();
+
+        const selectInputComponentCiudad = ref(null)
+        const selectInputComponentEstado = ref(null)
+        const selectInputComponentSexo = ref(null)
+
 
         //PARA MOSTRAR IMAGEN
         const urlbase = (url) => {
@@ -71,15 +77,24 @@ export default {
 
         //ELIMINAR RESIDENTE
         const eliminarResidente = () => {
-    
+
             catchData.value._method = "DELETE";
             Inertia.post('/residentes/' + catchData.value.id, catchData.value);
 
             openModal.value = false;
+        }
+
+        //limpiar campos
+
+        const limpiarCampos = async () => {
+
+             
 
         }
 
-        return { form, urlbase, eliminarResidente, openModal, catchData, showModal }
+
+
+        return { form, urlbase, eliminarResidente, openModal, catchData, showModal, limpiarCampos, selectInputComponentCiudad, selectInputComponentEstado, selectInputComponentSexo }
     }
 
 
@@ -108,15 +123,17 @@ export default {
                     <div class="lg:flex lg:flex-wrap">
                         <search-input id="nombre" label="Nombres, Apellidos o C.I"
                             class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2" v-model="form.search" />
+                        <!-- selccionar cuidad -->
                         <select-input id="ciudades" label="Ciudad" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
-                            v-model="form.search_ciudad">
-                            <option :value="null" />
+                            ref="selectInputComponentCiudad" v-model="form.search_ciudad">
+                            <option :value="null" :selected="form.search = null" />
                             <option v-for="ciudad in ciudades" :key="ciudad.id" :value="ciudad.id" class="capitalize">
                                 {{ ciudad.nombre_ciudad }}
                             </option>
                         </select-input>
-                        <select-input id="sexo" label="Sexo" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
-                            v-model="form.search_sexo">
+                        <!-- selccionar sexo -->
+                        <select-input :id="sexo" label="Sexo" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
+                            ref="selectInputComponentSexo" v-model="form.search_sexo">
                             <option :value="null" />
                             <option value="femenino">
                                 Femenino
@@ -125,8 +142,9 @@ export default {
                                 Masculino
                             </option>
                         </select-input>
-                        <select-input id="estado" label="Estado" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
-                            v-model="form.search_estado">
+                        <!-- selccionar estado -->
+                        <select-input :id="estado" label="Estado" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
+                            ref="selectInputComponentEstado" v-model="form.search_estado">
                             <option :value="null" />
                             <option v-for="estado_residente in estado_residentes" :key="estado_residente.id"
                                 :value="estado_residente.id" class="capitalize">
@@ -222,7 +240,7 @@ export default {
             </template>
             <template v-slot:content>
                 <div v-if="catchData">
-                    ¿Está seguro que desea eliminar al familiar {{ catchData.persona.nombres }} {{
+                    ¿Está seguro que desea eliminar al residente {{ catchData.persona.nombres }} {{
                         catchData.persona.apellidos }}?
                 </div>
             </template>

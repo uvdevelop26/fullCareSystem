@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Medicamento extends Model
 {
@@ -38,6 +39,34 @@ class Medicamento extends Model
     public function horarioMedicamentos()
     {
         return $this->belongsToMany(horarioMedicamento::class);
+    }
+
+    //Mutadores y Accesores
+    protected function descripcion(): Attribute
+    {
+        return new Attribute(
+            get: fn($value) => ucwords($value),
+            set: fn($value) => strtolower($value)
+        );
+
+    }
+
+    protected function indicaciones(): Attribute
+    {
+        return new Attribute(
+            get: fn($value) => ucwords($value),
+            set: fn($value) => strtolower($value)
+        );
+
+    }
+
+    protected function efectos_secundarios(): Attribute
+    {
+        return new Attribute(
+            get: fn($value) => ucwords($value),
+            set: fn($value) => strtolower($value)
+        );
+
     }
 
       //SCOPE PARA BUSQUEDA

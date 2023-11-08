@@ -143,7 +143,7 @@ export default {
             </template>
             <template v-slot:content>
                 <div v-if="catchData">
-                    ¿Está seguro que desea eliminar este Permiso de Acceso?
+                    ¿Está seguro que desea eliminar el permiso {{ catchData.name }} ?
                 </div>
             </template>
             <template v-slot:footer>

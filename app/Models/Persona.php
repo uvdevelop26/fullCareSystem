@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Persona extends Model
 {
@@ -23,7 +24,31 @@ class Persona extends Model
         'ciudade_id'
     ];
 
-    
+
+    //Mutadores y Accesores
+    protected function nombres(): Attribute
+    {
+        return new Attribute(
+            get: fn ($value) => ucwords($value),
+            set: fn ($value) => strtolower($value)
+        );
+    }
+
+    protected function apellidos(): Attribute
+    {
+        return new Attribute(
+            get: fn ($value) => ucwords($value),
+            set: fn ($value) => strtolower($value)
+        );
+    }
+
+    protected function sexo(): Attribute
+    {
+        return new Attribute(
+            get: fn ($value) => ucwords($value),
+            set: fn ($value) => strtolower($value)
+        );
+    }
 
     //Relacion de uno a muchos
     public function ciudade()

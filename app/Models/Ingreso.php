@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Ingreso extends Model
 {
@@ -30,6 +31,26 @@ class Ingreso extends Model
     {
         return $this->belongsTo(Categoria::class);
     }
+
+    //Mutadores y Accesores
+    protected function concepto(): Attribute
+    {
+        return new Attribute(
+            get: fn($value) => ucwords($value),
+            set: fn($value) => strtolower($value)
+        );
+
+    }
+
+    protected function detalle(): Attribute
+    {
+        return new Attribute(
+            get: fn($value) => ucwords($value),
+            set: fn($value) => strtolower($value)
+        );
+
+    }
+
 
     //SCOPE PARA BUSQUEDA
     public function scopeFilter($query, array $filters)

@@ -33,7 +33,7 @@ export default {
 
         
         const guardar = ()=>{
-            form.post(route("permissions.store"), form);
+            form.post(route("roles.store"), form);
         }
       
 
