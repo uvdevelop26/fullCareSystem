@@ -66,7 +66,13 @@ export default {
             openModal.value = false;
         }
 
-        return { form, eliminarRole, catchData, openModal, showModal }
+        //LIMPIAR CAMPOS
+        const limpiarCampos = ()=>{
+            form.search = null
+           
+        }
+
+        return { form, eliminarRole, catchData, openModal, showModal, limpiarCampos }
     }
 
 
@@ -101,6 +107,11 @@ export default {
                                 {{ roles.name }}
                             </option>
                         </select-input>
+                    </div>
+                    <div class="py-3 text-right">
+                        <button class="btn-indigo mx-1 hover:bg-softIndigo" type="button" @click="limpiarCampos()">
+                            Limpiar
+                        </button>
                     </div>
                 </div>
             </filters>

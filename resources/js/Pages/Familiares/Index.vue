@@ -68,9 +68,15 @@ export default {
             openModal.value = false;
         }
 
+        //LIMPIAR CAMPOS
+        const limpiarCampos = ()=>{
+            form.search = null
+            form.search_ciudad = null
+            form.search_residente = null
+        }
 
 
-        return { form, eliminarFamiliare, openModal, showModal, catchData }
+        return { form, eliminarFamiliare, openModal, showModal, catchData, limpiarCampos }
 
     }
 

@@ -65,7 +65,13 @@ export default {
             openModal.value = false;
         }
 
-        return { eliminarJornada, form, openModal, catchData, showModal }
+        //LIMPIAR CAMPOS
+        const limpiarCampos = ()=>{
+            form.search = null
+            form.search_turno = null
+        }
+
+        return { eliminarJornada, form, openModal, catchData, showModal, limpiarCampos }
     }
 
 }
@@ -99,6 +105,11 @@ export default {
                             {{ turno.nombre_turnos }}
                         </option>
                     </select-input>
+                </div>
+                <div class="py-3 text-right">
+                    <button class="btn-indigo mx-1 hover:bg-softIndigo" type="button" @click="limpiarCampos()">
+                        Limpiar
+                    </button>
                 </div>
             </div>
         </filters>

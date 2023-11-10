@@ -66,8 +66,14 @@ export default {
             openModal.value = false;
         }
 
+        //LIMPIAR CAMPOS
+        const limpiarCampos = ()=>{
+            form.search = null
+            form.search_estado = null
+        }
 
-        return { form, eliminarVacacion, openModal, catchData, showModal }
+
+        return { form, eliminarVacacion, openModal, catchData, showModal, limpiarCampos }
     }
 }
 </script>

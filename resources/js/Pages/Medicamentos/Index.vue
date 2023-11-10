@@ -64,7 +64,15 @@ export default {
             openModal.value = false;
         }
 
-        return { eliminarMedicamento, form, showModal, openModal, catchData }
+        //LIMPIAR CAMPOS
+        const limpiarCampos = ()=>{
+            form.search_nombre = null
+            form.search_residente = null
+            
+        }
+
+
+        return { eliminarMedicamento, form, showModal, openModal, catchData, limpiarCampos }
     }
 
 }

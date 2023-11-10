@@ -66,7 +66,15 @@ export default {
             openModal.value = false;
         }
 
-        return { eliminarRutina, form, catchData, openModal, showModal }
+        //LIMPIAR CAMPOS
+        const limpiarCampos = ()=>{
+            form.search_nombre = null
+            form.search_residente = null
+            
+        }
+
+
+        return { eliminarRutina, form, catchData, openModal, showModal, limpiarCampos }
     }
 
 

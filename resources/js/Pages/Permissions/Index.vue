@@ -66,7 +66,13 @@ export default {
             openModal.value = false;
         }
 
-        return { eliminarPermiso, form, catchData, showModal, openModal }
+        //LIMPIAR CAMPOS
+        const limpiarCampos = ()=>{
+            form.search = null
+           
+        }
+
+        return { eliminarPermiso, form, catchData, showModal, openModal, limpiarCampos }
     }
 
 
@@ -95,6 +101,11 @@ export default {
                     <div class="lg:flex lg:flex-wrap">
                         <search-input id="nombre" label="Rol" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
                             v-model="form.search" />
+                    </div>
+                    <div class="py-3 text-right">
+                        <button class="btn-indigo mx-1 hover:bg-softIndigo" type="button" @click="limpiarCampos()">
+                            Limpiar
+                        </button>
                     </div>
                 </div>
             </filters>

@@ -59,7 +59,6 @@ export default {
             catchData.value = data
         }
 
-
         //ELIMINAR EMPLEADO
         const eliminarEmpleado = () => {
             catchData.value._method = "DELETE";
@@ -68,8 +67,16 @@ export default {
             openModal.value = false;
         }
 
+        //LIMPIAR CAMPOS
 
-        return { form, eliminarEmpleado, openModal, catchData, showModal }
+        const limpiarCampos = () => {
+            form.search = null,
+                form.search_ciudad = null,
+                form.search_seccion = null
+        }
+
+
+        return { form, eliminarEmpleado, openModal, catchData, showModal, limpiarCampos }
     }
 
 }
@@ -110,6 +117,11 @@ export default {
                                 {{ seccion.nombre_seccion }}
                             </option>
                         </select-input>
+                    </div>
+                    <div class="py-3 text-right">
+                        <button class="btn-indigo mx-1 hover:bg-softIndigo" type="button" @click="limpiarCampos()">
+                            Limpiar
+                        </button>
                     </div>
                 </div>
             </filters>

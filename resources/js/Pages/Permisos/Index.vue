@@ -65,8 +65,14 @@ export default {
             openModal.value = false;
         }
 
+        //LIMPIAR CAMPOS
+        const limpiarCampos = ()=>{
+            form.search = null
+            form.search_estado = null
+        }
 
-        return { eliminarPermiso, form, openModal, catchData, showModal }
+
+        return { eliminarPermiso, form, openModal, catchData, showModal, limpiarCampos }
 
     }
 }

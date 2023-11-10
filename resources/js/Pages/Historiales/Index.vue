@@ -92,8 +92,15 @@ export default {
             openModal.value = false;
         }
 
+         //LIMPIAR CAMPOS
+         const limpiarCampos = ()=>{
+            form.search = null
+            form.search_anho = null,
+            form.search_mes = null 
+        }
 
-        return { form, showYears, meses, eliminarHistorial, catchData, openModal, showModal }
+
+        return { form, showYears, meses, eliminarHistorial, catchData, openModal, showModal, limpiarCampos }
 
     }
 

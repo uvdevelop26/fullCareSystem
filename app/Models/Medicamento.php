@@ -60,14 +60,14 @@ class Medicamento extends Model
 
     }
 
-    protected function efectos_secundarios(): Attribute
+  /*   protected function efectos_secundarios(): Attribute
     {
         return new Attribute(
             get: fn($value) => ucwords($value),
             set: fn($value) => strtolower($value)
         );
 
-    }
+    } */
 
       //SCOPE PARA BUSQUEDA
       public function scopeFilter($query, array $filters)

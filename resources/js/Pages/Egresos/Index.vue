@@ -94,7 +94,15 @@ export default {
             openModal.value = false;
         }
 
-        return { eliminarEgreso, form, showYears, meses, catchData, openModal, showModal }
+        //LIMPIAR CAMPOS
+        const limpiarCampos = ()=>{
+            form.search_comprobante = null
+            form.search_categoria = null
+            form.search_anho = null
+            form.search_mes = null
+        }
+
+        return { eliminarEgreso, form, showYears, meses, catchData, openModal, showModal, limpiarCampos }
     }
 
 }
@@ -145,6 +153,11 @@ export default {
                                 </option>
                             </select-input>
                         </div>
+                    </div>
+                    <div class="py-3 text-right">
+                        <button class="btn-indigo mx-1 hover:bg-softIndigo" type="button" @click="limpiarCampos()">
+                            Limpiar
+                        </button>
                     </div>
                 </div>
             </filters>
