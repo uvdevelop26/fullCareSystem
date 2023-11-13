@@ -79,31 +79,31 @@ export default {
         <div class="max-w-4xl overflow-hidden pt-2">
             <form @submit.prevent="actualizar">
                 <div class="py-3 px-3 flex flex-wrap bg-white border rounded-md">
-                    <text-input type="text" label="Residente" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="residente_id"
+                    <text-input type="text" label="Residente" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="residente_id"
                         v-model="form.residente_id" name="residente_id" :error="errors.residente_id"/>
-                    <text-input type="text" label="Nombre del Medicamento" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="nombre"
+                    <text-input type="text" label="Nombre del Medicamento" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="nombre"
                         v-model="form.nombre" :error="errors.nombre" />
                     <div class="pb-5 lg:pr-3 w-full lg:w-1/2">
                         <label for="descripcion" class="form-label">Descripcion:</label>
-                        <textarea name="descripcion" :id="descripcion" cols="20" rows="3" class="form-textarea"
+                        <textarea name="descripcion" id="descripcion" cols="20" rows="3" class="form-textarea"
                             v-model="form.descripcion"></textarea>
                         <span v-if="errors.descripcion" class="text-red-500">{{ errors.descripcion }}</span>
                     </div>
                     <text-input type="text" label="Dosis" class="pb-5 lg:pr-3 w-full lg:w-1/2" v-model="form.dosis"
-                        :id="dosis" name="dosis" :error="errors.dosis" />
+                        id="dosis" name="dosis" :error="errors.dosis" />
                     <div class="pb-5 lg:pr-3 w-full lg:w-1/2">
                         <label for="indicaciones" class="form-label">Indicaciones:</label>
-                        <textarea name="indicaciones" :id="indicaciones" cols="20" rows="3" class="form-textarea"
+                        <textarea name="indicaciones" id="indicaciones" cols="20" rows="3" class="form-textarea"
                             v-model="form.indicaciones"></textarea>
                         <span v-if="errors.indicaciones" class="text-red-500">{{ errors.indicaciones }}</span>
                     </div>
                     <div class="pb-5 lg:pr-3 w-full lg:w-1/2">
                         <label for="efectos_secundarios" class="form-label">Efectos Secundarios:</label>
-                        <textarea name="indicaciones" :id="efectos_secundarios" cols="20" rows="3" class="form-textarea"
+                        <textarea name="indicaciones" id="efectos_secundarios" cols="20" rows="3" class="form-textarea"
                             v-model="form.efectos_secundarios"></textarea>
                         <span v-if="errors.efectos_secundarios" class="text-red-500">{{ errors.efectos_secundarios }}</span>
                     </div>
-                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Presentacion" :id="presentacione_id"
+                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Presentacion" id="presentacione_id"
                         v-model="form.presentacione_id" :error="errors.presentacione_id">
                         <option :value="null" />
                         <option v-for="presentacione in presentaciones" :key="presentacione.id" :value="presentacione.id"

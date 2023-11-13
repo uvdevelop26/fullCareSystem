@@ -60,7 +60,7 @@ export default {
         <div class="max-w-4xl overflow-hidden pt-2">
             <form @submit.prevent="actualizar">
                 <div class="py-3 px-3  bg-white border rounded-md">
-                    <text-input v-model="form.name" type="text" label="Nombre" class="pb-7 pr-6 w-full lg:w-1/2" :id="name"
+                    <text-input v-model="form.name" type="text" label="Nombre" class="pb-7 pr-6 w-full lg:w-1/2" id="name"
                         name="name" :error="errors.name" />
                     <div class="py-4 lg:pr-2 flex w-full items-center justify-end bg-white border-t">
                         <Link type="button" :href="route('permissions.index')" class="btn-cancelar">

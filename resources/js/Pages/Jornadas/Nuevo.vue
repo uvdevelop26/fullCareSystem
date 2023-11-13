@@ -75,7 +75,7 @@ export default {
         <div class="max-w-4xl overflow-hidden pt-2">
             <form @submit.prevent="guardar">
                 <div class="py-3 px-3 flex flex-wrap bg-white border rounded-md">
-                    <text-input type="text" label="Empleado" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="empleado_id"
+                    <text-input type="text" label="Empleado" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="empleado_id"
                         v-model="form.empleado_id" :error="errors.empleado_id" />
                     <select-input v-model="form.turno_id" class="pb-8 pr-6 w-full lg:w-1/2" label="Turno" :error="errors.turno_id">
                         <option :value="null" />
@@ -83,9 +83,9 @@ export default {
                             {{ turno.nombre_turnos }}
                         </option>
                     </select-input>
-                    <text-input type="time" label="Hora Entrada" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="hora_entrada"
+                    <text-input type="time" label="Hora Entrada" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="hora_entrada"
                         v-model="form.hora_entrada" disabled/>
-                    <text-input type="time" label="Hora Salida" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="hora_salida" v-model="form.hora_salida"  disabled />
+                    <text-input type="time" label="Hora Salida" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="hora_salida" v-model="form.hora_salida"  disabled />
                     <div class="w-full">
                         <span class="block py-2">Seleccione Días de la Semana:</span>
                         <div class="w-full flex flex-wrap justify-between">

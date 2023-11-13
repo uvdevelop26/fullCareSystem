@@ -28,7 +28,8 @@ export default {
 
     props: {
         permissions: Array,
-        filters: Object
+        filters: Object,
+        userPermission: Array
 
     },
 

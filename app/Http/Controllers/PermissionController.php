@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 
+
 use PhpParser\Node\Stmt\Return_;
 
 
@@ -23,6 +24,8 @@ class PermissionController extends Controller
 
     public function index(Request $request)
     {
+       
+
         $queries = ['search'];
 
         $permissions = Permission::orderBy('id', 'desc')
@@ -31,6 +34,7 @@ class PermissionController extends Controller
         return Inertia::render('Permissions/Index', [
             'permissions' => $permissions,
             'filters' => $request->all($queries),
+ 
         ]);
     }
 

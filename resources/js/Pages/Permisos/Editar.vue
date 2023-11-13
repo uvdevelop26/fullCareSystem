@@ -82,17 +82,17 @@ export default {
         <div class="max-w-4xl overflow-hidden pt-2">
             <form @submit.prevent="actualizar">
                 <div class="py-3 px-3 flex flex-wrap bg-white border rounded-md">
-                    <text-input type="text" label="Empleado" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="empleado_id"
+                    <text-input type="text" label="Empleado" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="empleado_id"
                         v-model="form.empleado_id" :error="errors.empleado_id" />
-                    <text-input type="date" label="Fecha Inicio" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="fecha_inicio"
+                    <text-input type="date" label="Fecha Inicio" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="fecha_inicio"
                         v-model="form.fecha_inicio" :error="errors.fecha_inicio" @change="calcularDuracion" />
-                    <text-input type="date" label="Fecha Fin" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="fecha_fin"
+                    <text-input type="date" label="Fecha Fin" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="fecha_fin"
                         v-model="form.fecha_fin" :error="errors.fecha_fin" @change="calcularDuracion" />
-                    <text-input type="number" label="Duración" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="duracion"
+                    <text-input type="number" label="Duración" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="duracion"
                         v-model="form.duracion" :error="errors.duracion" disabled />
-                    <text-input type="text" label="Motivo" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="motivo"
+                    <text-input type="text" label="Motivo" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="motivo"
                         v-model="form.motivo" :error="errors.motivo" />
-                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Estado" :id="estado"
+                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Estado" id="estado"
                         :error="errors.estado_variacione_id" v-model="form.estado_variacione_id">
                         <option :value="null" />
                         <option v-for="estadoVariacione in estadoVariaciones" :key="estadoVariacione.id"

@@ -91,17 +91,17 @@ export default {
                 <div class="py-3 px-3 flex flex-wrap bg-white border rounded-md">
                     <!-- RESIDENTE Y CARACTERÍSTICAS FÍSICAS -->
                     <text-input v-model="form.residente_id" type="text" label="Residente"
-                        class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="residente_id" :error="errors.residente_id" />
+                        class="pb-5 lg:pr-3 w-full lg:w-1/2" id="residente_id" :error="errors.residente_id" />
                     <text-input v-model="form.fecha_registro" type="date" label="Fecha" class="pb-5 lg:pr-3 w-full lg:w-1/2"
-                        :id="fecha_registro" :error="errors.fecha_registro" />
-                    <text-input v-model="form.peso" type="text" label="Peso" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="peso"
+                        id="fecha_registro" :error="errors.fecha_registro" />
+                    <text-input v-model="form.peso" type="text" label="Peso" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="peso"
                         :error="errors.peso" />
                     <text-input v-model="form.altura" type="text" label="Altura" class="pb-5 lg:pr-3 w-full lg:w-1/2"
-                        :id="altura" :error="errors.altura" />
+                        id="altura" :error="errors.altura" />
                     <text-input v-model="form.temperatura" type="text" label="Temperatura"
-                        class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="temperatura" :error="errors.temperatura" />
+                        class="pb-5 lg:pr-3 w-full lg:w-1/2" id="temperatura" :error="errors.temperatura" />
                     <text-input v-model="form.presion_arterial" type="text" label="Presion Arterial"
-                        class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="presion_arterial" :error="errors.presion_arterial" />
+                        class="pb-5 lg:pr-3 w-full lg:w-1/2" id="presion_arterial" :error="errors.presion_arterial" />
                     <!-- EDITAR ENFERMEDADES -->
                     <div class="flex-wrap pb-5 lg:pr-3 w-full lg:w-1/2">
                         <div class="block pb-2">Enfermedades:</div>
@@ -119,19 +119,19 @@ export default {
                     <!-- DATOS DEL HISTORIAL -->
                     <div class="pb-5 lg:pr-3 w-full lg:w-1/2">
                         <label for="diagnostico" class="form-label">Diagnostico:</label>
-                        <textarea name="diagnostico" :id="diagnostico" cols="20" rows="3" class="form-textarea "
+                        <textarea name="diagnostico" id="diagnostico" cols="20" rows="3" class="form-textarea "
                             v-model="form.diagnostico"></textarea>
                         <span v-if="errors.diagnostico" class="text-red-500">{{ errors.diagnostico }}</span>
                     </div>
                     <div class="pb-5 lg:pr-3 w-full lg:w-1/2">
                         <label for="tratamiento" class="form-label">Tratamiento:</label>
-                        <textarea name="tratamiento" :id="tratamiento" cols="20" rows="3" class="form-textarea "
+                        <textarea name="tratamiento" id="tratamiento" cols="20" rows="3" class="form-textarea "
                             v-model="form.tratamiento"></textarea>
                         <span v-if="errors.tratamiento" class="text-red-500">{{ errors.tratamiento }}</span>
                     </div>
                     <div class="pb-5 lg:pr-3 w-full lg:w-1/2">
                         <label for="observaciones" class="form-label">Observaciones:</label>
-                        <textarea name="observaciones" :id="observaciones" cols="20" rows="3" class="form-textarea "
+                        <textarea name="observaciones" id="observaciones" cols="20" rows="3" class="form-textarea "
                             v-model="form.observaciones"></textarea>
                         <span v-if="errors.observaciones" class="text-red-500">{{ errors.observaciones }}</span>
                     </div>

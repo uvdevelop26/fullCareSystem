@@ -5,7 +5,7 @@ import FullcareLogo from '../Shared/FullcareLogo.vue';
 import { Link } from '@inertiajs/inertia-vue3';
 import { ref, reactive, onMounted, onUnmounted } from 'vue';
 import { usePage } from '@inertiajs/inertia-vue3';
-
+import { defineProps } from 'vue';
 
 
 //show and hide menu to logout 
@@ -15,7 +15,9 @@ const showUserDropdown = ref(false)
 const isMobile = ref();
 let mql
 
-
+const props = defineProps({
+    auth: Array
+})
 
 
 //object for the menu
@@ -34,8 +36,8 @@ const menu = reactive([
         name: 'residentes',
         icon_name: 'residentes',
         submenu: [
-            { name: 'admin. residentes', href: '/residentes' },
-            { name: 'admin. familiares', href: '/familiares' }
+            { name: 'admin. residentes', href: '/residentes', permiso: 'residentes-lista' },
+            { name: 'admin. familiares', href: '/familiares', permiso: 'residentes-familiares' }
         ],
         toggle_submenu: false
     },
@@ -44,11 +46,11 @@ const menu = reactive([
         name: 'empleados',
         icon_name: 'empleados',
         submenu: [
-            { name: 'admin. empleados', href: '/empleados' },
-            { name: 'sueldos', href: '/sueldos' },
-            { name: 'jornadas laborales', href: '/jornadas' },
-            { name: 'solicitar permiso', href: '/permisos' },
-            { name: 'solicitar vacación', href: '/vacaciones' }
+            { name: 'admin. empleados', href: '/empleados', permiso: 'empleados-lista' },
+            { name: 'sueldos', href: '/sueldos', permiso: 'empleados-sueldos' },
+            { name: 'jornadas laborales', href: '/jornadas', permiso: 'empleados-jornadas' },
+            { name: 'solicitar permiso', href: '/permisos', permiso: 'empleados-permisos' },
+            { name: 'solicitar vacación', href: '/vacaciones', permiso: 'empleados-vacaciones' }
         ],
         toggle_submenu: false
 
@@ -58,9 +60,9 @@ const menu = reactive([
         name: 'usuarios',
         icon_name: 'usuarios',
         submenu: [
-            { name: 'admin. usuarios', href: '/usuarios' },
-            { name: 'roles', href: '/roles' },
-            { name: 'permisos de Acceso', href: '/permissions' }
+            { name: 'admin. usuarios', href: '/usuarios', permiso: 'usuarios-lista' },
+            { name: 'roles', href: '/roles', permiso: 'usuarios-roles' },
+            { name: 'permisos de Acceso', href: '/permissions', permiso: 'usuarios-permissions' }
         ],
         toggle_submenu: false
 
@@ -70,9 +72,9 @@ const menu = reactive([
         name: 'finanzas',
         icon_name: 'ingresos',
         submenu: [
-            { name: 'ingresos', href: '/ingresos' },
-            { name: 'egresos', href: '/egresos' },
-            { name: 'balance', href: '/balance' }
+            { name: 'ingresos', href: '/ingresos', permiso: 'finanzas-ingresos' },
+            { name: 'egresos', href: '/egresos', permiso: 'finanzas-egresos' },
+            { name: 'balance', href: '/balance', permiso: 'finanzas-balances' }
         ],
         toggle_submenu: false
 
@@ -82,18 +84,18 @@ const menu = reactive([
         name: 'salud',
         icon_name: 'historial',
         submenu: [
-            { name: 'historial clinico', href: '/historiales' },
-            { name: 'medicamentos', href: '/medicamentos' },
-            { name: 'rutinas', href: '/rutinas' },
-            { name: 'control de medicamentos', href: '/control-medicamento' },
-            { name: 'control de rutinas', href: '/control-rutina' },
+            { name: 'historial clinico', href: '/historiales',permiso:'salud-historiales' },
+            { name: 'medicamentos', href: '/medicamentos',permiso: 'salud-medicamentos' },
+            { name: 'rutinas', href: '/rutinas',permiso: 'salud-rutinas' },
+            { name: 'control de medicamentos', href: '/control-medicamento',permiso: 'salud-control-med' },
+            { name: 'control de rutinas', href: '/control-rutina',permiso: 'salud-control-rut' },
         ],
         toggle_submenu: false
 
     },
     {
         id: 7,
-        name: 'Reportes',
+        name: 'reportes',
         icon_name: 'reportes',
         href: '/reportes',
         submenu: [],
@@ -101,6 +103,14 @@ const menu = reactive([
 
     }
 ])
+
+//permisos
+
+const hasPermission = (permission) => {
+
+    return props.auth.permissions.includes(permission)
+}
+
 
 
 
@@ -129,16 +139,15 @@ onUnmounted(() => {
 });
 
 
-
-
-
 </script>
 
 <template>
     <div>
         <div class="md:h-screen">
             <div class="md:flex md:flex-grow">
+                <!-- COMPONENTE MENU DE NAVEGACIÓN -->
                 <NavigationMenu>
+                    <!-- LE PASA UN SLOT PARA EL ENCABEZADO -->
                     <template #header>
                         <div class="md:text-center">
                             <span class="text-white font-semibold drop-shadow-xl text-xl">
@@ -153,42 +162,47 @@ onUnmounted(() => {
                             </button>
                         </div>
                     </template>
+                    <!-- LISTA DE BOTONES  -->
                     <transition name="slice">
                         <nav class="md:h-full md:flex md:flex-col md:justify-between" v-if="isMobile">
+                            <!-- LISTA PRINCIPAL ETIQUET -->
                             <ul class="md:pt-4  md:h-full md:overflow-y-auto">
-                                <li v-for="(item, index) in menu" :key="item.id" class="py-2 px-3  md:mb-2"
-                                    :class="{ 'bg-fondColor border-l-turquesa': $page.url.startsWith(item.href) }">
-                                    <button v-if="item.submenu.length" @click="toggleSubMenu(index)"
-                                        class="group w-full flex">
+                                <template v-for="(item, index) in menu" :key="item.id">
+                                    <li v-if="hasPermission(item.name)" class="py-2 px-3  md:mb-2"
+                                        :class="{ 'bg-fondColor border-l-turquesa': $page.url.startsWith(item.href) }">
+                                        <button v-if="item.submenu.length && hasPermission(item.name)"
+                                            @click="toggleSubMenu(index)" class="group w-full flex">
+                                            <Icon :name="item.icon_name"
+                                                class="w-5 h-5 mr-3 inline fill-slate-500 group-hover:fill-turquesa" />
+                                            <span class="capitalize group-hover:text-turquesa"> {{ item.name }}</span>
+                                            <Icon :name="item.toggle_submenu ? 'up' : 'down'"
+                                                class="w-5 h-5 inline ml-auto fill-slate-500 group-hover:fill-turquesa" />
+                                        </button>
+                                        <Link class="group" v-else :href="item.href">
                                         <Icon :name="item.icon_name"
-                                            class="w-5 h-5 mr-3 inline fill-slate-500 group-hover:fill-turquesa" />
-                                        <span class="capitalize group-hover:text-turquesa"> {{ item.name }}</span>
-                                        <Icon :name="item.toggle_submenu ? 'up' : 'down'"
-                                            class="w-5 h-5 inline ml-auto fill-slate-500 group-hover:fill-turquesa" />
-                                    </button>
-                                    <Link class="group" v-else :href="item.href">
-                                    <Icon :name="item.icon_name"
-                                        class="w-5 h-5 mr-3 inline fill-slate-500 group-hover:fill-turquesa"
-                                        :class="{ 'fill-turquesa ': $page.url.startsWith(item.href) }" />
-                                    <span class="capitalize group-hover:text-turquesa"
-                                        :class="{ 'text-turquesa font-bold': $page.url.startsWith(item.href) }">
-                                        {{ item.name }}</span>
-                                    </Link>
-                                    <transition name="submenu-slice">
-                                        <ul v-if="item.submenu.length && item.toggle_submenu"
-                                            class="pl-8 pt-1 overflow-hidden">
-                                            <li v-for="subitem in item.submenu" :key="subitem.name"
-                                                class="py-1 pl-3 border-l-2"
-                                                :class="{ 'bg-fondColor border-l-turquesa': $page.url.startsWith(subitem.href) }">
-                                                <Link :href="subitem.href" class="md:text-sm">
-                                                <span class="capitalize hover:text-turquesa"
-                                                    :class="{ 'text-turquesa font-bold': $page.url.startsWith(subitem.href) }">{{
-                                                        subitem.name }}</span>
-                                                </Link>
-                                            </li>
-                                        </ul>
-                                    </transition>
-                                </li>
+                                            class="w-5 h-5 mr-3 inline fill-slate-500 group-hover:fill-turquesa"
+                                            :class="{ 'fill-turquesa ': $page.url.startsWith(item.href) }" />
+                                        <span class="capitalize group-hover:text-turquesa"
+                                            :class="{ 'text-turquesa font-bold': $page.url.startsWith(item.href) }">
+                                            {{ item.name }}</span>
+                                        </Link>
+                                        <transition name="submenu-slice">
+                                            <ul v-if="item.submenu.length && item.toggle_submenu"
+                                                class="pl-8 pt-1 overflow-hidden">
+                                                <template v-for="subitem in item.submenu" :key="subitem.name">
+                                                    <li  v-if="hasPermission(subitem.permiso)" class="py-1 pl-3 border-l-2"
+                                                        :class="{ 'bg-fondColor border-l-turquesa': $page.url.startsWith(subitem.href) }">
+                                                        <Link :href="subitem.href" class="md:text-sm">
+                                                        <span class="capitalize hover:text-turquesa"
+                                                            :class="{ 'text-turquesa font-bold': $page.url.startsWith(subitem.href) }">{{
+                                                                subitem.name }}</span>
+                                                        </Link>
+                                                    </li>
+                                                </template>
+                                            </ul>
+                                        </transition>
+                                    </li>
+                                </template>
                             </ul>
                             <div class="py-4 px-3 border-t relative md:text-center">
                                 <button class="px-4 py-2 bg-turquesa rounded-lg"
@@ -212,8 +226,8 @@ onUnmounted(() => {
                     </transition>
                 </NavigationMenu>
                 <div class="px-5 py-3 bg-fondColor md:px-8 md:py-8 md:flex-1 md:h-screen md:overflow-y-auto" scroll-region>
-                    <div v-if="$page.props.flash.message">
-                        {{ $page.props.flash.message }}
+                    <div v-if="$page.props.flash.success">
+                        {{ $page.props.flash.success }}
                     </div>
                     <slot />
                 </div>

@@ -18,9 +18,6 @@ export default {
         Link
     },
 
-    /*  props:{
-        movimientos: Array
-        }, */
 
     setup(props) {
 
@@ -123,7 +120,7 @@ export default {
                             <input type="radio" v-model="form.consulta" name="consulta" id="diario" value="diario">
                             <label for="diario"> Consulta Diaria</label>
                             <text-input type="date" v-model="form.fecha" label="Fecha" class="pb-5 lg:pr-3 w-full"
-                                :id="fecha" :disabled="form.consulta !== 'diario'" />
+                                id="fecha" :disabled="form.consulta !== 'diario'" />
                         </div>
                         <div class="lg:w-1/2">
                             <input type="radio" v-model="form.consulta" name="consulta" id="mensual" value="mensual">

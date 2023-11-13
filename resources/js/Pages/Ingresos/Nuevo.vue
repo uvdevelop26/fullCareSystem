@@ -62,8 +62,8 @@ export default {
       <form @submit.prevent="guardar">
         <div class="py-3 px-3 flex flex-wrap bg-white border rounded-md">
           <text-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Fecha" type="date" v-model="form.fecha"
-            :error="errors.fecha" :id="ingreso" />
-          <text-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Concepto" :id="concepto" v-model="form.concepto"
+            :error="errors.fecha" id="ingreso" />
+          <text-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Concepto" id="concepto" v-model="form.concepto"
             :error="errors.concepto" />
           <div class="pb-5 lg:pr-3 w-full lg:w-1/2">
             <label for="detalle" class="form-label">Detalle:</label>
@@ -71,9 +71,9 @@ export default {
               v-model="form.detalle"></textarea>
             <span v-if="errors.detalle" class="text-red-500">Este campo es requerido</span>
           </div>
-          <text-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Monto" type="number" :id="monto" v-model="form.monto"
+          <text-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Monto" type="number" id="monto" v-model="form.monto"
             :error="errors.monto" />
-          <text-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Comprobante Nro." type="number" :id="nro_comprobante"
+          <text-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Comprobante Nro." type="number" id="nro_comprobante"
             v-model="form.nro_comprobante" :error="errors.nro_comprobante" />
           <select-input v-model="form.categoria_id" :error="errors.categoria_id" class="pb-5 lg:pr-3 w-full lg:w-1/2"
             label="Categoria">

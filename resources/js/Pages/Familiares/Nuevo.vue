@@ -71,26 +71,26 @@ export default {
         <div class="max-w-4xl overflow-hidden pt-2">
             <form @submit.prevent="guardar">
                 <div class="py-3 px-3 flex flex-wrap bg-white border rounded-md">
-                    <text-input type="text" label="Nombres" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="nombres"
+                    <text-input type="text" label="Nombres" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="nombres"
                         v-model="form.nombres" :error="errors.nombres" />
-                    <text-input type="text" label="Apellidos" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="apellidos"
+                    <text-input type="text" label="Apellidos" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="apellidos"
                         v-model="form.apellidos" :error="errors.apellidos" />
-                    <text-input type="text" label="CI" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="ci_numero"
+                    <text-input type="text" label="CI" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="ci_numero"
                         v-model="form.ci_numero" :error="errors.ci_numero" />
 
                     <text-input type="date" label="Fecha de Nacimiento" class="pb-5 lg:pr-3 w-full lg:w-1/2"
-                        :id="fecha_nacimiento" v-model="form.fecha_nacimiento" :error="errors.fecha_nacimiento" />
-                    <text-input type="text" label="Teléfono" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="telefono"
+                        id="fecha_nacimiento" v-model="form.fecha_nacimiento" :error="errors.fecha_nacimiento" />
+                    <text-input type="text" label="Teléfono" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="telefono"
                         v-model="form.telefono" :error="errors.telefono" />
-                    <text-input type="number" label="edad" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="edad"
+                    <text-input type="number" label="edad" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="edad"
                         v-model="form.edad" :error="errors.edad" />
-                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Sexo" :id="sexo" v-model="form.sexo"
+                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Sexo" id="sexo" v-model="form.sexo"
                         :error="errors.sexo">
                         <option :value="null" />
                         <option value="femenino">Femenino</option>
                         <option value="masculino">Masculino</option>
                     </select-input>
-                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Ciudad" :id="ciudad" v-model="form.ciudade_id"
+                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Ciudad" id="ciudad" v-model="form.ciudade_id"
                         :error="errors.ciudade_id">
                         <option :value="null" />
                         <option v-for="ciudad in ciudades" :key="ciudad.nombre_ciudad" :value="ciudad.id"
@@ -98,9 +98,9 @@ export default {
                             {{ ciudad.nombre_ciudad }}
                         </option>
                     </select-input>
-                    <text-input type="text" label="Dirección" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="direccion"
+                    <text-input type="text" label="Dirección" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="direccion"
                         v-model="form.direccion" :error="errors.direccion" />
-                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Parentezco" :id="parentezco"
+                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Parentezco" id="parentezco"
                         v-model="form.parentezco" :error="errors.parentezco">
                         <option :value="null" />
                         <option value="hijo/a">Hijo/a</option>
@@ -108,14 +108,14 @@ export default {
                         <option value="sobrino/a">Sobrino/a</option>
                         <option value="otro">Otro</option>
                     </select-input>
-                    <text-input type="text" label="Email" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="email"
+                    <text-input type="text" label="Email" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="email"
                         v-model="form.email" :error="errors.email" />
                     <!-- <div class="pb-5 lg:pr-3 w-full lg:w-1/2">
                         <button class="bg-indigo-400" type="button"  @click="openModal = true">
                             seleccionar Residente
                         </button>
                     </div> -->
-                    <text-input type="text" label="Residente" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="residente"
+                    <text-input type="text" label="Residente" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="residente"
                         v-model="form.residente_id" :error="errors.residente_id" />
                     <div class="py-4 lg:pr-2 flex w-full items-center justify-end bg-white border-t">
                         <Link type="button" :href="route('familiares.index')" class="btn-cancelar">

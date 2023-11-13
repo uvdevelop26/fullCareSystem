@@ -84,10 +84,8 @@ class ResidenteController extends Controller
 
         sleep(1);
 
-        // return Redirect::route('residentes.index')->with('message', 'Residente Creado Exitosamente');
+         return Redirect::route('residentes.index')->with('success', 'Residente Creado Exitosamente');
 
-        return redirect()->route(route: 'residentes.index')
-            ->with(['message' => 'prueba exitosa']); 
     }
 
 

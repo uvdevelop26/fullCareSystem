@@ -29,7 +29,8 @@ export default {
     props: {
         jornadas: Array,
         turnos: Array,
-        filters: Object
+        filters: Object,
+        auth: Object
     },
 
 
@@ -86,7 +87,7 @@ export default {
             <h1 class="uppercase">
                 <span class="text-turquesa text-2xl font-semibold">Jornadas Laborales</span>
             </h1>
-            <Link :href="route('jornadas.create')"
+            <Link :href="route('jornadas.create')" v-if="auth.role === 'admin'"
                 class="px-5 py-1 md:px-12 bg-indigo-400 rounded-xl text-white hover:shadow-md hover:bg-softIndigo ">
             <Icon name="plus" class="w-4 h-4 inline fill-white mr-1" />
             Nuevo

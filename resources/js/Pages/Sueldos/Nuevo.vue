@@ -54,11 +54,11 @@ export default {
         <div class="max-w-4xl overflow-hidden pt-2">
             <form @submit.prevent="guardar">
                 <div class="py-3 px-3 flex flex-wrap bg-white border rounded-md">
-                    <text-input type="date" label="Fecha" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="fecha"
+                    <text-input type="date" label="Fecha" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="fecha"
                         v-model="form.fecha" :error="errors.fecha" />
-                    <text-input type="text" label="Empleado" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="empleado_id"
+                    <text-input type="text" label="Empleado" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="empleado_id"
                         v-model="form.empleado_id" :error="errors.empleado_id" />
-                    <text-input type="number" label="Monto" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="edad"
+                    <text-input type="number" label="Monto" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="edad"
                         v-model="form.monto" :error="errors.monto" />
                     <div class="py-4 lg:pr-2 flex w-full items-center justify-end bg-white border-t">
                         <Link type="button" :href="route('sueldos.index')" class="btn-cancelar">

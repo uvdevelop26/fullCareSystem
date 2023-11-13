@@ -75,21 +75,21 @@ export default {
         <div class="max-w-4xl overflow-hidden pt-2">
             <form @submit.prevent="guardar">
                 <div class="py-3 px-3 flex flex-wrap bg-white border rounded-md">
-                    <text-input type="text" label="Empleado" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="empleado_id"
+                    <text-input type="text" label="Empleado" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="empleado_id"
                         :error="errors.empleado_id" v-model="form.empleado_id" />
-                    <text-input type="date" label="Fecha de Inicio" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="fecha_inicio"
+                    <text-input type="date" label="Fecha de Inicio" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="fecha_inicio"
                         :error="errors.fecha_inicio" v-model="form.fecha_inicio" @change="calcularDuracion" />
-                    <text-input type="date" label="Fecha Fin" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="fecha_fin"
+                    <text-input type="date" label="Fecha Fin" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="fecha_fin"
                         :error="errors.fecha_fin" v-model="form.fecha_fin" @change="calcularDuracion" />
-                    <text-input type="number" label="Duracion" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="duracion"
+                    <text-input type="number" label="Duracion" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="duracion"
                         :error="errors.duracion" v-model="form.duracion" disabled />
-                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Estado" :id="estado"
+                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Estado" id="estado"
                         v-model="form.estado_variacione_id" :error="errors.estado_variacione_id">
                         <option :value="null" />
                         <option v-for="estadoVariacione in estadoVariaciones" :key="estadoVariacione.id"
                             :value="estadoVariacione.id" class="capitalize">{{ estadoVariacione.nombre_estado }}</option>
                     </select-input>
-                    <text-input type="text" label="Observacion" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="observacion"
+                    <text-input type="text" label="Observacion" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="observacion"
                         :error="errors.observacion" v-model="form.observacion" />
                     <div class="py-4 lg:pr-2 flex w-full items-center justify-end bg-white border-t">
                         <Link type="button" :href="route('vacaciones.index')" class="btn-cancelar">

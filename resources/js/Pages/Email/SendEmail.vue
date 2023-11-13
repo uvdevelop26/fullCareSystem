@@ -49,7 +49,7 @@ export default {
         <div class="max-w-4xl overflow-hidden pt-2">
             <form @submit.prevent="enviar">
                 <div class="py-3 px-3 flex flex-wrap bg-white border rounded-md">
-                    <text-input type="text" disabled label="Correo" class="pb-5 lg:pr-3 w-full max-w-lg" :id="email"
+                    <text-input type="text" disabled label="Correo" class="pb-5 lg:pr-3 w-full max-w-lg" id="email"
                         v-model="form.email" :error="errors.email" />
                     <div class="pb-5 lg:pr-3 w-full max-w-lg">
                         <label for="mensaje" class="form-label">Mensaje:</label>

@@ -55,12 +55,12 @@ export default {
             <form @submit.prevent="guardar">
                 <div class="py-3 px-3  bg-white border rounded-md">
                     <text-input type="text" v-model="form.name" label="Nombre del Rol" class="pb-5 lg:pr-3 w-full lg:w-1/2"
-                        :id="name" :error="errors.name" />
+                        id="name" :error="errors.name" />
                     <div class="flex-wrap">
                         <div class="block pb-2">Permisos para este Rol:</div>
                         <div v-for="permission in permissions" :key="permission.id">
                             <div class="flex items-center gap-1">
-                                <input type="checkbox" :id="permission.name" :value="permission.id"
+                                <input type="checkbox" id="permission" :value="permission.id"
                                     v-model="form.permissions">
                                 <label :for="permission.name" class="capitalize">{{ permission.name }}</label>
                             </div>

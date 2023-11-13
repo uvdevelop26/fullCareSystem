@@ -71,13 +71,13 @@ export default {
             <form @submit.prevent="guardar">
                 <div class="py-3 px-3 flex flex-wrap bg-white border rounded-md">
                     <!-- datos del rutinas -->
-                    <text-input type="text" label="Residente" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="residente_id"
+                    <text-input type="text" label="Residente" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="residente_id"
                         v-model="form.residente_id" name="residente_id" :error="errors.residente_id" />
-                    <text-input type="text" label="Rutina a realizar" class="pb-5 lg:pr-3 w-full lg:w-1/2" :id="nombre"
+                    <text-input type="text" label="Rutina a realizar" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="nombre"
                         v-model="form.nombre" :error="errors.nombre" />
                     <div class="pb-5 lg:pr-3 w-full lg:w-1/2">
                         <label for="descripcion" class="form-label">Descripcion:</label>
-                        <textarea name="descripcion" :id="descripcion" cols="20" rows="3" class="form-textarea"
+                        <textarea name="descripcion" id="descripcion" cols="20" rows="3" class="form-textarea"
                             v-model="form.descripcion"></textarea>
                         <span v-if="errors.descripcion" class="text-red-500">{{ errors.descripcion }}</span>
                     </div>
