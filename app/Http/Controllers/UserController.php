@@ -60,7 +60,7 @@ class UserController extends Controller
         $user->assignRole($request->input('role_id'));
 
 
-        return Redirect::route('usuarios.index');
+        return Redirect::route('usuarios.index')->with('success', 'Usuario Guardado Exitosamente');
     }
 
 
@@ -104,7 +104,7 @@ class UserController extends Controller
 
 
 
-        return Redirect::route('usuarios.index');
+        return Redirect::route('usuarios.index')->with('success', 'Usuario Editado Exitosamente');
     }
 
     public function destroy($id)

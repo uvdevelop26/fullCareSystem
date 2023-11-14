@@ -79,7 +79,7 @@ class HistorialeController extends Controller
             }
         }
 
-        return Redirect::route('historiales.index');
+        return Redirect::route('historiales.index')->with('success', 'Historial Guardado Exitosamente');
     }
 
 

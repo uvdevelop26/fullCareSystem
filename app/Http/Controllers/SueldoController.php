@@ -47,7 +47,7 @@ class SueldoController extends Controller
             'empleado_id' => $request->empleado_id
         ]);
 
-        return Redirect::route('sueldos.index');
+        return Redirect::route('sueldos.index')->with('success', 'Sueldo Creado Exitosamente');
     }
 
 
@@ -78,7 +78,7 @@ class SueldoController extends Controller
             'empleado_id' => $request->empleado_id
         ]);
 
-        return Redirect::route('sueldos.index');
+        return Redirect::route('sueldos.index')->with('success', 'Sueldo Actualizado Exitosamente');
     }
 
 

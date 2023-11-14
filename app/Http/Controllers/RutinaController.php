@@ -54,7 +54,7 @@ class RutinaController extends Controller
             }
         }
 
-        return Redirect::route('rutinas.index');
+        return Redirect::route('rutinas.index')->with('success', 'Rutina Guardada Exitosamente');
     }
 
 

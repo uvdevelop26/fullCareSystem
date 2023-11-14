@@ -9,7 +9,8 @@ import { watchEffect, reactive } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 import { pickBy } from 'lodash';
 import DialogModal from '../../Components/DialogModal.vue'
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import FlashMessages from '../../Shared/FlashMessages.vue';
 
 export default {
 
@@ -22,13 +23,15 @@ export default {
         SearchInput,
         SelectInput,
         Filters,
-        DialogModal
+        DialogModal,
+        FlashMessages
     },
 
     props: {
         egresos: Array,
         categorias: Array,
-        filters: Object
+        filters: Object,
+        flash: Object
     },
 
 
@@ -38,6 +41,8 @@ export default {
         const openModal = ref(false);
 
         const catchData = ref();
+
+        const flashMessage = ref(null);
 
         //Objetos para búsqueda
         const Datayears = () => {
@@ -95,14 +100,19 @@ export default {
         }
 
         //LIMPIAR CAMPOS
-        const limpiarCampos = ()=>{
+        const limpiarCampos = () => {
             form.search_comprobante = null
             form.search_categoria = null
             form.search_anho = null
             form.search_mes = null
         }
 
-        return { eliminarEgreso, form, showYears, meses, catchData, openModal, showModal, limpiarCampos }
+        //FLASH MESSAGES
+        onMounted(() => {
+            flashMessage.value = props.flash.success
+        })
+
+        return { eliminarEgreso, form, showYears, meses, catchData, openModal, showModal, limpiarCampos, flashMessage }
     }
 
 }
@@ -162,6 +172,8 @@ export default {
                 </div>
             </filters>
         </div>
+        <!-- FLASH MESSAGE -->
+        <flash-messages :flashMessage="flashMessage" />
         <!-- TABLE -->
         <div class="overflow-x-auto py-4 max-w-7xl">
             <table

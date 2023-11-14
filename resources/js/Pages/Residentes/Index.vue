@@ -10,7 +10,8 @@ import { Inertia } from '@inertiajs/inertia';
 import { pickBy } from 'lodash';
 import DialogModal from '../../Components/DialogModal.vue'
 import { ref } from 'vue';
-import { nextTick } from 'vue';
+import { onMounted } from 'vue'
+import FlashMessages from '../../Shared/FlashMessages.vue'
 
 
 
@@ -25,7 +26,8 @@ export default {
         SelectInput,
         SearchInput,
         Filters,
-        DialogModal
+        DialogModal,
+        FlashMessages
 
     },
 
@@ -34,8 +36,7 @@ export default {
         ciudades: Array,
         estado_residentes: Array,
         filters: Object,
-
-
+        flash: Object
     },
     setup(props) {
 
@@ -43,9 +44,7 @@ export default {
 
         const catchData = ref();
 
-        const selectInputComponentCiudad = ref(null)
-        const selectInputComponentEstado = ref(null)
-        const selectInputComponentSexo = ref(null)
+        const flashMessage = ref(null)
 
 
         //PARA MOSTRAR IMAGEN
@@ -95,9 +94,16 @@ export default {
 
         }
 
+        //flash Messages
+        onMounted(()=>{
+            flashMessage.value = props.flash.success
+          
+        })
+        
 
 
-        return { form, urlbase, eliminarResidente, openModal, catchData, showModal, limpiarCampos, selectInputComponentCiudad, selectInputComponentEstado, selectInputComponentSexo }
+
+        return { form, urlbase, eliminarResidente, openModal, catchData, showModal, limpiarCampos, flashMessage }
     }
 
 
@@ -129,7 +135,7 @@ export default {
                         <!-- selccionar cuidad -->
                         <select-input id="ciudades" label="Ciudad" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
                             ref="selectInputComponentCiudad" v-model="form.search_ciudad">
-                            <option :value="null"  />
+                            <option :value="null" />
                             <option v-for="ciudad in ciudades" :key="ciudad.id" :value="ciudad.id" class="capitalize">
                                 {{ ciudad.nombre_ciudad }}
                             </option>
@@ -163,7 +169,8 @@ export default {
                 </div>
             </filters>
         </div>
-
+        <!-- flash -->
+        <flash-messages :flashMessage="flashMessage" class="w-full" />
         <!-- TABLE -->
 
         <div class="overflow-x-auto py-4 max-w-7xl">

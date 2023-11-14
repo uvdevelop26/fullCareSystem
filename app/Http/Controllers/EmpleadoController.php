@@ -73,7 +73,7 @@ class EmpleadoController extends Controller
             'persona_id' => $persona->id
         ]);
 
-        return Redirect::route('empleados.index');
+        return Redirect::route('empleados.index')->with('success', 'Empleado Creado Exitosamente');
     }
 
 
@@ -124,7 +124,7 @@ class EmpleadoController extends Controller
             'persona_id' => $persona->id
         ]);
 
-        return Redirect::route('empleados.index');
+        return Redirect::route('empleados.index')->with('success', 'Empleado Editado Exitosamente');
     }
 
 

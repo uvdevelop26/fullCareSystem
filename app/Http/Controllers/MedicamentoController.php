@@ -72,7 +72,7 @@ class MedicamentoController extends Controller
                 $medicamento->horarioMedicamentos()->save($horario);
             }
         }
-        return Redirect::route('medicamentos.index');
+        return Redirect::route('medicamentos.index')->with('success', 'Medicamento Guardado Exitosamente');
     }
 
 

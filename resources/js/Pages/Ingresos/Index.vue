@@ -10,7 +10,8 @@ import { watchEffect, reactive } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 import { pickBy } from 'lodash';
 import DialogModal from '../../Components/DialogModal.vue'
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import FlashMessages from '../../Shared/FlashMessages.vue';
 
 
 export default {
@@ -24,13 +25,15 @@ export default {
         Filters,
         SearchInput,
         SelectInput,
-        DialogModal
+        DialogModal,
+        FlashMessages
     },
 
     props: {
         ingresos: Array,
         categorias: Array,
-        filters: Object
+        filters: Object,
+        flash: Object
     },
 
 
@@ -39,6 +42,8 @@ export default {
         const openModal = ref(false);
 
         const catchData = ref();
+
+        const flashMessage = ref(null);
 
 
         //Objetos para búsqueda
@@ -98,16 +103,21 @@ export default {
         }
 
         //LIMPIAR CAMPOS
-        const limpiarCampos = ()=>{
+        const limpiarCampos = () => {
             form.search_comprobante = null
             form.search_categoria = null
             form.search_anho = null
             form.search_mes = null
         }
 
+        //FLASH MESSAGES
+        onMounted(() => {
+            flashMessage.value = props.flash.success
+        });
 
 
-        return { eliminarIngreso, form, showYears, meses, catchData, openModal, showModal, limpiarCampos }
+
+        return { eliminarIngreso, form, showYears, meses, catchData, openModal, showModal, limpiarCampos, flashMessage }
     }
 
 }
@@ -167,7 +177,9 @@ export default {
                 </div>
             </filters>
         </div>
+        <!-- FLASH MESSAGE -->
 
+        <flash-messages :flashMessage="flashMessage" />
 
         <!-- TABLE -->
 

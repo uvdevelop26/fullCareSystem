@@ -149,7 +149,7 @@ class ResidenteController extends Controller
             }
         }
 
-        return Redirect::route('residentes.index');
+        return Redirect::route('residentes.index')->with('success', 'Residente Editado Exitosamente');
     }
 
 

@@ -56,7 +56,7 @@ class IngresoController extends Controller
             'categoria_id' => $request->categoria_id
         ]);
 
-        return Redirect::route('ingresos.index');
+        return Redirect::route('ingresos.index')->with('success', 'Ingreso Guardado Exitosamente');
     }
 
     public function show($id)
@@ -93,7 +93,7 @@ class IngresoController extends Controller
             'categoria_id' => $request->categoria_id
         ]);
 
-        return Redirect::route('ingresos.index');
+        return Redirect::route('ingresos.index')->with('success', 'Ingreso Editado Exitosamente');
     }
 
 

@@ -59,7 +59,7 @@ class PermisoController extends Controller
             'estado_variacione_id' => $request->estado_variacione_id
         ]);
 
-        return Redirect::route('permisos.index');
+        return Redirect::route('permisos.index')->with('success', 'Permiso Guardado Exitosamente');
     }
 
 
@@ -95,7 +95,7 @@ class PermisoController extends Controller
             'estado_variacione_id' => $request->estado_variacione_id
         ]);
 
-        return Redirect::route('permisos.index');
+        return Redirect::route('permisos.index')->with('success', 'Permiso Editado Exitosamente');
     }
 
     public function destroy($id)

@@ -64,7 +64,7 @@ class JornadaController extends Controller
 
         $jornada->dias()->attach($request->nombre_dias);
 
-        return Redirect::route('jornadas.index');
+        return Redirect::route('jornadas.index')->with('success', 'Jornada Creada Exitosamente');
     }
 
 
@@ -100,7 +100,7 @@ class JornadaController extends Controller
 
         $jornada->dias()->sync($request->nombre_dias);
 
-        return Redirect::route('jornadas.index');
+        return Redirect::route('jornadas.index')->with('success', 'Jornada Editada Exitosamente');
     }
 
     public function destroy($id)

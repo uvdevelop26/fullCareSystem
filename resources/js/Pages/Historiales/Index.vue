@@ -9,7 +9,8 @@ import { watchEffect, reactive } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 import { pickBy } from 'lodash';
 import DialogModal from '../../Components/DialogModal.vue'
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import FlashMessages from '../../Shared/FlashMessages.vue';
 
 export default {
 
@@ -22,12 +23,14 @@ export default {
         SearchInput,
         SelectInput,
         Filters,
-        DialogModal
+        DialogModal,
+        FlashMessages
     },
 
     props: {
         historiales: Array,
-        filters: Object
+        filters: Object,
+        flash: Object
     },
 
     setup(props) {
@@ -35,6 +38,8 @@ export default {
         const openModal = ref(false);
 
         const catchData = ref();
+
+        const flashMessage = ref(null)
 
 
         //para buscar años
@@ -99,8 +104,13 @@ export default {
             form.search_mes = null 
         }
 
+        //FLASH MESSAGES
+        onMounted(()=>{
+            flashMessage.value = props.flash.success
+        })
 
-        return { form, showYears, meses, eliminarHistorial, catchData, openModal, showModal, limpiarCampos }
+
+        return { form, showYears, meses, eliminarHistorial, catchData, openModal, showModal, limpiarCampos, flashMessage }
 
     }
 
@@ -154,6 +164,8 @@ export default {
                 </div>
             </filters>
         </div>
+        <!-- FLASH MESSAGE -->
+        <flash-messages :flashMessage="flashMessage" />
         <!-- TABLE -->
         <div class="overflow-x-auto py-4 max-w-7xl">
             <table

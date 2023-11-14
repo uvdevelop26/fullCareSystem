@@ -57,7 +57,7 @@ class RoleController extends Controller
 
         $role->syncPermissions($request->input('permissions'));
 
-        return Redirect::route('roles.index');
+        return Redirect::route('roles.index')->with('success', 'Rol Guardado Exitosamente');
     }
 
 
@@ -87,7 +87,7 @@ class RoleController extends Controller
 
         $role->syncPermissions($request['permissions']);
 
-        return Redirect::route('roles.index');
+        return Redirect::route('roles.index')->with('success', 'Rol Editado Exitosamente');
     }
 
 

@@ -9,7 +9,8 @@ import { watchEffect, reactive } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 import { pickBy } from 'lodash';
 import DialogModal from '../../Components/DialogModal.vue'
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import FlashMessages from '../../Shared/FlashMessages.vue';
 
 export default {
 
@@ -22,15 +23,16 @@ export default {
         SelectInput,
         Filters,
         SearchInput,
-        DialogModal
+        DialogModal,
+        FlashMessages
 
     },
 
     props: {
         permissions: Array,
         filters: Object,
-        userPermission: Array
-
+        userPermission: Array,
+        flash: Object
     },
 
 
@@ -40,6 +42,8 @@ export default {
         const openModal = ref(false);
 
         const catchData = ref();
+
+        const flashMessage = ref(null)
 
         //BUSQUEDA
         const form = reactive({
@@ -73,7 +77,12 @@ export default {
            
         }
 
-        return { eliminarPermiso, form, catchData, showModal, openModal, limpiarCampos }
+        //FLASH MESSAGES
+        onMounted(()=>{
+            flashMessage.value = props.flash.success
+        })
+
+        return { eliminarPermiso, form, catchData, showModal, openModal, limpiarCampos, flashMessage }
     }
 
 
@@ -111,6 +120,8 @@ export default {
                 </div>
             </filters>
         </div>
+        <!-- FLASH MESSAGE -->
+        <flash-messages :flashMessage="flashMessage" />
         <!-- TABLE -->
         <div class="overflow-x-auto py-4 max-w-7xl">
             <table

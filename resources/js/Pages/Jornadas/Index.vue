@@ -9,7 +9,8 @@ import { watchEffect, reactive } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 import { pickBy } from 'lodash';
 import DialogModal from '../../Components/DialogModal.vue'
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import FlashMessages from '../../Shared/FlashMessages.vue';
 
 
 export default {
@@ -23,14 +24,16 @@ export default {
         SearchInput,
         SelectInput,
         Filters,
-        DialogModal
+        DialogModal,
+        FlashMessages
     },
 
     props: {
         jornadas: Array,
         turnos: Array,
         filters: Object,
-        auth: Object
+        auth: Object,
+        flash: Object
     },
 
 
@@ -39,6 +42,8 @@ export default {
         const openModal = ref(false);
 
         const catchData = ref();
+
+        const flashMessage = ref(null)
 
         //BUSQUEDA
         const form = reactive({
@@ -67,12 +72,18 @@ export default {
         }
 
         //LIMPIAR CAMPOS
-        const limpiarCampos = ()=>{
+        const limpiarCampos = () => {
             form.search = null
             form.search_turno = null
         }
 
-        return { eliminarJornada, form, openModal, catchData, showModal, limpiarCampos }
+        //LIMPIAR CAMPOS
+        onMounted(() => {
+            flashMessage.value = props.flash.success
+        });
+
+
+        return { eliminarJornada, form, openModal, catchData, showModal, limpiarCampos, flashMessage }
     }
 
 }
@@ -94,27 +105,30 @@ export default {
             </Link>
         </div>
         <!-- FILTER AREA -->
-        <filters>
-            <div class="py-3 px-3 border border-turquesa rounded-md">
-                <div class="lg:flex lg:flex-wrap">
-                    <search-input id="nombre" label="Nombres, Apellidos o C.I" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
-                        v-model="form.search" />
-                    <select-input id="turno" label="Turno" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
-                        v-model="form.search_turno">
-                        <option :value="null" />
-                        <option v-for="turno in turnos" :key="turno.id" :value="turno.id" class="capitalize">
-                            {{ turno.nombre_turnos }}
-                        </option>
-                    </select-input>
+        <div class="py-2">
+            <filters>
+                <div class="py-3 px-3 border border-turquesa rounded-md">
+                    <div class="lg:flex lg:flex-wrap">
+                        <search-input id="nombre" label="Nombres, Apellidos o C.I"
+                            class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2" v-model="form.search" />
+                        <select-input id="turno" label="Turno" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
+                            v-model="form.search_turno">
+                            <option :value="null" />
+                            <option v-for="turno in turnos" :key="turno.id" :value="turno.id" class="capitalize">
+                                {{ turno.nombre_turnos }}
+                            </option>
+                        </select-input>
+                    </div>
+                    <div class="py-3 text-right">
+                        <button class="btn-indigo mx-1 hover:bg-softIndigo" type="button" @click="limpiarCampos()">
+                            Limpiar
+                        </button>
+                    </div>
                 </div>
-                <div class="py-3 text-right">
-                    <button class="btn-indigo mx-1 hover:bg-softIndigo" type="button" @click="limpiarCampos()">
-                        Limpiar
-                    </button>
-                </div>
-            </div>
-        </filters>
-
+            </filters>
+        </div>
+        <!-- flash message -->
+        <flash-messages :flashMessage="flashMessage" />
         <!-- TABLE -->
         <div class="overflow-x-auto py-4 max-w-7xl">
             <table

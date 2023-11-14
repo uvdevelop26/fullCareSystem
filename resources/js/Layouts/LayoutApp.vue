@@ -11,12 +11,13 @@ import { defineProps } from 'vue';
 //show and hide menu to logout 
 const showUserDropdown = ref(false)
 
+
 //variable to show/hide navbar depending on screen sizes
 const isMobile = ref();
 let mql
 
 const props = defineProps({
-    auth: Array
+    auth: Object,
 })
 
 
@@ -130,6 +131,7 @@ onMounted(() => {
     isMobile.value = mql.matches
 
     mql.addEventListener('change', handleMqlChange)
+
 })
 
 
@@ -226,9 +228,6 @@ onUnmounted(() => {
                     </transition>
                 </NavigationMenu>
                 <div class="px-5 py-3 bg-fondColor md:px-8 md:py-8 md:flex-1 md:h-screen md:overflow-y-auto" scroll-region>
-                    <div v-if="$page.props.flash.success">
-                        {{ $page.props.flash.success }}
-                    </div>
                     <slot />
                 </div>
             </div>

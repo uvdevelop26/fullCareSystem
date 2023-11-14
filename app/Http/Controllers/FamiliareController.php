@@ -65,7 +65,7 @@ class FamiliareController extends Controller
         ]);
 
 
-        return Redirect::route('familiares.index');
+        return Redirect::route('familiares.index')->with('success', 'Familiar Creado Exitosamente');
     }
 
 
@@ -111,7 +111,7 @@ class FamiliareController extends Controller
             'persona_id' => $persona->id,
         ]);
 
-        return Redirect::route('familiares.index');
+        return Redirect::route('familiares.index')->with('success', 'Familiar Editado Exitosamente');
     }
 
     public function destroy($id)

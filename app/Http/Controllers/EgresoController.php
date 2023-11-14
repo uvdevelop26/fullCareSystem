@@ -57,7 +57,7 @@ class EgresoController extends Controller
             'categoria_id' => $request->categoria_id
         ]);
 
-        return Redirect::route('egresos.index');
+        return Redirect::route('egresos.index')->with('success', 'Egreso Guardado Exitosamente');
     }
 
 
@@ -91,7 +91,8 @@ class EgresoController extends Controller
             'user_id' => $user_id,
             'categoria_id' => $request->categoria_id
         ]);
-        return Redirect::route('egresos.index');
+
+        return Redirect::route('egresos.index')->with('success', 'Egreso Editado Exitosamente');
     }
 
 

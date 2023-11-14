@@ -55,7 +55,7 @@ class PermissionController extends Controller
             'name' => $request->name
         ]);
 
-        return Redirect::route('permissions.index');
+        return Redirect::route('permissions.index')->with('success', 'Permisso de Acceso Guardado Exitosamente');
     }
 
 
@@ -81,7 +81,7 @@ class PermissionController extends Controller
 
         $permission->update($request->all());
 
-        return Redirect::route('permissions.index');
+        return Redirect::route('permissions.index')->with('success', 'Permisso de Acceso Editado Exitosamente');
     }
 
 

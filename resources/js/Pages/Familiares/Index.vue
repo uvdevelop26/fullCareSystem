@@ -10,7 +10,8 @@ import { watchEffect, reactive } from 'vue';
 import { Inertia } from "@inertiajs/inertia";
 import { pickBy } from 'lodash';
 import DialogModal from '../../Components/DialogModal.vue';
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import FlashMessages from '../../Shared/FlashMessages.vue'
 
 
 export default {
@@ -25,14 +26,16 @@ export default {
         Pagination,
         SelectInput,
         Filters,
-        DialogModal
+        DialogModal, 
+        FlashMessages
     },
 
 
     props: {
         familiares: Array,
         ciudades: Array,
-        filters: Object
+        filters: Object,
+        flash: Object
     },
 
     setup(props) {
@@ -40,6 +43,8 @@ export default {
         const openModal = ref(false)
 
         const catchData = ref()
+
+        const flashMessage = ref(null)
 
         //BUSQUEDA
         const form = reactive({
@@ -75,8 +80,14 @@ export default {
             form.search_residente = null
         }
 
+        //Flash Message
+        onMounted(()=>{
+            flashMessage.value = props.flash.success
+        });
 
-        return { form, eliminarFamiliare, openModal, showModal, catchData, limpiarCampos }
+
+
+        return { form, eliminarFamiliare, openModal, showModal, catchData, limpiarCampos, flashMessage }
 
     }
 
@@ -99,7 +110,6 @@ export default {
             Nuevo
             </Link>
         </div>
-
 
         <!-- FILTER AREA -->
         <div class="py-2">
@@ -126,7 +136,8 @@ export default {
                 </div>
             </filters>
         </div>
-
+        <!-- Message Flash -->
+        <flash-messages :flashMessage="flashMessage" />
         <!-- TABLE -->
         <div class="overflow-x-auto py-4 max-w-7xl">
             <table

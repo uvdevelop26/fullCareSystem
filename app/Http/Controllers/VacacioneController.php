@@ -56,7 +56,7 @@ class VacacioneController extends Controller
             'estado_variacione_id' => $request->estado_variacione_id
         ]);
 
-        return Redirect::route('vacaciones.index');
+        return Redirect::route('vacaciones.index')->with('success', 'Vacación Guardada Exitosamente');
     }
 
 
@@ -90,7 +90,7 @@ class VacacioneController extends Controller
             'estado_variacione_id' => $request->estado_variacione_id,
         ]);
 
-        return Redirect::route('vacaciones.index');
+        return Redirect::route('vacaciones.index')->with('success', 'Vacación Editada Exitosamente');
     }
 
 

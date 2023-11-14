@@ -11,7 +11,8 @@ import { watchEffect, reactive } from 'vue';
 import { Inertia } from "@inertiajs/inertia";
 import { pickBy } from 'lodash';
 import DialogModal from '../../Components/DialogModal.vue'
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import FlashMessages from '../../Shared/FlashMessages.vue';
 
 export default {
 
@@ -26,14 +27,15 @@ export default {
         SelectInput,
         TextInput,
         Filters,
-        DialogModal
+        DialogModal,
+        FlashMessages
     },
 
     props: {
         sueldos: Array,
         seccions: Array,
-        filters: Object
-
+        filters: Object,
+        flash: Object
     },
 
     setup(props) {
@@ -41,6 +43,8 @@ export default {
         const openModal = ref(false);
 
         const catchData = ref();
+
+        const flashMessage = ref(null)
 
         //BUSQUEDA
         //objetos para buscar años y meses
@@ -91,23 +95,28 @@ export default {
 
         //ELIMINAR SUELDO
         const eliminarSueldo = () => {
-            
+
             catchData.value._method = "DELETE";
             Inertia.post('/sueldos/' + catchData.value.id, catchData.value);
 
             openModal.value = false;
         }
 
-         //LIMPIAR CAMPOS
-         const limpiarCampos = ()=>{
+        //LIMPIAR CAMPOS
+        const limpiarCampos = () => {
             form.search = null
             form.search_seccion = null
             form.search_anho = null
             form.search_mes = null
         }
 
+        //FLASH MESSAGES
+        onMounted(() => {
+            flashMessage.value = props.flash.success
+        });
 
-        return { showYears, meses, eliminarSueldo, form, openModal, catchData, showModal, limpiarCampos }
+
+        return { showYears, meses, eliminarSueldo, form, openModal, catchData, showModal, limpiarCampos, flashMessage }
     }
 
 }
@@ -168,6 +177,8 @@ export default {
                 </div>
             </filters>
         </div>
+        <!-- Flash Message -->
+        <flash-messages  :flashMessage="flashMessage" />
         <!-- TABLE -->
         <div class="overflow-x-auto py-4 max-w-7xl">
             <table
