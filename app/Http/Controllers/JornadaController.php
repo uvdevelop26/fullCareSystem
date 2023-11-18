@@ -109,6 +109,6 @@ class JornadaController extends Controller
         
         $jornada->delete();
 
-        return Redirect::route('jornadas.index');
+        return Redirect::route('jornadas.index')->with('success', 'Jornada Eliminada Exitosamente');
     }
 }

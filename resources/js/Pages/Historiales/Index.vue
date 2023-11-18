@@ -92,7 +92,9 @@ export default {
         const eliminarHistorial = () => {
 
             catchData.value._method = "DELETE";
-            Inertia.post('/historiales/' + catchData.value.id, catchData.value);
+            Inertia.post('/historiales/' + catchData.value.id, catchData.value, {
+                preserveState: false
+            });
 
             openModal.value = false;
         }

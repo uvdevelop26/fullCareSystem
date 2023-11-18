@@ -65,19 +65,21 @@ export default {
         const eliminarPermiso = () => {
 
             catchData.value._method = "DELETE";
-            Inertia.post('/permisos/' + catchData.value.id, catchData.value);
+            Inertia.post('/permisos/' + catchData.value.id, catchData.value, {
+                preserveState: false
+            });
 
             openModal.value = false;
         }
 
         //LIMPIAR CAMPOS
-        const limpiarCampos = ()=>{
+        const limpiarCampos = () => {
             form.search = null
             form.search_estado = null
         }
 
         //FLASH MESSAGE
-        onMounted(()=>{
+        onMounted(() => {
             flashMessage.value = props.flash.success
         })
 
@@ -208,7 +210,7 @@ export default {
                     <button @click="openModal = false" class="btn-cancelar">
                         Cancelar
                     </button>
-                    <button @click="eliminarPermiso ()"
+                    <button @click="eliminarPermiso()"
                         class="px-6 py-3 text-white text-sm leading-4 rounded-md bg-red-400 hover:bg-red-300 font-bold whitespace-nowrap focus:bg-red-400">
                         Eliminar
                     </button>

@@ -117,11 +117,10 @@ class FamiliareController extends Controller
     public function destroy($id)
     {
 
-
         $familiare = Familiare::find($id);
 
         $familiare->delete();
 
-        return Redirect::route('familiares.index');
+        return Redirect::route('familiares.index')->with('success', 'Familiar Eliminado Exitosamente');
     }
 }

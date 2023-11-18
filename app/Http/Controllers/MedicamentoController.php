@@ -134,6 +134,6 @@ class MedicamentoController extends Controller
         
         $medicamento->delete();
 
-        return Redirect::route('medicamentos.index');
+        return Redirect::route('medicamentos.index')->with('success', 'Medicamento Eliminado Exitosamente');
     }
 }

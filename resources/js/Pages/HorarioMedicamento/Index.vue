@@ -1,18 +1,31 @@
 <script>
 import LayoutApp from '../../Layouts/LayoutApp.vue';
-import { useForm } from '@inertiajs/inertia-vue3';
-import { ref } from 'vue';
+import { useForm } from "@inertiajs/inertia-vue3";
+import FlashMessages from '../../Shared/FlashMessages.vue';
+import { ref, onMounted } from 'vue'
+
 
 
 export default {
-
     layout: LayoutApp,
 
+    components:{
+        FlashMessages
+    },
+
     props: {
-        horarioRutinas: Array
+        horarioMedicamentos: Array,
+        flash: Object,
+        errors: Object,
     },
 
     setup(props) {
+
+        const flashMessage = ref(null)
+
+        const error = ref(null)
+
+
         //PARA MOSTRAR IMAGEN
         const urlbase = (url) => {
             if (url.includes('https')) {
@@ -48,42 +61,56 @@ export default {
             hora: "",
             realizado: false,
             user_id: "",
-            horario_rutina_id: ""
+            horario_medicamento_id: ""
 
         });
+
 
         //enviar al formulario
         const realizarMarcacion = (data) => {
             form.fecha = getfullDate();
             form.hora = getfullHour();
             form.realizado = true,
-                form.horario_rutina_id = data
+                form.horario_medicamento_id = data
 
-            form.post(route('control-rutina.store'), {
-                forceFormData: true
+            form.post(route('horario-medicamentos.store'), {
+                forceFormData: true,
+                preserveState: false
             });
 
         }
 
-        return { urlbase, realizarMarcacion }
-    }
+        //Flash Mensajes
+        onMounted(()=>{
+            flashMessage.value = props.flash.success
 
+            error.value = props.errors.horario_medicamento_id
+        })
+
+
+
+        return { urlbase, realizarMarcacion, flashMessage, error }
+
+    }
 }
 </script>
+
 <template>
     <div>
 
         <Head title="Controlar Medicaciones" />
-
         <!-- HEADER -->
         <div class="py-3 mb-3 max-w-7xl border-b border-turquesa flex justify-between">
             <h1 class="uppercase">
-                <span class="text-turquesa text-2xl font-semibold">Control de Rutinas</span>
+                <span class="text-turquesa text-2xl font-semibold">Suministro de medicamentos</span>
             </h1>
         </div>
         <!-- FILTRO -->
 
-        <!-- TABLA DESKTOP -->
+        <!-- FLASH MENSAJES -->
+        <flash-messages :flashMessage="flashMessage" :error="error" />
+
+        <!-- TABLAS-->
         <div class="overflow-x-auto py-4 max-w-7xl">
             <!-- DESKTOP -->
             <table
@@ -91,15 +118,15 @@ export default {
                 <thead class="">
                     <tr class="capitalize shadow">
                         <th class="py-3 px-4 bg-turquesa rounded-l-xl text-white font-bold">Residente</th>
-                        <th class="py-3 px-4 bg-turquesa text-white font-bold">Rutina</th>
-                        <th class="py-3 px-4 bg-turquesa text-white font-bold">descripcion</th>
+                        <th class="py-3 px-4 bg-turquesa text-white font-bold">Medicamento</th>
+                        <th class="py-3 px-4 bg-turquesa text-white font-bold">Dosis</th>
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">Horarios</th>
                         <th class="py-3 px-4 bg-turquesa rounded-r-xl text-white font-bold"> Marcacion Diaria</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="horario in horarioRutinas" :key="horario.id" class="text-center shadow group">
-                        <td v-for="residente in horario.rutinas"
+                    <tr v-for="horario in horarioMedicamentos" :key="horario.id" class="text-center shadow group">
+                        <td v-for="residente in horario.medicamentos"
                             class="py-1 px-1 bg-white group-hover:bg-fondColor rounded-l-xl">
                             <div class="inline-block h-12 w-12 border-2 border-softIndigo rounded-full overflow-hidden">
                                 <img :src="urlbase(residente.residente.foto)" class="w-full h-full object-cover" alt="foto">
@@ -107,10 +134,10 @@ export default {
                             <div> {{ residente.residente.persona.nombres }} {{ residente.residente.persona.apellidos }}
                             </div>
                         </td>
-                        <td v-for="rutina in horario.rutinas" class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            {{ rutina.nombre }}</td>
-                        <td v-for="descripcion in horario.rutinas" class="py-2 px-2 bg-white group-hover:bg-fondColor">{{
-                            descripcion.descripcion }}</td>
+                        <td v-for="medicamento in horario.medicamentos" class="py-2 px-2 bg-white group-hover:bg-fondColor">
+                            {{ medicamento.nombre }}</td>
+                        <td v-for="dosis in horario.medicamentos" class="py-2 px-2 bg-white group-hover:bg-fondColor">{{
+                            dosis.dosis }}</td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
                             <span class="text-indigo-400 font-bold"> {{ horario.hora }}</span>
                         </td>
@@ -121,34 +148,35 @@ export default {
                         </td>
                     </tr>
                 </tbody>
+
             </table>
-            <!-- MOBILE -->
+            <!-- TABLA MOBILE -->
             <div class="w-full md:hidden">
-                <div class="mb-3" v-for="horario in horarioRutinas" :key="horario.id">
+                <div class="mb-3" v-for="horario in horarioMedicamentos" :key="horario.id">
 
                     <div class="flex">
                         <div class="header border border-b-0 p-5 w-2/5 bg-turquesa text-white font-bold capitalize">
                             Residente
                         </div>
-                        <div v-for="residente in horario.rutinas" class="contenido border border-b-0 p-5 w-3/5">
+                        <div v-for="residente in horario.medicamentos" class="contenido border border-b-0 p-5 w-3/5">
                             {{ residente.residente.persona.nombres }}
                             {{ residente.residente.persona.apellidos }}
                         </div>
                     </div>
                     <div class="flex">
                         <div class="header border border-b-0 p-5 w-2/5 bg-turquesa text-white font-bold">
-                            Rutina
+                            Medicamento
                         </div>
-                        <div v-for="rutina in horario.rutinas" class="contenido border border-b-0 p-5 w-3/5">
-                            {{ rutina.nombre }}
+                        <div v-for="medicamento in horario.medicamentos" class="contenido border border-b-0 p-5 w-3/5">
+                            {{ medicamento.nombre }}
                         </div>
                     </div>
                     <div class="flex">
                         <div class="header border border-b-0 p-5 w-2/5 bg-turquesa text-white font-bold">
-                            Descripcion
+                            Dosis
                         </div>
-                        <div v-for="descripcion in horario.rutinas" class="contenido border border-b-0 p-5 w-3/5">
-                            {{ descripcion.descripcion }}
+                        <div v-for="dosis in horario.medicamentos" class="contenido border border-b-0 p-5 w-3/5">
+                            {{ dosis.dosis }}
                         </div>
                     </div>
                     <div class="flex">
@@ -165,7 +193,8 @@ export default {
                         </div>
                         <div class="contenido border  p-5 w-3/5">
                             <button
-                                class="inline-block font-bold text-indigo-500 bg-indigo-200 py-2 px-3 border border-indigo-500 rounded-2xl hover:bg-indigo-400 hover:text-white"  @click="realizarMarcacion(horario.id)">Realizado</button>
+                                class="inline-block font-bold text-indigo-500 bg-indigo-200 py-2 px-3 border border-indigo-500 rounded-2xl hover:bg-indigo-400 hover:text-white"
+                                @click="realizarMarcacion(horario.id)">Realizado</button>
                         </div>
                     </div>
                 </div>

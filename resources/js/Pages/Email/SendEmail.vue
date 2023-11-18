@@ -5,6 +5,7 @@ import { useForm } from "@inertiajs/inertia-vue3";
 import Icon from '../../Shared/Icon.vue'
 import TextInput from '../../Shared/TextInput.vue';
 
+
 export default {
 
     layout: LayoutApp,

@@ -32,13 +32,14 @@ class PermissionSeeder extends Seeder
             'empleados-jornadas',
             'empleados-permisos',
             'empleados-vacaciones',
+
             //módulo usuarios
             'usuarios',
             'usuarios-lista',
             'usuarios-roles',
             'usuarios-permissions',
 
-            //módulo
+            //módulo finanzas
             'finanzas',
             'finanzas-ingresos',
             'finanzas-egresos',
@@ -49,8 +50,11 @@ class PermissionSeeder extends Seeder
             'salud-historiales',
             'salud-medicamentos',
             'salud-rutinas',
-            'salud-control-med',
-            'salud-control-rut',
+
+            //módulo control
+            'control',
+            'control-med',
+            'control-rut',
 
             //módulo reportes
             'reportes',
@@ -70,9 +74,9 @@ class PermissionSeeder extends Seeder
         $role1 = Role::create(['name' => 'enfermero']);
         $role1->givePermissionTo('empleados');
         $role1->givePermissionTo('empleados-jornadas');
-        $role1->givePermissionTo('salud');
-        $role1->givePermissionTo('salud-control-med');
-        $role1->givePermissionTo('salud-control-rut');
+        $role1->givePermissionTo('control');
+        $role1->givePermissionTo('control-med');
+        $role1->givePermissionTo('control-rut');
         $role1->givePermissionTo('reportes');
         
 

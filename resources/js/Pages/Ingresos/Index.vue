@@ -97,7 +97,9 @@ export default {
         const eliminarIngreso = () => {
 
             catchData.value._method = "DELETE";
-            Inertia.post('/ingresos/' + catchData.value.id, catchData.value);
+            Inertia.post('/ingresos/' + catchData.value.id, catchData.value, {
+                preserveState: false
+            });
 
             openModal.value = false;
         }

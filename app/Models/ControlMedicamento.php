@@ -24,4 +24,9 @@ class ControlMedicamento extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function horarioMedicamento()
+    {
+        return $this->belongsTo(HorarioMedicamento::class);
+    }
 }

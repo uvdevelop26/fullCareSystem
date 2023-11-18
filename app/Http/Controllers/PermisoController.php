@@ -104,6 +104,6 @@ class PermisoController extends Controller
         
         $permiso->delete();
 
-        return Redirect::route('permisos.index');
+        return Redirect::route('permisos.index')->with('success', 'Permiso Eliminado Exitosamente');
     }
 }

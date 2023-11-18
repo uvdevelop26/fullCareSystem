@@ -65,19 +65,21 @@ export default {
         const eliminarUser = () => {
 
             catchData.value._method = "DELETE";
-            Inertia.post('/usuarios/' + catchData.value.id, catchData.value);
+            Inertia.post('/usuarios/' + catchData.value.id, catchData.value, {
+                preserveState: false
+            });
 
             openModal.value = false;
         }
 
         //LIMPIAR CAMPOS
-        const limpiarCampos = ()=>{
+        const limpiarCampos = () => {
             form.search = null
             form.search_rol = null
         }
 
         //FLASH MESSAGES
-        onMounted(()=>{
+        onMounted(() => {
             flashMessage.value = props.flash.success
         })
 

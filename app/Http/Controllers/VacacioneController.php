@@ -100,6 +100,6 @@ class VacacioneController extends Controller
         
         $vacacione->delete();
 
-        return Redirect::route('vacaciones.index');
+        return Redirect::route('vacaciones.index')->with('success', 'Vacación Eliminada Exitosamente');
     }
 }

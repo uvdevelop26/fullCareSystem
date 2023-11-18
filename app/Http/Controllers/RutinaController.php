@@ -82,6 +82,6 @@ class RutinaController extends Controller
         
         $rutina->delete();
 
-        return Redirect::route('rutinas.index');
+        return Redirect::route('rutinas.index')->with('success', 'Rutina Eliminada Exitosamente');
     }
 }

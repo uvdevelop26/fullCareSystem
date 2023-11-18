@@ -140,7 +140,7 @@ class HistorialeController extends Controller
 
         $historiale->delete();
 
-        return Redirect::route('historiales.index');
+        return Redirect::route('historiales.index')->with('success', 'Historial Eliminado Exitosamente');
     }
 
 

@@ -73,7 +73,7 @@ class User extends Authenticatable
         return $this->hasMany(Egreso::class);
     }
 
-    public function controlMedicamento()
+    public function controlMedicamentos()
     {
         return $this->hasMany(ControlMedicamento::class);
     }

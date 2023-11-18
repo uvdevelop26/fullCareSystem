@@ -20,4 +20,8 @@ class HorarioMedicamento extends Model
         return $this->belongsToMany(Medicamento::class);
     }
 
+    public function controlMedicamentos()
+    {
+        return $this->hasMany(ControlMedicamento::class);
+    }
 }

@@ -66,7 +66,9 @@ export default {
         const eliminarJornada = () => {
 
             catchData.value._method = "DELETE";
-            Inertia.post('/jornadas/' + catchData.value.id, catchData.value);
+            Inertia.post('/jornadas/' + catchData.value.id, catchData.value, {
+                preserveState: false
+            });
 
             openModal.value = false;
         }
@@ -142,7 +144,8 @@ export default {
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">Entrada</th>
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">Salida</th>
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">Dias</th>
-                        <th class="py-3 px-4 bg-turquesa rounded-r-xl text-white font-bold">Acciones</th>
+                        <th class="py-3 px-4 bg-turquesa rounded-r-xl text-white font-bold" v-if="auth.role === 'admin'">
+                            Acciones</th>
                     </tr>
                 </thead>
                 <transition-group appear tag="tbody" name="list">
@@ -172,7 +175,7 @@ export default {
                                 {{ dias.nombre_dias }}
                             </span>
                         </td>
-                        <td class="py-2 px-2 rounded-r-xl bg-white group-hover:bg-fondColor">
+                        <td class="py-2 px-2 rounded-r-xl bg-white group-hover:bg-fondColor" v-if="auth.role === 'admin'">
                             <div class="w-full h-full flex items-center justify-center">
                                 <Link class="inline-block bg-fondColor px-3 py-3 mr-2 rounded-full hover:shadow-md"
                                     :href="route('jornadas.edit', jornada.id)">

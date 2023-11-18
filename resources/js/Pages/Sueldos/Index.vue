@@ -97,7 +97,9 @@ export default {
         const eliminarSueldo = () => {
 
             catchData.value._method = "DELETE";
-            Inertia.post('/sueldos/' + catchData.value.id, catchData.value);
+            Inertia.post('/sueldos/' + catchData.value.id, catchData.value, {
+                preserveState: false
+            });
 
             openModal.value = false;
         }
@@ -178,7 +180,7 @@ export default {
             </filters>
         </div>
         <!-- Flash Message -->
-        <flash-messages  :flashMessage="flashMessage" />
+        <flash-messages :flashMessage="flashMessage" />
         <!-- TABLE -->
         <div class="overflow-x-auto py-4 max-w-7xl">
             <table

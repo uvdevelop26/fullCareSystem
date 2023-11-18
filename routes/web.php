@@ -10,6 +10,8 @@ use App\Http\Controllers\EgresoController;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\FamiliareController;
 use App\Http\Controllers\HistorialeController;
+use App\Http\Controllers\HorarioMedicamentoController;
+use App\Http\Controllers\HorarioRutinaController;
 use App\Http\Controllers\IngresoController;
 use App\Http\Controllers\JornadaController;
 use App\Http\Controllers\MedicamentoController;
@@ -50,8 +52,8 @@ Route::get('/', function () {
 //dashboard
 
 Route::controller(DashboardController::class)
-    ->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified', ])
-    ->group(function (){
+    ->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])
+    ->group(function () {
         Route::get('/dashboard', 'index')->name('dashboard');
     });
 
@@ -137,10 +139,14 @@ Route::resource('medicamentos', MedicamentoController::class)
 Route::resource('rutinas', RutinaController::class)
     ->middleware('auth:sanctum', 'verified');
 
-//control de medicamentos
-Route::resource('control-medicamento', ControlMedicamentoController::class)
-    ->middleware('auth:sanctum', 'verified');;
+//marcación horario medicamentos
+Route::resource('horario-medicamentos', HorarioMedicamentoController::class)
+    ->middleware('auth:sanctum', 'verified');
 
-//control de rutinas
-Route::resource('control-rutina', ControlRutinaController::class)
+//marcación horario rutinas
+Route::resource('horario-rutinas', HorarioRutinaController::class)
+    ->middleware('auth:sanctum', 'verified');
+
+//control de horarios
+Route::resource('control-medicamentos', ControlMedicamentoController::class)
     ->middleware('auth:sanctum', 'verified');

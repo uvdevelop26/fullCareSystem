@@ -67,7 +67,9 @@ export default {
         const eliminarVacacion = (data) => {
 
             catchData.value._method = "DELETE";
-            Inertia.post('/vacaciones/' + catchData.value.id, catchData.value);
+            Inertia.post('/vacaciones/' + catchData.value.id, catchData.value, {
+                preserveState: false
+            });
 
             openModal.value = false;
         }

@@ -66,19 +66,21 @@ export default {
         const eliminarRole = () => {
 
             catchData.value._method = "DELETE";
-            Inertia.post('/roles/' + catchData.value.id, catchData.value);
+            Inertia.post('/roles/' + catchData.value.id, catchData.value, {
+                preserveState: false
+            });
 
             openModal.value = false;
         }
 
         //LIMPIAR CAMPOS
-        const limpiarCampos = ()=>{
+        const limpiarCampos = () => {
             form.search = null
-           
+
         }
 
         //FLASH MESSAGES
-        onMounted(()=>{
+        onMounted(() => {
             flashMessage.value = props.flash.success
         })
 

@@ -79,7 +79,9 @@ export default {
         const eliminarResidente = () => {
 
             catchData.value._method = "DELETE";
-            Inertia.post('/residentes/' + catchData.value.id, catchData.value);
+            Inertia.post('/residentes/' + catchData.value.id, catchData.value, {
+                preserveState: false
+            });
 
             openModal.value = false;
         }
@@ -101,6 +103,7 @@ export default {
         })
         
 
+            console.log(Inertia.page.props.flash.success)
 
 
         return { form, urlbase, eliminarResidente, openModal, catchData, showModal, limpiarCampos, flashMessage }

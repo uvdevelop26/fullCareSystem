@@ -159,7 +159,8 @@ class ResidenteController extends Controller
 
         $residente->delete();
 
-        return Redirect::route('residentes.index');
+        return Redirect::route('residentes.index')->with('success', 'Residente Eliminado');
+        
        
     }
 }

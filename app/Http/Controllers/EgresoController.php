@@ -102,6 +102,6 @@ class EgresoController extends Controller
 
         $egreso->delete();
         
-        return Redirect::route('egresos.index');
+        return Redirect::route('egresos.index')->with('success', 'Egreso Eliminado Exitosamente');
     }
 }

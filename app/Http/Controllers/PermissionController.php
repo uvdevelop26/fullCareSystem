@@ -91,6 +91,6 @@ class PermissionController extends Controller
         
         $permission->delete();
 
-        return Redirect::route('permissions.index');
+        return Redirect::route('permissions.index')->with('success', 'Permisso de Acceso Eliminado Exitosamente');
     }
 }

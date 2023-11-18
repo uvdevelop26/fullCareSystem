@@ -66,7 +66,9 @@ export default {
         const eliminarPermiso = () => {
 
             catchData.value._method = "DELETE";
-            Inertia.post('/permissions/' + catchData.value.id, catchData.value);
+            Inertia.post('/permissions/' + catchData.value.id, catchData.value, {
+                preserveState: false    
+            });
 
             openModal.value = false;
         }

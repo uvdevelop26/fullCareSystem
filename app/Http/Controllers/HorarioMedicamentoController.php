@@ -2,30 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ControlMedicamentoRequest;
 use App\Models\ControlMedicamento;
-use App\Models\HorarioMedicamento;
-use App\Models\Medicamento;
 use Illuminate\Http\Request;
+use App\Models\HorarioMedicamento;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
-class ControlMedicamentoController extends Controller
+class HorarioMedicamentoController extends Controller
 {
     public function index()
     {
-
-        $controlMedicamentos = ControlMedicamento::with('user', 'horarioMedicamento')
+        $horarioMedicamentos =  HorarioMedicamento::has('medicamentos')
+            ->with('medicamentos.residente.persona')
             ->orderBy('id', 'desc')
             ->get();
-   
-        return Inertia::render('ControlMedicamento/Index', ['horarioMedicamentos' => $controlMedicamentos]); 
+
+
+        return Inertia::render('HorarioMedicamento/Index', ['horarioMedicamentos' => $horarioMedicamentos]);
     }
 
-    public function store(Request $request)
+    public function store(ControlMedicamentoRequest $request)
     {
 
-        /*   $user_id = Auth::user()->id;
+        $user_id = Auth::user()->id;
 
         ControlMedicamento::create([
             'fecha' => $request->fecha,
@@ -35,6 +36,6 @@ class ControlMedicamentoController extends Controller
             'horario_medicamento_id' => $request->horario_medicamento_id
         ]);
 
-        return Redirect::route('control-medicamento.index'); */
+        return Redirect::route('horario-medicamentos.index')->with('success', 'Marcación Exitosa');
     }
 }

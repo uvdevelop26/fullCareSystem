@@ -85,17 +85,27 @@ const menu = reactive([
         name: 'salud',
         icon_name: 'historial',
         submenu: [
-            { name: 'historial clinico', href: '/historiales',permiso:'salud-historiales' },
-            { name: 'medicamentos', href: '/medicamentos',permiso: 'salud-medicamentos' },
-            { name: 'rutinas', href: '/rutinas',permiso: 'salud-rutinas' },
-            { name: 'control de medicamentos', href: '/control-medicamento',permiso: 'salud-control-med' },
-            { name: 'control de rutinas', href: '/control-rutina',permiso: 'salud-control-rut' },
+            { name: 'historial clinico', href: '/historiales', permiso: 'salud-historiales' },
+            { name: 'medicamentos', href: '/medicamentos', permiso: 'salud-medicamentos' },
+            { name: 'rutinas', href: '/rutinas', permiso: 'salud-rutinas' },
+
         ],
         toggle_submenu: false
 
     },
     {
         id: 7,
+        name: 'control',
+        icon_name: 'control',
+        submenu: [
+            { name: 'marcar medicamentos', href: '/horario-medicamentos', permiso: 'control-med' },
+            { name: 'marcar rutinas', href: '/horario-rutinas', permiso: 'control-rut' },
+        ],
+        toggle_submenu: false
+
+    },
+    {
+        id: 8,
         name: 'reportes',
         icon_name: 'reportes',
         href: '/reportes',
@@ -192,7 +202,7 @@ onUnmounted(() => {
                                             <ul v-if="item.submenu.length && item.toggle_submenu"
                                                 class="pl-8 pt-1 overflow-hidden">
                                                 <template v-for="subitem in item.submenu" :key="subitem.name">
-                                                    <li  v-if="hasPermission(subitem.permiso)" class="py-1 pl-3 border-l-2"
+                                                    <li v-if="hasPermission(subitem.permiso)" class="py-1 pl-3 border-l-2"
                                                         :class="{ 'bg-fondColor border-l-turquesa': $page.url.startsWith(subitem.href) }">
                                                         <Link :href="subitem.href" class="md:text-sm">
                                                         <span class="capitalize hover:text-turquesa"

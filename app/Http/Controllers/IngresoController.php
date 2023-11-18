@@ -103,6 +103,6 @@ class IngresoController extends Controller
         
         $ingreso->delete();
         
-        return Redirect::route('ingresos.index');
+        return Redirect::route('ingresos.index')->with('success', 'Ingreso Eliminado Exitosamente');
     }
 }

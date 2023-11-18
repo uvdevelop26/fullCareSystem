@@ -134,7 +134,7 @@ class EmpleadoController extends Controller
 
         $empleado->delete();
 
-        return Redirect::route('empleados.index');
+        return Redirect::route('empleados.index')->with('success', 'Empleado Eliminado Exitosamente');
        
     }
 }

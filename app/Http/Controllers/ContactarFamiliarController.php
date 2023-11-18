@@ -27,7 +27,7 @@ class ContactarFamiliarController extends Controller
      
         Mail::to($request->email)->send(new ContactarFamiliarMailable($request->mensaje));
 
-        return Redirect::route('familiares.index');
+        return Redirect::route('familiares.index')->with('success', 'Correo Enviado Exitosamente');
     }
 
     

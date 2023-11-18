@@ -94,7 +94,9 @@ export default {
         const eliminarEgreso = () => {
 
             catchData.value._method = "DELETE";
-            Inertia.post('/egresos/' + catchData.value.id, catchData.value);
+            Inertia.post('/egresos/' + catchData.value.id, catchData.value, {
+                preserveState: false
+            });
 
             openModal.value = false;
         }

@@ -67,7 +67,9 @@ export default {
         //ELIMINAR EMPLEADO
         const eliminarEmpleado = () => {
             catchData.value._method = "DELETE";
-            Inertia.post('/empleados/' + catchData.value.id, catchData.value);
+            Inertia.post('/empleados/' + catchData.value.id, catchData.value, {
+                preserveState: false
+            });
 
             openModal.value = false;
         }

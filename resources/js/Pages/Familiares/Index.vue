@@ -68,7 +68,9 @@ export default {
         const eliminarFamiliare = () => {
             
             catchData.value._method = "DELETE";
-            Inertia.post('/familiares/' + catchData.value.id, catchData.value)
+            Inertia.post('/familiares/' + catchData.value.id, catchData.value, {
+                preserveState: false
+            });
 
             openModal.value = false;
         }

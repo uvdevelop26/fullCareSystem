@@ -64,7 +64,9 @@ export default {
         const eliminarMedicamento = () => {
 
             catchData.value._method = "DELETE";
-            Inertia.post('/medicamentos/' + catchData.value.id, catchData.value);
+            Inertia.post('/medicamentos/' + catchData.value.id, catchData.value, {
+                preserveState: false
+            });
 
             openModal.value = false;
         }

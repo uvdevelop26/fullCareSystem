@@ -66,7 +66,9 @@ export default {
         const eliminarRutina = () => {
 
             catchData.value._method = "DELETE";
-            Inertia.post('/rutinas/' + catchData.value.id, catchData.value);
+            Inertia.post('/rutinas/' + catchData.value.id, catchData.value, {
+                preserveState: false
+            });
 
             openModal.value = false;
         }
