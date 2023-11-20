@@ -98,8 +98,10 @@ const menu = reactive([
         name: 'control',
         icon_name: 'control',
         submenu: [
-            { name: 'marcar medicamentos', href: '/horario-medicamentos', permiso: 'control-med' },
-            { name: 'marcar rutinas', href: '/horario-rutinas', permiso: 'control-rut' },
+            { name: 'marcar medicamentos', href: '/horario-medicamentos', permiso: 'marcar-med' },
+            { name: 'marcar rutinas', href: '/horario-rutinas', permiso: 'marcar-rut' },
+            { name: 'control medicamentos', href: '/control-medicamentos', permiso: 'control-med' },
+            { name: 'control rutinas', href: '/control-rutinas', permiso: 'control-rut' }
         ],
         toggle_submenu: false
 

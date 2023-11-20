@@ -11,18 +11,19 @@ return new class extends Migration
     {
         Schema::create('horario_rutina_rutina', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('horario_rutina_id');
             $table->unsignedBigInteger('rutina_id');
-
-            $table->foreign('horario_rutina_id')
-                ->references('id')
-                ->on('horario_rutina')
-                ->onDelete('cascade');
-
+            $table->unsignedBigInteger('horario_rutina_id');
+            
             $table->foreign('rutina_id')
                 ->references('id')
                 ->on('rutinas')
                 ->onDelete('cascade');
+                
+            $table->foreign('horario_rutina_id')
+                ->references('id')
+                ->on('horario_rutina')
+                ->onDelete('cascade');
+            
             $table->timestamps();
         });
     }

@@ -147,6 +147,10 @@ Route::resource('horario-medicamentos', HorarioMedicamentoController::class)
 Route::resource('horario-rutinas', HorarioRutinaController::class)
     ->middleware('auth:sanctum', 'verified');
 
-//control de horarios
+//control de horarios de medicamentos
 Route::resource('control-medicamentos', ControlMedicamentoController::class)
+    ->middleware('auth:sanctum', 'verified');
+
+//control de horarios de rutinas
+Route::resource('control-rutinas', ControlRutinaController::class)
     ->middleware('auth:sanctum', 'verified');

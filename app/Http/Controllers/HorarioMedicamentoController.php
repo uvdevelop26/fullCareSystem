@@ -12,15 +12,21 @@ use Inertia\Inertia;
 
 class HorarioMedicamentoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $queries = ['search_residente'];
+        
         $horarioMedicamentos =  HorarioMedicamento::has('medicamentos')
             ->with('medicamentos.residente.persona')
+            ->filter($request->only($queries))
             ->orderBy('id', 'desc')
             ->get();
 
 
-        return Inertia::render('HorarioMedicamento/Index', ['horarioMedicamentos' => $horarioMedicamentos]);
+        return Inertia::render('HorarioMedicamento/Index', [
+            'horarioMedicamentos' => $horarioMedicamentos,
+            'filters' => $request->all($queries)
+        ]);
     }
 
     public function store(ControlMedicamentoRequest $request)

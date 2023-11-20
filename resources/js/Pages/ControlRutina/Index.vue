@@ -7,7 +7,6 @@ import { Inertia } from '@inertiajs/inertia';
 import SearchInput from '../../Shared/SearchInput.vue';
 import { watchEffect, reactive } from 'vue';
 
-
 export default {
 
     layout: LayoutApp,
@@ -19,7 +18,7 @@ export default {
     },
 
     props: {
-        controlMedicamentos: Array,
+        controlRutinas: Array,
         filters: Object
     },
 
@@ -32,15 +31,21 @@ export default {
 
         watchEffect(() => {
             const query = pickBy(search);
-            Inertia.replace(route('control-medicamentos.index', Object.keys(query).length ? query : {}));
+            Inertia.replace(route('control-rutinas.index', Object.keys(query).length ? query : {}));
         })
 
 
         return { search }
+
+
     }
 
+
+
 }
+
 </script>
+
 <template>
     <div>
 
@@ -52,7 +57,8 @@ export default {
                 <span class="text-turquesa text-2xl font-semibold">Marcaciones Diarias</span>
             </h1>
         </div>
-        <!-- FILTER AREA -->
+
+        <!-- FILTER -->
         <div class="py-2">
             <filters>
                 <div class="py-3 px-3 border border-turquesa rounded-md">
@@ -60,12 +66,11 @@ export default {
                         <search-input id="nombre" label="Nombre del Residente" class="text-sm pb-1 lg:pr-3 w-full"
                             v-model="search.search_residente" />
                     </div>
-                   
                 </div>
             </filters>
         </div>
 
-        <!-- TABLA -->
+        <!-- TABLE -->
         <div class="overflow-x-auto py-4 max-w-7xl">
             <table
                 class="w-full whitespace-nowrap border-separate border-spacing-y-2 text-sm rounded-md overflow-hidden shadow-md">
@@ -73,7 +78,7 @@ export default {
                     <tr class="capitalize shadow">
                         <th class="py-3 px-4 bg-turquesa rounded-l-xl text-white font-bold">Fecha</th>
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">Residente</th>
-                        <th class="py-3 px-4 bg-turquesa text-white font-bold">Medicamento</th>
+                        <th class="py-3 px-4 bg-turquesa text-white font-bold">Rutina</th>
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">hora</th>
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">Hora Marcación</th>
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">Realizado</th>
@@ -82,21 +87,21 @@ export default {
                     </tr>
                 </thead>
                 <transition-group appear tag="tbody" name="list">
-                    <tr v-for="control in controlMedicamentos" :key="control.id" class="text-center shadow group"
-                        v-if="controlMedicamentos.length">
+                    <tr v-for="control in controlRutinas" :key="control.id" class="text-center shadow group"
+                        v-if="controlRutinas.length">
                         <td class="py-1 px-1 bg-white group-hover:bg-fondColor rounded-l-xl">
                             {{ control.fecha }}
                         </td>
-                        <td v-for="residente in control.horario_medicamento.medicamentos"
+                        <td v-for="residente in control.horario_rutina.rutinas"
                             class="py-1 px-1 bg-white group-hover:bg-fondColor">
                             {{ residente.residente.persona.nombres }}
                         </td>
-                        <td v-for="medicamentos in control.horario_medicamento.medicamentos"
+                        <td v-for="rutina in control.horario_rutina.rutinas"
                             class="py-1 px-1 bg-white group-hover:bg-fondColor">
-                            {{ medicamentos.nombre }}
+                            {{ rutina.nombre }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            {{ control.horario_medicamento.hora }}
+                            {{ control.horario_rutina.hora }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
                             {{ control.hora }}

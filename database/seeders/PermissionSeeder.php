@@ -53,6 +53,8 @@ class PermissionSeeder extends Seeder
 
             //módulo control
             'control',
+            'marcar-med',
+            'marcar-rut',
             'control-med',
             'control-rut',
 
@@ -75,8 +77,8 @@ class PermissionSeeder extends Seeder
         $role1->givePermissionTo('empleados');
         $role1->givePermissionTo('empleados-jornadas');
         $role1->givePermissionTo('control');
-        $role1->givePermissionTo('control-med');
-        $role1->givePermissionTo('control-rut');
+        $role1->givePermissionTo('marcar-med');
+        $role1->givePermissionTo('marcar-rut');
         $role1->givePermissionTo('reportes');
         
 

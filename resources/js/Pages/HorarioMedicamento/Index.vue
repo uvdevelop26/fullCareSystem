@@ -3,20 +3,29 @@ import LayoutApp from '../../Layouts/LayoutApp.vue';
 import { useForm } from "@inertiajs/inertia-vue3";
 import FlashMessages from '../../Shared/FlashMessages.vue';
 import { ref, onMounted } from 'vue'
-
-
+import { watchEffect, reactive } from 'vue';
+import Filters from '../../Shared/Filters.vue';
+import { pickBy } from 'lodash';
+import { Inertia } from '@inertiajs/inertia';
+import SearchInput from '../../Shared/SearchInput.vue';
+import { Head } from '@inertiajs/inertia-vue3';
 
 export default {
     layout: LayoutApp,
 
-    components:{
-        FlashMessages
+    components: {
+        FlashMessages,
+        Filters,
+        SearchInput,
+        Head
     },
 
     props: {
         horarioMedicamentos: Array,
         flash: Object,
         errors: Object,
+        filters: Object
+
     },
 
     setup(props) {
@@ -55,6 +64,16 @@ export default {
 
         }
 
+        //busqueda
+        const search = reactive({
+            search_residente: props.filters.search_residente
+        });
+
+        watchEffect(() => {
+            const query = pickBy(search);
+            Inertia.replace(route('horario-medicamentos.index', Object.keys(query).length ? query : {}));
+        })
+
         //variables para guardar datos
         const form = useForm({
             fecha: "",
@@ -81,7 +100,7 @@ export default {
         }
 
         //Flash Mensajes
-        onMounted(()=>{
+        onMounted(() => {
             flashMessage.value = props.flash.success
 
             error.value = props.errors.horario_medicamento_id
@@ -89,7 +108,7 @@ export default {
 
 
 
-        return { urlbase, realizarMarcacion, flashMessage, error }
+        return { urlbase, realizarMarcacion, flashMessage, error, search }
 
     }
 }
@@ -106,6 +125,19 @@ export default {
             </h1>
         </div>
         <!-- FILTRO -->
+        <div class="py-2">
+            <div class="py-3 px-3  max-w-xl rounded-md">
+                <div class="lg:flex lg:flex-wrap">
+                    <search-input id="nombre" label="Nombre del Residente" class="text-sm pb-1 lg:pr-3 w-full"
+                        v-model="search.search_residente" />
+                </div>
+                <!-- <div class="py-3 text-right">
+                    <button class="btn-indigo mx-1 hover:bg-softIndigo" type="button" @click="limpiarCampos()">
+                        Limpiar
+                    </button>
+                </div> -->
+            </div>
+        </div>
 
         <!-- FLASH MENSAJES -->
         <flash-messages :flashMessage="flashMessage" :error="error" />

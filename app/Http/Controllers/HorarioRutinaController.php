@@ -12,14 +12,19 @@ use Inertia\Inertia;
 
 class HorarioRutinaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $queries = ['search_residente'];
         $horarioRutinas = HorarioRutina::has('rutinas')
             ->with('rutinas.residente.persona')
+            ->filter($request->only($queries))
             ->orderBy('id', 'desc')
             ->get();
 
-        return Inertia::render('HorarioRutina/Index', ['horarioRutinas' => $horarioRutinas]);
+        return Inertia::render('HorarioRutina/Index', [
+            'horarioRutinas' => $horarioRutinas,
+            'filters' => $request->all($queries)
+        ]);
     }
 
     public function store(ControlRutinaRequest $request)

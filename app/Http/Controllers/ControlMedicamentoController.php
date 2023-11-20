@@ -12,29 +12,22 @@ use Inertia\Inertia;
 
 class ControlMedicamentoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $queries = ['search_residente'];
 
-        $controlMedicamentos = ControlMedicamento::with('user', 'horarioMedicamento')
+        $controlMedicamentos = ControlMedicamento::with('user', 'horarioMedicamento.medicamentos.residente.persona')
             ->orderBy('id', 'desc')
+            ->filter($request->only($queries))
             ->get();
-   
-        return Inertia::render('ControlMedicamento/Index', ['horarioMedicamentos' => $controlMedicamentos]); 
+
+        return Inertia::render('ControlMedicamento/Index', [
+            'controlMedicamentos' => $controlMedicamentos,
+            'filters' => $request->all($queries)
+        ]);
     }
 
     public function store(Request $request)
     {
-
-        /*   $user_id = Auth::user()->id;
-
-        ControlMedicamento::create([
-            'fecha' => $request->fecha,
-            'hora' => $request->hora,
-            'realizado' => $request->realizado,
-            'user_id' => $user_id,
-            'horario_medicamento_id' => $request->horario_medicamento_id
-        ]);
-
-        return Redirect::route('control-medicamento.index'); */
     }
 }
