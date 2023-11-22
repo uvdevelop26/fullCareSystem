@@ -124,6 +124,8 @@ Route::resource('egresos', EgresoController::class)
 Route::controller(BalanceController::class)->group(function () {
     Route::get('balance', 'index')->name('balance.index');
     Route::post('obtener-movimientos', 'obtenerMovimiento')->name('obtener-movimientos');
+    Route::get('balance-diario/{fecha}/pdf', 'diariopdf')->name('balance-diario.diariopdf');
+    Route::get('balance-mensual/{mes}/{anho}', 'mensualpdf')->name('balance-mensual.mensualpdf');
 });
 
 //historial clinico
@@ -154,3 +156,5 @@ Route::resource('control-medicamentos', ControlMedicamentoController::class)
 //control de horarios de rutinas
 Route::resource('control-rutinas', ControlRutinaController::class)
     ->middleware('auth:sanctum', 'verified');
+
+//reportes

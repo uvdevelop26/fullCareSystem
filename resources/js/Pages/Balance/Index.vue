@@ -6,6 +6,7 @@ import { useForm } from "@inertiajs/inertia-vue3";
 import { ref } from 'vue';
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import axios from 'axios';
+import Icon from '../../Shared/Icon.vue';
 
 export default {
 
@@ -15,7 +16,8 @@ export default {
         TextInput,
         SelectInput,
         Head,
-        Link
+        Link,
+        Icon
     },
 
 
@@ -67,23 +69,28 @@ export default {
         const fetchData = async () => {
             try {
                 const response = await axios.post('obtener-movimientos', form.value);
+
                 if (form.value.consulta == 'diario') {
                     movimientosDiarios.value = response.data;
                     totalIngresosDiarios.value = response.data[response.data.length - 1].total_ingresos_diarios;
                     totalEgresosDiarios.value = response.data[response.data.length - 1].total_egresos_diarios;
-               
+
                 } else if (form.value.consulta == 'mensual') {
                     movimientosMensuales.value = response.data;
                     totalIngresosMensuales.value = response.data[response.data.length - 1].total_ingresos_mensuales;
                     totalEgresosMensuales.value = response.data[response.data.length - 1].total_egresos_mensuales;
                     //console.log(response.data[response.data.length - 1].total_ingresos_mensuales)
-                   /*  totalIngresosMensuales.value = response.data[response.data.lenght - 1].total_ingresos_mensuales;
-                    totalEgresosMensuales.value = response.data[response.data.lenght - 1].total_egresos_mensuales; */
+                    /*  totalIngresosMensuales.value = response.data[response.data.lenght - 1].total_ingresos_mensuales;
+                     totalEgresosMensuales.value = response.data[response.data.lenght - 1].total_egresos_mensuales; */
                 }
             } catch (error) {
                 console.error('Error al obtener datos', error);
             }
         }
+
+
+
+
 
         return {
             meses,
@@ -95,7 +102,8 @@ export default {
             totalIngresosDiarios,
             totalEgresosDiarios,
             totalIngresosMensuales,
-            totalEgresosMensuales
+            totalEgresosMensuales,
+
         }
     }
 
@@ -162,7 +170,7 @@ export default {
                             <th class="py-3 px-4 bg-turquesa rounded-r-xl text-white font-bold">Egreso</th>
                         </tr>
                     </thead>
-                    <transition-group appear tag="tbody" name="list">
+                    <tbody>
                         <tr class="text-center shadow group" v-for="movimiento in movimientosDiarios">
                             <td class="py-1 px-1 bg-white group-hover:bg-fondColor rounded-l-xl">
                                 {{ movimiento.concepto }}
@@ -171,13 +179,13 @@ export default {
                                 {{ movimiento.fecha }}
                             </td>
                             <td class="py-1 px-1 bg-white group-hover:bg-fondColor rounded-l-xl">
-                                {{ movimiento.monto_ingreso }}
+                                {{ movimiento.monto_ingreso }} <span v-if="movimiento.monto_ingreso">Gs.</span>
                             </td>
                             <td class="py-1 px-1 bg-white group-hover:bg-fondColor rounded-r-xl">
-                                {{ movimiento.monto_egreso }}
+                                {{ movimiento.monto_egreso }} <span v-if="movimiento.monto_egreso">Gs.</span>
                             </td>
                         </tr>
-                    </transition-group>
+                    </tbody>
                 </table>
                 <div class="py-2 2xl:flex ">
                     <div class="2xl:w-1/2 2xl:text-center">
@@ -192,6 +200,11 @@ export default {
                         <input type="text" name="total_egresos_dias" id="total_egresos_dias"
                             class="border-turquesa rounded-md w-44 h-7" v-model="totalEgresosDiarios" disabled>
                     </div>
+                    <div>
+                        <a for="generar_pdf"
+                            class="inline-block text-xs font-bold px-4 py-1 bg-indigo-400 rounded-md text-white hover:bg-softIndigo cursor-pointer" target="_blank"
+                            :href="route('balance-diario.diariopdf', form.fecha)"> Generar Reporte PDF</a>
+                    </div>
                 </div>
             </div>
             <!-- TABLE 2 -->
@@ -201,23 +214,27 @@ export default {
                     <thead class="">
                         <tr class="capitalize shadow">
                             <th class="py-3 px-4 bg-turquesa rounded-l-xl text-white font-bold">Concepto</th>
+                            <th class="py-3 px-4 bg-turquesa text-white">Fecha</th>
                             <th class="py-3 px-4 bg-turquesa text-white font-bold">Ingreso</th>
                             <th class="py-3 px-4 bg-turquesa rounded-r-xl text-white font-bold">Egreso</th>
                         </tr>
                     </thead>
-                    <transition-group appear tag="tbody" name="list">
+                    <tbody>
                         <tr class="text-center shadow group" v-for="movimiento in movimientosMensuales">
                             <td class="py-1 px-1 bg-white group-hover:bg-fondColor rounded-l-xl">
                                 {{ movimiento.concepto }}
                             </td>
-                            <td class="py-1 px-1 bg-white group-hover:bg-fondColor rounded-l-xl">
-                                {{ movimiento.monto_ingreso }}
+                            <td class="py-1 px-1 bg-white group-hover:bg-fondColor">
+                                {{ movimiento.fecha }}
+                            </td>
+                            <td class="py-1 px-1 bg-white group-hover:bg-fondColor">
+                                {{ movimiento.monto_ingreso }} <span v-if="movimiento.monto_ingreso">Gs.</span>
                             </td>
                             <td class="py-1 px-1 bg-white group-hover:bg-fondColor rounded-r-xl">
-                                {{ movimiento.monto_egreso }}
+                                {{ movimiento.monto_egreso }} <span v-if="movimiento.monto_egreso">Gs.</span>
                             </td>
                         </tr>
-                    </transition-group>
+                    </tbody>
                 </table>
                 <div class="py-2 2xl:flex ">
                     <div class="2xl:w-1/2 2xl:text-center">
@@ -232,12 +249,17 @@ export default {
                         <input type="text" name="total_egresos_mes" id="total_egresos_mes"
                             class="border-turquesa rounded-md w-44 h-7" v-model="totalEgresosMensuales" disabled>
                     </div>
+                    <div>
+                        <a for="generar_pdf"
+                            class="inline-block text-xs font-bold px-4 py-1 bg-indigo-400 rounded-md text-white hover:bg-softIndigo cursor-pointer" target="_blank"
+                            :href="route('balance-mensual.mensualpdf', { mes: form.mes, anho: form.anho })"> Generar Reporte PDF</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </template>
-<style scoped>
+<!-- <style scoped>
 /* LIST TRANSITIONS */
 .list-enter-from {
     opacity: 0;
@@ -266,4 +288,4 @@ export default {
 .list-leave-active {
     transition: all 0.4s ease;
 }
-</style>
+</style> -->
