@@ -178,6 +178,7 @@ export default {
                     </div>
                 </div>
             </filters>
+    
         </div>
         <!-- Flash Message -->
         <flash-messages :flashMessage="flashMessage" />

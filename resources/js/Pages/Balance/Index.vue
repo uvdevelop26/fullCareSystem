@@ -61,9 +61,11 @@ export default {
         const movimientosDiarios = ref([]);
         const movimientosMensuales = ref([]);
         const totalIngresosDiarios = ref([]);
+        const diferenciaDiario = ref(null)
         const totalEgresosDiarios = ref([]);
         const totalIngresosMensuales = ref([]);
         const totalEgresosMensuales = ref([]);
+        const diferenciaMensual = ref(null)
 
 
         const fetchData = async () => {
@@ -74,14 +76,13 @@ export default {
                     movimientosDiarios.value = response.data;
                     totalIngresosDiarios.value = response.data[response.data.length - 1].total_ingresos_diarios;
                     totalEgresosDiarios.value = response.data[response.data.length - 1].total_egresos_diarios;
+                    diferenciaDiario.value = totalIngresosDiarios.value - totalEgresosDiarios.value;
 
                 } else if (form.value.consulta == 'mensual') {
                     movimientosMensuales.value = response.data;
                     totalIngresosMensuales.value = response.data[response.data.length - 1].total_ingresos_mensuales;
                     totalEgresosMensuales.value = response.data[response.data.length - 1].total_egresos_mensuales;
-                    //console.log(response.data[response.data.length - 1].total_ingresos_mensuales)
-                    /*  totalIngresosMensuales.value = response.data[response.data.lenght - 1].total_ingresos_mensuales;
-                     totalEgresosMensuales.value = response.data[response.data.lenght - 1].total_egresos_mensuales; */
+                    diferenciaMensual.value = totalIngresosMensuales.value - totalEgresosMensuales.value;
                 }
             } catch (error) {
                 console.error('Error al obtener datos', error);
@@ -101,9 +102,10 @@ export default {
             movimientosMensuales,
             totalIngresosDiarios,
             totalEgresosDiarios,
+            diferenciaDiario,
             totalIngresosMensuales,
             totalEgresosMensuales,
-
+            diferenciaMensual
         }
     }
 
@@ -187,23 +189,30 @@ export default {
                         </tr>
                     </tbody>
                 </table>
-                <div class="py-2 2xl:flex ">
-                    <div class="2xl:w-1/2 2xl:text-center">
-                        <label for="total_ingresos_dias" class="text-xs mr-2 text-indigo-400 font-bold">Total Ingresos del
+                <div class="py-2">
+                    <div class="pb-2 flex justify-between items-center xl:justify-end">
+                        <label for="total_ingresos_dias" class="text-xs mr-2 font-bold">Total Ingresos del
                             Día:</label>
                         <input type="text" name="total_ingresos_dias" id="total_ingresos_dias"
                             class="border-turquesa rounded-md w-44 h-7" v-model="totalIngresosDiarios" disabled>
                     </div>
-                    <div class="pt-1 2xl:w-1/2 2xl:text-center">
-                        <label for="total_egresos_dias" class="text-xs mr-2 text-indigo-400 font-bold">Total Egresos del
+                    <div class="pb-2 flex justify-between items-center xl:justify-end">
+                        <label for="total_egresos_dias" class="text-xs mr-2 font-bold">Total Egresos del
                             Día:</label>
                         <input type="text" name="total_egresos_dias" id="total_egresos_dias"
                             class="border-turquesa rounded-md w-44 h-7" v-model="totalEgresosDiarios" disabled>
                     </div>
-                    <div>
-                        <a for="generar_pdf"
-                            class="inline-block text-xs font-bold px-4 py-1 bg-indigo-400 rounded-md text-white hover:bg-softIndigo cursor-pointer" target="_blank"
-                            :href="route('balance-diario.diariopdf', form.fecha)"> Generar Reporte PDF</a>
+                    <div class="pb-2 flex justify-between items-center xl:justify-end">
+                        <label for="diferencia" class="text-xs mr-2 font-bold">Diferencia:</label>
+                        <input type="text" name="diferencia" id="total_egresos_dias"
+                            class="border-turquesa rounded-md w-44 h-7" v-model="diferenciaDiario"  disabled>
+                    </div>
+                    <div class="pb-2 lg:text-right">
+                        <a class="inline-block px-8 py-1 bg-indigo-400 rounded-md hover:bg-softIndigo cursor-pointer"
+                            target="_blank" :href="route('balance-diario.diariopdf', form.fecha)">
+                            <span class="text-xs mr-3 font-bold text-white">Imprimir</span>
+                            <Icon name="pdf" class="w-4 h-4 fill-white inline" />
+                        </a>
                     </div>
                 </div>
             </div>
@@ -236,23 +245,30 @@ export default {
                         </tr>
                     </tbody>
                 </table>
-                <div class="py-2 2xl:flex ">
-                    <div class="2xl:w-1/2 2xl:text-center">
-                        <label for="total_ingresos_mes" class="text-xs mr-2 text-indigo-400 font-bold">Total Ingresos del
+                <div class="py-2">
+                    <div class="pb-2 flex justify-between items-center xl:justify-end">
+                        <label for="total_ingresos_mes" class="text-xs mr-2 font-bold">Total Ingresos del
                             Mes:</label>
                         <input type="text" name="total_ingresos_mes" id="total_ingresos_mes"
                             class="border-turquesa rounded-md w-44 h-7" v-model="totalIngresosMensuales" disabled>
                     </div>
-                    <div class="pt-1 2xl:w-1/2 2xl:text-center">
-                        <label for="total_egresos_mes" class="text-xs mr-2 text-indigo-400 font-bold">Total Egresos del
+                    <div class="pb-2 flex justify-between items-center xl:justify-end">
+                        <label for="total_egresos_mes" class="text-xs mr-2 font-bold">Total Egresos del
                             Mes:</label>
                         <input type="text" name="total_egresos_mes" id="total_egresos_mes"
                             class="border-turquesa rounded-md w-44 h-7" v-model="totalEgresosMensuales" disabled>
                     </div>
-                    <div>
-                        <a for="generar_pdf"
-                            class="inline-block text-xs font-bold px-4 py-1 bg-indigo-400 rounded-md text-white hover:bg-softIndigo cursor-pointer" target="_blank"
-                            :href="route('balance-mensual.mensualpdf', { mes: form.mes, anho: form.anho })"> Generar Reporte PDF</a>
+                    <div class="pb-2 flex justify-between items-center xl:justify-end">
+                        <label for="diferencia" class="text-xs mr-2 font-bold">Diferencia:</label>
+                        <input type="text" name="diferencia" id="total_egresos_dias"
+                            class="border-turquesa rounded-md w-44 h-7" v-model="diferenciaMensual"   disabled>
+                    </div>
+                    <div class="pb-2 lg:text-right">
+                        <a class="inline-block px-8 py-1 bg-indigo-400 rounded-md hover:bg-softIndigo cursor-pointer"
+                            target="_blank" :href="route('balance-mensual.mensualpdf', { mes: form.mes, anho: form.anho })">
+                            <span class="text-xs mr-3 font-bold text-white">Imprimir</span>
+                            <Icon name="pdf" class="w-4 h-4 fill-white inline" />
+                        </a>
                     </div>
                 </div>
             </div>

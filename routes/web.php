@@ -17,6 +17,7 @@ use App\Http\Controllers\JornadaController;
 use App\Http\Controllers\MedicamentoController;
 use App\Http\Controllers\PermisoController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\ResidenteController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RutinaController;
@@ -65,6 +66,19 @@ Route::controller(DashboardController::class)
 //reportes
 Route::get('historiales/{historiale}/pdf', [HistorialeController::class, 'pdf'])
     ->name('historiales.pdf');
+
+Route::controller(ReporteController::class)->group(function () {
+    Route::get('/reportes', 'index')->name('reportes.index');
+    Route::get('/reportes/residentes', 'residentespdf')->name('reportes.residentespdf');
+    Route::get('/reportes/empleados', 'empleadospdf')->name('reportes.empleadospdf');
+    Route::get('/reportes/jornadas', 'jornadaspdf')->name('reportes.jornadaspdf');
+    Route::get('/reportes/usuarios', 'usuariospdf')->name('reportes.usuariospdf');
+    Route::get('/reportes/medicamentos', 'medicamentospdf')->name('reportes.medicamentospdf');
+    Route::get('/reportes/rutinas', 'rutinaspdf')->name('reportes.rutinaspdf');
+});
+
+/* Route::get('/reportes', [ReporteController::class, 'index'])
+    ->name('reportes.index'); */
 
 //Residentes
 Route::resource('residentes', ResidenteController::class)
@@ -156,5 +170,3 @@ Route::resource('control-medicamentos', ControlMedicamentoController::class)
 //control de horarios de rutinas
 Route::resource('control-rutinas', ControlRutinaController::class)
     ->middleware('auth:sanctum', 'verified');
-
-//reportes

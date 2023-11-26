@@ -20,6 +20,8 @@ class PermissionSeeder extends Seeder
 
         //CREA EL ARRAY CON LOS PERMISOS
         $permissions = [
+            //dashboard
+            'dashboard',
             //módulo residentes
             'residentes',
             'residentes-lista',
