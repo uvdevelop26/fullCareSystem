@@ -25,20 +25,16 @@ export default {
     setup() {
 
         const form = useForm({
-            fecha_registro: "",
-            diagnostico: "",
-            tratamiento: "",
-            observaciones: "",
             residente_id: "",
-
-
+            fecha_registro: "",
             peso: "",
             altura: "",
             temperatura: "",
             presion_arterial: "",
-
             enfermedades: [{ valor: '' }],
-
+            diagnostico: "",
+            tratamiento: "",
+            observaciones: ""
         });
 
         //enfermedades
@@ -76,9 +72,8 @@ export default {
         <div class="max-w-4xl overflow-hidden pt-2">
             <form @submit.prevent="guardar">
                 <div class="py-3 px-3 flex flex-wrap bg-white border rounded-md">
-                    <!-- RESIDENTE Y CARACTERÍSTICAS FÍSICAS -->
                     <text-input v-model="form.residente_id" type="text" label="Residente"
-                        class="pb-5 lg:pr-3 w-full lg:w-1/2" id="residente_id" :error="errors.residente_id" />
+                        class="pb-5 lg:pr-3 w-full lg:w-1/2" id="residente" :error="errors.residente_id" />
                     <text-input v-model="form.fecha_registro" type="date" label="Fecha" class="pb-5 lg:pr-3 w-full lg:w-1/2"
                         id="fecha_registro" :error="errors.fecha_registro" />
                     <text-input v-model="form.peso" type="text" label="Peso" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="peso"
@@ -89,7 +84,7 @@ export default {
                         class="pb-5 lg:pr-3 w-full lg:w-1/2" id="temperatura" :error="errors.temperatura" />
                     <text-input v-model="form.presion_arterial" type="text" label="Presion Arterial"
                         class="pb-5 lg:pr-3 w-full lg:w-1/2" id="presion_arterial" :error="errors.presion_arterial" />
-                    <!-- INSERTAR ENFERMEDADES -->
+                    <!-- agregar enfermedad -->
                     <div class="flex-wrap pb-5 lg:pr-3 w-full lg:w-1/2">
                         <div class="block pb-2">Enfermedades:</div>
                         <div v-for="(enfermedad, index) in form.enfermedades" :key="index" class="flex gap-2 my-1">
@@ -102,17 +97,17 @@ export default {
                         <button type="button"
                             class="px-3 py-1 mt-2 bg-indigo-400 rounded-xl text-white hover:shadow-md hover:bg-softIndigo"
                             @click="agregarEnfermedad">Agregar Enfermedad</button>
+                        <span v-if="errors.enfermedades" class="text-red-500">{{ errors.enfermedades }}</span>
                     </div>
-                    <!-- datos de historial -->
                     <div class="pb-5 lg:pr-3 w-full lg:w-1/2">
-                        <label for="diagnostico" class="form-label">Diagnostico:</label>
-                        <textarea name="diagnostico" id="diagnostico" cols="20" rows="3" class="form-textarea "
+                        <label for="observaciones" class="form-label">Diagnóstico:</label>
+                        <textarea name="observaciones" id="observaciones" cols="20" rows="3" class="form-textarea "
                             v-model="form.diagnostico"></textarea>
                         <span v-if="errors.diagnostico" class="text-red-500">{{ errors.diagnostico }}</span>
                     </div>
                     <div class="pb-5 lg:pr-3 w-full lg:w-1/2">
-                        <label for="tratamiento" class="form-label">Tratamiento:</label>
-                        <textarea name="tratamiento" id="tratamiento" cols="20" rows="3" class="form-textarea "
+                        <label for="observaciones" class="form-label">Tratamiento:</label>
+                        <textarea name="observaciones" id="observaciones" cols="20" rows="3" class="form-textarea "
                             v-model="form.tratamiento"></textarea>
                         <span v-if="errors.tratamiento" class="text-red-500">{{ errors.tratamiento }}</span>
                     </div>
@@ -133,5 +128,6 @@ export default {
                 </div>
             </form>
         </div>
-</div></template>
+    </div>
+</template>
 

@@ -17,8 +17,19 @@ class Turno extends Model
         'hora_salida',
     ];
 
-    public function jornadas(){
-        return $this->hasMany(Jornada::class);
+    //Mutadores y Accesores
+    public function setNombreTurnosAttribute($value)
+    {
+        $this->attributes['nombre_turnos'] = strtolower($value);
     }
 
+    public function getNombreTurnosAttribute($value)
+    {
+        return ucwords($value);
+    }
+
+    public function jornadas()
+    {
+        return $this->hasMany(Jornada::class);
+    }
 }

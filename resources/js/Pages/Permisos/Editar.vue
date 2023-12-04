@@ -96,7 +96,7 @@ export default {
                         :error="errors.estado_variacione_id" v-model="form.estado_variacione_id">
                         <option :value="null" />
                         <option v-for="estadoVariacione in estadoVariaciones" :key="estadoVariacione.id"
-                            :value="estadoVariacione.id">{{ estadoVariacione.nombre_estado }}</option>
+                            :value="estadoVariacione.id" class="text-sm">{{ estadoVariacione.nombre_estado }}</option>
                     </select-input>
                     <div class="py-4 lg:pr-2 flex w-full items-center justify-end bg-white border-t">
                         <Link type="button" :href="route('permisos.index')" class="btn-cancelar">

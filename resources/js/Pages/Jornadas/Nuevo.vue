@@ -79,7 +79,7 @@ export default {
                         v-model="form.empleado_id" :error="errors.empleado_id" />
                     <select-input v-model="form.turno_id" class="pb-8 pr-6 w-full lg:w-1/2" label="Turno" :error="errors.turno_id">
                         <option :value="null" />
-                        <option v-for="turno in turnos" :key="turno.id" :value="turno.id" class="capitalize">
+                        <option v-for="turno in turnos" :key="turno.id" :value="turno.id" class="text-sm">
                             {{ turno.nombre_turnos }}
                         </option>
                     </select-input>
@@ -87,11 +87,11 @@ export default {
                         v-model="form.hora_entrada" disabled/>
                     <text-input type="time" label="Hora Salida" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="hora_salida" v-model="form.hora_salida"  disabled />
                     <div class="w-full">
-                        <span class="block py-2">Seleccione Días de la Semana:</span>
+                        <span class="block py-4 font-bold text-center">Seleccione Días de la Semana</span>
                         <div class="w-full flex flex-wrap justify-between">
                             <div class="mr-2 pb-1 text-center" v-for="dia in dias" :key="dia.id">
                                 <label class="form-label">{{ dia.nombre_dias }}</label>
-                                <input type="checkbox" v-model="form.nombre_dias" :value="dia.id" class="form-checkbox">
+                                <input type="checkbox" v-model="form.nombre_dias" :value="dia.id" class="border-turquesa rounded-sm ml-1">
                             </div>
                         </div>
                         <div v-if="errors.nombre_dias" class="form-error"> {{ errors.nombre_dias }}</div>

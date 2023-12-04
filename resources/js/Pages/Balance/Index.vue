@@ -177,10 +177,10 @@ export default {
                             <td class="py-1 px-1 bg-white group-hover:bg-fondColor rounded-l-xl">
                                 {{ movimiento.concepto }}
                             </td>
-                            <td class="py-1 px-1 bg-white group-hover:bg-fondColor rounded-l-xl">
+                            <td class="py-1 px-1 bg-white group-hover:bg-fondColor">
                                 {{ movimiento.fecha }}
                             </td>
-                            <td class="py-1 px-1 bg-white group-hover:bg-fondColor rounded-l-xl">
+                            <td class="py-1 px-1 bg-white group-hover:bg-fondColor">
                                 {{ movimiento.monto_ingreso }} <span v-if="movimiento.monto_ingreso">Gs.</span>
                             </td>
                             <td class="py-1 px-1 bg-white group-hover:bg-fondColor rounded-r-xl">

@@ -64,22 +64,46 @@ class RutinaController extends Controller
     }
 
 
-    public function edit($id)
+    public function edit(Rutina $rutina)
     {
-        //
+        $rutinaHasHorarios = HorarioRutina::whereIn('id', array_column(json_decode($rutina->horarioRutinas, true), 'id'))->get();
+
+        return Inertia::render('Rutinas/Editar', [
+            'rutina' => $rutina,
+            'rutinaHasHorarios' => $rutinaHasHorarios,
+        ]);
     }
 
 
-    public function update(Request $request, $id)
+    public function update(RutinaRequest $request, Rutina $rutina)
     {
-        //
+        $rutina->update([
+            'nombre' => $request->nombre,
+            'descripcion' => $request->descripcion,
+            'residente_id' => $request->residente_id
+        ]);
+
+        //manejo de horarios
+        $rutina->horarioRutinas()->delete();
+
+        $nuevosHorarios = $request->input('horarios', []);
+
+        foreach ($nuevosHorarios as $horarioData) {
+            $rutina->horarioRutinas()->create([
+                'hora' => $horarioData['hora'],
+            
+            ]);
+        }
+
+
+        return Redirect::route('rutinas.index')->with('success', 'Rutina Actualizada Exitosamente');
     }
 
 
     public function destroy($id)
     {
         $rutina = Rutina::find($id);
-        
+
         $rutina->delete();
 
         return Redirect::route('rutinas.index')->with('success', 'Rutina Eliminada Exitosamente');

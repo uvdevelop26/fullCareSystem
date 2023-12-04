@@ -15,6 +15,17 @@ class Dia extends Model
         'nombre_dias'
     ];
 
+     //Mutadores y Accesores
+     public function setNombreDiasAttribute($value)
+     {
+         $this->attributes['nombre_dias'] = strtolower($value);
+     }
+     
+     public function getNombreDiasAttribute($value)
+     {
+         return ucwords($value);
+     }
+
     //relacion de muchos a muchos
     public function jornadas()
     {

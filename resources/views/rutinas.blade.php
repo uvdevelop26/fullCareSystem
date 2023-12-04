@@ -8,31 +8,27 @@
     <title>Document</title>
 </head>
 <style>
-    * {
-        font-size: 1rem;
-        margin: 0;
+    @page {
+        margin: 2.5cm 2cm 0.5cm 2cm;
         padding: 0;
-        box-sizing: border-box;
     }
 
-    .container {
-        padding: 0px 70px;
+    * {
+        font-size: 1rem;
+    }
+
+    .header {
+        position: fixed;
+        top: -2.5cm;
+        left: 0;
+        width: 100%;
+        border-bottom: 1px solid rgb(124, 118, 118);
     }
 
     .header-container {
+        width: 100%;
         position: relative;
-        padding-top: 30px;
-        padding-bottom: 15px;
-        margin-bottom: 10px;
-        border-bottom: 1px solid gray;
-    }
-
-    .header-text {
-        text-align: right;
-        padding-top: 25px;
-        color: rgb(124, 118, 118);
-        font-style: italic;
-        font-size: 13px
+        padding: 10px 0px;
     }
 
     .header-img {
@@ -47,10 +43,19 @@
         height: 85px;
     }
 
+    .header-text {
+        text-align: right;
+        padding-top: 25px;
+        color: rgb(124, 118, 118);
+        font-style: italic;
+        font-size: 13px
+    }
+
     .titulos {
         font-size: 15px;
         text-transform: uppercase;
     }
+
 
     /*HEADER*/
     .div-1Header,
@@ -171,27 +176,23 @@
         text-align: left;
     }
 
-    /*FIRMA*/
-    /* .firma {
-        border-top: 1px solid rgba(20, 20, 20, 0.5);
-        text-align: center;
-        width: 30%;
-        margin-left: 70%;
-        margin-top: 80px;
-        padding-top: 5px;
+    footer {
+        position: fixed;
+        bottom: 0cm;
+        left: 0cm;
+        width: 100%;
     }
 
-    /*FOOTER*/
-    /*  footer {
-        width: 100%;
-        text-align: center;
-        position: absolute;
-        bottom: 0px;
-    } */
+    footer p {
+        /* padding: 10px 85px; */
+        text-align: right;
+        color: rgb(124, 118, 118);
+        font-style: italic;
+    }
 </style>
 
 <body>
-    <div class="container">
+    <div class="header">
         <div class="header-container">
             <div class="header-img">
                 <img src="storage/image/hogar de Ancianos.png" alt="logo">
@@ -200,6 +201,9 @@
                 Hogar de Ancianos "Virgen del Rosario"
             </p>
         </div>
+    </div>
+    <div class="container">
+
         {{-- table 1 --}}
         <table class="div-1Header">
             <tr>
@@ -244,14 +248,12 @@
                     <table class="table_datosFtxt">
                         <tr>
                             <td>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum maxime eos minus
-                                    illum dignissimos voluptas? Expedita optio eligendi hic pariatur quisquam ratione,
-                                    ipsam ipsa temporibus perspiciatis, alias iure sequi sit.</p>
+                                <p></p>
                             </td>
                         </tr>
                     </table>
                 </td>
-                <td class="datosFinales">
+                 {{--<td class="datosFinales">
                     <table class="table_datosfinales">
                         <tr>
                             <td>
@@ -290,10 +292,13 @@
                             </td>
                         </tr>
 
-                    </table>
-                </td>
+                    </table> 
+                </td>--}}
             </tr>
         </table>
+        <footer>
+            <p> Impreso por {{ $users->username }} en fecha {{ $fechaActual }}</p>
+        </footer>
     </div>
 </body>
 

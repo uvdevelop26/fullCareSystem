@@ -69,7 +69,7 @@ export default {
                         <div v-for="permission in permissions" :key="permission.id">
                             <div class="flex items-center gap-1">
                                 <input type="checkbox" id="permission" :value="permission.id"
-                                    v-model="form.permissions">
+                                    v-model="form.permissions" class="rounded-sm border-turquesa">
                                 <label :for="permission.name" class="capitalize"> {{ permission.name }}</label>
                             </div>
                         </div>

@@ -13,6 +13,18 @@ class EstadoVariacione extends Model
 
     protected $fillable = ['nombre_estado'];
 
+
+     //Mutadores y Accesores
+     public function setNombreEstadoAttribute($value)
+     {
+         $this->attributes['nombre_estado'] = strtolower($value);
+     }
+     
+     public function getNombreEstadoAttribute($value)
+     {
+         return ucwords($value);
+     }
+
     //relacion de uno a muchos 
     public function vacaciones()
     {

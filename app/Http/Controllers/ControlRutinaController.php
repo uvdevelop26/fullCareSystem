@@ -14,7 +14,7 @@ class ControlRutinaController extends Controller
 
     public function index(Request $request)
     {
-        $queries = ['search_residente'];
+        $queries = ['search_residente', 'search_fecha'];
 
         $controlRutinas = ControlRutina::with('user', 'horarioRutina.rutinas.residente.persona')
             ->orderBy('id', 'desc')

@@ -18,7 +18,8 @@ class RutinaRequest extends FormRequest
         return [
             'nombre' => 'required',
             'descripcion' => 'required',
-            'residente_id' => 'required'
+            'residente_id' => 'required',
+            'horarios' => 'required'
         ];
     }
 

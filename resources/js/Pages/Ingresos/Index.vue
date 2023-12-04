@@ -150,7 +150,7 @@ export default {
                             v-model="form.search_categoria">
                             <option :value="null" />
                             <option v-for="categoria in categorias" :key="categoria.id" :value="categoria.id"
-                                class="capitalize">
+                                class="text-sm">
                                 {{ categoria.nombre }}
                             </option>
                         </select-input>
@@ -158,14 +158,14 @@ export default {
                             <select-input id="anhos" label="Año" class="text-sm pb-1 lg:pr-3 w-full"
                                 v-model="form.search_anho">
                                 <option :value="null" />
-                                <option v-for="years in showYears" :key="years" :value="years">
+                                <option v-for="years in showYears" :key="years" :value="years" class="text-sm">
                                     {{ years }}
                                 </option>
                             </select-input>
                             <select-input id="mes" label="Mes" class="text-sm pb-1 lg:pr-3 w-full"
                                 v-model="form.search_mes">
                                 <option :value="null" />
-                                <option v-for="mes in meses" :key="mes.id" :value="mes.id" class="capitalize">
+                                <option v-for="mes in meses" :key="mes.id" :value="mes.id" class="capitalize text-sm">
                                     {{ mes.mes }}
                                 </option>
                             </select-input>

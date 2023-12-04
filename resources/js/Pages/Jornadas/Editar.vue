@@ -82,7 +82,7 @@ export default {
                     <select-input v-model="form.turno_id" class="pb-8 pr-6 w-full lg:w-1/2" label="Turno"
                         :error="errors.turno_id">
                         <option :value="null" />
-                        <option v-for="turno in turnos" :key="turno.id" :value="turno.id">
+                        <option v-for="turno in turnos" :key="turno.id" :value="turno.id" class="text-sm">
                             {{ turno.nombre_turnos }}
                         </option>
                     </select-input>
@@ -95,7 +95,7 @@ export default {
                         <div class="w-full flex flex-wrap justify-between">
                             <div class="mr-2 pb-1 text-center" v-for="dia in dias" :key="dia.id">
                                 <label class="form-label">{{ dia.nombre_dias }}</label>
-                                <input type="checkbox" v-model="form.nombre_dias" :value="dia.id" class="form-checkbox">
+                                <input type="checkbox" v-model="form.nombre_dias" :value="dia.id" class="border-turquesa rounded-sm ml-1">
                             </div>
                         </div>
                         <div v-if="errors.nombre_dias" class="form-error"> {{ errors.nombre_dias }}</div>

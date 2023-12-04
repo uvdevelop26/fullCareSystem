@@ -20,7 +20,7 @@ class FamiliareRequest extends FormRequest
             'apellidos' => 'required|max:100',
             'ci_numero' => 'required|max:100',
             'fecha_nacimiento' => 'required',
-            'telefono' => 'nullable|max:30',
+            'telefono' => 'required|max:30',
             'edad' => 'required|min:1|max:105',
             'sexo' => 'required',
             'direccion' => 'required|max:200',

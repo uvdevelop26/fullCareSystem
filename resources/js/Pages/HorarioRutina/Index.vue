@@ -142,7 +142,9 @@ export default {
         </div>
 
         <!-- FLASH MESSAGES -->
-        <flash-messages :flashMessage="flashMessage" :error="error" />
+        <div class="max-w-xl">
+            <flash-messages :flashMessage="flashMessage" :error="error" />
+        </div>
 
         <!-- TABLA DESKTOP -->
         <div class="overflow-x-auto py-4 max-w-7xl">

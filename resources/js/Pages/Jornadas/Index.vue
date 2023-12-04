@@ -116,7 +116,7 @@ export default {
                         <select-input id="turno" label="Turno" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
                             v-model="form.search_turno">
                             <option :value="null" />
-                            <option v-for="turno in turnos" :key="turno.id" :value="turno.id" class="capitalize">
+                            <option v-for="turno in turnos" :key="turno.id" :value="turno.id" class="text-sm">
                                 {{ turno.nombre_turnos }}
                             </option>
                         </select-input>
@@ -171,8 +171,8 @@ export default {
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
                             <span v-for="dias in jornada.dias"
-                                class="inline-block px-3 py-1 mr-2 rounded-2xl border border-softIndigo text-softIndigo bg-indigo-100">
-                                {{ dias.nombre_dias }}
+                                class="inline-block pr-1">
+                                {{ dias.nombre_dias }},
                             </span>
                         </td>
                         <td class="py-2 px-2 rounded-r-xl bg-white group-hover:bg-fondColor" v-if="auth.role === 'admin'">

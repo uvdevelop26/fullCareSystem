@@ -26,7 +26,7 @@ class MedicamentoController extends Controller
     public function index(Request $request)
     {
         $queries = ['search_nombre', 'search_residente'];
-        
+
         $medicamentos = Medicamento::with('residente.persona', 'presentacione', 'horarioMedicamentos')
             ->orderBy('id', 'desc')
             ->filter($request->only($queries))
@@ -84,17 +84,16 @@ class MedicamentoController extends Controller
 
     public function edit(Medicamento $medicamento)
     {
-        //$horarios = Horario::get();
-
-        //  $medicamentoHasHorario = array_column(json_decode($medicamento->horarios, true), 'id');
-        $horarios = $medicamento->horarios;
-        $medicamentoHasHorario = $horarios->toArray();
 
         $presentaciones = Presentacione::all();
 
+        //  $medicamentoHasHorario = array_column(json_decode($medicamento->horarios, true), 'id');
+
+        $medicamentoHasHorarios = HorarioMedicamento::whereIn('id', array_column(json_decode($medicamento->horarioMedicamentos, true), 'id'))->get();
+
         return Inertia::render('Medicamentos/Editar', [
             'medicamento' => $medicamento,
-            'medicamentoHasHorario' => $medicamentoHasHorario,
+            'medicamentoHasHorarios' => $medicamentoHasHorarios,
             'presentaciones' => $presentaciones
         ]);
     }
@@ -103,7 +102,6 @@ class MedicamentoController extends Controller
     public function update(MedicamentoRequest $request, Medicamento $medicamento)
     {
 
-        //Actualizar los datos de "medicamentos"
         $medicamento->update([
             'nombre' => $request->nombre,
             'descripcion' => $request->descripcion,
@@ -114,24 +112,28 @@ class MedicamentoController extends Controller
             'presentacione_id' => $request->presentacione_id
         ]);
 
-        //recuperar horarios existentes
-        $horariosExistentes = $medicamento->horarios;
+        //manejo de horarios
+        $medicamento->horarioMedicamentos()->delete();
 
-        //nuevos horarios proporcionados por el usuario
-        $nuevosHorarios = $request->horarios;
+        $nuevosHorarios = $request->input('horarios', []);
 
-        //actualiza horarios existentes
+        foreach ($nuevosHorarios as $horarioData) {
+            $medicamento->horarioMedicamentos()->create([
+                'hora' => $horarioData['hora'],
+            
+            ]);
+        }
 
 
+        return Redirect::route('medicamentos.index')->with('success', 'Medicamento Actualizado Exitosamente');
 
-        // return Redirect::route('medicamentos.index');
     }
 
 
     public function destroy($id)
     {
         $medicamento = Medicamento::find($id);
-        
+
         $medicamento->delete();
 
         return Redirect::route('medicamentos.index')->with('success', 'Medicamento Eliminado Exitosamente');

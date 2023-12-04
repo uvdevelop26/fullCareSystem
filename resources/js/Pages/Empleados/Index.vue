@@ -118,14 +118,14 @@ export default {
                         <select-input id="ciudades" label="Ciudad" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
                             v-model="form.search_ciudad">
                             <option :value="null" />
-                            <option v-for="ciudad in ciudades" :key="ciudad.id" :value="ciudad.id" class="capitalize">
+                            <option v-for="ciudad in ciudades" :key="ciudad.id" :value="ciudad.id" class="text-sm">
                                 {{ ciudad.nombre_ciudad }}
                             </option>
                         </select-input>
                         <select-input id="ciudades" label="Sección" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
                             v-model="form.search_seccion">
                             <option :value="null" />
-                            <option v-for="seccion in seccions" :key="seccion.id" :value="seccion.id" class="capitalize">
+                            <option v-for="seccion in seccions" :key="seccion.id" :value="seccion.id" class="text-sm">
                                 {{ seccion.nombre_seccion }}
                             </option>
                         </select-input>

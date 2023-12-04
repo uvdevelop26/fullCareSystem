@@ -75,6 +75,7 @@ Route::controller(ReporteController::class)->group(function () {
     Route::get('/reportes/usuarios', 'usuariospdf')->name('reportes.usuariospdf');
     Route::get('/reportes/medicamentos', 'medicamentospdf')->name('reportes.medicamentospdf');
     Route::get('/reportes/rutinas', 'rutinaspdf')->name('reportes.rutinaspdf');
+    Route::get('/reportes/sueldos/{mes}/{anho}', 'sueldospdf')->name('reportes.sueldospdf');
 });
 
 /* Route::get('/reportes', [ReporteController::class, 'index'])

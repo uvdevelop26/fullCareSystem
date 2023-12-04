@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Historial Clínico</title>
+    <title>Movimientos Diarios</title>
 
     <style>
         * {
@@ -182,6 +182,13 @@
             position: absolute;
             bottom: 0px;
         }
+
+        footer p{
+            padding: 10px 85px;
+            text-align: right;
+            color: rgb(124, 118, 118);
+            font-style: italic;
+        }
     </style>
 
 </head>
@@ -217,7 +224,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <p>E-MAIL: <span>contacto@tuempresa.com</span> </p>
+                                <p>E-MAIL: <span>hogarvdelRosario@gmail.com</span> </p>
                             </td>
                         </tr>
                     </table>
@@ -254,9 +261,7 @@
                     <table class="table_datosFtxt">
                         <tr>
                             <td>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum maxime eos minus
-                                    illum dignissimos voluptas? Expedita optio eligendi hic pariatur quisquam ratione,
-                                    ipsam ipsa temporibus perspiciatis, alias iure sequi sit.</p>
+                                <p></p>
                             </td>
                         </tr>
                     </table>
@@ -290,7 +295,7 @@
                         <tr>
                             <td>
                                 <p>
-                                    Diferencia
+                                    Diferencia:
                                 </p>
                             </td>
                             <td>
@@ -310,7 +315,7 @@
         </div>
         <!--FOOTER-->
         <footer>
-            <p>Obten tu factura en: https://tuempresa.com/facturacion | Empresa: 558525 | Referencia: 55a885dvs </p>
+            <p> Impreso por {{ $users->username }} en fecha {{ $fechaActual }}</p>
         </footer>
     </div>
 </body>

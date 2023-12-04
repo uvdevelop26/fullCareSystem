@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Jornadas</title>
 </head>
 <style>
+    
     * {
         font-size: 1rem;
         margin: 0;
@@ -171,23 +172,19 @@
         text-align: left;
     }
 
-    /*FIRMA*/
-    /* .firma {
-        border-top: 1px solid rgba(20, 20, 20, 0.5);
-        text-align: center;
-        width: 30%;
-        margin-left: 70%;
-        margin-top: 80px;
-        padding-top: 5px;
-    }
-
-    /*FOOTER*/
-    /*  footer {
+    footer {
         width: 100%;
         text-align: center;
         position: absolute;
         bottom: 0px;
-    } */
+    }
+
+    footer p {
+        padding: 20px 90px;
+        text-align: right;
+        color: rgb(124, 118, 118);
+        font-style: italic;
+    }
 </style>
 
 <body>
@@ -251,14 +248,12 @@
                     <table class="table_datosFtxt">
                         <tr>
                             <td>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum maxime eos minus
-                                    illum dignissimos voluptas? Expedita optio eligendi hic pariatur quisquam ratione,
-                                    ipsam ipsa temporibus perspiciatis, alias iure sequi sit.</p>
+                                <p></p>
                             </td>
                         </tr>
                     </table>
                 </td>
-                <td class="datosFinales">
+               {{--  <td class="datosFinales">
                     <table class="table_datosfinales">
                         <tr>
                             <td>
@@ -272,35 +267,15 @@
                                 </p>
                             </td>
                         </tr>
-                        <tr>
-                            <td>
-                                <p>
-                                    Cantidad Activos
-                                </p>
-                            </td>
-                            <td>
-                                <p>
-                                    fasdf
-                                </p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p>
-                                    Cantidad Inactivos
-                                </p>
-                            </td>
-                            <td>
-                                <p>
-                                    fad
-                                </p>
-                            </td>
-                        </tr>
+                        
 
                     </table>
-                </td>
+                </td> --}}
             </tr>
         </table>
+        <footer>
+            <p> Impreso por {{ $users->username }} en fecha {{ $fechaActual }}</p>
+        </footer>
     </div>
 </body>
 

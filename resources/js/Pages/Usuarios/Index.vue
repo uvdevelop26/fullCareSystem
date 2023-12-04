@@ -116,7 +116,7 @@ export default {
                         <select-input id="roles" label="Rol" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
                             v-model="form.search_rol">
                             <option :value="null" />
-                            <option v-for="rol in roles" :key="rol.id" :value="rol.id" class="capitalize">
+                            <option v-for="rol in roles" :key="rol.id" :value="rol.id" class="text-sm">
                                 {{ rol.name }}
                             </option>
                         </select-input>
@@ -165,7 +165,7 @@ export default {
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
                             <span v-for="role in user.roles"
-                                class="inline-block px-3 py-1 mr-2 rounded-2xl border border-softIndigo text-softIndigo bg-indigo-100">
+                                class="inline-block pr-1">
                                 {{ role.name }}
                             </span>
                         </td>

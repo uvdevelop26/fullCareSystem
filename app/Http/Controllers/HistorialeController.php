@@ -10,6 +10,7 @@ use App\Models\Historiale;
 use App\Models\Incidencia;
 use App\Models\Persona;
 use App\Models\Residente;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -107,7 +108,6 @@ class HistorialeController extends Controller
 
     public function update(HistorialeRequest $request, Historiale $historiale)
     {
-
         $caracteristica = Caracteristica::find($historiale->caracteristica_id);
 
         $caracteristica->update([
@@ -126,11 +126,19 @@ class HistorialeController extends Controller
             'caracteristica_id' => $caracteristica->id
         ]);
 
-        //obtener enfermedades actuales
-        $enfermedadesActuales = $historiale->enfermedades->pluck('id')->toArray();
+        //manejo de horarios
+        $historiale->enfermedades()->delete();
 
-        //comparar y eliminar enfermedades que ya no están presentes en el formulario
-        $enfermedadesEliminar = array_diff($enfermedadesActuales, $request->enfermedade_id);
+        $nuevasEnfermedades = $request->input('enfermedades', []);
+
+        foreach ($nuevasEnfermedades as $enfermedadesData) {
+            $historiale->enfermedades()->create([
+                'nombre' => $enfermedadesData['nombre'],
+
+            ]);
+        }
+
+        return Redirect::route('historiales.index')->with('success', 'Historial Actualizado Exitosamente');
     }
 
 
@@ -147,6 +155,10 @@ class HistorialeController extends Controller
 
     public function pdf(Historiale $historiale)
     {
+        $fechaActual = Carbon::today()->toDateString();
+
+        $users = Auth::user();
+
         $caracteristica = Caracteristica::find($historiale->caracteristica_id);
 
         //enfermedades relacionadas al historial
@@ -160,7 +172,7 @@ class HistorialeController extends Controller
 
         $pdf->getDomPDF()->set_option("enable_php", true);
 
-        $pdf->loadView('report', compact('historiale','residente', 'persona','caracteristica', 'historialeHasEnfermedade'));
+        $pdf->loadView('report', compact('historiale', 'residente', 'persona', 'caracteristica', 'historialeHasEnfermedade', 'fechaActual', 'users'));
 
         return $pdf->stream();
     }

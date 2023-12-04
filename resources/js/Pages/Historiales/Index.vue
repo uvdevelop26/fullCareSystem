@@ -145,14 +145,14 @@ export default {
                             <select-input id="anhos" label="Año" class="text-sm pb-1 lg:pr-3 w-full"
                                 v-model="form.search_anho">
                                 <option :value="null" />
-                                <option v-for="years in showYears" :key="years" :value="years">
+                                <option v-for="years in showYears" :key="years" :value="years" class="text-sm">
                                     {{ years }}
                                 </option>
                             </select-input>
                             <select-input id="mes" label="Mes" class="text-sm pb-1 lg:pr-3 w-full"
                                 v-model="form.search_mes">
                                 <option :value="null" />
-                                <option v-for="mes in meses" :key="mes.id" :value="mes.id" class="capitalize">
+                                <option v-for="mes in meses" :key="mes.id" :value="mes.id" class="capitalize text-sm">
                                     {{ mes.mes }}
                                 </option>
                             </select-input>
@@ -206,14 +206,14 @@ export default {
                         </td>
                         <td class="py-2 px-2 rounded-r-xl bg-white group-hover:bg-fondColor">
                             <div class="w-full h-full flex items-center">
-                                <Link class="inline-block bg-fondColor px-3 py-3 mr-2 rounded-full hover:shadow-md"
-                                    :href="route('historiales.edit', historiale.id)">
-                                <Icon name="edit" class="w-3 h-3 fill-textColor" />
-                                </Link>
-                                <button class="inline-block px-3 py-3 rounded-full bg-softIndigo hover:shadow-md"
+                                <button class="inline-block px-3 py-3 mr-1 rounded-full bg-softIndigo hover:shadow-md"
                                     @click="showModal(historiale)">
                                     <Icon name="delete" class="w-3 h-3 fill-white" />
                                 </button>
+                                <Link class="inline-block bg-fondColor px-3 py-3 mr-1 rounded-full hover:shadow-md"
+                                    :href="route('historiales.edit', historiale.id)">
+                                <icon name="edit" class="w-3 h-3 fill-textColor" />
+                                </Link>
                                 <a class="inline-block bg-fondColor px-3 py-3 mr-2 rounded-full hover:shadow-md"
                                     :href="route('historiales.pdf', historiale.id)" target="_blank">
                                     <icon name="ver" class="w-3 h-3 fill-textColor" />
@@ -231,12 +231,12 @@ export default {
         <dialog-modal :show="openModal">
             <template v-slot:title>
                 <div class="font-bold">
-                    Eliminar Historial
+                    Anular Historial
                 </div>
             </template>
             <template v-slot:content>
                 <div v-if="catchData">
-                    ¿Está seguro que desea eliminar el historial del residente {{ catchData.residente.persona.nombres}}?
+                    ¿Está seguro que desea anular el historial del residente {{ catchData.residente.persona.nombres}}?
                 </div>
             </template>
             <template v-slot:footer>

@@ -12,7 +12,7 @@ return new class extends Migration
         Schema::create('control_rutina', function (Blueprint $table) {
             $table->id();
             $table->date('fecha');
-            $table->time('hora');
+            $table->time('hora')->nullable();
             $table->boolean('realizado');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('horario_rutina_id');

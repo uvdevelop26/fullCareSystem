@@ -5,7 +5,9 @@ import Filters from '../../Shared/Filters.vue';
 import { pickBy } from 'lodash';
 import { Inertia } from '@inertiajs/inertia';
 import SearchInput from '../../Shared/SearchInput.vue';
+import TextInput from "../../Shared/TextInput.vue";
 import { watchEffect, reactive } from 'vue';
+
 
 export default {
 
@@ -14,7 +16,8 @@ export default {
     components: {
         Head,
         Filters,
-        SearchInput
+        SearchInput,
+        TextInput
     },
 
     props: {
@@ -26,7 +29,8 @@ export default {
 
         //BUSQUEDA
         const search = reactive({
-            search_residente: props.filters.search_residente
+            search_residente: props.filters.search_residente,
+            search_fecha: props.filters.search_fecha
         });
 
         watchEffect(() => {
@@ -63,8 +67,10 @@ export default {
             <filters>
                 <div class="py-3 px-3 border border-turquesa rounded-md">
                     <div class="lg:flex lg:flex-wrap">
-                        <search-input id="nombre" label="Nombre del Residente" class="text-sm pb-1 lg:pr-3 w-full"
+                        <search-input id="nombre" label="Nombre del Residente" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
                             v-model="search.search_residente" />
+                        <text-input type="date" label="Fecha" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2" id="name"
+                            v-model="search.search_fecha" />
                     </div>
                 </div>
             </filters>

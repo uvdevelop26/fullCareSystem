@@ -74,6 +74,16 @@ export default {
             openModal.value = false;
         }
 
+        const pillColor = (data) => {
+            if (data === 'Pendiente') {
+                return 'border border-indigo-400 bg-indigo-100 text-indigo-400'
+            } else if (data === 'Aprobado') {
+                return 'border border-emerald-400 bg-emerald-100 text-emerald-400'
+            } else if (data === 'Rechazado') {
+                return 'border border-red-400 bg-red-100 text-red-400'
+            }
+        }
+
         //LIMPIAR CAMPOS
         const limpiarCampos = ()=>{
             form.search = null
@@ -86,7 +96,7 @@ export default {
         })
 
 
-        return { form, eliminarVacacion, openModal, catchData, showModal, limpiarCampos, flashMessage }
+        return { form, eliminarVacacion, openModal, catchData, showModal, limpiarCampos, flashMessage, pillColor }
     }
 }
 </script>
@@ -116,7 +126,7 @@ export default {
                             v-model="form.search_estado">
                             <option :value="null" />
                             <option v-for="estadoVariacione in estadoVariaciones" :key="estadoVariacione.id"
-                                :value="estadoVariacione.id" class="capitalize">
+                                :value="estadoVariacione.id" class="text-sm">
                                 {{ estadoVariacione.nombre_estado }}
                             </option>
                         </select-input>
@@ -167,8 +177,8 @@ export default {
                             {{ vacacione.duracion }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            <span class="inline-block px-3 py-1 capitalize rounded-2xl"
-                                :class="[vacacione.estado_variacione.nombre_estado === 'aprobado' ? 'border border-softIndigo text-softIndigo bg-indigo-100' : 'border border-red-500 text-red-500 bg-red-100']">
+                            <span class="inline-block px-3 py-1 capitalize font-bold rounded-2xl"
+                                :class="pillColor(vacacione.estado_variacione.nombre_estado)">
                                 {{ vacacione.estado_variacione.nombre_estado }}
                             </span>
                         </td>

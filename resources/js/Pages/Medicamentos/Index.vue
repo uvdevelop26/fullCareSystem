@@ -111,7 +111,7 @@ export default {
                     <div class=" lg:flex lg:flex-wrap">
                         <search-input id="medicamentos" label="Medicamento" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
                             v-model="form.search_nombre" />
-                        <search-input id="Residente" label="Nombres, Apellidos o C.I"
+                        <search-input id="Residente" label="Nombres o Apellidos"
                             class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2" v-model="form.search_residente" />
                     </div>
                     <div class="py-3 text-right">

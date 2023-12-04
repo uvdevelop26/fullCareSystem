@@ -39,6 +39,10 @@ class ControlRutina extends Model
                     $query->where('nombres', 'like', '%' . $search . '%');
                 });
             });
+        })->when($filters['search_fecha'] ?? null, function ($query, $search) {
+            $query->where(function ($query) use ($search) {
+                $query->whereDate('fecha', $search);
+            });
         });
     }
 }

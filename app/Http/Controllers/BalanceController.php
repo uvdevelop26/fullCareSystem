@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Egreso;
 use App\Models\Ingreso;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class BalanceController extends Controller
@@ -73,6 +75,9 @@ class BalanceController extends Controller
 
     public function diariopdf($fecha)
     {
+        $fechaActual = Carbon::today()->toDateString();
+
+        $users = Auth::user();
         //movimientos del día
         $ingresos = Ingreso::where('fecha', $fecha)
             ->select('concepto', 'fecha', 'monto as monto_ingreso')
@@ -96,7 +101,7 @@ class BalanceController extends Controller
 
         $pdf->getDomPDF()->set_option("enable_php", true);
 
-        $pdf->loadView('movimientoDiario', compact('movimientosDiarios', 'fecha', 'totalIngresosDiarios', 'totalEgresosDiarios', 'diferencia'));
+        $pdf->loadView('movimientoDiario', compact('movimientosDiarios', 'fecha', 'totalIngresosDiarios', 'totalEgresosDiarios', 'diferencia', 'users', 'fechaActual'));
 
         return $pdf->stream();
     }
@@ -104,6 +109,10 @@ class BalanceController extends Controller
 
     public function mensualpdf($mes, $anho)
     {
+        $fechaActual = Carbon::today()->toDateString();
+
+        $users = Auth::user();
+
         $ingresos = Ingreso::whereMonth('fecha', $mes)
             ->whereYear('fecha', $anho)
             ->select('concepto', 'fecha', 'monto as monto_ingreso')
@@ -131,7 +140,7 @@ class BalanceController extends Controller
 
         $pdf->getDomPDF()->set_option("enable_php", true);
 
-        $pdf->loadView('movimientoMensual', compact('movimientosMensuales', 'mes', 'totalIngresosMensuales', 'totalEgresosMensuales', 'diferencia'));
+        $pdf->loadView('movimientoMensual', compact('movimientosMensuales', 'mes', 'totalIngresosMensuales', 'totalEgresosMensuales', 'diferencia', 'fechaActual', 'users'));
 
         return $pdf->stream();
     }

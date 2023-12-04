@@ -64,7 +64,7 @@
             text-decoration: underline;
         }
 
-        ul li{
+        ul li {
             padding: 5px 0;
         }
 
@@ -75,6 +75,27 @@
 
         ul li .historia-data {
             display: inline-block;
+        }
+
+        .enfermedades-ul {
+            padding: 5px 0 0 10px;
+            text-transform: capitalize;
+            list-style: none;
+        }
+
+        /*FOOTER*/
+        footer {
+            width: 100%;
+            text-align: center;
+            position: absolute;
+            bottom: 0px;
+        }
+
+        footer p {
+            padding: 10px 85px;
+            text-align: right;
+            color: rgb(124, 118, 118);
+            font-style: italic;
         }
     </style>
 </head>
@@ -110,41 +131,41 @@
             </li>
             <li>
                 <div class="historia-info">Nombres:</div>
-                <div class="historia-data">{{ $persona->nombres}}</div> 
+                <div class="historia-data">{{ $persona->nombres}}</div>
             </li>
             <li>
                 <div class="historia-info">Apellidos:</div>
-                <div class="historia-data">{{ $persona->apellidos }}</div> 
+                <div class="historia-data">{{ $persona->apellidos }}</div>
             </li>
             <li>
                 <div class="historia-info">Sexo:</div>
-                <div class="historia-data">{{ $persona->sexo }}</div> 
+                <div class="historia-data">{{ $persona->sexo }}</div>
             </li>
             <li>
                 <div class="historia-info">Nacimiento:</div>
-                <div class="historia-data">{{ $persona->fecha_nacimiento }}</div> 
+                <div class="historia-data">{{ $persona->fecha_nacimiento }}</div>
             </li>
             <li>
                 <div class="historia-info">Dirección: </div>
-                <div class="historia-data">{{ $persona->direccion }}</div> 
+                <div class="historia-data">{{ $persona->direccion }}</div>
             </li>
         </ul>
         <h2 class="sub-title">Valoración Inicial</h2>
         <ul>
             <li>
-                <div class="historia-info"> Peso: </div> 
+                <div class="historia-info"> Peso: </div>
                 <div class="historia-data">{{ $caracteristica->peso }} kg</div>
             </li>
             <li>
-                <div class="historia-info"> Altura:</div> 
+                <div class="historia-info"> Altura:</div>
                 <div class="historia-data">{{ $caracteristica->altura }} cm.</div>
             </li>
             <li>
-                <div class="historia-info">Temperatura:</div> 
+                <div class="historia-info">Temperatura:</div>
                 <div class="historia-data">{{ $caracteristica->temperatura }} C°</div>
             </li>
             <li>
-                <div class="historia-info"> Presión Arterial:</div> 
+                <div class="historia-info"> Presión Arterial:</div>
                 <div class="historia-data">{{ $caracteristica->presion_arterial }}</div>
             </li>
         </ul>
@@ -155,13 +176,16 @@
         <p>Se realizó valoración médica al residente {{ $persona->nombres }} {{ $persona->apellidos}} de {{
             $persona->edad
             }} años de edad, con fecha de ingreso a la institución {{
-            $residente->fecha_ingreso }} padece de las siguientes enfermedades:
+            $residente->fecha_ingreso }}.
+            <br>
+            El residente actualmente padece de padece de las siguientes enfermedades:
+        <ul class="enfermedades-ul">
             @foreach($historialeHasEnfermedade as $item)
-            <span>
-                {{ $item->nombre}}
-            </span>
+            <li class="enfermedades-li">{{ $item->nombre}}</li>
             @endforeach
-            . Se han realizado las siguientes valoraciones médicas:
+
+        </ul>
+        Se han realizado las siguientes valoraciones médicas:
         </p>
         <ul>
             <li>
@@ -174,6 +198,9 @@
                 Observaciones: {{ $historiale->observaciones}}
             </li>
         </ul>
+        <footer>
+            <p> Impreso por {{ $users->username }} en fecha {{ $fechaActual }}</p>
+        </footer>
     </div>
 </body>
 

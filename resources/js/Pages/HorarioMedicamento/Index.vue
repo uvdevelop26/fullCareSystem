@@ -92,11 +92,15 @@ export default {
             form.realizado = true,
                 form.horario_medicamento_id = data
 
+            enviarFormulario()
+
+        }
+
+        const enviarFormulario = async () => {
             form.post(route('horario-medicamentos.store'), {
                 forceFormData: true,
                 preserveState: false
             });
-
         }
 
         //Flash Mensajes
@@ -125,6 +129,7 @@ export default {
             </h1>
         </div>
         <!-- FILTRO -->
+
         <div class="py-2">
             <div class="py-3 px-3  max-w-xl rounded-md">
                 <div class="lg:flex lg:flex-wrap">
@@ -140,7 +145,9 @@ export default {
         </div>
 
         <!-- FLASH MENSAJES -->
-        <flash-messages :flashMessage="flashMessage" :error="error" />
+        <div class="max-w-xl">
+            <flash-messages :flashMessage="flashMessage" :error="error" />
+        </div>
 
         <!-- TABLAS-->
         <div class="overflow-x-auto py-4 max-w-7xl">
@@ -177,53 +184,53 @@ export default {
                             <button
                                 class="inline-block font-bold text-indigo-500 bg-indigo-200 py-2 px-3 border border-indigo-500 rounded-2xl hover:bg-indigo-400 hover:text-white"
                                 @click="realizarMarcacion(horario.id)">Realizado</button>
+                            <br>
                         </td>
                     </tr>
                 </tbody>
-
             </table>
             <!-- TABLA MOBILE -->
             <div class="w-full md:hidden">
                 <div class="mb-3" v-for="horario in horarioMedicamentos" :key="horario.id">
 
                     <div class="flex">
-                        <div class="header border border-b-0 p-5 w-2/5 bg-turquesa text-white font-bold capitalize">
+                        <div class="header border border-b-0 p-5 w-2/5 bg-turquesa text-white font-bold capitalize text-sm">
                             Residente
                         </div>
-                        <div v-for="residente in horario.medicamentos" class="contenido border border-b-0 p-5 w-3/5">
+                        <div v-for="residente in horario.medicamentos" class="border border-b-0 p-5 w-3/5">
                             {{ residente.residente.persona.nombres }}
                             {{ residente.residente.persona.apellidos }}
                         </div>
                     </div>
                     <div class="flex">
-                        <div class="header border border-b-0 p-5 w-2/5 bg-turquesa text-white font-bold">
+                        <div class="header border border-b-0 p-5 w-2/5 bg-turquesa text-white font-bold text-sm">
                             Medicamento
                         </div>
-                        <div v-for="medicamento in horario.medicamentos" class="contenido border border-b-0 p-5 w-3/5">
+                        <div v-for="medicamento in horario.medicamentos" class="border border-b-0 p-5 w-3/5">
                             {{ medicamento.nombre }}
                         </div>
                     </div>
                     <div class="flex">
-                        <div class="header border border-b-0 p-5 w-2/5 bg-turquesa text-white font-bold">
+                        <div class="header border border-b-0 p-5 w-2/5 bg-turquesa text-white font-bold text-sm">
                             Dosis
                         </div>
-                        <div v-for="dosis in horario.medicamentos" class="contenido border border-b-0 p-5 w-3/5">
+                        <div v-for="dosis in horario.medicamentos" class="border border-b-0 p-5 w-3/5">
                             {{ dosis.dosis }}
                         </div>
                     </div>
                     <div class="flex">
-                        <div class="header border border-b-0 p-5 w-2/5 bg-turquesa text-white font-bold">
+                        <div class="header border border-b-0 p-5 w-2/5 bg-turquesa text-white font-bold text-sm">
                             Horarios
                         </div>
-                        <div class="contenido border border-b-0 p-5 w-3/5">
+                        <div class="border border-b-0 p-5 w-3/5">
                             {{ horario.hora }}
                         </div>
                     </div>
                     <div class="flex">
-                        <div class="header border  p-5 w-2/5 bg-turquesa text-white font-bold">
+                        <div class="header border  p-5 w-2/5 bg-turquesa text-white font-bold text-sm">
                             Marcacion diaria
                         </div>
-                        <div class="contenido border  p-5 w-3/5">
+                        <div class="border p-5 w-3/5">
                             <button
                                 class="inline-block font-bold text-indigo-500 bg-indigo-200 py-2 px-3 border border-indigo-500 rounded-2xl hover:bg-indigo-400 hover:text-white"
                                 @click="realizarMarcacion(horario.id)">Realizado</button>

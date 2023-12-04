@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Usuarios</title>
+    <title>Document</title>
 </head>
 <style>
     * {
@@ -171,19 +171,23 @@
         text-align: left;
     }
 
-    footer {
+    /*FIRMA*/
+    /* .firma {
+        border-top: 1px solid rgba(20, 20, 20, 0.5);
+        text-align: center;
+        width: 30%;
+        margin-left: 70%;
+        margin-top: 80px;
+        padding-top: 5px;
+    }
+
+    /*FOOTER*/
+    /*  footer {
         width: 100%;
         text-align: center;
         position: absolute;
         bottom: 0px;
-    }
-
-    footer p {
-        padding: 20px 100px;
-        text-align: right;
-        color: rgb(124, 118, 118);
-        font-style: italic;
-    }
+    } */
 </style>
 
 <body>
@@ -203,7 +207,7 @@
                     <table class="table_h_factura">
                         <thead>
                             <th class="headerDatosh titulos">
-                                <span class="titulos">Listado de Usuarios del Sistema Fullcare System</span>
+                                <span class="titulos">Sueldos Pagados en el mes de {{ $mes }}</span>
                             </th>
                         </thead>
                     </table>
@@ -214,25 +218,23 @@
         <table class="table_materiales">
             <thead>
                 <tr>
-                    <td>Nombre y Apellido</td>
+                    <td>Nombres</td>
+                    <td>Apellidos</td>
                     <td>Cédula</td>
-                    <td>Email</td>
-                    <td>Nombre de Usuario</td>
-                    <td>Rol</td>
+                    <td>Sección</td>
+                    <td>Fecha</td>
+                    <td>Monto</td>
                 </tr>
             </thead>
             <tbody>
-                @foreach($usuarios as $item)
+                @foreach($sueldos as $item)
                 <tr>
-                    <td>{{ $item->empleado->persona->nombres}} {{ $item->empleado->persona->apellidos}}</td>
-                    <td>{{ $item->empleado->persona->ci_numero}}</td>
-                    <td>{{ $item->empleado->email}}</td>
-                    <td>{{ $item->username}}</td>
-                    <td class="capitalize">
-                        @foreach($item->roles as $role)
-                        <span>{{ $role->name }},</span>
-                        @endforeach
-                    </td>
+                    <td>{{ $item->empleado->persona->nombres }}</td>
+                    <td>{{ $item->empleado->persona->apellidos }}</td>
+                    <td>{{ $item->empleado->persona->ci_numero }}</td>
+                    <td>{{ $item->empleado->seccion->nombre_seccion }}</td>
+                    <td>{{ $item->fecha }}</td>
+                    <td>{{ $item->monto }}</td>
                 </tr>
                 @endforeach
             </tbody>
@@ -244,7 +246,9 @@
                     <table class="table_datosFtxt">
                         <tr>
                             <td>
-                                <p></p>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum maxime eos minus
+                                    illum dignissimos voluptas? Expedita optio eligendi hic pariatur quisquam ratione,
+                                    ipsam ipsa temporibus perspiciatis, alias iure sequi sit.</p>
                             </td>
                         </tr>
                     </table>
@@ -259,31 +263,31 @@
                             </td>
                             <td>
                                 <p>
-                                    {{ $cantidadUsuarios }}
+                                    fa
                                 </p>
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 <p>
-                                    Cantidad Enfermeros
+                                    Cantidad Activos
                                 </p>
                             </td>
                             <td>
                                 <p>
-                                    {{ $cantidadEnfermeros }}
+                                    fasdf
                                 </p>
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 <p>
-                                    Cantidad Administradores
+                                    Cantidad Inactivos
                                 </p>
                             </td>
                             <td>
                                 <p>
-                                    {{ $cantidadAdmin }}
+                                    fad
                                 </p>
                             </td>
                         </tr>
@@ -292,9 +296,6 @@
                 </td>
             </tr>
         </table>
-        <footer>
-            <p> Impreso por {{ $users->username }} en fecha {{ $fechaActual }}</p>
-        </footer>
     </div>
 </body>
 

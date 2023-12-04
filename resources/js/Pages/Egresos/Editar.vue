@@ -87,7 +87,7 @@ export default {
           <select-input v-model="form.categoria_id" :error="errors.categoria_id" class="pb-5 lg:pr-3 w-full lg:w-1/2"
             label="Categoria">
             <option :value="null" />
-            <option v-for="categoria in categorias" :key="categoria.id" :value="categoria.id" class="capitalize">
+            <option v-for="categoria in categorias" :key="categoria.id" :value="categoria.id" class="text-sm">
               {{ categoria.nombre }}</option>
           </select-input>
           <div class="py-4 lg:pr-2 flex w-full items-center justify-end bg-white border-t">

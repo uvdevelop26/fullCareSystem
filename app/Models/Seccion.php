@@ -15,4 +15,15 @@ class Seccion extends Model
     {
         return $this->hasMany(Empleado::class);
     }
+
+    //Mutadores y Accesores
+    public function setNombreSeccion($value)
+    {
+        $this->attributes['nombre_seccion'] = strtolower($value);
+    }
+    
+    public function getNombreSeccionAttribute($value)
+    {
+        return ucwords($value);
+    }
 }

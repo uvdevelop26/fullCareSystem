@@ -115,7 +115,7 @@ export default {
                         <select-input id="roles" label="Nombre del Rol" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
                             v-model="form.search">
                             <option :value="null" />
-                            <option v-for="roles in rolesToSearch" :key="roles.id" :value="roles.id">
+                            <option v-for="roles in rolesToSearch" :key="roles.id" :value="roles.id" class="text-sm">
                                 {{ roles.name }}
                             </option>
                         </select-input>

@@ -21,7 +21,7 @@ export default {
 
     props: {
         medicamento: Array,
-        medicamentoHasHorario: Array,
+        medicamentoHasHorarios: Array,
         presentaciones: Array,
         errors: Object
     },
@@ -39,17 +39,17 @@ export default {
             efectos_secundarios: props.medicamento.efectos_secundarios,
             residente_id: props.medicamento.residente_id,
             presentacione_id: props.medicamento.presentacione_id,
-            horarios: props.medicamentoHasHorario
+            horarios: props.medicamentoHasHorarios
 
         });
 
-        const eliminarHorario = (index)=>{
-            form.horarios.splice(index, 1);
+        const agregarHorario = () => {
+            form.horarios.push({ valor: '' })
         }
 
-        const agregarHorario = ()=>{
-            form.horarios.push({ valor: ''})
-        }
+        const eliminarHorario = (index) => {
+            form.horarios.splice(index, 1);
+        }    
 
         const actualizar = () => {
             form.post(
@@ -78,9 +78,10 @@ export default {
         <!-- formulario -->
         <div class="max-w-4xl overflow-hidden pt-2">
             <form @submit.prevent="actualizar">
+                <!-- datos del medicamento -->
                 <div class="py-3 px-3 flex flex-wrap bg-white border rounded-md">
                     <text-input type="text" label="Residente" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="residente_id"
-                        v-model="form.residente_id" name="residente_id" :error="errors.residente_id"/>
+                        v-model="form.residente_id" name="residente_id" :error="errors.residente_id" />
                     <text-input type="text" label="Nombre del Medicamento" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="nombre"
                         v-model="form.nombre" :error="errors.nombre" />
                     <div class="pb-5 lg:pr-3 w-full lg:w-1/2">
@@ -103,6 +104,7 @@ export default {
                             v-model="form.efectos_secundarios"></textarea>
                         <span v-if="errors.efectos_secundarios" class="text-red-500">{{ errors.efectos_secundarios }}</span>
                     </div>
+                    <!-- presentación del medicamento -->
                     <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Presentacion" id="presentacione_id"
                         v-model="form.presentacione_id" :error="errors.presentacione_id">
                         <option :value="null" />
@@ -111,15 +113,22 @@ export default {
                             {{ presentacione.nombre }}
                         </option>
                     </select-input>
-                    <div class="flex-wrap">
+                    <!-- horarios -->
+                    <div class="flex-wrap pb-5 lg:pr-3 w-full lg:w-1/2">
                         <div class="block pb-2">Horarios de Suministro:</div>
-                        <div v-for="(horario, index) in form.horarios" :key="index">
-                            <input type="text" v-model="horario.hora" placeholder="HH:MM" >
-                            <button type="button" @click="eliminarHorario(index)">Eliminar</button>
+                        <div v-for="(horario, index) in form.horarios" :key="index" class="flex gap-2 my-1">
+                            <input type="text" class="border-turquesa rounded-md w-full" v-model="horario.hora"
+                                placeholder="HH:MM">
+                            <button type="button"
+                                class="px-3 py-1 bg-indigo-400 rounded-xl text-white hover:shadow-md hover:bg-softIndigo"
+                                @click="eliminarHorario(index)">Eliminar</button>
                         </div>
-                        <button type="button" @click="agregarHorario">Agregar Horario</button>
+                        <button type="button"
+                            class="px-3 py-1 mt-2 bg-indigo-400 rounded-xl text-white hover:shadow-md hover:bg-softIndigo"
+                            @click="agregarHorario">Agregar Horario</button>
                         <span v-if="errors.horarios" class="text-red-500">{{ errors.horarios }}</span>
                     </div>
+                    <!-- botones -->
                     <div class="py-4 lg:pr-2 flex w-full items-center justify-end bg-white border-t">
                         <Link type="button" :href="route('medicamentos.index')" class="btn-cancelar">
                         <span class="text-white font-bold">Cancelar</span>

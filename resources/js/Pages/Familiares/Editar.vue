@@ -88,13 +88,13 @@ export default {
                     <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Sexo" id="sexo" v-model="form.sexo"
                         :error="errors.sexo">
                         <option :value="null" />
-                        <option value="femenino">Femenino</option>
-                        <option value="masculino">Masculino</option>
+                        <option value="Femenino" class="text-sm">Femenino</option>
+                        <option value="Masculino" class="text-sm">Masculino</option>
                     </select-input>
                     <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Ciudad" id="ciudad" v-model="form.ciudade_id"
                         :error="errors.ciudade_id">
                         <option :value="null" />
-                        <option v-for="ciudad in ciudades" :key="ciudad.nombre_ciudad" :value="ciudad.id" class="capitalize">
+                        <option v-for="ciudad in ciudades" :key="ciudad.nombre_ciudad" :value="ciudad.id" class="text-sm">
                             {{ ciudad.nombre_ciudad }}
                         </option>
                     </select-input>
@@ -103,10 +103,10 @@ export default {
                     <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Parentezco" id="parentezco"
                         v-model="form.parentezco" :error="errors.parentezco">
                         <option :value="null" />
-                        <option value="hijo/a">Hijo/a</option>
-                        <option value="hermano/a">Hermano/a</option>
-                        <option value="sobrino/a">Sobrino/a</option>
-                        <option value="otro">Otro</option>
+                        <option value="Hijo/a" class="text-sm">Hijo/a</option>
+                        <option value="Hermano/a" class="text-sm">Hermano/a</option>
+                        <option value="Sobrino/a" class="text-sm">Sobrino/a</option>
+                        <option value="Otro" class="text-sm">Otro</option>
                     </select-input>
                     <text-input type="text" label="Email" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="email"
                         v-model="form.email" :error="errors.email" />

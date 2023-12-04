@@ -99,13 +99,13 @@ export default {
                     <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Sexo" id="sexo" v-model="form.sexo"
                         :error="errors.sexo">
                         <option :value="null" />
-                        <option value="femenino">Femenino</option>
-                        <option value="masculino">Masculino</option>
+                        <option value="Femenino" class="text-sm">Femenino</option>
+                        <option value="Masculino" class="text-sm">Masculino</option>
                     </select-input>
                     <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Ciudad" id="ciudad" v-model="form.ciudade_id"
                         :error="errors.ciudade_id">
                         <option :value="null" />
-                        <option v-for="ciudade in ciudades" :value="ciudade.id" class="capitalize">
+                        <option v-for="ciudade in ciudades" :value="ciudade.id" class="text-sm">
                             {{ ciudade.nombre_ciudad }}
                         </option>
                     </select-input>
@@ -115,7 +115,7 @@ export default {
                         v-model="form.estado_residente_id">
                         <option :value="null" />
                         <option v-for="estado_residente in estado_residentes" :key="estado_residente.id"
-                            :value="estado_residente.id" class="capitalize">
+                            :value="estado_residente.id" class="capitalize text-sm">
                             {{ estado_residente.nombre_estado }}
                         </option>
                     </select-input>

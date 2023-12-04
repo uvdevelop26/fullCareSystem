@@ -5,7 +5,9 @@ import Filters from '../../Shared/Filters.vue';
 import { pickBy } from 'lodash';
 import { Inertia } from '@inertiajs/inertia';
 import SearchInput from '../../Shared/SearchInput.vue';
+import SelectInput from '../../Shared/SelectInput.vue';
 import { watchEffect, reactive } from 'vue';
+import TextInput from "../../Shared/TextInput.vue";
 
 
 export default {
@@ -15,7 +17,9 @@ export default {
     components: {
         Head,
         Filters,
-        SearchInput
+        SearchInput,
+        SelectInput,
+        TextInput
     },
 
     props: {
@@ -27,7 +31,9 @@ export default {
 
         //BUSQUEDA
         const search = reactive({
-            search_residente: props.filters.search_residente
+            search_residente: props.filters.search_residente,
+            search_fecha: props.filters.search_fecha
+
         });
 
         watchEffect(() => {
@@ -35,8 +41,14 @@ export default {
             Inertia.replace(route('control-medicamentos.index', Object.keys(query).length ? query : {}));
         })
 
+        //LIMPIAR CAMPOS
+        const limpiarCampos = () => {
+            search.search_residente = null,
+            search.search_fecha = null
+        }
 
-        return { search }
+
+        return { search, limpiarCampos }
     }
 
 }
@@ -57,10 +69,16 @@ export default {
             <filters>
                 <div class="py-3 px-3 border border-turquesa rounded-md">
                     <div class="lg:flex lg:flex-wrap">
-                        <search-input id="nombre" label="Nombre del Residente" class="text-sm pb-1 lg:pr-3 w-full"
+                        <search-input id="nombre" label="Nombre del Residente" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
                             v-model="search.search_residente" />
+                        <text-input type="date" label="Fecha" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2" id="name"
+                            v-model="search.search_fecha" />
                     </div>
-                   
+                    <div class="py-3 text-right">
+                        <button class="btn-indigo mx-1 hover:bg-softIndigo" type="button" @click="limpiarCampos()">
+                            Limpiar
+                        </button>
+                    </div>
                 </div>
             </filters>
         </div>
@@ -103,6 +121,7 @@ export default {
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
                             <span v-if="control.realizado == 1"> SI </span>
+                            <span v-else> NO </span>
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
                             {{ control.user.username }}

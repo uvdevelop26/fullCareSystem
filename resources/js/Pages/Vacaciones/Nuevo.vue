@@ -87,7 +87,7 @@ export default {
                         v-model="form.estado_variacione_id" :error="errors.estado_variacione_id">
                         <option :value="null" />
                         <option v-for="estadoVariacione in estadoVariaciones" :key="estadoVariacione.id"
-                            :value="estadoVariacione.id" class="capitalize">{{ estadoVariacione.nombre_estado }}</option>
+                            :value="estadoVariacione.id" class="text-sm">{{ estadoVariacione.nombre_estado }}</option>
                     </select-input>
                     <text-input type="text" label="Observacion" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="observacion"
                         :error="errors.observacion" v-model="form.observacion" />

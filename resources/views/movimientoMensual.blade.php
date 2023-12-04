@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Movimientos Mensuales</title>
     <style>
         * {
             font-size: 1rem;
@@ -183,8 +183,15 @@
             position: absolute;
             bottom: 0px;
         }
+
+        footer p {
+            padding: 10px 85px;
+            text-align: right;
+            color: rgb(124, 118, 118);
+            font-style: italic;
+        }
     </style>
-    
+
 </head>
 
 <body>
@@ -210,7 +217,7 @@
                                 <p class="titulos">Hogar de Ancianos Virgen del Rosario</p>
                             </td>
                         </tr>
-            
+
                         <tr>
                             <td>
                                 <p>TELEFONO: <span>5897485106</span> </p>
@@ -218,7 +225,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <p>E-MAIL: <span>contacto@tuempresa.com</span> </p>
+                                <p>E-MAIL: <span>hogarvdelRosario@gmail.com</span> </p>
                             </td>
                         </tr>
                     </table>
@@ -255,9 +262,7 @@
                     <table class="table_datosFtxt">
                         <tr>
                             <td>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum maxime eos minus
-                                    illum dignissimos voluptas? Expedita optio eligendi hic pariatur quisquam ratione,
-                                    ipsam ipsa temporibus perspiciatis, alias iure sequi sit.</p>
+                                <p></p>
                             </td>
                         </tr>
                     </table>
@@ -291,7 +296,7 @@
                         <tr>
                             <td>
                                 <p>
-                                    Diferencia
+                                    Diferencia:
                                 </p>
                             </td>
                             <td>
@@ -300,18 +305,18 @@
                                 </p>
                             </td>
                         </tr>
-                        
+
                     </table>
                 </td>
             </tr>
         </table>
         <!--FIRMA-->
         <div class="firma">
-            Firma 
+            Firma
         </div>
         <!--FOOTER-->
         <footer>
-            <p>Obten tu factura en: https://tuempresa.com/facturacion | Empresa: 558525 | Referencia: 55a885dvs </p>
+            <p> Impreso por {{ $users->username }} en fecha {{ $fechaActual }}</p>
         </footer>
     </div>
 

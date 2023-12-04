@@ -97,13 +97,13 @@ export default {
         }
 
         //flash Messages
-        onMounted(()=>{
+        onMounted(() => {
             flashMessage.value = props.flash.success
-          
-        })
-        
 
-            console.log(Inertia.page.props.flash.success)
+        })
+
+
+        console.log(Inertia.page.props.flash.success)
 
 
         return { form, urlbase, eliminarResidente, openModal, catchData, showModal, limpiarCampos, flashMessage }
@@ -139,7 +139,7 @@ export default {
                         <select-input id="ciudades" label="Ciudad" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
                             ref="selectInputComponentCiudad" v-model="form.search_ciudad">
                             <option :value="null" />
-                            <option v-for="ciudad in ciudades" :key="ciudad.id" :value="ciudad.id" class="capitalize">
+                            <option v-for="ciudad in ciudades" :key="ciudad.id" :value="ciudad.id" class="text-sm">
                                 {{ ciudad.nombre_ciudad }}
                             </option>
                         </select-input>
@@ -147,10 +147,10 @@ export default {
                         <select-input :id="sexo" label="Sexo" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
                             ref="selectInputComponentSexo" v-model="form.search_sexo">
                             <option :value="null" />
-                            <option value="femenino">
+                            <option class="text-sm" value="femenino">
                                 Femenino
                             </option>
-                            <option value="masculino">
+                            <option class="text-sm" value="masculino">
                                 Masculino
                             </option>
                         </select-input>
@@ -159,7 +159,7 @@ export default {
                             ref="selectInputComponentEstado" v-model="form.search_estado">
                             <option :value="null" />
                             <option v-for="estado_residente in estado_residentes" :key="estado_residente.id"
-                                :value="estado_residente.id" class="capitalize">
+                                :value="estado_residente.id" class="capitalize text-sm">
                                 {{ estado_residente.nombre_estado }}
                             </option>
                         </select-input>

@@ -14,7 +14,7 @@ class ControlMedicamentoController extends Controller
 {
     public function index(Request $request)
     {
-        $queries = ['search_residente'];
+        $queries = ['search_residente', 'search_fecha'];
 
         $controlMedicamentos = ControlMedicamento::with('user', 'horarioMedicamento.medicamentos.residente.persona')
             ->orderBy('id', 'desc')
