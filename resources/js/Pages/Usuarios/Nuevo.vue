@@ -22,6 +22,7 @@ export default {
 
     props: {
         roles: Array,
+        empleados: Array,
         errors: Object
     },
 
@@ -56,14 +57,19 @@ export default {
         <div class="max-w-4xl overflow-hidden pt-2">
             <form @submit.prevent="guardar">
                 <div class="py-3 px-3 flex flex-wrap bg-white border rounded-md">
-                    <text-input type="text" label="Empleado" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="empleado"
-                        v-model="form.empleado_id" :error="errors.empleado_id" />
+                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Empleado" id="empleado" v-model="form.empleado_id"
+                        :error="errors.empleado_id">
+                        <option :value="null" />
+                        <option v-for="empleado in empleados" :key="empleado.id" :value="empleado.id" class="text-sm">
+                            {{ empleado.persona.nombres }} {{ empleado.persona.apellidos }}
+                        </option>
+                    </select-input>
                     <text-input type="text" label="Nombre de Usuario" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="username"
                         v-model="form.username" :error="errors.username" />
                     <text-input type="password" label="Contraseña" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="password"
                         v-model="form.password" :error="errors.password" />
-                    <text-input type="password" label="Re-escribir la contraseña" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="password_confirmation"
-                        v-model="form.password_confirmation" :error="errors.password" />
+                    <text-input type="password" label="Re-escribir la contraseña" class="pb-5 lg:pr-3 w-full lg:w-1/2"
+                        id="password_confirmation" v-model="form.password_confirmation" :error="errors.password" />
                     <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Rol" id="role_id" v-model="form.role_id"
                         :error="errors.role_id">
                         <option :value="null" />

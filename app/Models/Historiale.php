@@ -21,6 +21,8 @@ class Historiale extends Model
         'caracteristica_id'
     ];
 
+
+    //funciones de relación
     public function caracteristica()
     {
         return $this->belongsTo(Caracteristica::class);

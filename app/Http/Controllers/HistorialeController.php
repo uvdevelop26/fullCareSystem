@@ -39,11 +39,13 @@ class HistorialeController extends Controller
 
     public function create()
     {
+        $residentes = Residente::with('persona')->get();
+
         $enfermedades = Enfermedade::all();
 
         return Inertia::render('Historiales/Nuevo', [
             'enfermedades' => $enfermedades,
-
+            'residentes' => $residentes
         ]);
     }
 
@@ -97,17 +99,21 @@ class HistorialeController extends Controller
         //enfermedades relacionadas al historial
         $historialeHasEnfermedade = Enfermedade::whereIn('id', array_column(json_decode($historiale->enfermedades, true), 'id'))->get();
 
+        $residentes = Residente::with('persona')->get();
+
 
         return Inertia::render('Historiales/Editar', [
             'caracteristica' => $caracteristica,
             'historialeHasEnfermedade' => $historialeHasEnfermedade,
-            'historiale' => $historiale
+            'historiale' => $historiale,
+            'residentes' => $residentes
         ]);
     }
 
 
     public function update(HistorialeRequest $request, Historiale $historiale)
     {
+    
         $caracteristica = Caracteristica::find($historiale->caracteristica_id);
 
         $caracteristica->update([

@@ -209,8 +209,8 @@
                 <td class="datos-grales-td">
                     <table class="table_h_factura">
                         <thead>
-                            <th class="headerDatosh titulos">Movimiento Financiero mes de: <span
-                                    class="titulos">{{$mes}}</span></th>
+                            <th class="headerDatosh titulos">Movimiento Financiero mes de <span
+                                    class="titulos">{{$nombreMes}}</span></th>
                         </thead>
                         <tr>
                             <td class="titulos">

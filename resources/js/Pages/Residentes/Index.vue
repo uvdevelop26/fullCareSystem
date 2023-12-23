@@ -34,7 +34,6 @@ export default {
     props: {
         residentes: Array,
         ciudades: Array,
-        estado_residentes: Array,
         filters: Object,
         flash: Object
     },
@@ -60,7 +59,6 @@ export default {
         const form = reactive({
             search: props.filters.search,
             search_ciudad: props.filters.search_ciudad,
-            search_estado: props.filters.search_estado,
             search_sexo: props.filters.search_sexo
         })
 
@@ -80,7 +78,8 @@ export default {
 
             catchData.value._method = "DELETE";
             Inertia.post('/residentes/' + catchData.value.id, catchData.value, {
-                preserveState: false
+                preserveState: false,
+                preserveScroll: true
             });
 
             openModal.value = false;
@@ -91,7 +90,6 @@ export default {
         const limpiarCampos = async () => {
             form.search = null
             form.search_ciudad = null
-            form.search_estado = null
             form.search_sexo = null
 
         }
@@ -102,8 +100,6 @@ export default {
 
         })
 
-
-        console.log(Inertia.page.props.flash.success)
 
 
         return { form, urlbase, eliminarResidente, openModal, catchData, showModal, limpiarCampos, flashMessage }
@@ -144,23 +140,14 @@ export default {
                             </option>
                         </select-input>
                         <!-- selccionar sexo -->
-                        <select-input :id="sexo" label="Sexo" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
-                            ref="selectInputComponentSexo" v-model="form.search_sexo">
+                        <select-input id="sexo" label="Sexo" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
+                             v-model="form.search_sexo">
                             <option :value="null" />
                             <option class="text-sm" value="femenino">
                                 Femenino
                             </option>
                             <option class="text-sm" value="masculino">
                                 Masculino
-                            </option>
-                        </select-input>
-                        <!-- selccionar estado -->
-                        <select-input :id="estado" label="Estado" class="text-sm pb-1 lg:pr-3 w-full lg:w-1/2"
-                            ref="selectInputComponentEstado" v-model="form.search_estado">
-                            <option :value="null" />
-                            <option v-for="estado_residente in estado_residentes" :key="estado_residente.id"
-                                :value="estado_residente.id" class="capitalize text-sm">
-                                {{ estado_residente.nombre_estado }}
                             </option>
                         </select-input>
                     </div>
@@ -190,7 +177,7 @@ export default {
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">sexo</th>
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">direccion</th>
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">Ingreso</th>
-                        <th class="py-3 px-4 bg-turquesa text-white font-bold">Estado</th>
+                        <th class="py-3 px-4 bg-turquesa text-white font-bold">Habitación N°</th>
                         <th class="py-3 px-4 bg-turquesa rounded-r-xl text-white font-bold">Acciones</th>
                     </tr>
                 </thead>
@@ -213,18 +200,13 @@ export default {
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">{{ residente.persona.edad }}</td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor capitalize">{{ residente.persona.sexo }}</td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            <span class="block text-indigo-400 font-semibold capitalize"> {{
+                            <span class="block font-semibold underline"> {{
                                 residente.persona.ciudade.nombre_ciudad }}
                             </span>
-                            {{ residente.persona.direccion }}
+                          <p class="w-64 whitespace-normal">{{ residente.persona.direccion }}</p>  
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">{{ residente.fecha_ingreso }}</td>
-                        <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            <span class="inline-block px-3 py-1 rounded-2xl capitalize"
-                                :class="[residente.estado_residente.nombre_estado === 'activo' ? 'border border-softIndigo text-softIndigo bg-indigo-100' : 'border border-red-500 text-red-500 bg-red-100']">
-                                {{ residente.estado_residente.nombre_estado }}
-                            </span>
-                        </td>
+                        <td class="py-2 px-2 bg-white group-hover:bg-fondColor">{{ residente.habitacione.numero }}</td>
                         <td class="py-2 px-2 rounded-r-xl bg-white group-hover:bg-fondColor">
                             <div class="w-full h-full flex items-center">
                                 <Link class="inline-block bg-fondColor px-3 py-3 mr-2 rounded-full hover:shadow-md"

@@ -22,17 +22,8 @@ class Ingreso extends Model
         'categoria_id'
     ];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    public function categoria()
-    {
-        return $this->belongsTo(Categoria::class);
-    }
-
     //Mutadores y Accesores
+
     protected function concepto(): Attribute
     {
         return new Attribute(
@@ -49,6 +40,19 @@ class Ingreso extends Model
             set: fn($value) => strtolower($value)
         );
 
+    }
+
+
+    //funciones de relaciones
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function categoria()
+    {
+        return $this->belongsTo(Categoria::class);
     }
 
 

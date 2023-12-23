@@ -72,7 +72,7 @@ export default {
             <span v-if="errors.detalle" class="text-red-500">Este campo es requerido</span>
           </div>
           <text-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Monto" type="number" id="monto" v-model="form.monto"
-            :error="errors.monto" />
+            :error="errors.monto" reference="150000 (sin puntos)" />
           <text-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Comprobante Nro." type="number" id="nro_comprobante"
             v-model="form.nro_comprobante" :error="errors.nro_comprobante" />
           <select-input v-model="form.categoria_id" :error="errors.categoria_id" class="pb-5 lg:pr-3 w-full lg:w-1/2"

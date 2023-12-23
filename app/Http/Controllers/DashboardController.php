@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Habitacione;
 use App\Models\Persona;
 use App\Models\Residente;
 use App\Models\User;
@@ -16,26 +17,27 @@ class DashboardController extends Controller
 
     public function index()
     {
+        $habitacion1 = Habitacione::with('residentes.persona', 'residentes.estados')
+            ->where('numero', 1)->get();
 
+        $habitacion2 = Habitacione::with('residentes.persona', 'residentes.estados')
+            ->where('numero', 2)->get();
 
-        $totalResidentes = Residente::count();
+        $habitacion3 = Habitacione::with('residentes.persona', 'residentes.estados')
+            ->where('numero', 3)->get();
 
-        $mesActual = Carbon::now()->month;
+        $habitacion4 = Habitacione::with('residentes.persona', 'residentes.estados')
+            ->where('numero', 4)->get();
 
-        $cumpleanioResidentes = Residente::with('persona')->whereHas('persona', function ($query) use ($mesActual) {
-            $query->whereMonth('fecha_nacimiento', $mesActual);
-        })->get();
-
-
-        /*   return Inertia::render('Dashboard/Index', [
-            'totalResidentes', $totalResidentes
-        ]); */
-
+        $habitacion5 = Habitacione::with('residentes.persona', 'residentes.estados')
+            ->where('numero', 5)->get();
 
         return Inertia::render('Dashboard/Index', [
-            'totalResidentes' => $totalResidentes,
-            'cumpleanioResidentes' => $cumpleanioResidentes
-
+            'habitacion1' => $habitacion1,
+            'habitacion2' => $habitacion2,
+            'habitacion3' => $habitacion3,
+            'habitacion4' => $habitacion4,
+            'habitacion5' => $habitacion5
         ]);
     }
 

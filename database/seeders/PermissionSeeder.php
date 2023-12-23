@@ -25,6 +25,7 @@ class PermissionSeeder extends Seeder
             //módulo residentes
             'residentes',
             'residentes-lista',
+            'residentes-estados',
             'residentes-familiares',
 
             //módulo empleados

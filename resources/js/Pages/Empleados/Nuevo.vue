@@ -73,7 +73,7 @@ export default {
                     <text-input type="text" label="Apellidos" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="apellidos"
                         v-model="form.apellidos" :error="errors.apellidos" />
                     <text-input type="text" label="CI" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="ci_numero"
-                        v-model="form.ci_numero" :error="errors.ci_numero" />
+                        v-model="form.ci_numero" :error="errors.ci_numero" reference="4972774 (sin puntos)" />
                     <text-input type="date" label="Fecha de Nacimiento" class="pb-5 lg:pr-3 w-full lg:w-1/2"
                         id="fecha_nacimiento" v-model="form.fecha_nacimiento" :error="errors.fecha_nacimiento" />
                     <text-input type="text" label="Teléfono" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="telefono"

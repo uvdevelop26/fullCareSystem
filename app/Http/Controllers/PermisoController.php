@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PermisoRequest;
+use App\Models\Empleado;
 use App\Models\EstadoVariacione;
 use App\Models\Permiso;
 use Illuminate\Http\Request;
@@ -37,10 +38,13 @@ class PermisoController extends Controller
     {
         $estadoVariaciones = EstadoVariacione::all();
 
+        $empleados = Empleado::with('persona')->get();
+
         return Inertia::render(
             'Permisos/Nuevo',
             [
-                'estadoVariaciones' => $estadoVariaciones
+                'estadoVariaciones' => $estadoVariaciones,
+                'empleados' => $empleados
             ]
         );
     }
@@ -73,11 +77,14 @@ class PermisoController extends Controller
     {
         $estadoVariaciones = EstadoVariacione::all();
 
+        $empleados = Empleado::with('persona')->get();
+
         return Inertia::render(
             'Permisos/Editar',
             [
                 'permiso' => $permiso,
-                'estadoVariaciones' => $estadoVariaciones
+                'estadoVariaciones' => $estadoVariaciones,
+                'empleados' => $empleados
             ]
         );
     }

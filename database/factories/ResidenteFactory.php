@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\EstadoResidente;
+use App\Models\Habitacione;
 use App\Models\Persona;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,7 +19,7 @@ class ResidenteFactory extends Factory
             'foto' => $this->faker->imageUrl(150, 150),
             'fecha_ingreso' => $fechaIngreso,
             'persona_id' => Persona::all()->random()->id,
-            'estado_residente_id' => EstadoResidente::all()->random()->id
+            'habitacione_id' => Habitacione::all()->random()->id
         ];
     }
 }

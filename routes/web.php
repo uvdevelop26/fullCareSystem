@@ -8,6 +8,7 @@ use App\Http\Controllers\ControlRutinaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EgresoController;
 use App\Http\Controllers\EmpleadoController;
+use App\Http\Controllers\EstadoResidenteController;
 use App\Http\Controllers\FamiliareController;
 use App\Http\Controllers\HistorialeController;
 use App\Http\Controllers\HorarioMedicamentoController;
@@ -70,6 +71,7 @@ Route::get('historiales/{historiale}/pdf', [HistorialeController::class, 'pdf'])
 Route::controller(ReporteController::class)->group(function () {
     Route::get('/reportes', 'index')->name('reportes.index');
     Route::get('/reportes/residentes', 'residentespdf')->name('reportes.residentespdf');
+    Route::get('/reportes/estados', 'estadospdf')->name('reportes.estadospdf');
     Route::get('/reportes/empleados', 'empleadospdf')->name('reportes.empleadospdf');
     Route::get('/reportes/jornadas', 'jornadaspdf')->name('reportes.jornadaspdf');
     Route::get('/reportes/usuarios', 'usuariospdf')->name('reportes.usuariospdf');
@@ -78,11 +80,13 @@ Route::controller(ReporteController::class)->group(function () {
     Route::get('/reportes/sueldos/{mes}/{anho}', 'sueldospdf')->name('reportes.sueldospdf');
 });
 
-/* Route::get('/reportes', [ReporteController::class, 'index'])
-    ->name('reportes.index'); */
 
 //Residentes
 Route::resource('residentes', ResidenteController::class)
+    ->middleware('auth:sanctum', 'verified');
+
+//MovimientosResidentes
+Route::resource('estados', EstadoResidenteController::class)
     ->middleware('auth:sanctum', 'verified');
 
 //Familiares

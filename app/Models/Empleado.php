@@ -18,6 +18,9 @@ class Empleado extends Model
         'persona_id'
     ];
 
+    //Mutadores y Accesores
+    
+
     //relacion de uno a muchos
     public function persona()
     {

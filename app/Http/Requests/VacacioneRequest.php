@@ -16,9 +16,9 @@ class VacacioneRequest extends FormRequest
     public function rules()
     {
         return [
-            'fecha_inicio' => 'required',
-            'fecha_fin' => 'required',
-            'duracion' => 'required',
+            'fecha_inicio' => 'required|date',
+            'fecha_fin' => 'required|date',
+            'duracion' => 'required|numeric|max:15',
             'observacion' => 'nullable',
             'empleado_id' => 'required',
             'estado_variacione_id' => 'required',

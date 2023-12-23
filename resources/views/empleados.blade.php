@@ -268,7 +268,43 @@
                         <tr>
                             <td>
                                 <p>
-                                    Cantidad:
+                                    Enfermeros:
+                                </p>
+                            </td>
+                            <td>
+                                <p>
+                                    {{ $cantidadEnfermeros }}
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>
+                                    Administradores:
+                                </p>
+                            </td>
+                            <td>
+                                <p>
+                                    {{ $cantidadAdministrador }}
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>
+                                    Staff:
+                                </p>
+                            </td>
+                            <td>
+                                <p>
+                                    {{ $cantidadStaff }}
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>
+                                    Total:
                                 </p>
                             </td>
                             <td>

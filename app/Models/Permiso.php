@@ -21,6 +21,11 @@ class Permiso extends Model
         'estado_variacione_id'
     ];
 
+    //Mutadores y Accesores
+    
+
+    //funciones de relación
+
     public function empleado()
     {
         return $this->belongsTo(Empleado::class);

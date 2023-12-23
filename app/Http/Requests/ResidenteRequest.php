@@ -27,7 +27,7 @@ class ResidenteRequest extends FormRequest
             'ciudade_id' => 'required',
             'foto' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
             'fecha_ingreso' => 'required|date',
-            'estado_residente_id' => 'required',
+            'habitacione_id' => 'required',
         ];
     }
 
@@ -36,8 +36,8 @@ class ResidenteRequest extends FormRequest
         return [
             'ci_numero' => 'ci',
             'fecha_nacimiento' => 'fecha de nacimiento',
-            'ciudade_id' =>'ciudad',
-            'estado_residente_id' => 'estado'
+            'ciudade_id' => 'ciudad',
+            'habitacione_id' => 'habitación',
         ];
     }
 }

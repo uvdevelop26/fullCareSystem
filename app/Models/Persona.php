@@ -42,6 +42,8 @@ class Persona extends Model
         );
     }
 
+    //Mutadores y Accesores
+
     protected function sexo(): Attribute
     {
         return new Attribute(

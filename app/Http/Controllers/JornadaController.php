@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Redis;
 use Inertia\Inertia;
 use App\Http\Requests\TurnoRequest;
+use App\Models\Empleado;
 use App\Models\Familiare;
 use App\Models\Jornada;
 
@@ -42,14 +43,17 @@ class JornadaController extends Controller
 
     public function create()
     {
+        
         $dias = Dia::all();
         $turnos = Turno::all();
+        $empleados = Empleado::with('persona')->get();
 
         return Inertia::render(
             'Jornadas/Nuevo',
             [
                 'dias' => $dias,
-                'turnos' => $turnos
+                'turnos' => $turnos,
+                'empleados' => $empleados
             ]
         );
     }
@@ -78,6 +82,8 @@ class JornadaController extends Controller
         $turnos = Turno::all();
 
         $jornadaHasDias = array_column(json_decode($jornada->dias, true), 'id');
+
+        $empleados = Empleado::with('persona')->get();
         //array_colum: (extrae la columna 'id', del array asociativo de php que le pasamos)
         //"json_decode" convierte un objeto json a un array asociativo de php
 
@@ -85,7 +91,8 @@ class JornadaController extends Controller
             'jornada' => $jornada,
             'dias' => $dias,
             'turnos' => $turnos,
-            'jornadaHasDias' => $jornadaHasDias
+            'jornadaHasDias' => $jornadaHasDias,
+            'empleados' => $empleados
         ]);
     }
 

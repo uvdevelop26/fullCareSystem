@@ -21,6 +21,9 @@ class Vacacione extends Model
         'estado_variacione_id',
     ];
 
+     //Mutadores y Accesores
+     
+
     //relaciones de uno a muchos
     public function empleado()
     {

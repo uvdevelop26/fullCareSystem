@@ -257,45 +257,45 @@
                     </table>
                 </td>
                 <td class="datosFinales">
-                    {{-- <table class="table_datosfinales">
+                    <table class="table_datosfinales">
                         <tr>
                             <td>
                                 <p>
-                                    Cantidad
+                                    Suministrados
                                 </p>
                             </td>
                             <td>
                                 <p>
-                                    fa
+                                    {{ $suministrados }}
                                 </p>
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 <p>
-                                    Cantidad Activos
+                                    No suministrados
                                 </p>
                             </td>
                             <td>
                                 <p>
-                                    fasdf
+                                    {{ $noSuministrados }}
                                 </p>
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 <p>
-                                    Cantidad Inactivos
+                                    Total
                                 </p>
                             </td>
                             <td>
                                 <p>
-                                    fad
+                                    {{ $totalMedicamentos }}
                                 </p>
                             </td>
                         </tr>
 
-                    </table> --}}
+                    </table>
                 </td>
             </tr>
         </table>

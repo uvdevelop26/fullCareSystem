@@ -16,7 +16,7 @@ class FamiliareController extends Controller
 
     public function index(Request $request)
     {
-        
+
         $queries = ['search', 'search_ciudad', 'search_residente'];
 
         $residentes = Residente::all();
@@ -37,8 +37,13 @@ class FamiliareController extends Controller
 
     public function create()
     {
+        $residentes = Residente::with('persona')->get();
         $ciudades = Ciudade::all();
-        return Inertia::render('Familiares/Nuevo', ['ciudades' => $ciudades]);
+
+        return Inertia::render('Familiares/Nuevo', [
+            'ciudades' => $ciudades,
+            'residentes' => $residentes
+        ]);
     }
 
 
@@ -78,11 +83,13 @@ class FamiliareController extends Controller
     {
         $ciudades = Ciudade::all();
         $persona = $familiare->persona;
+        $residentes = Residente::with('persona')->get();
 
         return Inertia::render('Familiares/Editar', [
             'familiare' => $familiare,
             'persona' => $persona,
-            'ciudades' => $ciudades
+            'ciudades' => $ciudades,
+            'residentes' => $residentes
         ]);
     }
 

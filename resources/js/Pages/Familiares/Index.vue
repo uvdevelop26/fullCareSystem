@@ -26,7 +26,7 @@ export default {
         Pagination,
         SelectInput,
         Filters,
-        DialogModal, 
+        DialogModal,
         FlashMessages
     },
 
@@ -66,7 +66,7 @@ export default {
 
         //ELIMINAR FAMILIAR
         const eliminarFamiliare = () => {
-            
+
             catchData.value._method = "DELETE";
             Inertia.post('/familiares/' + catchData.value.id, catchData.value, {
                 preserveState: false
@@ -76,14 +76,14 @@ export default {
         }
 
         //LIMPIAR CAMPOS
-        const limpiarCampos = ()=>{
+        const limpiarCampos = () => {
             form.search = null
             form.search_ciudad = null
             form.search_residente = null
         }
 
         //Flash Message
-        onMounted(()=>{
+        onMounted(() => {
             flashMessage.value = props.flash.success
         });
 
@@ -163,7 +163,7 @@ export default {
                     <tr class="text-center shadow group" v-for="familiare in familiares" :key="familiare.id"
                         v-if="familiares.length">
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor rounded-l-xl">
-                            <span class="text-indigo-400 font-semibold">{{ familiare.residente.persona.nombres }}</span>
+                            <span class="font-semibold">{{ familiare.residente.persona.nombres }}</span>
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
                             {{ familiare.persona.nombres }} {{ familiare.persona.apellidos }}
@@ -184,10 +184,10 @@ export default {
                             {{ familiare.persona.sexo }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            <span class="block text-indigo-400 font-semibold capitalize">
+                            <span class="block font-semibold underline capitalize">
                                 {{ familiare.persona.ciudade.nombre_ciudad }}
                             </span>
-                            {{ familiare.persona.direccion }}
+                            <p class="w-64 whitespace-normal">{{ familiare.persona.direccion }}</p>
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
                             {{ familiare.parentezco }}

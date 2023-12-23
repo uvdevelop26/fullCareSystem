@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Jornadas</title>
+    <title>Empleados</title>
 </head>
 <style>
     @page {
@@ -30,7 +30,6 @@
         padding: 10px 0px;
     }
 
-
     .header-img {
         overflow: hidden;
         position: absolute;
@@ -51,6 +50,7 @@
         font-style: italic;
         font-size: 13px
     }
+
 
     .titulos {
         font-size: 15px;
@@ -204,7 +204,6 @@
         </div>
     </div>
     <div class="container">
-    
         {{-- table 1 --}}
         <table class="div-1Header">
             <tr>
@@ -212,7 +211,7 @@
                     <table class="table_h_factura">
                         <thead>
                             <th class="headerDatosh titulos">
-                                <span class="titulos">Jornadas Laborales de Empleados - Hogar de Ancianos "Virgen del
+                                <span class="titulos">Estado y Movimiento de Residentes - Hogar de Ancianos "Virgen del
                                     Rosario"</span>
                             </th>
                         </thead>
@@ -221,30 +220,48 @@
             </tr>
         </table>
         {{-- table 2 --}}
+        
         <table class="table_materiales">
             <thead>
                 <tr>
                     <td>Nombre y Apellido</td>
                     <td>Cédula</td>
-                    <td>Turno</td>
-                    <td>Hora Entrada</td>
-                    <td>Hora Salida</td>
-                    <td>Dias</td>
+                    <td>Ingreso</td>
+                    <td>Estado Actual</td>
+                    <td>Fecha Salida</td>
+                    <td>Motivo</td>
+                    <td>Fecha Regreso</td>
                 </tr>
             </thead>
             <tbody>
-                @foreach($jornadas as $item)
+                @foreach($estados as $item)
                 <tr>
-                    <td>{{ $item->empleado->persona->nombres}} {{ $item->empleado->persona->apellidos}}</td>
-                    <td>{{ $item->empleado->persona->ci_numero}}</td>
-                    <td>{{ $item->turno->nombre_turnos}}</td>
-                    <td>{{ $item->turno->hora_entrada}}</td>
-                    <td>{{ $item->turno->hora_salida}}</td>
-                    <td>
-                        @foreach($item->dias as $dias)
-                        <span>{{ $dias->nombre_dias }},</span>
-                        @endforeach
+                    <td>{{ $item->residente->persona->nombres}} {{ $item->residente->persona->apellidos}}</td>
+                    <td>{{ $item->residente->persona->ci_numero}}</td>
+                    <td>{{ $item->residente->fecha_ingreso }}</td>
+                    @if($item->nombre == 1)
+                    <td>Activo
+                        
                     </td>
+                    @else
+                    <td>Inactivo</td>
+                    @endif
+                    @if($item->fecha_salida)
+                    <td>{{ $item->fecha_salida}}</td>
+                    @else
+                    <td></td>
+                    @endif
+                    @if($item->motivo_salida)
+                    <td>{{ $item->motivo_salida}}</td>
+                    @else
+                    <td></td>
+                    @endif
+                    @if($item->fecha_regreso)
+                    <td>{{ $item->fecha_regreso }}</td>
+                    @else
+                    <td></td>
+                    @endif
+
                 </tr>
                 @endforeach
             </tbody>
@@ -261,29 +278,39 @@
                         </tr>
                     </table>
                 </td>
-                {{-- <td class="datosFinales">
+                <td class="datosFinales">
                     <table class="table_datosfinales">
                         <tr>
                             <td>
                                 <p>
-                                    Cantidad
+                                    Cantidad Activos
                                 </p>
                             </td>
                             <td>
                                 <p>
-                                    fa
+                                    {{ $activos }}
                                 </p>
                             </td>
                         </tr>
-
-
+                        <tr>
+                            <td>
+                                <p>
+                                    Cantidad Inactivos
+                                </p>
+                            </td>
+                            <td>
+                                <p>
+                                    {{ $inactivos }}
+                                </p>
+                            </td>
+                        </tr>
                     </table>
-                </td> --}}
+                </td>
             </tr>
         </table>
-        <footer>
+         <footer>
             <p> Impreso por {{ $users->username }} en fecha {{ $fechaActual }}</p>
-        </footer>
+        </footer> 
     </div>
 </body>
 

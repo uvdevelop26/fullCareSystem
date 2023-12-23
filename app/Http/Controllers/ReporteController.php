@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Empleado;
+use App\Models\EstadoResidente;
 use App\Models\Jornada;
 use App\Models\Medicamento;
 use App\Models\Residente;
@@ -12,6 +13,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class ReporteController extends Controller
@@ -32,18 +34,18 @@ class ReporteController extends Controller
 
         $users = Auth::user();
         //datos
-        $residentes = Residente::with('persona.ciudade', 'estado_residente')
+        $residentes = Residente::with('persona.ciudade', 'habitacione')
             ->orderBy('id', 'desc')
             ->get();
 
         $cantidadResidentes = Residente::count();
 
-        $cantidadActivos = Residente::whereHas('estado_residente', function ($query) {
-            $query->where('nombre_estado', 'activo');
+        $cantidadFemenino = Residente::whereHas('persona', function ($query) {
+            $query->where('sexo', 'femenino');
         })->count();
 
-        $cantidadInactivos = Residente::whereHas('estado_residente', function ($query) {
-            $query->where('nombre_estado', 'inactivo');
+        $cantidadMasculino = Residente::whereHas('persona', function ($query) {
+            $query->where('sexo', 'masculino');
         })->count();
 
         //genera pdf
@@ -52,10 +54,47 @@ class ReporteController extends Controller
 
         $pdf->getDomPDF()->set_option("enable_php", true);
 
-        $pdf->loadView('residentes', compact('residentes', 'cantidadResidentes', 'cantidadActivos', 'cantidadInactivos', 'fechaActual', 'users'));
+        $pdf->loadView('residentes', compact('residentes', 'cantidadResidentes', 'fechaActual', 'users', 'cantidadFemenino', 'cantidadMasculino'));
 
         return $pdf->setPaper('a4', 'landscape')->stream();
     }
+
+    public function estadospdf()
+    {
+        $ultimoEstado = null;
+
+        $fechaActual = Carbon::today()->toDateString();
+
+        $users = Auth::user();
+
+        $estados = EstadoResidente::with('residente.persona')
+            ->whereIn('id', function ($query) {
+                $query->select(DB::raw('MAX(id)'))
+                    ->from('estado_residentes')
+                    ->groupBy('residente_id');
+            })
+            ->get();
+
+        $activos = $estados->filter(function ($estado) {
+            return $estado->nombre === 1;
+        })->count();
+
+        $inactivos = $estados->filter(function ($estado) {
+            return $estado->nombre === 0;
+        })->count();
+
+
+
+        $pdf = app('dompdf.wrapper');
+
+        $pdf->getDomPDF()->set_option("enable_php", true);
+
+        $pdf->loadView('estados', compact('estados', 'fechaActual', 'users', 'activos', 'inactivos'));
+
+        return $pdf->setPaper('a4', 'landscape')->stream();
+    }
+
+
 
     public function empleadospdf()
     {
@@ -69,13 +108,26 @@ class ReporteController extends Controller
 
         $cantidadEmpleados = Empleado::count();
 
+        $cantidadEnfermeros = Empleado::whereHas('seccion', function ($query) {
+            $query->where('nombre_seccion', 'enfermeria');
+        })->count();
+
+        $cantidadAdministrador = Empleado::whereHas('seccion', function ($query) {
+            $query->where('nombre_seccion', 'administracion');
+        })->count();
+
+        $cantidadStaff = Empleado::whereHas('seccion', function ($query) {
+            $query->where('nombre_seccion', 'cocina y limpieza');
+        })->count();
+
+
         //genera pdf
 
         $pdf = app('dompdf.wrapper');
 
         $pdf->getDomPDF()->set_option("enable_php", true);
 
-        $pdf->loadView('empleados', compact('empleados', 'cantidadEmpleados', 'fechaActual', 'users'));
+        $pdf->loadView('empleados', compact('empleados', 'cantidadEmpleados', 'fechaActual', 'users', 'cantidadEnfermeros', 'cantidadAdministrador', 'cantidadStaff'));
 
         return $pdf->setPaper('a4', 'landscape')->stream();
     }
@@ -144,6 +196,12 @@ class ReporteController extends Controller
         $medicamentos = Medicamento::with('residente.persona', 'presentacione', 'horarioMedicamentos')
             ->orderBy('id', 'desc')
             ->get();
+        
+        $suministrados = Medicamento::has('horarioMedicamentos')->count();
+
+        $noSuministrados = Medicamento::doesntHave('horarioMedicamentos')->count();
+
+        $totalMedicamentos = Medicamento::count();
 
         //genera pdf
 
@@ -151,7 +209,7 @@ class ReporteController extends Controller
 
         $pdf->getDomPDF()->set_option("enable_php", true);
 
-        $pdf->loadView('medicamentos', compact('medicamentos', 'fechaActual', 'users'));
+        $pdf->loadView('medicamentos', compact('medicamentos', 'fechaActual', 'users', 'suministrados', 'noSuministrados', 'totalMedicamentos'));
 
         return $pdf->setPaper('a4', 'landscape')->stream();
     }

@@ -72,14 +72,14 @@ export default {
         }
 
         //LIMPIAR CAMPOS
-        const limpiarCampos = ()=>{
+        const limpiarCampos = () => {
             form.search_nombre = null
             form.search_residente = null
-            
+
         }
 
         //FLASH MESSAGE
-        onMounted(()=>{
+        onMounted(() => {
             flashMessage.value = props.flash.success
         })
 
@@ -152,25 +152,27 @@ export default {
                             {{ medicamento.nombre }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            {{ medicamento.descripcion }}
+                            <p class="w-64 whitespace-normal">{{ medicamento.descripcion }}</p>
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
                             {{ medicamento.dosis }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            {{ medicamento.indicaciones }}
+                            <p class="w-64 whitespace-normal">{{ medicamento.indicaciones }}</p>
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            {{ medicamento.efectos_secundarios }}
+                            <p class="w-64 whitespace-normal">{{ medicamento.efectos_secundarios }}</p>
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
                             {{ medicamento.presentacione.nombre }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            <span v-for="horario in medicamento.horario_medicamentos"
-                                class="inline-block px-3 py-1 mr-2 rounded-2xl border border-softIndigo text-softIndigo bg-indigo-100">
-                                {{ horario.hora }}
-                            </span>
+                            <ul class="flex justify-center">
+                                <li v-for="(horario, index) in medicamento.horario_medicamentos" class="pb-1">
+                                    {{ horario.hora }}
+                                    <span v-if="index < medicamento.horario_medicamentos.length - 1">,</span>
+                                </li>
+                            </ul>
                         </td>
                         <td class="py-2 px-2 rounded-r-xl bg-white group-hover:bg-fondColor">
                             <div class="w-full h-full flex items-center">

@@ -75,16 +75,29 @@ export default {
 
         <!-- CARDS -->
         <!-- residentes -->
-        <div class="py-3 mb-3 max-w-7xl flex flex-wrap gap-4 justify-center lg:justify-start">
+        <div class="py-3 mb-3 max-w-7xl flex flex-wrap gap-4 justify-center lg:justify-start lg:items-start">
             <div class="bg-white w-2/3 rounded-lg shadow-md border overflow-hidden  max-w-xs">
                 <a :href="route('reportes.residentespdf')" target="_blank">
-                    <div class="py-2 px-3 bg-indigo-400 flex items-center">
+                    <div class="py-2 px-3 bg-green-400 flex items-center">
                         <Icon name="residentes" class="w-7 h-7 mr-5 fill-white" />
                         <span class="text-white inline-block font-bold">Residentes</span>
                     </div>
                     <div class="flex justify-between py-4 px-3">
                         <span class="inline-block font-bold ">Imprimir Reporte</span>
-                        <Icon name="pdf" class="w-7 h-7 mr-5 fill-indigo-400" />
+                        <Icon name="pdf" class="w-7 h-7 mr-5 fill-green-400" />
+                    </div>
+                </a>
+            </div>
+            <!-- Estados de Residentes -->
+            <div class="bg-white w-2/3 rounded-lg shadow-md border overflow-hidden  max-w-xs">
+                <a :href="route('reportes.estadospdf')" target="_blank">
+                    <div class="py-2 px-3 bg-softIndigo flex items-center">
+                        <Icon name="search" class="w-7 h-7 mr-5 fill-white" />
+                        <span class="text-white inline-block font-bold">Estados de Residentes</span>
+                    </div>
+                    <div class="flex justify-between py-4 px-3">
+                        <span class="inline-block font-bold ">Imprimir Reporte</span>
+                        <Icon name="pdf" class="w-7 h-7 mr-5 fill-softIndigo" />
                     </div>
                 </a>
             </div>
@@ -104,13 +117,13 @@ export default {
             <!-- jornadas Laborales -->
             <div class="bg-white w-2/3 rounded-lg shadow-md border overflow-hidden max-w-xs">
                 <a :href="route('reportes.jornadaspdf')" target="_blank">
-                    <div class="py-2 px-3 bg-green-400 flex items-center">
+                    <div class="py-2 px-3 bg-indigo-400 flex items-center">
                         <Icon name="jornadas" class="w-7 h-7 mr-5 fill-white" />
                         <span class="text-white inline-block font-bold">Jornadas</span>
                     </div>
                     <div class="flex justify-between py-4 px-3">
                         <span class="inline-block font-bold ">Imprimir Reporte</span>
-                        <Icon name="pdf" class="w-7 h-7 mr-5 fill-green-400" />
+                        <Icon name="pdf" class="w-7 h-7 mr-5 fill-indigo-400" />
                     </div>
                 </a>
             </div>

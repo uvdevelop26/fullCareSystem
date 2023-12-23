@@ -6,13 +6,13 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class MedicamentoRequest extends FormRequest
 {
-    
+
     public function authorize()
     {
         return true;
     }
 
-    
+
     public function rules()
     {
         return [
@@ -23,7 +23,19 @@ class MedicamentoRequest extends FormRequest
             'efectos_secundarios' => 'nullable|max:100',
             'residente_id' => 'required',
             'presentacione_id' => 'required',
-            'horarios' => 'required'
+            'horarios' => [
+                'array',
+                'nullable'
+            ],
+            'horarios.*.valor' => [
+                'nullable',
+                'date_format:H:i',
+            ],
+            'horarios.*.hora' => [
+                'nullable',
+                'date_format:H:i'
+              
+            ],
         ];
     }
 
@@ -32,7 +44,16 @@ class MedicamentoRequest extends FormRequest
         return [
             'efectos_secundarios' => 'efectos secundarios',
             'residente_id' => 'residente',
-            'presentacione_id' => 'presentaciones'
+            'presentacione_id' => 'presentaciones',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            //'horarios.*.valor.required' => 'El campo :attribute en horarios es obligatorio.',
+            'horarios.*.valor.date_format' => 'El formato del campo valor en horarios debe ser H:M.',
+            'horarios.*.hora.date_format' => 'El formato del campo valor en horarios debe ser H:M.',
         ];
     }
 }

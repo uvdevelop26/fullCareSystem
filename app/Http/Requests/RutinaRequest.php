@@ -16,10 +16,23 @@ class RutinaRequest extends FormRequest
     public function rules()
     {
         return [
-            'nombre' => 'required',
-            'descripcion' => 'required',
+            'nombre' => 'required|max:100',
+            'descripcion' => 'required|max:200',
             'residente_id' => 'required',
-            'horarios' => 'required'
+            'horarios' => [
+                'array',
+                'required'
+            ],
+            'horarios.*.valor' =>[
+                'nullable',
+                'date_format:H:i',
+            ],
+            'horarios.*.hora' => [
+                'nullable',
+                'date_format:H:i'
+              
+            ],
+            
         ];
     }
 
@@ -28,6 +41,16 @@ class RutinaRequest extends FormRequest
         return [
             'residente_id' => 'residente',
 
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            //'horarios.*.valor.required' => 'El campo :attribute en horarios es obligatorio.',
+           // 'horarios.*.valor.required' => 'El formato del campo valor en horarios es obligatorio',
+            'horarios.*.valor.date_format' => 'El formato del campo valor en horarios debe ser H:M.',
+            'horarios.*.hora.date_format' => 'El formato del campo valor en horarios debe ser H:M.',
         ];
     }
 }

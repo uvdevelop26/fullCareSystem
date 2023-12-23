@@ -83,7 +83,7 @@ export default {
         }
 
         //messages flash
-        onMounted(()=>{
+        onMounted(() => {
             flashMessage.value = props.flash.success
         })
 
@@ -182,10 +182,10 @@ export default {
                             {{ empleado.persona.sexo }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            <span class="block text-indigo-400 font-semibold capitalize">
+                            <span class="block underline font-semibold capitalize">
                                 {{ empleado.persona.ciudade.nombre_ciudad }}
                             </span>
-                            {{ empleado.persona.direccion }}
+                            <p class="w-64 whitespace-normal">{{ empleado.persona.direccion }}</p>
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
                             {{ empleado.fecha_inicio }}
@@ -194,10 +194,10 @@ export default {
                             {{ empleado.email }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            <span class="block font-semibold text-indigo-400 capitalize">
+                            <span class="block font-semibold underline capitalize">
                                 {{ empleado.seccion.nombre_seccion }}
                             </span>
-                            {{ empleado.seccion.descripcion }}
+                            <p class="w-60 whitespace-normal">{{ empleado.seccion.descripcion }}</p>
                         </td>
                         <td class="py-2 px-2 rounded-r-xl bg-white group-hover:bg-fondColor">
                             <div class="w-full h-full flex items-center">

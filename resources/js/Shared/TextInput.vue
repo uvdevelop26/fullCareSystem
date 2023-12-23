@@ -3,7 +3,8 @@
     <label v-if="label" class="form-label" :for="id">{{ label }}:</label>
     <input :id="id" ref="input" v-bind="{ ...$attrs, class: null }" class="form-input" :class="{error: error}" :type="type" :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"/>
-      <div v-if="error" class="form-error"> {{ error }}</div>
+      <span class="text-xs text-red-400" v-if="reference">Ejemplo {{ reference }}</span>
+      <div v-if="error" class="form-error"> {{ error }}</div> 
   </div>
 </template>
 
@@ -26,6 +27,7 @@ export default {
     },
     error: String,
     label: String,
+    reference: String,
     modelValue: String,
   },
 

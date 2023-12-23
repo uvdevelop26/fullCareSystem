@@ -210,18 +210,18 @@ export default {
                             {{ ingreso.concepto }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            {{ ingreso.detalle }}
+                            <p class="w-64 whitespace-normal mx-auto">{{ ingreso.detalle }}</p>
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            {{ ingreso.monto }}
+                            {{ ingreso.monto }} Gs.
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
                             {{ ingreso.nro_comprobante }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            <span class="block text-indigo-400 capitalize font-semibold"> {{ ingreso.categoria.nombre }}
+                            <span class="block underline capitalize font-semibold"> {{ ingreso.categoria.nombre }}
                             </span>
-                            {{ ingreso.categoria.descripcion }}
+                           <p class="w-64 whitespace-normal mx-auto capitalize">{{ ingreso.categoria.descripcion }}</p> 
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
                             {{ ingreso.user.username }}

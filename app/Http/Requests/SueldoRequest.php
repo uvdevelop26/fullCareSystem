@@ -16,8 +16,8 @@ class SueldoRequest extends FormRequest
     public function rules()
     {
         return [
-            'fecha' => 'required',
-            'monto' => 'required',
+            'fecha' => 'required|date',
+            'monto' => 'required|numeric|min:100000',
             'empleado_id' => 'required'
         ];
     }

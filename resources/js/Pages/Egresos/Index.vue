@@ -201,7 +201,7 @@ export default {
                             {{ egreso.concepto }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            {{ egreso.detalle }}
+                           <p class="w-64 whitespace-normal mx-auto"> {{ egreso.detalle }}</p>
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
                             {{ egreso.monto }}
@@ -210,9 +210,11 @@ export default {
                             {{ egreso.nro_comprobante }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            <span class="block text-indigo-400 capitalize font-semibold"> {{ egreso.categoria.nombre }}
+                            <span class="block underline capitalize font-semibold"> {{ egreso.categoria.nombre }}
                             </span>
-                            {{ egreso.categoria.descripcion }}
+                             
+                            <p class="w-64 whitespace-normal mx-auto">{{ egreso.categoria.descripcion }}</p>
+
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
                             {{ egreso.user.username }}

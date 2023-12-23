@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use App\Http\Requests\ResidenteRequest;
 use App\Models\EstadoResidente;
+use App\Models\Habitacione;
 
 use function GuzzleHttp\Promise\all;
 use Illuminate\Support\Facades\Storage;
@@ -21,19 +22,19 @@ class ResidenteController extends Controller
 
     public function index(Request $request)
     {
-        $queries = ['search', 'search_ciudad', 'search_sexo', 'search_estado'];
-        $residentes = Residente::with('persona.ciudade', 'estado_residente')
+        $queries = ['search', 'search_ciudad', 'search_sexo'];
+        
+        $residentes = Residente::with('persona.ciudade', 'habitacione')
             ->orderBy('id', 'desc')
             ->filter($request->only($queries))
             ->get();
 
         $ciudades = Ciudade::all();
-        $estado_residentes = EstadoResidente::all();
+
 
         return Inertia::render('Residentes/Index', [
             'residentes' => $residentes,
             'ciudades' => $ciudades,
-            'estado_residentes' => $estado_residentes,
             'filters' => $request->all($queries)
         ]);
     }
@@ -42,12 +43,12 @@ class ResidenteController extends Controller
     public function create()
     {
         $ciudades = Ciudade::all();
-        $estado_residentes = EstadoResidente::all();
+        $habitaciones = Habitacione::all();
         return Inertia::render(
             'Residentes/Nuevo',
             [
                 'ciudades' => $ciudades,
-                'estado_residentes' => $estado_residentes
+                'habitaciones' => $habitaciones
             ]
         );
     }
@@ -75,17 +76,21 @@ class ResidenteController extends Controller
         ]);
 
 
-        Residente::create([
+        $residente = Residente::create([
             'foto' => $image_path,
             'fecha_ingreso' => $request->fecha_ingreso,
             'persona_id' => $persona->id,
-            'estado_residente_id' => $request->estado_residente_id
+            'habitacione_id' => $request->habitacione_id
+        ]);
+
+         EstadoResidente::create([
+            'nombre' => 1,
+            'residente_id' => $residente->id
         ]);
 
         sleep(1);
 
-         return Redirect::route('residentes.index')->with('success', 'Residente Creado Exitosamente');
-
+        return Redirect::route('residentes.index')->with('success', 'Residente Creado Exitosamente');
     }
 
 
@@ -99,13 +104,13 @@ class ResidenteController extends Controller
     {
         $persona = $residente->persona;
         $ciudades = Ciudade::all();
-        $estado_residentes = EstadoResidente::all();
+        $habitaciones = Habitacione::all();
 
         return Inertia::render('Residentes/Editar', [
             'residente' => $residente,
             'persona' => $persona,
             'ciudades' => $ciudades,
-            'estado_residentes' => $estado_residentes
+            'habitaciones' => $habitaciones
         ]);
     }
 
@@ -129,8 +134,8 @@ class ResidenteController extends Controller
 
         $residente->update([
             'fecha_ingreso' => $request->fecha_ingreso,
-            'estado_residente_id' => $request->estado_residente_id,
             'persona_id' => $persona->id,
+            'habitacione_id' => $request->habitacione_id
         ]);
 
         if ($request->file('foto')) {
@@ -160,7 +165,5 @@ class ResidenteController extends Controller
         $residente->delete();
 
         return Redirect::route('residentes.index')->with('success', 'Residente Eliminado');
-        
-       
     }
 }

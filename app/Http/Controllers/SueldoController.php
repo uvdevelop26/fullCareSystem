@@ -34,7 +34,9 @@ class SueldoController extends Controller
 
     public function create()
     {
-        return Inertia::render('Sueldos/Nuevo');
+        $empleados = Empleado::with('persona')->get();
+
+        return Inertia::render('Sueldos/Nuevo', ['empleados' => $empleados]);
     }
 
 
@@ -59,10 +61,13 @@ class SueldoController extends Controller
 
     public function edit(Sueldo $sueldo)
     {
+        $empleados = Empleado::with('persona')->get();
+
         return Inertia::render(
             'Sueldos/Editar',
             [
-                'sueldo' => $sueldo
+                'sueldo' => $sueldo,
+                'empleados' => $empleados
             ]
         );
     }

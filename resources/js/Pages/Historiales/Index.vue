@@ -99,15 +99,15 @@ export default {
             openModal.value = false;
         }
 
-         //LIMPIAR CAMPOS
-         const limpiarCampos = ()=>{
+        //LIMPIAR CAMPOS
+        const limpiarCampos = () => {
             form.search = null
             form.search_anho = null,
-            form.search_mes = null 
+                form.search_mes = null
         }
 
         //FLASH MESSAGES
-        onMounted(()=>{
+        onMounted(() => {
             flashMessage.value = props.flash.success
         })
 
@@ -193,16 +193,18 @@ export default {
                             {{ historiale.fecha_registro }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            <span v-for="enfermedades in historiale.enfermedades"
-                                class="inline-block px-3 py-1 mr-2 rounded-2xl border border-softIndigo text-softIndigo bg-indigo-100">
-                                {{ enfermedades.nombre }}
-                            </span>
+                            <ul>
+                                <li v-for="(enfermedades, index) in historiale.enfermedades" class="pb-1">{{
+                                    enfermedades.nombre }}
+                                    <span v-if="index < historiale.enfermedades.length - 1">,</span>
+                                </li>
+                            </ul>
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            {{ historiale.diagnostico }}
+                            <p class="w-64 whitespace-normal mx-auto">{{ historiale.diagnostico }}</p>
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            {{ historiale.observaciones }}
+                            <p class="w-64 whitespace-normal mx-auto">{{ historiale.observaciones }}</p>
                         </td>
                         <td class="py-2 px-2 rounded-r-xl bg-white group-hover:bg-fondColor">
                             <div class="w-full h-full flex items-center">
@@ -236,7 +238,7 @@ export default {
             </template>
             <template v-slot:content>
                 <div v-if="catchData">
-                    ¿Está seguro que desea anular el historial del residente {{ catchData.residente.persona.nombres}}?
+                    ¿Está seguro que desea anular el historial del residente {{ catchData.residente.persona.nombres }}?
                 </div>
             </template>
             <template v-slot:footer>
@@ -281,4 +283,5 @@ export default {
 
 .list-leave-active {
     transition: all 0.4s ease;
-}</style>
+}
+</style>

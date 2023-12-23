@@ -16,11 +16,11 @@ class EgresoRequest extends FormRequest
     public function rules()
     {
         return [
-            'fecha' => 'required',
-            'concepto' => 'required',
+            'fecha' => 'required|date',
+            'concepto' => 'required|max:100',
             'detalle' => 'nullable',
-            'monto' => 'required',
-            'nro_comprobante' => 'nullable',
+            'monto' => 'required|numeric|min:1000',
+            'nro_comprobante' => 'nullable|max:50',
             'categoria_id' => 'required'
         ];
     }

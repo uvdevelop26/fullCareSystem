@@ -64,6 +64,10 @@
             text-decoration: underline;
         }
 
+        .parrafo {
+            padding: 4px 0px
+        }
+
         ul li {
             padding: 5px 0;
         }
@@ -81,6 +85,16 @@
             padding: 5px 0 0 10px;
             text-transform: capitalize;
             list-style: none;
+        }
+
+        /*FIRMA*/
+        .firma {
+            border-top: 1px solid rgba(20, 20, 20, 0.5);
+            text-align: center;
+            width: 30%;
+            margin-left: 70%;
+            margin-top: 80px;
+            padding-top: 5px;
         }
 
         /*FOOTER*/
@@ -166,7 +180,7 @@
             </li>
             <li>
                 <div class="historia-info"> Presión Arterial:</div>
-                <div class="historia-data">{{ $caracteristica->presion_arterial }}</div>
+                <div class="historia-data">{{ $caracteristica->presion_arterial }} mmHg</div>
             </li>
         </ul>
 
@@ -176,17 +190,17 @@
         <p>Se realizó valoración médica al residente {{ $persona->nombres }} {{ $persona->apellidos}} de {{
             $persona->edad
             }} años de edad, con fecha de ingreso a la institución {{
-            $residente->fecha_ingreso }}.
-            <br>
-            El residente actualmente padece de padece de las siguientes enfermedades:
+            $residente->fecha_ingreso }}.</p>
+        <br>
+        <p>El residente actualmente padece de las siguientes enfermedades:</p>
         <ul class="enfermedades-ul">
             @foreach($historialeHasEnfermedade as $item)
             <li class="enfermedades-li">{{ $item->nombre}}</li>
             @endforeach
 
         </ul>
-        Se han realizado las siguientes valoraciones médicas:
-        </p>
+        <p>Se han realizado las siguientes valoraciones médicas:</p>
+
         <ul>
             <li>
                 Diagnóstico general: {{ $historiale->diagnostico}}
@@ -198,6 +212,11 @@
                 Observaciones: {{ $historiale->observaciones}}
             </li>
         </ul>
+        <!--FIRMA-->
+        <div class="firma">
+            Firma del Médico
+        </div>
+        {{-- FOOTER --}}
         <footer>
             <p> Impreso por {{ $users->username }} en fecha {{ $fechaActual }}</p>
         </footer>

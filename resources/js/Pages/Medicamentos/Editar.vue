@@ -23,6 +23,7 @@ export default {
         medicamento: Array,
         medicamentoHasHorarios: Array,
         presentaciones: Array,
+        residentes: Array,
         errors: Object
     },
 
@@ -49,7 +50,7 @@ export default {
 
         const eliminarHorario = (index) => {
             form.horarios.splice(index, 1);
-        }    
+        }
 
         const actualizar = () => {
             form.post(
@@ -60,7 +61,14 @@ export default {
             );
         };
 
-        return { form, actualizar, eliminarHorario, agregarHorario };
+        //mensajes de error
+        const obtenerError = (index) => {
+            const errorKey = `horarios.${index}.hora`
+
+            return props.errors[errorKey] || '';
+        }
+
+        return { form, actualizar, eliminarHorario, agregarHorario, obtenerError };
     },
 };
 </script>
@@ -80,8 +88,12 @@ export default {
             <form @submit.prevent="actualizar">
                 <!-- datos del medicamento -->
                 <div class="py-3 px-3 flex flex-wrap bg-white border rounded-md">
-                    <text-input type="text" label="Residente" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="residente_id"
-                        v-model="form.residente_id" name="residente_id" :error="errors.residente_id" />
+                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Residente" id="residente"
+                        v-model="form.residente_id" :error="errors.residente_id">
+                        <option :value="null" />
+                        <option v-for="residente in residentes" :key="residente.id" :value="residente.id" class="text-sm">{{
+                            residente.persona.nombres }} {{ residente.persona.apellidos }}</option>
+                    </select-input>
                     <text-input type="text" label="Nombre del Medicamento" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="nombre"
                         v-model="form.nombre" :error="errors.nombre" />
                     <div class="pb-5 lg:pr-3 w-full lg:w-1/2">
@@ -115,13 +127,17 @@ export default {
                     </select-input>
                     <!-- horarios -->
                     <div class="flex-wrap pb-5 lg:pr-3 w-full lg:w-1/2">
-                        <div class="block pb-2">Horarios de Suministro:</div>
-                        <div v-for="(horario, index) in form.horarios" :key="index" class="flex gap-2 my-1">
-                            <input type="text" class="border-turquesa rounded-md w-full" v-model="horario.hora"
-                                placeholder="HH:MM">
-                            <button type="button"
-                                class="px-3 py-1 bg-indigo-400 rounded-xl text-white hover:shadow-md hover:bg-softIndigo"
-                                @click="eliminarHorario(index)">Eliminar</button>
+                        <div class="block pb-2 text-center font-bold">Horarios de Suministro:</div>
+                        <div v-for="(horario, index) in form.horarios" :key="index" class="my-1 flex flex-col items-center">
+                            <span v-if="obtenerError(index)" class="text-red-500 text-xs">{{ obtenerError(index)
+                            }}</span>
+                            <div class="flex gap-2 items-center w-full">
+                                <input type="text" class="border-turquesa rounded-md w-full" v-model="horario.hora"
+                                    placeholder="HH:MM">
+                                <button type="button"
+                                    class="px-3 py-1 bg-indigo-400 rounded-xl text-white hover:shadow-md hover:bg-softIndigo"
+                                    @click="eliminarHorario(index)">Eliminar</button>
+                            </div>
                         </div>
                         <button type="button"
                             class="px-3 py-1 mt-2 bg-indigo-400 rounded-xl text-white hover:shadow-md hover:bg-softIndigo"

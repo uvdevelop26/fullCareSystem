@@ -25,9 +25,9 @@ export default {
 
     },
 
-    props:{
+    props: {
+        residentes: Array,
         ciudades: Array,
-        residentes: Array, 
         errors: Object
     },
 
@@ -76,7 +76,7 @@ export default {
                     <text-input type="text" label="Apellidos" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="apellidos"
                         v-model="form.apellidos" :error="errors.apellidos" />
                     <text-input type="text" label="CI" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="ci_numero"
-                        v-model="form.ci_numero" :error="errors.ci_numero" />
+                        v-model="form.ci_numero" :error="errors.ci_numero" reference="4972774 (sin puntos)" />
 
                     <text-input type="date" label="Fecha de Nacimiento" class="pb-5 lg:pr-3 w-full lg:w-1/2"
                         id="fecha_nacimiento" v-model="form.fecha_nacimiento" :error="errors.fecha_nacimiento" />
@@ -93,8 +93,7 @@ export default {
                     <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Ciudad" id="ciudad" v-model="form.ciudade_id"
                         :error="errors.ciudade_id">
                         <option :value="null" />
-                        <option v-for="ciudad in ciudades" :key="ciudad.nombre_ciudad" :value="ciudad.id"
-                            class="text-sm">
+                        <option v-for="ciudad in ciudades" :key="ciudad.nombre_ciudad" :value="ciudad.id" class="text-sm">
                             {{ ciudad.nombre_ciudad }}
                         </option>
                     </select-input>
@@ -110,13 +109,11 @@ export default {
                     </select-input>
                     <text-input type="text" label="Email" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="email"
                         v-model="form.email" :error="errors.email" />
-                    <!-- <div class="pb-5 lg:pr-3 w-full lg:w-1/2">
-                        <button class="bg-indigo-400" type="button"  @click="openModal = true">
-                            seleccionar Residente
-                        </button>
-                    </div> -->
-                    <text-input type="text" label="Residente" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="residente"
-                        v-model="form.residente_id" :error="errors.residente_id" />
+                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Residente" id="residente" v-model="form.residente_id"
+                        :error="errors.residente_id">
+                        <option :value="null" />
+                        <option v-for="residente in residentes" :key="residente.id" :value="residente.id" class="text-sm">{{ residente.persona.nombres}} {{ residente.persona.apellidos}}</option>
+                    </select-input>
                     <div class="py-4 lg:pr-2 flex w-full items-center justify-end bg-white border-t">
                         <Link type="button" :href="route('familiares.index')" class="btn-cancelar">
                         <span class="text-white font-bold">Cancelar</span>
@@ -137,9 +134,10 @@ export default {
             </template>
             <template #content>
                 <div>
-                    <input type="text" v-model="searchTerm" name="" id="" placeholder="buscar Nombre del Residente" @input="searchResidente" class="w-full h-10 focus:border-turquesa rounded-md border-turquesa">
+                    <input type="text" v-model="searchTerm" name="" id="" placeholder="buscar Nombre del Residente"
+                        @input="searchResidente" class="w-full h-10 focus:border-turquesa rounded-md border-turquesa">
                     <!-- LISTA DE RESULTADOS -->
-                    <ul >
+                    <ul>
                         <li>resultado</li>
                     </ul>
                 </div>
@@ -148,7 +146,7 @@ export default {
                 <div>
                     <button @click="openModal = false" class="btn-cancelar">
                         Cancelar
-                    </button>   
+                    </button>
                 </div>
             </template>
 

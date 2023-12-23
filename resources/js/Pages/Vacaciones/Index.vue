@@ -73,16 +73,7 @@ export default {
 
             openModal.value = false;
         }
-
-        const pillColor = (data) => {
-            if (data === 'Pendiente') {
-                return 'border border-indigo-400 bg-indigo-100 text-indigo-400'
-            } else if (data === 'Aprobado') {
-                return 'border border-emerald-400 bg-emerald-100 text-emerald-400'
-            } else if (data === 'Rechazado') {
-                return 'border border-red-400 bg-red-100 text-red-400'
-            }
-        }
+        
 
         //LIMPIAR CAMPOS
         const limpiarCampos = ()=>{
@@ -96,7 +87,7 @@ export default {
         })
 
 
-        return { form, eliminarVacacion, openModal, catchData, showModal, limpiarCampos, flashMessage, pillColor }
+        return { form, eliminarVacacion, openModal, catchData, showModal, limpiarCampos, flashMessage }
     }
 }
 </script>
@@ -151,7 +142,7 @@ export default {
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">CI</th>
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">fecha inicio</th>
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">fecha fin</th>
-                        <th class="py-3 px-4 bg-turquesa text-white font-bold">duracion</th>
+                        <th class="py-3 px-4 bg-turquesa text-white font-bold">duracion días</th>
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">estado</th>
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">observacion</th>
                         <th class="py-3 px-4 bg-turquesa rounded-r-xl text-white font-bold">Acciones</th>
@@ -177,13 +168,12 @@ export default {
                             {{ vacacione.duracion }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            <span class="inline-block px-3 py-1 capitalize font-bold rounded-2xl"
-                                :class="pillColor(vacacione.estado_variacione.nombre_estado)">
+                            <span class="font-bold">
                                 {{ vacacione.estado_variacione.nombre_estado }}
                             </span>
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            {{ vacacione.observacion }}
+                          <p class="w-64 whitespace-normal mx-auto">{{ vacacione.observacion }}</p>  
                         </td>
                         <td class="py-2 px-2 rounded-r-xl  bg-white group-hover:bg-fondColor">
                             <div class="w-full h-full flex items-center">

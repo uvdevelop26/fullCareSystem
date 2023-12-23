@@ -38,6 +38,7 @@ const menu = reactive([
         icon_name: 'residentes',
         submenu: [
             { name: 'admin. residentes', href: '/residentes', permiso: 'residentes-lista' },
+            { name: 'estados residentes', href: '/estados', permiso: 'residentes-estados' },
             { name: 'admin. familiares', href: '/familiares', permiso: 'residentes-familiares' }
         ],
         toggle_submenu: false

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\VacacioneRequest;
+use App\Models\Empleado;
 use App\Models\EstadoVacacione;
 use App\Models\EstadoVariacione;
 use App\Models\Vacacione;
@@ -35,10 +36,14 @@ class VacacioneController extends Controller
     public function create()
     {
         $estadoVariaciones = EstadoVariacione::all();
+
+        $empleados = Empleado::with('persona')->get();
+
         return Inertia::render(
             'Vacaciones/Nuevo',
             [
-                'estadoVariaciones' => $estadoVariaciones
+                'estadoVariaciones' => $estadoVariaciones,
+                'empleados' => $empleados
             ]
         );
     }
@@ -69,11 +74,15 @@ class VacacioneController extends Controller
     public function edit(Vacacione $vacacione)
     {
         $estadoVariaciones = EstadoVariacione::all();
+
+        $empleados = Empleado::with('persona')->get();
+
         return Inertia::render(
             'Vacaciones/Editar',
             [
                 'vacacione' => $vacacione,
-                'estadoVariaciones' => $estadoVariaciones
+                'estadoVariaciones' => $estadoVariaciones,
+                'empleados' => $empleados
             ]
         );
     }

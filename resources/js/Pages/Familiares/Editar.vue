@@ -23,6 +23,7 @@ export default {
         familiare: Array,
         persona: Array,
         ciudades: Array,
+        residentes: Array,
         errors: Object,
     },
 
@@ -77,8 +78,7 @@ export default {
                     <text-input type="text" label="Apellidos" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="apellidos"
                         v-model="form.apellidos" :error="errors.apellidos" />
                     <text-input type="text" label="CI" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="ci_numero"
-                        v-model="form.ci_numero" :error="errors.ci_numero" />
-
+                        v-model="form.ci_numero" :error="errors.ci_numero" reference="4972774 (sin puntos)" />
                     <text-input type="date" label="Fecha de Nacimiento" class="pb-5 lg:pr-3 w-full lg:w-1/2"
                         id="fecha_nacimiento" v-model="form.fecha_nacimiento" :error="errors.fecha_nacimiento" />
                     <text-input type="text" label="Teléfono" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="telefono"
@@ -110,8 +110,11 @@ export default {
                     </select-input>
                     <text-input type="text" label="Email" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="email"
                         v-model="form.email" :error="errors.email" />
-                    <text-input type="text" label="Residente" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="residente"
-                        v-model="form.residente_id" :error="errors.residente_id" />
+                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Residente" id="residente" v-model="form.residente_id"
+                        :error="errors.residente_id">
+                        <option :value="null" />
+                        <option v-for="residente in residentes" :key="residente.id" :value="residente.id" class="text-sm">{{ residente.persona.nombres}} {{ residente.persona.apellidos}}</option> 
+                    </select-input>
                     <div class="py-4 lg:pr-2 flex w-full items-center justify-end bg-white border-t">
                         <Link type="button" :href="route('familiares.index')" class="btn-cancelar">
                         <span class="text-white font-bold">Cancelar</span>

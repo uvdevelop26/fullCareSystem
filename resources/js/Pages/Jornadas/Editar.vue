@@ -24,6 +24,7 @@ export default {
         dias: Array,
         turnos: Array,
         jornadaHasDias: Array,
+        empleados: Array,
         errors: Object
     },
 
@@ -65,6 +66,7 @@ export default {
 </script>
 <template>
     <div>
+
         <Head title="Editar Jornada" />
         <!-- HEADER -->
         <h1 class="py-3 px-2 max-w-4xl flex items-center gap-4 bg-white rounded-md border text-2xl">
@@ -77,8 +79,13 @@ export default {
         <div class="max-w-4xl overflow-hidden pt-2">
             <form @submit.prevent="actualizar">
                 <div class="py-3 px-3 flex flex-wrap bg-white border rounded-md">
-                    <text-input type="text" label="Empleado" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="empleado_id"
-                        v-model="form.empleado_id" :error="errors.empleado_id" />
+                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Empleado" id="empleado_id"
+                        v-model="form.empleado_id" :error="errors.empleado_id">
+                        <option :value="null" />
+                        <option v-for="empleado in empleados" :key="empleado.id" :value="empleado.id" class="text-sm">
+                            {{ empleado.persona.nombres }} {{ empleado.persona.apellidos }}
+                        </option>
+                    </select-input>
                     <select-input v-model="form.turno_id" class="pb-8 pr-6 w-full lg:w-1/2" label="Turno"
                         :error="errors.turno_id">
                         <option :value="null" />
@@ -95,7 +102,8 @@ export default {
                         <div class="w-full flex flex-wrap justify-between">
                             <div class="mr-2 pb-1 text-center" v-for="dia in dias" :key="dia.id">
                                 <label class="form-label">{{ dia.nombre_dias }}</label>
-                                <input type="checkbox" v-model="form.nombre_dias" :value="dia.id" class="border-turquesa rounded-sm ml-1">
+                                <input type="checkbox" v-model="form.nombre_dias" :value="dia.id"
+                                    class="border-turquesa rounded-sm ml-1">
                             </div>
                         </div>
                         <div v-if="errors.nombre_dias" class="form-error"> {{ errors.nombre_dias }}</div>

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class HorarioRutina extends Model
 {
@@ -15,6 +16,15 @@ class HorarioRutina extends Model
     protected $fillable = [
         'hora'
     ];
+
+    //Mutadores y Accesores
+    protected function hora(): Attribute
+    {
+        return new Attribute(
+            get: fn ($value) => \Carbon\Carbon::createFromFormat('H:i:s', $value)->format('H:i')
+
+        );
+    }
 
     //muchos a muchos
     public function rutinas()

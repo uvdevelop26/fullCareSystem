@@ -8,31 +8,26 @@
     <title>Residentes</title>
 </head>
 <style>
-    * {
-        font-size: 1rem;
-        margin: 0;
+    @page {
+        margin: 2.5cm 2cm 0.5cm 2cm;
         padding: 0;
-        box-sizing: border-box;
     }
 
-    .container {
-        padding: 0px 70px;
+    * {
+        font-size: 1rem;
+    }
+
+    .header {
+        position: fixed;
+        top: -2.5cm;
+        left: 0;
+        border-bottom: 1px solid rgb(124, 118, 118);
     }
 
     .header-container {
+        width: 100%;
         position: relative;
-        padding-top: 30px;
-        padding-bottom: 15px;
-        margin-bottom: 10px;
-        border-bottom: 1px solid gray;
-    }
-
-    .header-text {
-        text-align: right;
-        padding-top: 25px;
-        color: rgb(124, 118, 118);
-        font-style: italic;
-        font-size: 13px
+        padding: 10px 0px;
     }
 
     .header-img {
@@ -46,6 +41,16 @@
         width: 85px;
         height: 85px;
     }
+
+    .header-text {
+        width: 1000px;
+        text-align: right;
+        padding-top: 25px;
+        color: rgb(124, 118, 118);
+        font-style: italic;
+        font-size: 13px
+    }
+
 
     .titulos {
         font-size: 15px;
@@ -188,7 +193,7 @@
 </style>
 
 <body>
-    <div class="container">
+    <div class="header">
         <div class="header-container">
             <div class="header-img">
                 <img src="storage/image/hogar de Ancianos.png" alt="logo">
@@ -197,6 +202,8 @@
                 Hogar de Ancianos "Virgen del Rosario"
             </p>
         </div>
+    </div>
+    <div class="container">
         {{-- table 1 --}}
         <table class="div-1Header">
             <tr>
@@ -223,7 +230,7 @@
                     <td>Sexo</td>
                     <td>Dirección</td>
                     <td>Fecha Ingreso</td>
-                    <td>Estado</td>
+                    <td>Habitación</td>
                 </tr>
             </thead>
             <tbody>
@@ -236,7 +243,7 @@
                     <td>{{ $item->persona->sexo}}</td>
                     <td class="capitalize">{{ $item->persona->ciudade->nombre_ciudad}}</td>
                     <td>{{ $item->fecha_ingreso}}</td>
-                    <td class="capitalize">{{$item->estado_residente->nombre_estado}}</td>
+                    <td class="capitalize">{{$item->habitacione->numero}}</td>
                 </tr>
                 @endforeach
             </tbody>
@@ -270,24 +277,24 @@
                         <tr>
                             <td>
                                 <p>
-                                    Cantidad Activos:
+                                    Cantidad Femeninos:
                                 </p>
                             </td>
                             <td>
                                 <p>
-                                    {{ $cantidadActivos}}
+                                    {{ $cantidadFemenino}}
                                 </p>
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 <p>
-                                    Cantidad Inactivos:
+                                    Cantidad Masculino:
                                 </p>
                             </td>
                             <td>
                                 <p>
-                                    {{$cantidadInactivos }}
+                                    {{$cantidadMasculino }}
                                 </p>
                             </td>
                         </tr>

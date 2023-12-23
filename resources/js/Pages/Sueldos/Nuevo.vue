@@ -20,6 +20,7 @@ export default {
     },
 
     props: {
+        empleados: Array,
         errors: Object,
     },
 
@@ -56,10 +57,15 @@ export default {
                 <div class="py-3 px-3 flex flex-wrap bg-white border rounded-md">
                     <text-input type="date" label="Fecha" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="fecha"
                         v-model="form.fecha" :error="errors.fecha" />
-                    <text-input type="text" label="Empleado" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="empleado_id"
-                        v-model="form.empleado_id" :error="errors.empleado_id" />
+                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Empleado" id="empleado_id" v-model="form.empleado_id"
+                        :error="errors.empleado_id">
+                        <option :value="null" />
+                        <option v-for="empleado in empleados" :key="empleado.id" :value="empleado.id" class="text-sm">
+                            {{ empleado.persona.nombres }} {{ empleado.persona.apellidos }}
+                        </option>
+                    </select-input>
                     <text-input type="number" label="Monto" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="edad"
-                        v-model="form.monto" :error="errors.monto" />
+                        v-model="form.monto" :error="errors.monto" reference="150000 (sin puntos)" />
                     <div class="py-4 lg:pr-2 flex w-full items-center justify-end bg-white border-t">
                         <Link type="button" :href="route('sueldos.index')" class="btn-cancelar">
                         <span class="text-white font-bold">Cancelar</span>

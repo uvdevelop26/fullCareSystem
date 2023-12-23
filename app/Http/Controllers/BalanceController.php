@@ -7,6 +7,7 @@ use App\Models\Ingreso;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class BalanceController extends Controller
@@ -30,6 +31,7 @@ class BalanceController extends Controller
 
             $movimientosDiarios = $ingresos->concat($egresos);
 
+        
             //calcular total de ingresos y egresos del día
             $totalIngresosDiarios = $ingresos->sum('monto_ingreso');
 
@@ -41,6 +43,7 @@ class BalanceController extends Controller
             ];
 
             return response()->json($movimientosDiarios);
+
         } else if ($request->consulta == 'mensual') {
 
             $ingresos = Ingreso::whereMonth('fecha', $request->mes)
@@ -69,7 +72,7 @@ class BalanceController extends Controller
             ];
 
             return response()->json($movimientosMensuales);
-        }
+        } 
     }
 
 
@@ -109,6 +112,10 @@ class BalanceController extends Controller
 
     public function mensualpdf($mes, $anho)
     {
+        app()->setLocale('es');
+
+        $nombreMes = Carbon::create(null, $mes, 1)->monthName;
+
         $fechaActual = Carbon::today()->toDateString();
 
         $users = Auth::user();
@@ -140,7 +147,7 @@ class BalanceController extends Controller
 
         $pdf->getDomPDF()->set_option("enable_php", true);
 
-        $pdf->loadView('movimientoMensual', compact('movimientosMensuales', 'mes', 'totalIngresosMensuales', 'totalEgresosMensuales', 'diferencia', 'fechaActual', 'users'));
+        $pdf->loadView('movimientoMensual', compact('movimientosMensuales', 'mes', 'totalIngresosMensuales', 'totalEgresosMensuales', 'diferencia', 'fechaActual', 'users', 'nombreMes'));
 
         return $pdf->stream();
     }

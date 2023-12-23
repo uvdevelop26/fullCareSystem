@@ -35,9 +35,9 @@ class DatabaseSeeder extends Seeder
     {
         //Residentes
         $this->call(CiudadeSeeder::class);
-        Persona::factory(10)->create();
-        $this->call(EstadoResidenteSeeder::class);
-        Residente::factory(12)->create();
+        Persona::factory(100)->create();
+        $this->call(HabitacioneSeeder::class);
+        Residente::factory(15)->create();
         Familiare::factory(18)->create();
 
         //Empleados - Usuarios

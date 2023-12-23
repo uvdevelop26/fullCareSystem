@@ -19,7 +19,7 @@ export default {
 
     props: {
         ciudades: Array,
-        estado_residentes: Array,
+        habitaciones: Array,
         errors: Object
     },
 
@@ -37,7 +37,7 @@ export default {
             ciudade_id: "",
             foto: "",
             fecha_ingreso: "",
-            estado_residente_id: ""
+            habitacione_id: "",
         });
 
         const guardar = async () => {
@@ -65,8 +65,8 @@ export default {
         <div class="max-w-4xl overflow-hidden pt-2">
             <form @submit.prevent="guardar">
                 <div class="py-3 px-3 flex flex-wrap bg-white border rounded-md">
-                    <text-input type="file" label="Foto" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="foto"
-                        :error="errors.foto" @input="form.foto = $event.target.files[0]" />
+                    <text-input type="file" label="Foto" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="foto" :error="errors.foto"
+                        @input="form.foto = $event.target.files[0]" />
                     <text-input type="date" label="Fecha Ingreso" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="fecha_ingreso"
                         v-model="form.fecha_ingreso" :error="errors.fecha_ingreso" />
 
@@ -75,8 +75,7 @@ export default {
                     <text-input type="text" label="Apellidos" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="apellidos"
                         v-model="form.apellidos" :error="errors.apellidos" />
                     <text-input type="text" label="CI" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="ci_numero"
-                        v-model="form.ci_numero" :error="errors.ci_numero" />
-
+                        v-model="form.ci_numero" :error="errors.ci_numero" reference="4972774 (sin puntos)" />
                     <text-input type="date" label="Fecha de Nacimiento" class="pb-5 lg:pr-3 w-full lg:w-1/2"
                         id="fecha_nacimiento" v-model="form.fecha_nacimiento" :error="errors.fecha_nacimiento" />
                     <text-input type="text" label="Teléfono" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="telefono"
@@ -98,12 +97,12 @@ export default {
                     </select-input>
                     <text-input type="text" label="Dirección" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="direccion"
                         v-model="form.direccion" :error="errors.direccion" />
-                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Estado" id="estado" 
-                    v-model="form.estado_residente_id" :error="errors.estado_residente_id">
+                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Habitación N°" id="habitacion"
+                        v-model="form.habitacione_id" :error="errors.habitacione_id">
                         <option :value="null" />
-                        <option v-for="estado_residente in estado_residentes" :key="estado_residente.id" 
-                        :value="estado_residente.id" class="capitalize text-sm">
-                            {{ estado_residente.nombre_estado }}
+                        <option v-for="habitacione in habitaciones" :key="habitacione.id" :value="habitacione.id"
+                            class="capitalize text-sm">
+                            {{ habitacione.numero }}
                         </option>
                     </select-input>
                     <div class="py-4 lg:pr-2 flex w-full items-center justify-end bg-white border-t">

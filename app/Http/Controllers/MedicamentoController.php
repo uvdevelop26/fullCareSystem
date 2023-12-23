@@ -7,6 +7,7 @@ use App\Models\Horario;
 use App\Models\HorarioMedicamento;
 use App\Models\Medicamento;
 use App\Models\Presentacione;
+use App\Models\Residente;
 use App\Models\Turno;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -42,8 +43,12 @@ class MedicamentoController extends Controller
     public function create()
     {
         $presentaciones = Presentacione::all();
+
+        $residentes = Residente::with('persona')->get();
+
         return Inertia::render('Medicamentos/Nuevo', [
-            'presentaciones' => $presentaciones
+            'presentaciones' => $presentaciones,
+            'residentes' => $residentes
         ]);
     }
 
@@ -91,10 +96,13 @@ class MedicamentoController extends Controller
 
         $medicamentoHasHorarios = HorarioMedicamento::whereIn('id', array_column(json_decode($medicamento->horarioMedicamentos, true), 'id'))->get();
 
+        $residentes = Residente::with('persona')->get();
+
         return Inertia::render('Medicamentos/Editar', [
             'medicamento' => $medicamento,
             'medicamentoHasHorarios' => $medicamentoHasHorarios,
-            'presentaciones' => $presentaciones
+            'presentaciones' => $presentaciones,
+            'residentes' => $residentes
         ]);
     }
 

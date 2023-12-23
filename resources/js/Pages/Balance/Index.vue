@@ -20,6 +20,9 @@ export default {
         Icon
     },
 
+    props:{
+        flash: Object
+    },
 
     setup(props) {
 
@@ -125,16 +128,17 @@ export default {
         <div class="max-w-4xl overflow-hidden pt-2">
             <form @submit.prevent="fetchData">
                 <div class="py-3 px-3  bg-white border rounded-md">
+                    <p class="text-sm pb-3 text-red-400">*selecciona tipo de consulta</p>
                     <div class="lg:flex">
                         <div class="lg:w-1/2">
                             <input type="radio" v-model="form.consulta" name="consulta" id="diario" value="diario">
-                            <label for="diario"> Consulta Diaria</label>
+                            <label for="diario" class="font-bold ml-3"> Consulta Diaria</label>
                             <text-input type="date" v-model="form.fecha" label="Fecha" class="pb-5 lg:pr-3 w-full"
                                 id="fecha" :disabled="form.consulta !== 'diario'" />
                         </div>
                         <div class="lg:w-1/2">
                             <input type="radio" v-model="form.consulta" name="consulta" id="mensual" value="mensual">
-                            <label for="mensual"> Consulta Mensual</label>
+                            <label for="mensual" class="font-bold ml-3"> Consulta Mensual</label>
                             <select-input id="mes" v-model="form.mes" label="Mes" class="text-sm pb-1 lg:pr-3 w-full"
                                 :disabled="form.consulta !== 'mensual'">
                                 <option :value="null" />
@@ -152,7 +156,7 @@ export default {
                         </div>
                     </div>
                     <div class="py-4 lg:pr-2 flex w-full items-center justify-end bg-white border-t">
-                        <button class="btn-indigo mx-1" type="submit">
+                        <button class="btn-indigo mx-1 hover:bg-softIndigo" type="submit">
                             Consultar
                         </button>
                     </div>

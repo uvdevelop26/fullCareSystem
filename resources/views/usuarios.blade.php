@@ -8,31 +8,27 @@
     <title>Usuarios</title>
 </head>
 <style>
+    @page {
+        margin: 2.5cm 2cm 0.5cm 2cm;
+        padding: 0;
+    }
+
     * {
         font-size: 1rem;
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
     }
 
-    .container {
-        padding: 0px 70px;
+    .header {
+        position: fixed;
+        top: -2.5cm;
+        left: 0;
+        border-bottom: 1px solid rgb(124, 118, 118);
     }
+
 
     .header-container {
+        width: 100%;
         position: relative;
-        padding-top: 30px;
-        padding-bottom: 15px;
-        margin-bottom: 10px;
-        border-bottom: 1px solid gray;
-    }
-
-    .header-text {
-        text-align: right;
-        padding-top: 25px;
-        color: rgb(124, 118, 118);
-        font-style: italic;
-        font-size: 13px
+        padding: 10px 0px;
     }
 
     .header-img {
@@ -45,6 +41,15 @@
     img {
         width: 85px;
         height: 85px;
+    }
+
+    .header-text {
+        width: 1000px;
+        text-align: right;
+        padding-top: 25px;
+        color: rgb(124, 118, 118);
+        font-style: italic;
+        font-size: 13px
     }
 
     .titulos {
@@ -171,15 +176,16 @@
         text-align: left;
     }
 
+    /*FOOTER*/
     footer {
+        position: fixed;
+        bottom: 0cm;
+        left: 0cm;
         width: 100%;
-        text-align: center;
-        position: absolute;
-        bottom: 0px;
     }
 
     footer p {
-        padding: 20px 100px;
+        /* padding: 10px 85px; */
         text-align: right;
         color: rgb(124, 118, 118);
         font-style: italic;
@@ -187,7 +193,7 @@
 </style>
 
 <body>
-    <div class="container">
+    <div class="header">
         <div class="header-container">
             <div class="header-img">
                 <img src="storage/image/hogar de Ancianos.png" alt="logo">
@@ -196,6 +202,9 @@
                 Hogar de Ancianos "Virgen del Rosario"
             </p>
         </div>
+    </div>
+    <div class="container">
+        
         {{-- table 1 --}}
         <table class="div-1Header">
             <tr>

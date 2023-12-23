@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
+use App\Models\Empleado;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -42,17 +43,20 @@ class UserController extends Controller
 
     public function create()
     {
+        $empleados = Empleado::with('persona')->get();
+
         $roles = Role::all();
 
         return Inertia::render('Usuarios/Nuevo', [
-            'roles' => $roles
+            'roles' => $roles,
+            'empleados' => $empleados
         ]);
     }
 
 
     public function store(UserRequest $request)
     {
-
+        
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
 
@@ -67,18 +71,20 @@ class UserController extends Controller
 
     public function edit($id)
     {
-
-
+        
         $user = User::find($id);
         $roles = Role::all();
         $userRole = $user->roles->all();
+
+        $empleados = Empleado::with('persona')->get();
 
         return Inertia::render(
             'Usuarios/Editar',
             [
                 'user' => $user,
                 'roles' => $roles,
-                'userRole' => $userRole
+                'userRole' => $userRole,
+                'empleados' => $empleados
             ]
         );
     }

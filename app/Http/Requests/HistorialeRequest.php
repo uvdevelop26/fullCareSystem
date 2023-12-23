@@ -17,15 +17,15 @@ class HistorialeRequest extends FormRequest
     {
         return [
             'residente_id' => 'required',
-            'fecha_registro' =>  'required',
-            'peso' => 'required|numeric',
+            'fecha_registro' =>  'required|date',
+            'peso' => 'required|numeric|max:200',
             'altura' => 'required|numeric',
             'temperatura' => 'required|numeric',
             'presion_arterial' => 'required|numeric',
-            'enfermedades' => 'required',
-            'diagnostico' => 'required',
-            'tratamiento' => 'required',
-            'observaciones' => 'required'
+            'diagnostico' => 'required|max:200',
+            'tratamiento' => 'required|max:200',
+            'observaciones' => 'required|max:200',
+            
         ];
     }
 

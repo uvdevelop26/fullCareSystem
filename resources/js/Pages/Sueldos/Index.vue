@@ -192,6 +192,7 @@ export default {
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">Apellidos</th>
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">C.I.</th>
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">Sección</th>
+                        <th class="py-3 px-4 bg-turquesa text-white font-bold">Descripción</th>
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">Fecha</th>
                         <th class="py-3 px-4 bg-turquesa text-white font-bold">Monto</th>
                         <th class="py-3 px-4 bg-turquesa rounded-r-xl text-white font-bold">Acciones</th>
@@ -200,7 +201,7 @@ export default {
                 <transition-group appear tag="tbody" name="list">
                     <tr class="text-center shadow group" v-for="sueldo in sueldos" :key="sueldo.id" v-if="sueldos.length">
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor rounded-l-xl">
-                            {{ sueldo.empleado.persona.nombres }} 
+                            {{ sueldo.empleado.persona.nombres }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
                             {{ sueldo.empleado.persona.apellidos }}
@@ -208,17 +209,18 @@ export default {
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
                             {{ sueldo.empleado.persona.ci_numero }}
                         </td>
+                        <td class="py-2 px-2  bg-white group-hover:bg-fondColor">
+                            <span class="font-semibold  "> {{
+                                sueldo.empleado.seccion.nombre_seccion }}</span>
+                        </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            <span class="block font-semibold text-indigo-400 capitalize">
-                                {{ sueldo.empleado.seccion.nombre_seccion }}
-                            </span>
-                            {{ sueldo.empleado.seccion.descripcion }}
+                            <p class="w-64 whitespace-normal mx-auto"> {{ sueldo.empleado.seccion.descripcion }}</p>
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
                             {{ sueldo.fecha }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            {{ sueldo.monto }}
+                            {{ sueldo.monto }} Gs.
                         </td>
                         <td class="py-2 px-2 rounded-r-xl  bg-white group-hover:bg-fondColor">
                             <div class="w-full h-full flex items-center justify-center">

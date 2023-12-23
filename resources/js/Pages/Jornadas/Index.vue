@@ -165,15 +165,25 @@ export default {
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
                             {{ jornada.turno.hora_entrada }}
+                            <span v-if="jornada.turno.nombre_turnos == 'Madrugada'">AM</span>
+                            <span v-else-if="jornada.turno.nombre_turnos == 'Noche'">PM</span>
+                            <span v-else-if="jornada.turno.nombre_turnos == 'Mañana'">AM</span>
+                            <span v-else-if="jornada.turno.nombre_turnos == 'Tarde'">PM</span>
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
                             {{ jornada.turno.hora_salida }}
+                            <span v-if="jornada.turno.nombre_turnos == 'Madrugada'">AM</span>
+                            <span v-else-if="jornada.turno.nombre_turnos == 'Noche'">AM</span>
+                            <span v-else-if="jornada.turno.nombre_turnos == 'Mañana'">PM</span>
+                            <span v-else-if="jornada.turno.nombre_turnos == 'Tarde'">PM</span>
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            <span v-for="dias in jornada.dias"
-                                class="inline-block pr-1">
-                                {{ dias.nombre_dias }},
-                            </span>
+                            <ul>
+                                <li v-for="(dias, index) in jornada.dias" class="pb-1">
+                                    {{ dias.nombre_dias }}
+                                    <span v-if="index < jornada.dias.length - 1">,</span>
+                                </li>
+                            </ul>
                         </td>
                         <td class="py-2 px-2 rounded-r-xl bg-white group-hover:bg-fondColor" v-if="auth.role === 'admin'">
                             <div class="w-full h-full flex items-center justify-center">

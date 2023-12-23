@@ -23,7 +23,7 @@ export default {
         SelectInput,
         SearchInput,
         Filters,
-        DialogModal, 
+        DialogModal,
         FlashMessages
     },
 
@@ -74,14 +74,14 @@ export default {
         }
 
         //LIMPIAR CAMPOS
-        const limpiarCampos = ()=>{
+        const limpiarCampos = () => {
             form.search_nombre = null
             form.search_residente = null
-            
+
         }
 
         //FLASH MESSAGES
-        onMounted(()=>{
+        onMounted(() => {
 
             flashMessage.value = props.flash.success
 
@@ -154,13 +154,15 @@ export default {
                             {{ rutina.nombre }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            {{ rutina.descripcion }}
+                            <p class="w-64 whitespace-normal mx-auto">{{ rutina.descripcion }}</p>
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            <span v-for="horario in rutina.horario_rutinas"
-                                class="inline-block px-3 py-1 mr-2 rounded-2xl border border-softIndigo text-softIndigo bg-indigo-100">
-                                {{ horario.hora }}
-                            </span>
+                            <ul class="flex justify-center">
+                                <li v-for="(horario, index) in rutina.horario_rutinas" class="pb-1">
+                                    {{ horario.hora }}
+                                    <span v-if="index < rutina.horario_rutinas.length - 1">,</span>
+                                </li>
+                            </ul>
                         </td>
                         <td class="py-2 px-2 rounded-r-xl bg-white group-hover:bg-fondColor">
                             <div class="w-full h-full flex items-center justify-center">
@@ -180,7 +182,7 @@ export default {
                     </tr>
                 </transition-group>
             </table>
-          
+
         </div>
         <!-- MODAL PARA ELIMINAR -->
         <dialog-modal :show="openModal">

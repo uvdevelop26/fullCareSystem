@@ -4,7 +4,7 @@ import Icon from "../../Shared/Icon.vue";
 import TextInput from "../../Shared/TextInput.vue";
 import SelectInput from "../../Shared/SelectInput.vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
-import { useForm   } from "@inertiajs/inertia-vue3";
+import { useForm } from "@inertiajs/inertia-vue3";
 import { watch } from "vue";
 
 
@@ -27,6 +27,7 @@ export default {
     props: {
         dias: Array,
         turnos: Array,
+        empleados: Array,
         errors: Object
     },
 
@@ -75,23 +76,31 @@ export default {
         <div class="max-w-4xl overflow-hidden pt-2">
             <form @submit.prevent="guardar">
                 <div class="py-3 px-3 flex flex-wrap bg-white border rounded-md">
-                    <text-input type="text" label="Empleado" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="empleado_id"
-                        v-model="form.empleado_id" :error="errors.empleado_id" />
-                    <select-input v-model="form.turno_id" class="pb-8 pr-6 w-full lg:w-1/2" label="Turno" :error="errors.turno_id">
+                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Empleado" id="empleado_id"
+                        v-model="form.empleado_id" :error="errors.empleado_id">
+                        <option :value="null" />
+                        <option v-for="empleado in empleados" :key="empleado.id" :value="empleado.id" class="text-sm">
+                            {{ empleado.persona.nombres }} {{ empleado.persona.apellidos }}
+                        </option>
+                    </select-input>
+                    <select-input v-model="form.turno_id" class="pb-8 pr-6 w-full lg:w-1/2" label="Turno"
+                        :error="errors.turno_id">
                         <option :value="null" />
                         <option v-for="turno in turnos" :key="turno.id" :value="turno.id" class="text-sm">
                             {{ turno.nombre_turnos }}
                         </option>
                     </select-input>
                     <text-input type="time" label="Hora Entrada" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="hora_entrada"
-                        v-model="form.hora_entrada" disabled/>
-                    <text-input type="time" label="Hora Salida" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="hora_salida" v-model="form.hora_salida"  disabled />
+                        v-model="form.hora_entrada" disabled />
+                    <text-input type="time" label="Hora Salida" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="hora_salida"
+                        v-model="form.hora_salida" disabled />
                     <div class="w-full">
                         <span class="block py-4 font-bold text-center">Seleccione Días de la Semana</span>
                         <div class="w-full flex flex-wrap justify-between">
                             <div class="mr-2 pb-1 text-center" v-for="dia in dias" :key="dia.id">
                                 <label class="form-label">{{ dia.nombre_dias }}</label>
-                                <input type="checkbox" v-model="form.nombre_dias" :value="dia.id" class="border-turquesa rounded-sm ml-1">
+                                <input type="checkbox" v-model="form.nombre_dias" :value="dia.id"
+                                    class="border-turquesa rounded-sm ml-1">
                             </div>
                         </div>
                         <div v-if="errors.nombre_dias" class="form-error"> {{ errors.nombre_dias }}</div>
@@ -107,5 +116,4 @@ export default {
                 </div>
             </form>
         </div>
-    </div>
-</template>
+    </div></template>

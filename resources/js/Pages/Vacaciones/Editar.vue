@@ -22,6 +22,7 @@ export default {
     props: {
         vacacione: Array,
         estadoVariaciones: Array,
+        empleados: Array,
         errors: Object,
     },
 
@@ -73,6 +74,7 @@ export default {
 
 <template>
     <div>
+
         <Head title="Editar Vacaciones" />
         <h1 class="py-3 px-2 max-w-4xl flex items-center gap-4 bg-white rounded-md border text-2xl">
             <div class="inline-block p-2 bg-teal-50 border border-turquesa rounded-md">
@@ -83,8 +85,13 @@ export default {
         <div class="max-w-4xl overflow-hidden pt-2">
             <form @submit.prevent="actualizar">
                 <div class="py-3 px-3 flex flex-wrap bg-white border rounded-md">
-                    <text-input type="text" label="Empleado" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="empleado_id"
-                        :error="errors.empleado_id" v-model="form.empleado_id" />
+                    <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Empleado" id="empleado_id"
+                        v-model="form.empleado_id" :error="errors.empleado_id">
+                        <option :value="null" />
+                        <option v-for="empleado in empleados" :key="empleado.id" :value="empleado.id" class="text-sm">
+                            {{ empleado.persona.nombres }} {{ empleado.persona.apellidos }}
+                        </option>
+                    </select-input>
                     <text-input type="date" label="Fecha de Inicio" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="fecha_inicio"
                         :error="errors.fecha_inicio" v-model="form.fecha_inicio" @change="calcularDuracion" />
                     <text-input type="date" label="Fecha Fin" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="fecha_fin"

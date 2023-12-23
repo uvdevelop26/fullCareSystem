@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\RutinaRequest;
 use App\Models\HorarioRutina;
+use App\Models\Residente;
 use App\Models\Rutina;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -30,7 +31,9 @@ class RutinaController extends Controller
 
     public function create()
     {
-        return Inertia::render('Rutinas/Nuevo');
+        $residentes = Residente::with('persona')->get();
+
+        return Inertia::render('Rutinas/Nuevo', ['residentes' => $residentes]);
     }
 
 
@@ -68,9 +71,12 @@ class RutinaController extends Controller
     {
         $rutinaHasHorarios = HorarioRutina::whereIn('id', array_column(json_decode($rutina->horarioRutinas, true), 'id'))->get();
 
+        $residentes = Residente::with('persona')->get();
+
         return Inertia::render('Rutinas/Editar', [
             'rutina' => $rutina,
             'rutinaHasHorarios' => $rutinaHasHorarios,
+            'residentes' => $residentes
         ]);
     }
 

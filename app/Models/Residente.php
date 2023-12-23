@@ -16,7 +16,7 @@ class Residente extends Model
     'foto',
     'fecha_ingreso',
     'persona_id',
-    'estado_residente_id'
+    'habitacione_id'
   ];
 
 
@@ -26,9 +26,15 @@ class Residente extends Model
     return $this->belongsTo(Persona::class);
   }
 
-  public function estado_residente()
+
+  public function habitacione()
   {
-    return $this->belongsTo(EstadoResidente::class);
+    return $this->belongsTo(Habitacione::class);
+  }
+
+  public function estados()
+  {
+    return $this->hasMany(EstadoResidente::class);
   }
 
   //relación de uno a muchos (tiene varios)
@@ -75,12 +81,6 @@ class Residente extends Model
       $query->where(function ($query) use ($search) {
         $query->whereHas('persona', function ($query) use ($search) {
           $query->where('sexo', $search);
-        });
-      });
-    })->when($filters['search_estado'] ?? null, function ($query, $search) {
-      $query->where(function ($query) use ($search) {
-        $query->whereHas('estado_residente', function ($query) use ($search) {
-          $query->where('id', $search);
         });
       });
     });
