@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ControlMedicamento;
+use App\Models\ControlRutina;
 use App\Models\Empleado;
 use App\Models\EstadoResidente;
 use App\Models\Jornada;
@@ -196,7 +198,7 @@ class ReporteController extends Controller
         $medicamentos = Medicamento::with('residente.persona', 'presentacione', 'horarioMedicamentos')
             ->orderBy('id', 'desc')
             ->get();
-        
+
         $suministrados = Medicamento::has('horarioMedicamentos')->count();
 
         $noSuministrados = Medicamento::doesntHave('horarioMedicamentos')->count();
@@ -237,6 +239,14 @@ class ReporteController extends Controller
 
     public function sueldospdf($mes, $anho)
     {
+        app()->setLocale('es');
+
+        $nombreMes = Carbon::create(null, $mes, 1)->monthName;
+
+        $fechaActual = Carbon::today()->toDateString();
+
+        $users = Auth::user();
+
 
         $sueldos = Sueldo::with('empleado.persona', 'empleado.seccion')
             ->whereYear('fecha', $anho)
@@ -249,7 +259,51 @@ class ReporteController extends Controller
 
         $pdf->getDomPDF()->set_option("enable_php", true);
 
-        $pdf->loadView('sueldos', compact('sueldos', 'mes'));
+        $pdf->loadView('sueldos', compact('sueldos', 'mes', 'nombreMes', 'fechaActual', 'users'));
+
+        return $pdf->setPaper('a4', 'landscape')->stream();
+    }
+
+
+    public function controlMedicamentospdf($fecha)
+    {
+
+        $fechaActual = Carbon::today()->toDateString();
+
+        $users = Auth::user();
+
+        $controlMedicamentos = ControlMedicamento::with('user', 'horarioMedicamento.medicamentos.residente.persona')
+            ->where('fecha', $fecha)
+            ->orderBy('id', 'desc')
+            ->get();
+
+        //generar pdf
+        $pdf = app('dompdf.wrapper');
+
+        $pdf->getDomPDF()->set_option("enable_php", true);
+
+        $pdf->loadView('controlMedicamento', compact('fechaActual', 'users', 'controlMedicamentos', 'fecha'));
+
+        return $pdf->setPaper('a4', 'landscape')->stream();
+    }
+
+    public function controlRutinaspdf($fecha)
+    {
+        $fechaActual = Carbon::today()->toDateString();
+
+        $users = Auth::user();
+
+        $controlRutinas = ControlRutina::with('user', 'horarioRutina.rutinas.residente.persona')
+            ->where('fecha', $fecha)
+            ->orderBy('id', 'desc')
+            ->get();
+
+        //generar pdf
+        $pdf = app('dompdf.wrapper');
+
+        $pdf->getDomPDF()->set_option("enable_php", true);
+
+        $pdf->loadView('controlRutina', compact('fechaActual', 'users', 'controlRutinas', 'fecha'));
 
         return $pdf->setPaper('a4', 'landscape')->stream();
     }

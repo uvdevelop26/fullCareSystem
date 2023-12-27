@@ -78,6 +78,8 @@ Route::controller(ReporteController::class)->group(function () {
     Route::get('/reportes/medicamentos', 'medicamentospdf')->name('reportes.medicamentospdf');
     Route::get('/reportes/rutinas', 'rutinaspdf')->name('reportes.rutinaspdf');
     Route::get('/reportes/sueldos/{mes}/{anho}', 'sueldospdf')->name('reportes.sueldospdf');
+    Route::get('/reportes/control-medicamento/{fecha}', 'controlMedicamentospdf')->name('reportes.controlMedicamentospdf');
+    Route::get('/reportes/control-rutina/{fecha}', 'controlRutinaspdf')->name('reportes.controlRutinaspdf');
 });
 
 

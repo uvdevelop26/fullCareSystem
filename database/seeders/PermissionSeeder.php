@@ -82,7 +82,7 @@ class PermissionSeeder extends Seeder
         $role1->givePermissionTo('control');
         $role1->givePermissionTo('marcar-med');
         $role1->givePermissionTo('marcar-rut');
-        $role1->givePermissionTo('reportes');
+     
         
 
 

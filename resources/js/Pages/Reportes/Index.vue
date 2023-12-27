@@ -2,7 +2,8 @@
 import LayoutApp from '../../Layouts/LayoutApp.vue';
 import { Head } from '@inertiajs/inertia-vue3';
 import Icon from '../../Shared/Icon.vue';
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
+import TextInput from "../../Shared/TextInput.vue";
 
 export default {
 
@@ -10,7 +11,8 @@ export default {
 
     components: {
         Head,
-        Icon
+        Icon,
+        TextInput
     },
 
     props: {
@@ -23,6 +25,11 @@ export default {
             mes: 0,
             anho: 0
         })
+
+        const controlMed = ref('00-00-00');
+
+        const controlRut = ref('00-00-00')
+
 
 
         //años
@@ -54,7 +61,7 @@ export default {
 
 
 
-        return { showYears, meses, form }
+        return { showYears, meses, form, controlMed, controlRut }
 
     }
 
@@ -74,8 +81,9 @@ export default {
         </div>
 
         <!-- CARDS -->
-        <!-- residentes -->
-        <div class="py-3 mb-3 max-w-7xl flex flex-wrap gap-4 justify-center lg:justify-start lg:items-start">
+
+        <div class="pt-3 pb-12 mb-3 border-b max-w-7xl flex flex-wrap gap-4 justify-center lg:justify-start lg:items-start">
+            <!-- residentes -->
             <div class="bg-white w-2/3 rounded-lg shadow-md border overflow-hidden  max-w-xs">
                 <a :href="route('reportes.residentespdf')" target="_blank">
                     <div class="py-2 px-3 bg-green-400 flex items-center">
@@ -166,33 +174,75 @@ export default {
                     </div>
                 </a>
             </div>
+        </div>
+        <div class="pt-3 pb-12 mb-3 border-b max-w-7xl flex flex-wrap gap-4 justify-center lg:justify-start lg:items-center">
             <!-- sueldos -->
             <div class="bg-white w-2/3 rounded-lg shadow-md border overflow-hidden max-w-xs">
-
                 <div class="py-2 px-3 bg-teal-400 flex items-center">
                     <Icon name="sueldos" class="w-7 h-7 mr-5 fill-white" />
                     <span class="text-white inline-block font-bold">Sueldos</span>
                 </div>
                 <div class="py-4 px-3">
                     <label for="mes">Mes:</label>
-                    <select name="mes" id="mes" class="w-full h-8 py-0 border-teal-400 rounded-md text-sm" v-model="form.mes">
+                    <select name="mes" id="mes" class="w-full h-8 py-0 border-teal-400 rounded-md text-sm"
+                        v-model="form.mes">
                         <option :value="0"></option>
                         <option v-for="mese in meses" :key="mese.id" :value="mese.id">{{ mese.mes }}</option>
                     </select>
                     <label for="anho">Año:</label>
                     <select name="anho" id="anho"
-                        class="w-full h-8 py-0 border-teal-400 rounded-md focus:border-turquesa text-sm" v-model="form.anho">
+                        class="w-full h-8 py-0 border-teal-400 rounded-md focus:border-turquesa text-sm"
+                        v-model="form.anho">
                         <option :value="0"></option>
                         <option v-for="year in showYears" :key="year" :value="year" class="capitalize">{{ year }}</option>
                     </select>
-                    <a target="_blank" :href="route('reportes.sueldospdf', { mes: form.mes, anho: form.anho })" class="cursor-pointer">
-                        <div class="flex justify-between py-4">
-                            <span class="inline-block font-bold ">Imprimir Reporte</span>
-                            <Icon name="pdf" class="w-7 h-7  fill-teal-400" />
-                        </div>
+                </div>
+                <div class="pb-5 px-3 text-left">
+                    <a class="inline-block w-full text-center px-12 py-1 bg-teal-400 rounded-md hover:bg-teal-500 cursor-pointer"
+                        target="_blank" :href="route('reportes.sueldospdf', { mes: form.mes, anho: form.anho })">
+                        <span class="text-xs mr-3 font-bold text-white">Imprimir</span>
+                        <Icon name="pdf" class="w-4 h-4 fill-white inline" />
                     </a>
                 </div>
             </div>
+
+            <!-- control de medicamentos -->
+            <div class="bg-white w-2/3 rounded-lg shadow-md border overflow-hidden max-w-xs">
+                <div class="py-2 px-3 bg-amber-400 flex items-center">
+                    <Icon name="control" class="w-7 h-7 mr-5 fill-white" />
+                    <span class="text-white inline-block font-bold">Marcación de Medicamentos</span>
+                </div>
+                <div class="py-4 px-3">
+                    <input type="date" class="w-full h-8 py-0 border-amber-400 rounded-md text-sm" v-model="controlMed">
+                </div>
+                <div class="pb-5 px-3 text-left">
+                    <a class="inline-block w-full text-center px-12 py-1 bg-amber-400 rounded-md hover:bg-amber-500 cursor-pointer"
+                        target="_blank" :href="route('reportes.controlMedicamentospdf', controlMed )">
+                        <span class="text-xs mr-3 font-bold text-white">Imprimir</span>
+                        <Icon name="pdf" class="w-4 h-4 fill-white inline" />
+                    </a>
+                </div>
+            </div>
+
+            <!-- control de rutinas -->
+            <div class="bg-white w-2/3 rounded-lg shadow-md border overflow-hidden max-w-xs">
+                <div class="py-2 px-3 bg-lime-400 flex items-center">
+                    <Icon name="control" class="w-7 h-7 mr-5 fill-white" />
+                    <span class="text-white inline-block font-bold">Marcación de Rutinas</span>
+                </div>
+                <div class="py-4 px-3">
+                    <input type="date" class="w-full h-8 py-0 border-lime-400 rounded-md text-sm" v-model="controlRut">
+                </div>
+                <div class="pb-5 px-3 text-left">
+                    <a class="inline-block w-full text-center px-12 py-1 bg-lime-400 rounded-md hover:bg-lime-500 cursor-pointer"
+                        target="_blank" :href="route('reportes.controlRutinaspdf', controlRut )">
+                        <span class="text-xs mr-3 font-bold text-white">Imprimir</span>
+                        <Icon name="pdf" class="w-4 h-4 fill-white inline" />
+                    </a>
+                </div>
+            </div>
+
+
         </div>
 
     </div>

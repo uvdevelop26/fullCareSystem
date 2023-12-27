@@ -23,7 +23,7 @@ class SeccionSeeder extends Seeder
                 'descripcion' => 'cuidados profesionales'
             ],
             [
-                'nombre_seccion' => 'cocina y limpieza',
+                'nombre_seccion' => 'staff',
                 'descripcion' => 'encargados de alimentación y limpieza del hogar'
             ]
 

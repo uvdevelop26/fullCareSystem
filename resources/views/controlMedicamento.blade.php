@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Empleados</title>
 </head>
 <style>
     @page {
@@ -21,7 +21,6 @@
         position: fixed;
         top: -2.5cm;
         left: 0;
-        width: 100%;
         border-bottom: 1px solid rgb(124, 118, 118);
     }
 
@@ -44,12 +43,14 @@
     }
 
     .header-text {
+        width: 1000px;
         text-align: right;
         padding-top: 25px;
         color: rgb(124, 118, 118);
         font-style: italic;
         font-size: 13px
     }
+
 
     .titulos {
         font-size: 15px;
@@ -175,7 +176,7 @@
         text-align: left;
     }
 
-    /*FIRMA*/
+    /*FOOTER*/
     footer {
         position: fixed;
         bottom: 0cm;
@@ -203,6 +204,7 @@
         </div>
     </div>
     <div class="container">
+
         {{-- table 1 --}}
         <table class="div-1Header">
             <tr>
@@ -210,7 +212,9 @@
                     <table class="table_h_factura">
                         <thead>
                             <th class="headerDatosh titulos">
-                                <span class="titulos">Sueldos Pagados en el mes de {{ $nombreMes }}</span>
+                                <span class="titulos">Marcación de Medicamentos fecha {{ $fecha }} Hogar de Ancianos
+                                    "Virgen del
+                                    Rosario"</span>
                             </th>
                         </thead>
                     </table>
@@ -221,23 +225,37 @@
         <table class="table_materiales">
             <thead>
                 <tr>
-                    <td>Nombres</td>
-                    <td>Apellidos</td>
-                    <td>Cédula</td>
-                    <td>Sección</td>
-                    <td>Fecha</td>
-                    <td>Monto</td>
+                    <td>Residente</td>
+                    <td>Medicamento</td>
+                    <td>Hora</td>
+                    <td>Hora Marcacion</td>
+                    <td>Realizado</td>
+                    <td>Usuario</td>
+
                 </tr>
             </thead>
             <tbody>
-                @foreach($sueldos as $item)
+                @foreach($controlMedicamentos as $item)
                 <tr>
-                    <td>{{ $item->empleado->persona->nombres }}</td>
-                    <td>{{ $item->empleado->persona->apellidos }}</td>
-                    <td>{{ $item->empleado->persona->ci_numero }}</td>
-                    <td>{{ $item->empleado->seccion->nombre_seccion }}</td>
-                    <td>{{ $item->fecha }}</td>
-                    <td>{{ $item->monto }}</td>
+                    @foreach($item->horarioMedicamento->medicamentos as $item2)
+                    <td>{{ $item2->residente->persona->nombres }}</td>
+                    @endforeach
+
+                    @foreach($item->horarioMedicamento->medicamentos as $item3)
+                    <td>{{ $item3->nombre}}</td>
+                    @endforeach
+                    <td>
+                        {{ $item->horarioMedicamento->hora }}
+                    </td>
+                    <td>
+                        {{ $item->hora }}
+                    </td>
+                    @if($item->realizado === 1)
+                    <td>SI</td>
+                    @else
+                    <td>NO</td>
+                    @endif
+                    <td>{{ $item->user->username }}</td>
                 </tr>
                 @endforeach
             </tbody>
@@ -255,45 +273,7 @@
                     </table>
                 </td>
                 <td class="datosFinales">
-                    {{-- <table class="table_datosfinales">
-                        <tr>
-                            <td>
-                                <p>
-                                    Cantidad
-                                </p>
-                            </td>
-                            <td>
-                                <p>
-                                    fa
-                                </p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p>
-                                    Cantidad Activos
-                                </p>
-                            </td>
-                            <td>
-                                <p>
-                                    fasdf
-                                </p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p>
-                                    Cantidad Inactivos
-                                </p>
-                            </td>
-                            <td>
-                                <p>
-                                    fad
-                                </p>
-                            </td>
-                        </tr>
 
-                    </table> --}}
                 </td>
             </tr>
         </table>
