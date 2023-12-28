@@ -2,13 +2,15 @@
 <script>
 import LayoutApp from '../../Layouts/LayoutApp.vue';
 import Icon from '../../Shared/Icon.vue';
+import { Head } from "@inertiajs/inertia-vue3";
 
 export default {
 
   layout: LayoutApp,
 
   components: {
-    Icon
+    Icon,
+    Head
   },
 
   props: {
@@ -31,6 +33,7 @@ export default {
 </script>
 <template>
   <div>
+    <Head title="dashboard" />
     <!-- HEADER -->
     <div class="py-3 mb-3 max-w-7xl border-b border-turquesa flex justify-between">
       <h1 class="uppercase">

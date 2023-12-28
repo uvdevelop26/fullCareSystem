@@ -50,7 +50,11 @@ export default {
 
             const fechaActual = new Date();
 
-            const fechaMarcacion = fechaActual.toISOString().slice(0, 10);
+            const year = fechaActual.getFullYear();
+            const month = (fechaActual.getMonth() + 1).toString().padStart(2, '0');
+            const day = fechaActual.getDate().toString().padStart(2, '0');
+
+            const fechaMarcacion = `${year}-${month}-${day}`;
 
             return fechaMarcacion;
         }
@@ -172,8 +176,9 @@ export default {
                         </td>
                         <td v-for="rutina in horario.rutinas" class="py-2 px-2 bg-white group-hover:bg-fondColor">
                             {{ rutina.nombre }}</td>
-                        <td v-for="descripcion in horario.rutinas" class="py-2 px-2 bg-white group-hover:bg-fondColor">{{
-                            descripcion.descripcion }}</td>
+                        <td v-for="descripcion in horario.rutinas" class="py-2 px-2 bg-white group-hover:bg-fondColor">
+                            <span class="inline-block w-64 whitespace-normal">{{ descripcion.descripcion }}</span>
+                        </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
                             <span class="text-indigo-400 font-bold"> {{ horario.hora }}</span>
                         </td>

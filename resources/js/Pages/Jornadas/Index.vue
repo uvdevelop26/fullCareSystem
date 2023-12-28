@@ -178,7 +178,7 @@ export default {
                             <span v-else-if="jornada.turno.nombre_turnos == 'Tarde'">PM</span>
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            <ul>
+                            <ul class="w-44 mx-auto flex flex-wrap justify-center">
                                 <li v-for="(dias, index) in jornada.dias" class="pb-1">
                                     {{ dias.nombre_dias }}
                                     <span v-if="index < jornada.dias.length - 1">,</span>

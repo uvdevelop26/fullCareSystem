@@ -50,7 +50,11 @@ export default {
 
             const fechaActual = new Date();
 
-            const fechaMarcacion = fechaActual.toISOString().slice(0, 10);
+            const year = fechaActual.getFullYear();
+            const month = (fechaActual.getMonth() + 1).toString().padStart(2, '0');
+            const day = fechaActual.getDate().toString().padStart(2, '0');
+
+            const fechaMarcacion = `${year}-${month}-${day}`;
 
             return fechaMarcacion;
         }

@@ -163,6 +163,7 @@
             margin: 0px;
             padding: 2px;
             text-align: left;
+            font-size: 14px;
         }
 
         /*FIRMA*/
@@ -183,7 +184,7 @@
             bottom: 0px;
         }
 
-        footer p{
+        footer p {
             padding: 10px 85px;
             text-align: right;
             color: rgb(124, 118, 118);
@@ -216,7 +217,7 @@
                                 <p class="titulos">Hogar de Ancianos Virgen del Rosario</p>
                             </td>
                         </tr>
-                    
+
                         <tr>
                             <td>
                                 <p>TELEFONO: <span>5897485106</span> </p>
@@ -246,10 +247,19 @@
             <tbody>
                 @foreach($movimientosDiarios as $item)
                 <tr>
+
                     <td>{{ $item->concepto}}</td>
                     <td>{{ $item->fecha}}</td>
-                    <td>{{ $item->monto_ingreso}}</td>
-                    <td>{{ $item->monto_egreso}}</td>
+                    @if($item->monto_ingreso)
+                    <td>{{ $item->monto_ingreso}} Gs.</td>
+                    @else
+                    <td></td>
+                    @endif
+                    @if($item->monto_egreso)
+                    <td>{{ $item->monto_egreso}} Gs.</td>
+                    @else
+                    <td></td>
+                    @endif
                 </tr>
                 @endforeach
             </tbody>
@@ -276,7 +286,7 @@
                             </td>
                             <td>
                                 <p>
-                                    {{ $totalIngresosDiarios }}
+                                    {{ $totalIngresosDiarios }} Gs.
                                 </p>
                             </td>
                         </tr>
@@ -288,7 +298,7 @@
                             </td>
                             <td>
                                 <p>
-                                    {{ $totalEgresosDiarios }}
+                                    {{ $totalEgresosDiarios }} Gs.
                                 </p>
                             </td>
                         </tr>
@@ -300,18 +310,18 @@
                             </td>
                             <td>
                                 <p>
-                                    {{$diferencia}}
+                                    {{$diferencia}} Gs.
                                 </p>
                             </td>
                         </tr>
-                        
+
                     </table>
                 </td>
             </tr>
         </table>
         <!--FIRMA-->
         <div class="firma">
-            Firma 
+            Firma
         </div>
         <!--FOOTER-->
         <footer>

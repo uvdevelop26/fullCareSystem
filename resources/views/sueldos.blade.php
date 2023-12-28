@@ -162,7 +162,7 @@
 
     .datosFinales .table_datosfinales {
         width: 42%;
-        height: 100px;
+        height: 50px;
         width: 100%;
         margin: 0px;
         padding: 10px;
@@ -176,6 +176,16 @@
     }
 
     /*FIRMA*/
+    .firma {
+        border-top: 1px solid rgba(20, 20, 20, 0.5);
+        text-align: center;
+        width: 30%;
+        margin-left: 70%;
+        margin-top: 80px;
+        padding-top: 5px;
+    }
+
+    /*footer*/
     footer {
         position: fixed;
         bottom: 0cm;
@@ -237,7 +247,7 @@
                     <td>{{ $item->empleado->persona->ci_numero }}</td>
                     <td>{{ $item->empleado->seccion->nombre_seccion }}</td>
                     <td>{{ $item->fecha }}</td>
-                    <td>{{ $item->monto }}</td>
+                    <td>{{ $item->monto }} Gs.</td>
                 </tr>
                 @endforeach
             </tbody>
@@ -255,20 +265,20 @@
                     </table>
                 </td>
                 <td class="datosFinales">
-                    {{-- <table class="table_datosfinales">
+                    <table class="table_datosfinales">
                         <tr>
                             <td>
                                 <p>
-                                    Cantidad
+                                    Total Pagado
                                 </p>
                             </td>
                             <td>
                                 <p>
-                                    fa
+                                    {{ $totalSueldos }} Gs.
                                 </p>
                             </td>
                         </tr>
-                        <tr>
+                        {{-- <tr>
                             <td>
                                 <p>
                                     Cantidad Activos
@@ -279,8 +289,8 @@
                                     fasdf
                                 </p>
                             </td>
-                        </tr>
-                        <tr>
+                        </tr> --}}
+                        {{-- <tr>
                             <td>
                                 <p>
                                     Cantidad Inactivos
@@ -291,12 +301,17 @@
                                     fad
                                 </p>
                             </td>
-                        </tr>
+                        </tr> --}}
 
-                    </table> --}}
+                    </table>
                 </td>
             </tr>
         </table>
+        {{-- firma --}}
+        <div class="firma">
+            Firma
+        </div>
+        {{-- footer --}}
         <footer>
             <p> Impreso por {{ $users->username }} en fecha {{ $fechaActual }}</p>
         </footer>

@@ -119,7 +119,7 @@ class ReporteController extends Controller
         })->count();
 
         $cantidadStaff = Empleado::whereHas('seccion', function ($query) {
-            $query->where('nombre_seccion', 'cocina y limpieza');
+            $query->where('nombre_seccion', 'staff');
         })->count();
 
 
@@ -253,13 +253,17 @@ class ReporteController extends Controller
             ->whereMonth('fecha', $mes)
             ->get();
 
+        $totalSueldos = Sueldo::whereYear('fecha', $anho)
+            ->whereMonth('fecha', $mes)
+            ->sum('monto');
+
         //genera pdf
 
         $pdf = app('dompdf.wrapper');
 
         $pdf->getDomPDF()->set_option("enable_php", true);
 
-        $pdf->loadView('sueldos', compact('sueldos', 'mes', 'nombreMes', 'fechaActual', 'users'));
+        $pdf->loadView('sueldos', compact('sueldos', 'mes', 'nombreMes', 'fechaActual', 'users', 'totalSueldos'));
 
         return $pdf->setPaper('a4', 'landscape')->stream();
     }

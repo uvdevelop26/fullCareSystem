@@ -164,8 +164,7 @@ export default {
                             {{ user.username }}
                         </td>
                         <td class="py-2 px-2 bg-white group-hover:bg-fondColor">
-                            <span v-for="role in user.roles"
-                                class="inline-block pr-1">
+                            <span v-for="role in user.roles" class="inline-block pr-1 capitalize font-semibold">
                                 {{ role.name }}
                             </span>
                         </td>

@@ -164,6 +164,7 @@
             margin: 0px;
             padding: 2px;
             text-align: left;
+            font-size: 13px;
         }
 
         /*FIRMA*/
@@ -249,8 +250,16 @@
                 <tr>
                     <td>{{ $item->concepto}}</td>
                     <td>{{ $item->fecha}}</td>
-                    <td>{{ $item->monto_ingreso}}</td>
-                    <td>{{ $item->monto_egreso}}</td>
+                    @if($item->monto_ingreso)
+                    <td>{{ $item->monto_ingreso}} Gs.</td>
+                    @else
+                    <td></td>
+                    @endif
+                    @if($item->monto_egreso)
+                    <td>{{ $item->monto_egreso}} Gs.</td>
+                    @else
+                    <td></td>
+                    @endif
                 </tr>
                 @endforeach
             </tbody>
@@ -277,7 +286,7 @@
                             </td>
                             <td>
                                 <p>
-                                    {{ $totalIngresosMensuales }}
+                                    {{ $totalIngresosMensuales }} Gs.
                                 </p>
                             </td>
                         </tr>
@@ -289,7 +298,7 @@
                             </td>
                             <td>
                                 <p>
-                                    {{ $totalEgresosMensuales }}
+                                    {{ $totalEgresosMensuales }} Gs.
                                 </p>
                             </td>
                         </tr>
@@ -301,7 +310,7 @@
                             </td>
                             <td>
                                 <p>
-                                    {{$diferencia}}
+                                    {{$diferencia}} Gs.
                                 </p>
                             </td>
                         </tr>

@@ -84,7 +84,7 @@ export default {
                         id="fecha_nacimiento" v-model="form.fecha_nacimiento" :error="errors.fecha_nacimiento" />
                     <text-input type="text" label="Teléfono" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="telefono"
                         v-model="form.telefono" :error="errors.telefono" />
-                    <text-input type="number" label="edad" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="edad"
+                    <text-input type="number" label="Edad" class="pb-5 lg:pr-3 w-full lg:w-1/2" id="edad"
                         v-model="form.edad" :error="errors.edad" />
                     <select-input class="pb-5 lg:pr-3 w-full lg:w-1/2" label="Sexo" id="sexo" v-model="form.sexo"
                         :error="errors.sexo">

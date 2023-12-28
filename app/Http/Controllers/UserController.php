@@ -43,7 +43,12 @@ class UserController extends Controller
 
     public function create()
     {
-        $empleados = Empleado::with('persona')->get();
+        $seccionesExcluidas = ['staff'];
+
+        $empleados = Empleado::with('persona')->whereHas('seccion', function ($query) use ($seccionesExcluidas) {
+            $query->whereNotIn('nombre_seccion', $seccionesExcluidas);
+        })->get();
+       // $empleados = Empleado::with('persona')->get();
 
         $roles = Role::all();
 
@@ -56,7 +61,7 @@ class UserController extends Controller
 
     public function store(UserRequest $request)
     {
-        
+
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
 
@@ -71,12 +76,18 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        
+
+        $seccionesExcluidas = ['staff'];
+
+        $empleados = Empleado::with('persona')->whereHas('seccion', function ($query) use ($seccionesExcluidas) {
+            $query->whereNotIn('nombre_seccion', $seccionesExcluidas);
+        })->get();
+
         $user = User::find($id);
         $roles = Role::all();
         $userRole = $user->roles->all();
 
-        $empleados = Empleado::with('persona')->get();
+       // $empleados = Empleado::with('persona')->get();
 
         return Inertia::render(
             'Usuarios/Editar',
@@ -121,6 +132,4 @@ class UserController extends Controller
 
         return Redirect::route('usuarios.index')->with('success', 'Usuario Eliminado Exitosamente');
     }
-
-
 }
